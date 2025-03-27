@@ -22663,7 +22663,7 @@ MonoBehaviour:
   hardDamage: 20
   enemyMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
 --- !u!114 &1447127294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34896,7 +34896,7 @@ GameObject:
   - component: {fileID: 2133874410}
   - component: {fileID: 2133874409}
   - component: {fileID: 2133874411}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

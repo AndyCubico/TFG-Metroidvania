@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
 
 public class Character_Controller : MonoBehaviour
 {
@@ -163,6 +165,33 @@ public class Character_Controller : MonoBehaviour
     public LayerMask roofMask;
     [Space(10)]
 
+    [Header("Input Actions")]
+    [Space(5)]
+    public InputActionReference movement;
+    public InputActionReference jumpingHold;
+    public InputActionReference crouchingHold;
+    public InputActionReference crouchingDown;
+    public InputActionReference dashing;
+    public InputActionReference impactHittingHold;
+    public InputActionReference impactHittingDown;
+    public InputActionReference UpAction;
+    public InputActionReference DownAction;
+    public InputActionReference LeftAction;
+    public InputActionReference RightAction;
+    [Space(10)]
+
+    //Bool keys
+    bool jumpKeyHold;
+    bool impactHitHold;
+    bool impactHitDown;
+    bool dashDown;
+    bool crouchDown;
+    bool crouchHold;
+    bool upKey;
+    bool downKey;
+    bool leftKey;
+    bool rightKey;
+
     [Header("Player Material")]
     [Space(5)]
 
@@ -180,6 +209,172 @@ public class Character_Controller : MonoBehaviour
 
     //Scripts
     private Combat combatScript;
+
+    private void OnEnable()
+    {
+        jumpingHold.action.started += JumpingHoldEvent;
+        impactHittingHold.action.started += ImpactHitHoldEvent;
+        impactHittingDown.action.started += ImpactHitDownEvent;
+        dashing.action.started += DashDownEvent;
+        crouchingDown.action.started += CrouchDownEvent;
+        crouchingHold.action.started += CrouchHoldEvent;
+        UpAction.action.started += UpEvent;
+        DownAction.action.started += DownEvent;
+        LeftAction.action.started += LeftEvent;
+        RightAction.action.started += RightEvent;
+    }
+
+    private void OnDisable()
+    {
+        jumpingHold.action.started -= JumpingHoldEvent;
+        impactHittingHold.action.started -= ImpactHitHoldEvent;
+        impactHittingDown.action.started -= ImpactHitDownEvent;
+        dashing.action.started -= DashDownEvent;
+        crouchingDown.action.started -= CrouchDownEvent;
+        crouchingHold.action.started -= CrouchHoldEvent;
+        UpAction.action.started -= UpEvent;
+        DownAction.action.started -= DownEvent;
+        LeftAction.action.started -= LeftEvent;
+        RightAction.action.started -= RightEvent;
+    }
+
+    public void JumpingHoldEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            jumpKeyHold = true;
+        }
+        else
+        {
+            jumpKeyHold = false;
+        }
+
+        if (context.canceled)
+        {
+            if ((isHangingWall || isGrounded) && !isCrouch)
+            {
+                jumpStopper = false;
+            }
+
+            if (!isImpactHitting && !hasImpactHit) //Return ImpactHit
+            {
+                hasImpactHit = true;
+                isImpactHitting = false;
+            }
+
+            if (playerState == PLAYER_STATUS.JUMP)
+            {
+                JumpReset();
+            }
+        }
+    }
+    
+    public void ImpactHitHoldEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            impactHitHold = true;
+        }
+        else
+        {
+            impactHitHold = false;
+        }
+    }
+    public void ImpactHitDownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            impactHitDown = true;
+        }
+        else
+        {
+            impactHitDown = false;
+        }
+    }
+
+    public void DashDownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            dashDown = true;
+        }
+        else
+        {
+            dashDown = false;
+        }
+    }
+
+    public void CrouchDownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            crouchDown = true;
+        }
+        else
+        {
+            crouchDown = false;
+        }
+    } 
+    
+    public void CrouchHoldEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            crouchHold = true;
+        }
+        else
+        {
+            crouchHold = false;
+        }
+    }
+
+    public void UpEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            upKey = true;
+        }
+        else
+        {
+            upKey = false;
+        }
+    }
+
+    public void DownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            downKey = true;
+        }
+        else
+        {
+            downKey = false;
+        }
+    }
+
+    public void LeftEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            leftKey = true;
+        }
+        else
+        {
+            leftKey = false;
+        }
+    }
+
+    public void RightEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            rightKey = true;
+        }
+        else
+        {
+            rightKey = false;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -226,7 +421,8 @@ public class Character_Controller : MonoBehaviour
         AddMovementSpeed();
 
         //_MOVEMENT
-        move = new Vector2(Input.GetAxisRaw("Horizontal"), 0); //Only exist horizontal control for basic movement 
+        //move = new Vector2(Input.GetAxisRaw("Horizontal"), 0); //Only exist horizontal control for basic movement 
+        move.x = movement.action.ReadValue<Vector2>().x;
         //MOVEMENT_
 
         //_JUMP
@@ -264,7 +460,7 @@ public class Character_Controller : MonoBehaviour
         //Aniamte the player
         AnimatePlayer();
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && playerState == PLAYER_STATUS.WALL) //Player can deatach walls if press Left Control
+        if (crouchDown && playerState == PLAYER_STATUS.WALL) //Player can deatach walls if press Left Control
         {
             PlayerUnFrezze();
         }
@@ -280,10 +476,10 @@ public class Character_Controller : MonoBehaviour
         }
 
         //Deactivates emergency jumping stop, if is on ground, or if it was activated in hanging
-        if ((Input.GetKeyUp(KeyCode.Space) && isHangingWall || isGrounded) && !isCrouch)
-        {
-            jumpStopper = false;
-        }
+        //if ((jumpKeyUp && isHangingWall || isGrounded) && !isCrouch)
+        //{
+        //    jumpStopper = false;
+        //}
 
         //Update player status for the inspector
         playerStateMessage = playerState.ToString() + ", " + playerFaceDir.ToString();
@@ -342,16 +538,16 @@ public class Character_Controller : MonoBehaviour
     //Make the action of jumping
     private void Jumping()
     {
-        if ((playerState == PLAYER_STATUS.AIR || playerState == PLAYER_STATUS.JUMP) && doubleJump && unlockDoubleJump)
+        if ((playerState == PLAYER_STATUS.AIR || playerState == PLAYER_STATUS.JUMP) && doubleJump && unlockDoubleJump) //Double jump ablity
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.S) && !isImpactHitting)
+            if (jumpKeyHold && !impactHitHold && !isImpactHitting)
             {
                 canJump = true;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
             }
         }
 
-        if (Input.GetKey(KeyCode.Space) && !jumpStopper && !isTooMuchEarring && !isRoof) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player
+        if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player
         {
             //Check if you can Jump
             if (canJump)
@@ -391,7 +587,7 @@ public class Character_Controller : MonoBehaviour
         }
 
         //Reset Jump if the player key up Space, or if arrive to maxJumpForce
-        if (playerState == PLAYER_STATUS.JUMP && (spaceTime >= maxJumpTime || Input.GetKeyUp(KeyCode.Space)))
+        if (playerState == PLAYER_STATUS.JUMP && (spaceTime >= maxJumpTime))
         {
             JumpReset();
         }
@@ -426,7 +622,7 @@ public class Character_Controller : MonoBehaviour
     {
         if (playerState == PLAYER_STATUS.AIR || playerState == PLAYER_STATUS.WALL)
         {
-            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S) && hasImpactHit && !isCrouch && rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
+            if (jumpKeyHold && impactHitHold && hasImpactHit && !isCrouch && rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
             {
                 hasImpactHit = false;
                 isImpactHitting = true;
@@ -434,14 +630,14 @@ public class Character_Controller : MonoBehaviour
             }
         }
 
-        if(!isImpactHitting && !hasImpactHit) //Return ImpactHit
-        {
-            if(Input.GetKeyUp(KeyCode.Space)) //This is to cancel multi doing Impact Hit if you don't key up Space or S
-            {
-                hasImpactHit = true;
-                isImpactHitting = false;
-            }
-        }
+        //if(!isImpactHitting && !hasImpactHit) //Return ImpactHit
+        //{
+        //    if(jumpKeyUp) //This is to cancel multi doing Impact Hit if you don't key up Space or S
+        //    {
+        //        hasImpactHit = true;
+        //        isImpactHitting = false;
+        //    }
+        //}
     }
 
     //Make the action of dashing
@@ -449,7 +645,7 @@ public class Character_Controller : MonoBehaviour
     { 
         if (canDash && !isRoof && !isCrouch)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !isImpactHitting && !Input.GetKeyDown(KeyCode.S) && playerFaceDir != PLAYER_FACE_DIRECTION.DOWN) //Check if the Left Shift is pressed, is in ground and is not sliding
+            if (dashDown && !isImpactHitting && !impactHitDown && playerFaceDir != PLAYER_FACE_DIRECTION.DOWN) //Check if the Left Shift is pressed, is in ground and is not sliding
             {
                 dashFacing = playerFaceDir;
                 //rb.AddForce(new Vector2(dashForce * playerDir, 0)); //Dash Force Input to Player, based on the face direction
@@ -544,7 +740,7 @@ public class Character_Controller : MonoBehaviour
     //Check the action of crouching and the state of it
     private void CrouchingGroundAndAir()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && !isDashing)
+        if (crouchHold && !isDashing)
         {
             isCrouch = true;
         }
@@ -639,7 +835,7 @@ public class Character_Controller : MonoBehaviour
         isGrounded = Physics2D.OverlapAreaAll(GroundCheck.bounds.min, GroundCheck.bounds.max, groundMask).Length > 0;
 
         //Check if is Ground
-        if (isGrounded && playerState != PLAYER_STATUS.JUMP) //Check if the player was not actually jumping when you touch ground, this is because jumping to ground close to walls in corners, cause problems...
+        if ((isGrounded && playerState != PLAYER_STATUS.JUMP) || (isGrounded && rb.linearVelocity.y == 0 && playerState == PLAYER_STATUS.JUMP)) //Check if the player was not actually jumping when you touch ground, this is because jumping to ground close to walls in corners, cause problems...
         {
             playerState = PLAYER_STATUS.GROUND;
             hasImpactHit = false;
@@ -652,7 +848,7 @@ public class Character_Controller : MonoBehaviour
                 isImpactHitting = false;
             }
 
-            if(rb.linearVelocity.y <= 0)
+            if(rb.linearVelocity.y <= 0 && !jumpKeyHold) //Return jump and avoid jumping if the Space is Holded
             {
                 canJump = true;
             }
@@ -733,7 +929,7 @@ public class Character_Controller : MonoBehaviour
             maxAirJumps = 0;
 
             //EMERGENCY JUMP STOP! Here the player will stop jumping when touching wall and prevent from deataching without wanting, and falling off
-            if (Input.GetKey(KeyCode.Space) && !jumpStopper)
+            if (jumpKeyHold && !jumpStopper)
             {
                 jumpStopper = true;
             }
@@ -763,42 +959,42 @@ public class Character_Controller : MonoBehaviour
     //Check the player facing direction
     void CheckPlayerFaceDirection()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (rightKey)
         {
             playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT;
 
-            if (Input.GetKey(KeyCode.W))
+            if (upKey)
             {
                 playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT_UP;
             }
 
-            if (Input.GetKey(KeyCode.S))
+            if (downKey)
             {
                 playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT_DOWN;
             }
         }
         
-        if (Input.GetKey(KeyCode.A))
+        if (leftKey)
         {
             playerFaceDir = PLAYER_FACE_DIRECTION.LEFT;
 
-            if (Input.GetKey(KeyCode.W))
+            if (upKey)
             {
                 playerFaceDir = PLAYER_FACE_DIRECTION.LEFT_UP;
             }
 
-            if (Input.GetKey(KeyCode.S))
+            if (downKey)
             {
                 playerFaceDir = PLAYER_FACE_DIRECTION.LEFT_DOWN;
             }
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (upKey)
         {
             playerFaceDir = PLAYER_FACE_DIRECTION.UP;
         }
         
-        if (Input.GetKey(KeyCode.S))
+        if (downKey)
         {
             playerFaceDir = PLAYER_FACE_DIRECTION.DOWN;
         }

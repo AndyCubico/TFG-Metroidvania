@@ -22409,7 +22409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0f129fe9b397547bb125cd18a235aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMessage: GROUND, RIGHT
+  playerStateMessage: GROUND, LEFT
   unlockAirDash: 0
   unlockDoubleJump: 0
   speed: 50
@@ -22417,10 +22417,10 @@ MonoBehaviour:
   airSpeedReduction: 3
   crouchSpeedReduction: 2
   icedFloorEffect: 1
-  minJumpForce: 10
-  maxJumpTime: 0.2
+  minJumpForce: 200
+  maxJumpTime: 0.12
   jumpForceMultiplier: 10
-  fallmultiplier: 2.8
+  fallmultiplier: 4
   coyoteTime: 0.07
   dashForce: 500
   dashDuration: 0.25
@@ -22428,7 +22428,7 @@ MonoBehaviour:
   maxAngleFloor: 40
   impactHit: 1000
   isGrounded: 1
-  flipAnimation: 0
+  flipAnimation: 1
   isTooMuchEarring: 0
   doubleJump: 0
   hasImpactHit: 0

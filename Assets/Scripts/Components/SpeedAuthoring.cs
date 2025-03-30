@@ -8,7 +8,7 @@ public class SpeedAuthoring : MonoBehaviour
     {
         public override void Bake(SpeedAuthoring authoring)
         {
-            Entity entity = GetEntity(TransformUsageFlags.WorldSpace);
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic); //Changed from WorldSpace to Dynamic
             AddComponent(entity, new SpeedComponent
             {
                 m_Value = authoring.m_Speed

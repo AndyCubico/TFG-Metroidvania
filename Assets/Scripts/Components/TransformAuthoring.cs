@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class TransformAuthoring : MonoBehaviour
 {
-    public Vector2 m_Position;
-    public Vector2 m_Rotation;
-    public Vector2 m_Scale; 
+    public Vector2 position;
+    public Vector2 rotation;
+    public Vector2 scale; 
     
     public class Baker : Baker<TransformAuthoring>
     {
@@ -14,9 +14,9 @@ public class TransformAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.None);
             AddComponent(entity, new TransformComponent
             {
-                m_Position = authoring.m_Position,
-                m_Rotation = authoring.m_Rotation,
-                m_Scale = authoring.m_Scale
+                position = authoring.position,
+                rotation = authoring.rotation,
+                scale = authoring.scale
             });
         }
     }
@@ -24,7 +24,7 @@ public class TransformAuthoring : MonoBehaviour
 
 public struct TransformComponent : IComponentData
 {
-    public Vector2 m_Position;
-    public Vector2 m_Rotation;
-    public Vector2 m_Scale;
+    public Vector2 position;
+    public Vector2 rotation;
+    public Vector2 scale;
 }

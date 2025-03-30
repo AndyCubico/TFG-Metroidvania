@@ -31,8 +31,8 @@ partial struct UnitMoverSystem : ISystem
                 RefRO<SpeedComponent>,
                 RefRW<PhysicsVelocity>>())
         {
-            physicsVelocity.ValueRW.Linear.x = moveSpeed.ValueRO.m_Value.x;
-            physicsVelocity.ValueRW.Linear.y = moveSpeed.ValueRO.m_Value.y;
+            physicsVelocity.ValueRW.Linear.x = moveSpeed.ValueRO.value.x;
+            physicsVelocity.ValueRW.Linear.y = moveSpeed.ValueRO.value.y;
             physicsVelocity.ValueRW.Angular = float3.zero;
         }
     }

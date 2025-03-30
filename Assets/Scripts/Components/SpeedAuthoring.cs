@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpeedAuthoring : MonoBehaviour
 {
-    public Vector2 m_Speed;
+    public Vector2 speed;
     public class Baker : Baker<SpeedAuthoring>
     {
         public override void Bake(SpeedAuthoring authoring)
@@ -11,7 +11,7 @@ public class SpeedAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic); //Changed from WorldSpace to Dynamic
             AddComponent(entity, new SpeedComponent
             {
-                m_Value = authoring.m_Speed
+                value = authoring.speed
             });
         }
     }
@@ -19,5 +19,5 @@ public class SpeedAuthoring : MonoBehaviour
 
 public struct SpeedComponent : IComponentData
 {
-    public Vector2 m_Value;
+    public Vector2 value;
 }

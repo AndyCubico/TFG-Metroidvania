@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UuidAuthoring : MonoBehaviour
 {
-    public Guid m_Guid;
+    public Guid guid;
 
     public class Baker : Baker<UuidAuthoring>
     {
@@ -13,7 +13,7 @@ public class UuidAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.None);
             AddComponent(entity, new UuidComponent
             {
-                m_Guid = authoring.m_Guid
+                guid = authoring.guid
             });
         }
     }
@@ -21,5 +21,5 @@ public class UuidAuthoring : MonoBehaviour
 
 public struct UuidComponent : IComponentData
 {
-    public Guid m_Guid;
+    public Guid guid;
 }

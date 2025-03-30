@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealthAuthoring : MonoBehaviour
 {
-    public int m_Health;
+    public int health;
 
     public class Baker : Baker<HealthAuthoring>
     {
@@ -12,7 +12,7 @@ public class HealthAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.None);
             AddComponent(entity, new HealthComponent
             {
-                m_Value = authoring.m_Health
+                value = authoring.health
             });
         }
     }
@@ -20,5 +20,5 @@ public class HealthAuthoring : MonoBehaviour
 
 public struct HealthComponent : IComponentData
 {
-    public int m_Value;
+    public int value;
 }

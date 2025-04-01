@@ -16,7 +16,7 @@ partial struct UnitMoverSystem : ISystem
         };
 
         unitMoverJob.ScheduleParallel();
-                    
+
 
         // Both examples without jobs
 
@@ -33,10 +33,10 @@ partial struct UnitMoverSystem : ISystem
         //}
 
         // Physics
-        //foreach ((
-        //    RefRW<LocalTransform> localTransform,
-        //    RefRO<SpeedComponent> moveSpeed,
-        //    RefRW<PhysicsVelocity> physicsVelocity)
+        //foreach (var (
+        //    localTransform,
+        //    moveSpeed,
+        //    physicsVelocity)
         //    in SystemAPI.Query<
         //        RefRW<LocalTransform>,
         //        RefRO<SpeedComponent>,

@@ -408,11 +408,6 @@ public class Character_Controller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Hanging Wall mechanic
-        CheckWalls();
-
-        //Ground checker and Slide Mechanic
-        CheckGroundAndSlide();
     }
 
     private void Update()
@@ -440,6 +435,16 @@ public class Character_Controller : MonoBehaviour
         //_DASH
         Dash();
         //DASH_
+
+        //_CHECK_WALLS
+        //Hanging Wall mechanic
+        CheckWalls();
+        //CHECK_WALLS_
+
+        //_CHECK_GROUND_AND_SLIDE
+        //Ground checker and Slide Mechanic
+        CheckGroundAndSlide();
+        //CHECK_GROUND_AND_SLIDE_
 
         //_CROUCH
         CrouchingGroundAndAir();

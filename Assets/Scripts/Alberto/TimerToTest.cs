@@ -45,12 +45,12 @@ public class TimerToTest : MonoBehaviour
             timer = 0;
         }
 
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    startTimerVertical = !startTimerVertical;
-        //    initialPos = this.gameObject.transform.position;
-        //    timer = 0;
-        //}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            startTimerVertical = !startTimerVertical;
+            initialPos = this.gameObject.transform.position;
+            timer = 0;
+        }
 
         if (startTimerHorizontal)
         {
@@ -64,20 +64,30 @@ public class TimerToTest : MonoBehaviour
             }
         }
 
+        //if (startTimerVertical)
+        //{
+        //    if (rb.linearVelocity.y < 0)
+        //    {
+        //        timer += Time.deltaTime;
+        //    }
+
+        //    if (rb.linearVelocity.y == 0 && timer > 0.1f)
+        //    {
+        //        Debug.Log("Time:" + timer);
+        //        startTimerVertical = false;
+        //    }
+        //}
+
         if (startTimerVertical)
         {
-            if (rb.linearVelocity.y < 0)
-            {
-                timer += Time.deltaTime;
-            }
+               timer += Time.deltaTime;
 
-            if (rb.linearVelocity.y == 0 && timer > 0.1f)
+            if (rb.linearVelocity.y == 0 && timer > 0.1f && Character_Controller.isGrounded)
             {
                 Debug.Log("Time:" + timer);
                 startTimerVertical = false;
             }
         }
-
 
         if (dash)
         {

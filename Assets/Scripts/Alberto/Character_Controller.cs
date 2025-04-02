@@ -531,7 +531,7 @@ public class Character_Controller : MonoBehaviour
     {
         if(playerState == PLAYER_STATUS.AIR && rb.linearVelocity.y < 0f)
         {
-            rb.linearVelocity -= gravityVector * fallmultiplier * Time.deltaTime;
+            rb.linearVelocity -= new Vector2(0, gravityVector.y * fallmultiplier * Time.deltaTime);
         }
     }
 
@@ -570,7 +570,7 @@ public class Character_Controller : MonoBehaviour
             {
                 spaceTime += Time.deltaTime; //See how much time you press Space
 
-                float smoothingTimer = spaceTime / maxJumpTime; //This variable will produce the effect, were when you are at the half of the jump, will reduce the force added to the jump, making it smoother
+                float smoothingTimer =  spaceTime / maxJumpTime; //This variable will produce the effect, were when you are at the half of the jump, will reduce the force added to the jump, making it smoother
                 float finalJumpForce = 0; //This will be the force added to the jump
 
                 if (smoothingTimer > 0.5f) //In case the jumps is more than the half of it, make it smoother
@@ -582,7 +582,7 @@ public class Character_Controller : MonoBehaviour
                     finalJumpForce = jumpForceMultiplier; //In case we are not more than the half of the jump, we put the base force of jumping
                 }
 
-                rb.linearVelocity += gravityVector * finalJumpForce * Time.deltaTime; //Here finally add the force to the rigidbody, taking count the gravity force and the time.
+                rb.linearVelocity += new Vector2(0, gravityVector.y * finalJumpForce * Time.deltaTime); //Here finally add the force to the rigidbody, taking count the gravity force and the time.
             }
         }
 

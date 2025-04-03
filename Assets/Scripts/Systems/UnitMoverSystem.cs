@@ -53,7 +53,7 @@ partial struct UnitMoverSystem : ISystem
     {
         public float deltaTime; // Example of how to use external variables
 
-        public void Execute(ref LocalTransform localTransform, in SpeedComponent moveSpeed, ref PhysicsVelocity physicsVelocity)
+        public void Execute(ref LocalTransform localTransform, in movement.SpeedComponent moveSpeed, ref PhysicsVelocity physicsVelocity)
         {
             physicsVelocity.Linear.x = moveSpeed.value.x;
             physicsVelocity.Linear.y = moveSpeed.value.y;

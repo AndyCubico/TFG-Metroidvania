@@ -176,10 +176,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 762230104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875fc2540eda0014b9022caa22c57d53, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f3cae3d028576c48b2b5d3eb7a2c33e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: {x: 1.53, y: 9}
+  position:
+    x: 0
+    y: 0
+  rotation:
+    x: 0
+    y: 0
+  scale:
+    x: 0
+    y: 0
+  speed:
+    x: 1.65
+    y: 0
+  health: 0
 --- !u!54 &762230108
 Rigidbody:
   m_ObjectHideFlags: 0

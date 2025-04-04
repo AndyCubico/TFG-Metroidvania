@@ -551,7 +551,7 @@ public class Character_Controller : MonoBehaviour
             }
         }
 
-        if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player
+        if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player or the earring of the floor is able to jump
         {
             //Check if you can Jump
             if (canJump)
@@ -590,7 +590,7 @@ public class Character_Controller : MonoBehaviour
             }
         }
 
-        //Reset Jump if the player key up Space, or if arrive to maxJumpForce
+        //Reset Jump if the player key up Space, or if arrive to maxJumpTime
         if (playerState == PLAYER_STATUS.JUMP && (spaceTime >= maxJumpTime))
         {
             JumpReset();

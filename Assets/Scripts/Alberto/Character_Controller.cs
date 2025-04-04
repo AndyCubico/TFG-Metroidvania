@@ -58,8 +58,10 @@ public class Character_Controller : MonoBehaviour
     public float speed;
     public float maxSpeedX;
     public float airSpeedReduction;
-    public float crouchSpeedReduction;
     public float icedFloorEffect;
+    [Header("__________________________ CROUCH __________________________")]
+    public float crouchSpeedReduction;
+    public float multiplierAirCrouch;
     [Header("__________________________ JUMP __________________________")]
     public float minJumpForce;
     public float maxJumpTime;
@@ -155,7 +157,7 @@ public class Character_Controller : MonoBehaviour
     public Sprite Player_Down;
     [Space(10)]
 
-    [Header("Asigned Layers")]
+    [Header("Assigned Layers")]
     [Space(5)]
 
     //Layers
@@ -775,7 +777,7 @@ public class Character_Controller : MonoBehaviour
                         moveStopper = false;
                         isUnderground = false;
                     }
-                    else //In case the player is crouched on air, and touch ground (not ramp angle), will return him upp off the ground when release Left_Control
+                    else //In case the player is crouched on air, and touch ground (not ramp angle), will return him upward off the ground when release Left_Control
                     {
                         moveStopper = true;
                         isUnderground = true;
@@ -806,7 +808,7 @@ public class Character_Controller : MonoBehaviour
 
         if (!isCrouch) //Here we return to the not crouch state
         {
-            if (isUnderground) //Here the player in case is underground, will pop up upper in ground
+            if (isUnderground) //Here the player in case is underground, will pop up upward in ground
             {
                 this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + DownCrouchCollider.radius, this.gameObject.transform.position.z);
                 moveStopper = false;
@@ -1059,11 +1061,11 @@ public class Character_Controller : MonoBehaviour
                     //Reduce movement if is CROUCH
                     if (isGrounded)
                     {
-                        rb.linearVelocity += move * (speed / (isRoof ? (crouchSpeedReduction / 2) : crouchSpeedReduction)) * Time.deltaTime; //Movement in floor crouched
+                        rb.linearVelocity += move * (speed / (isRoof ? (crouchSpeedReduction / 1.5f) : crouchSpeedReduction)) * Time.deltaTime; //Movement in floor crouched
                     }
                     else
                     {
-                        rb.linearVelocity += move * (speed / crouchSpeedReduction) * Time.deltaTime; //Movement in air crouched is more reduced
+                        rb.linearVelocity += move * (speed / (crouchSpeedReduction * multiplierAirCrouch)) * Time.deltaTime; //Movement in air crouched is more reduced
                     }
 
                     if(move.x == 0 && rb.linearVelocity.x != 0) //This is for not slide to much when you are crouched by innerthia

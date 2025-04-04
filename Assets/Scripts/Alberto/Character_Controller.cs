@@ -408,6 +408,18 @@ public class Character_Controller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //_JUMP
+        Jumping();
+        //JUMP_
+
+        //_GROUND_HIT
+        GroundHit();
+        //GROUND_HIT_
+
+        //_CHECK_GROUND_AND_SLIDE
+        //Ground checker and Slide Mechanic
+        CheckGroundAndSlide();
+        //CHECK_GROUND_AND_SLIDE_
     }
 
     private void Update()
@@ -420,17 +432,9 @@ public class Character_Controller : MonoBehaviour
         move.x = movement.action.ReadValue<Vector2>().x;
         //MOVEMENT_
 
-        //_JUMP
-        Jumping();
-        //JUMP_
-
         //_COYOTE_TIME
         CoyoteTime();
         //COYOTE_TIME_
-
-        //_GROUND_HIT
-        GroundHit();
-        //GROUND_HIT_
 
         //_DASH
         Dash();
@@ -440,11 +444,6 @@ public class Character_Controller : MonoBehaviour
         //Hanging Wall mechanic
         CheckWalls();
         //CHECK_WALLS_
-
-        //_CHECK_GROUND_AND_SLIDE
-        //Ground checker and Slide Mechanic
-        CheckGroundAndSlide();
-        //CHECK_GROUND_AND_SLIDE_
 
         //_CROUCH
         CrouchingGroundAndAir();

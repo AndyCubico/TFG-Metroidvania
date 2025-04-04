@@ -64,30 +64,41 @@ public class TimerToTest : MonoBehaviour
             }
         }
 
+        if (startTimerVertical)
+        {
+            if (rb.linearVelocity.y < 0)
+            {
+                timer += Time.deltaTime;
+            }
+
+            if (rb.linearVelocity.y == 0 && timer > 0.1f)
+            {
+                Debug.Log("Time:" + timer);
+                startTimerVertical = false;
+            }
+        }
+
         //if (startTimerVertical)
         //{
-        //    if (rb.linearVelocity.y < 0)
-        //    {
-        //        timer += Time.deltaTime;
-        //    }
+        //       timer += Time.deltaTime;
 
-        //    if (rb.linearVelocity.y == 0 && timer > 0.1f)
+        //    if (rb.linearVelocity.y == 0 && timer > 0.1f && Character_Controller.isGrounded)
         //    {
         //        Debug.Log("Time:" + timer);
         //        startTimerVertical = false;
         //    }
         //}
 
-        if (startTimerVertical)
-        {
-               timer += Time.deltaTime;
+        //if (startTimerVertical)
+        //{
+        //    timer += Time.deltaTime;
 
-            if (rb.linearVelocity.y == 0 && timer > 0.1f && Character_Controller.isGrounded)
-            {
-                Debug.Log("Time:" + timer);
-                startTimerVertical = false;
-            }
-        }
+        //    if (rb.linearVelocity.y <= 0 && timer > 0.1f)
+        //    {
+        //        Debug.Log("Time:" + timer);
+        //        startTimerVertical = false;
+        //    }
+        //}
 
         if (dash)
         {

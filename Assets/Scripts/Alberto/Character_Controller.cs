@@ -117,6 +117,7 @@ public class Character_Controller : MonoBehaviour
     public bool flipAnimation;
     public bool isTooMuchEarring;
     public bool doubleJump;
+    public bool canDash;
 
     public bool hasImpactHit;
     [SerializeField]public bool isImpactHitting;
@@ -127,8 +128,6 @@ public class Character_Controller : MonoBehaviour
     bool jumpStopper;
     bool moveStopper;
     bool cheatMode;
-
-    public bool canDash;
 
     [Space(10)]
 
@@ -145,6 +144,7 @@ public class Character_Controller : MonoBehaviour
     [Header("Crouch Colliders")]
     [Space(5)]
 
+    public BoxCollider2D playerUpCollider;
     public BoxCollider2D UpCrouchCollider;
     public CircleCollider2D DownCrouchCollider;
     [Space(10)]
@@ -749,6 +749,10 @@ public class Character_Controller : MonoBehaviour
         if (crouchHold && !isDashing)
         {
             isCrouch = true;
+
+            UpCrouchCollider.enabled = true;
+
+            playerUpCollider.enabled = false;
         }
         else
         {
@@ -817,8 +821,10 @@ public class Character_Controller : MonoBehaviour
 
             playerSprite.sprite = Player_Full; //Set player sprite to Full
             player_Material.color = new Color(256, 256, 256);
-            UpCrouchCollider.isTrigger = false;
+            UpCrouchCollider.isTrigger = true;
             DownCrouchCollider.isTrigger = false;
+
+            playerUpCollider.enabled = true;
 
             if (playerState != PLAYER_STATUS.WALL)
             {
@@ -905,9 +911,10 @@ public class Character_Controller : MonoBehaviour
         isRightWall = Physics2D.OverlapAreaAll(RightWallCheck.bounds.min, RightWallCheck.bounds.max, wallMask).Length > 0;
 
         //If you are hanged and jump, unfreeze player to move again
-        if (playerState == PLAYER_STATUS.JUMP)
+        if (playerState == PLAYER_STATUS.JUMP && isHangingWall)
         {
             PlayerUnFrezze();
+            //rb.AddForce(Vector2.up, ForceMode2D.Impulse);
         }
 
         //Check if is not touching walls
@@ -1061,7 +1068,7 @@ public class Character_Controller : MonoBehaviour
                     //Reduce movement if is CROUCH
                     if (isGrounded)
                     {
-                        rb.linearVelocity += move * (speed / (isRoof ? (crouchSpeedReduction / 1.5f) : crouchSpeedReduction)) * Time.deltaTime; //Movement in floor crouched
+                        rb.linearVelocity += move * (speed / (isRoof ? (crouchSpeedReduction / 2f) : crouchSpeedReduction)) * Time.deltaTime; //Movement in floor crouched
                     }
                     else
                     {

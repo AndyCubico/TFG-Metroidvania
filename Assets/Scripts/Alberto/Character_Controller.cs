@@ -422,6 +422,11 @@ public class Character_Controller : MonoBehaviour
         //Ground checker and Slide Mechanic
         CheckGroundAndSlide();
         //CHECK_GROUND_AND_SLIDE_
+
+        //_CHECK_WALLS
+        //Hanging Wall mechanic
+        CheckWalls();
+        //CHECK_WALLS_
     }
 
     private void Update()
@@ -441,11 +446,6 @@ public class Character_Controller : MonoBehaviour
         //_DASH
         Dash();
         //DASH_
-
-        //_CHECK_WALLS
-        //Hanging Wall mechanic
-        CheckWalls();
-        //CHECK_WALLS_
 
         //_CROUCH
         CrouchingGroundAndAir();
@@ -914,7 +914,8 @@ public class Character_Controller : MonoBehaviour
         if (playerState == PLAYER_STATUS.JUMP && isHangingWall)
         {
             PlayerUnFrezze();
-            //rb.AddForce(Vector2.up, ForceMode2D.Impulse);
+
+            rb.AddForce(new Vector2(1f * (isRightWall ? 1 : -1), 1) / 0.2f); //Extra impulse to get out of the wall
         }
 
         //Check if is not touching walls

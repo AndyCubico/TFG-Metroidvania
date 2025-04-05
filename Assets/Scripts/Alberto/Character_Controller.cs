@@ -74,6 +74,9 @@ public class Character_Controller : MonoBehaviour
     public float dashCooldown;
     [Header("_________________________ EARING _________________________")]
     public float maxAngleFloor;
+    [Header("_________________________ EARING _________________________")]
+    public float hangWallImpulseUp;
+    public float hangWallImpulseSides;
 
     private float spaceTime;
     private float dashTime;
@@ -881,7 +884,7 @@ public class Character_Controller : MonoBehaviour
         }
 
         //Put player in AIR status if is not in ground and not Sliding in Ramp
-        if (!isGrounded && playerState != PLAYER_STATUS.JUMP && playerState != PLAYER_STATUS.AIR && playerState != PLAYER_STATUS.WALL && !isImpactHitting && !isSlide) //Also check to not do infinit ImpactHit
+        if (!isGrounded && playerState != PLAYER_STATUS.JUMP && playerState != PLAYER_STATUS.AIR && playerState != PLAYER_STATUS.WALL && !isImpactHitting && !isSlide && !isDashing) //Also check to not do infinit ImpactHit
         {
             hasImpactHit = true;
 
@@ -915,7 +918,8 @@ public class Character_Controller : MonoBehaviour
         {
             PlayerUnFrezze();
 
-            rb.AddForce(new Vector2(1f * (isRightWall ? 1 : -1), 1) / 0.2f); //Extra impulse to get out of the wall
+            rb.AddForce(new Vector2(hangWallImpulseSides * (isRightWall ? 1 : -1), hangWallImpulseUp)); //Extra impulse to get out of the wall
+            Debug.Log(hangWallImpulseSides * (isRightWall ? 1 : -1));
         }
 
         //Check if is not touching walls

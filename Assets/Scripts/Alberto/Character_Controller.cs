@@ -919,7 +919,6 @@ public class Character_Controller : MonoBehaviour
             PlayerUnFrezze();
 
             rb.AddForce(new Vector2(hangWallImpulseSides * (isRightWall ? 1 : -1), hangWallImpulseUp)); //Extra impulse to get out of the wall
-            Debug.Log(hangWallImpulseSides * (isRightWall ? 1 : -1));
         }
 
         //Check if is not touching walls

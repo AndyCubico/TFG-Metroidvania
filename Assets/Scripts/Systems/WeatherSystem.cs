@@ -1,16 +1,14 @@
 using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
-using weather;
 
-partial struct RainSystem : ISystem
+partial struct WeatherSystem : ISystem
 {
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var weatherComp 
+        foreach (var weatherComp
             in SystemAPI.Query<
-                RefRO<WeatherComponent>>())
+                RefRO<weather.WeatherComponent>>())
         {
             switch (weatherComp.ValueRO.weather)
             {

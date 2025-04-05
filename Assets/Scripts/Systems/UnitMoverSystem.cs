@@ -1,9 +1,9 @@
+using System.Diagnostics;
 using Unity.Burst;
 using Unity.Entities;
-using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Physics;
-using System.Diagnostics;
+using Unity.Transforms;
 
 partial struct UnitMoverSystem : ISystem
 {

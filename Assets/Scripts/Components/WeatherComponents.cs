@@ -1,5 +1,3 @@
-using Unity.Entities;
-using UnityEngine;
 public enum WEATHER
 {
     SUN,
@@ -11,21 +9,21 @@ public enum WEATHER
 
 namespace weather
 {
-    public struct WeatherComponent : IComponentData
+    public struct WeatherComponent : QG_IEnableComponent
     {
         public WEATHER weather;
         public float duration;  // rl minutes
     }
 
-    public struct IsRainingComponent : IComponentData
+    public struct RainComponent : QG_IEnableComponent
     {
     }
 
-    public struct IsSnowingComponent : IComponentData
+    public struct SnowComponent : QG_IEnableComponent
     {
     }
 
-    public struct IsSunComponent : IComponentData
+    public struct SunComponent : QG_IEnableComponent
     {
     }
 }

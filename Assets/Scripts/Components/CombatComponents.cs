@@ -1,9 +1,7 @@
 using Unity.Entities;
-using UnityEngine;
-
 namespace combat
 {
-    public struct HealthComponent : IComponentData
+    public struct HealthComponent : QG_IEnableComponent
     {
         public int value;
     }

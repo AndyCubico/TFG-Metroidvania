@@ -1,4 +1,3 @@
-using combat;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -19,7 +18,7 @@ public class EntityBaseAuthoring : MonoBehaviour
     {
         public override void Bake(EntityBaseAuthoring authoring)
         {
-            Entity entity = GetEntity(TransformUsageFlags.None);
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
             AddComponent(entity, new movement.TransformComponent
             {

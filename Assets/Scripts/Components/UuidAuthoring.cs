@@ -19,7 +19,7 @@ public class UuidAuthoring : MonoBehaviour
     }
 }
 
-public struct UuidComponent : IComponentData
+public struct UuidComponent : QG_IEnableComponent
 {
     public Guid guid;
 }

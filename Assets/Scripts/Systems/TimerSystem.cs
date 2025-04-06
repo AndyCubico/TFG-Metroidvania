@@ -7,33 +7,47 @@ partial struct TimerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
         state.RequireForUpdate<utils.TimerComponent>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var (
-            timerComp,
-            entity)
-            in SystemAPI.Query<
-                RefRW<utils.TimerComponent>>()
-                .WithDisabled<utils.TimerTriggerComponent>()
-                .WithEntityAccess())
+        var _timerJob = new TimerJob()
         {
-            timerComp.ValueRW.timer -= SystemAPI.Time.DeltaTime;
+            deltaTime = Time.deltaTime,
+            ecb = GetEntityCommandBuffer(ref state),
+        };
 
-            if (timerComp.ValueRO.timer <= 0)
-            {
-                if (state.EntityManager.HasComponent<utils.TimerTriggerComponent>(entity))
-                {
-                    state.EntityManager.SetComponentEnabled<utils.TimerTriggerComponent>(entity, true);
-                }
-                else
-                {
-                    Debug.Log("[Error] Entity does not have TimerTriggerComponent");
-                }
-            }
+        var _query = SystemAPI.QueryBuilder()
+            .WithAllRW<utils.TimerComponent>()
+            .WithDisabled<utils.TimerTriggerComponent>()
+            .Build();
+
+        _timerJob.ScheduleParallel(_query);
+    }
+
+    private EntityCommandBuffer.ParallelWriter GetEntityCommandBuffer(ref SystemState state)
+    {
+        var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+        return ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
+    }
+}
+
+public partial struct TimerJob : IJobEntity
+{
+    public float deltaTime;
+    public EntityCommandBuffer.ParallelWriter ecb;
+
+    public void Execute([EntityIndexInQuery] int entityIndex,
+        in Entity entity, ref utils.TimerComponent timerComp)
+    {
+        timerComp.timer -= deltaTime;
+
+        if (timerComp.timer <= 0)
+        {
+            ecb.SetComponentEnabled<utils.TimerTriggerComponent>(entityIndex, entity, true);
         }
     }
 }

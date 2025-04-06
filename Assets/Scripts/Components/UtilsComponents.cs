@@ -2,6 +2,12 @@ using Unity.Entities;
 
 namespace utils
 {
+    public struct SetActiveComponent : QG_IEnableComponent
+    {
+        public bool isActive;
+        public Entity entity;
+    }
+
     public struct TimerComponent : QG_IComponent
     {
         public float targetDuration;    // Set only once

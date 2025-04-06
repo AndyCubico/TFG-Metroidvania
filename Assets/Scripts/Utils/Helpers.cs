@@ -18,17 +18,9 @@ public static class Helper
         var entityQuery = state.GetEntityQuery(ComponentType.ReadWrite<TComponent>());
         return entityQuery.GetSingletonEntity(); // exception if there is more than one
     }
-
-    // Prefer this over EnableComponent
-    public static void EnableComponent<T>(in Entity entity, bool enable = true) where T : unmanaged, QG_IEnableComponent
+    public static void EnableComponent<T>(ref SystemState state, in Entity entity, bool enable = true) where T : unmanaged, QG_IEnableComponent
     {
         EntityManager entityManager = GetEntityManager();
-        entityManager.SetComponentEnabled<T>(entity, enable);
+        state.EntityManager.SetComponentEnabled<T>(entity, enable);
     }
-
-    public static void EnableComponentFromState(ref SystemState state, in Entity entity, ComponentType type, bool enable = true)
-    {
-        state.EntityManager.SetComponentEnabled(entity, type, enable);
-    }
-
 }

@@ -20,7 +20,6 @@ public static class Helper
     }
     public static void EnableComponent<T>(ref SystemState state, in Entity entity, bool enable = true) where T : unmanaged, QG_IEnableComponent
     {
-        EntityManager entityManager = GetEntityManager();
         state.EntityManager.SetComponentEnabled<T>(entity, enable);
     }
 }

@@ -1,6 +1,7 @@
 using Unity.Entities;
 using UnityEditor;
 using UnityEngine;
+using utils;
 
 public class WeatherAuthoring : MonoBehaviour
 {
@@ -17,9 +18,7 @@ public class WeatherAuthoring : MonoBehaviour
             AddComponent(entity, new utils.TimerComponent
             {
                 targetDuration = authoring.duration,
-                timer = 0,
-                entityHolder = entity,
-                componentType = ComponentType.ReadWrite<utils.TimerTriggerComponent>()
+                timer = authoring.duration,
             });
 
             AddComponent(entity, new weather.RainComponent { });
@@ -27,9 +26,7 @@ public class WeatherAuthoring : MonoBehaviour
             AddComponent(entity, new weather.SunComponent { });
 
             AddComponent(entity, new utils.TimerTriggerComponent { });
-
-            // Set the trigger to false
-            Helper.EnableComponent<utils.TimerTriggerComponent>(entity, false);
+            SetComponentEnabled<TimerTriggerComponent>(entity, false);
         }
     }
 }

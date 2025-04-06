@@ -1,9 +1,9 @@
-using System.Diagnostics;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
+using UnityEngine;
 
 partial struct UnitMoverSystem : ISystem
 {
@@ -59,7 +59,7 @@ partial struct UnitMoverSystem : ISystem
             physicsVelocity.Linear.y = moveSpeed.value.y;
             physicsVelocity.Angular = float3.zero;
 
-            Debug.WriteLine(deltaTime);
+            //Debug.Log(deltaTime);
         }
     }
 }

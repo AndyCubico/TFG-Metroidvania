@@ -586,7 +586,7 @@ public class CharacterPlayerController : MonoBehaviour
 
         if (playerState != PLAYER_STATUS.HANGED && isHangingEdge)
         {
-            PlayerFrezze();
+             PlayerFrezze();
             canJump = true;
 
             if (jumpKeyHold && !jumpStopper)

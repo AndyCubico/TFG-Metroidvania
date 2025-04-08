@@ -3,10 +3,32 @@ using UnityEngine.Rendering;
 
 public class HangEdges : MonoBehaviour
 {
+    public float transaltionSpeed;
     public Transform playerPosition;
+    private GameObject player;
     private CharacterPlayerController playerController;
     private bool isHanged;
-    public BoxCollider2D ground;
+
+    private void Update()
+    {
+        if (isHanged)
+        {
+            player.transform.position = Vector3.Lerp(player.transform.position, playerPosition.transform.position, transaltionSpeed);
+
+            if(player.transform.position == playerPosition.transform.position)
+            {
+                isHanged = false;
+            }
+        }
+
+        if(playerController != null)
+        {
+            if (playerController.jumpKeyDown)
+            {
+                isHanged = false;
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,27 +37,12 @@ public class HangEdges : MonoBehaviour
             playerController = collision.GetComponent<CharacterPlayerController>();
 
             playerController.isHangingEdge = true;
+            player = collision.gameObject;
 
-            collision.gameObject.transform.position = playerPosition.position;
-            collision.gameObject.transform.rotation = playerPosition.rotation;
+            //collision.gameObject.transform.position = playerPosition.position;
+            //collision.gameObject.transform.rotation = playerPosition.rotation;
 
-            ground.isTrigger = true;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            ground.isTrigger = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            ground.isTrigger = false;
+            isHanged = true;
         }
     }
 }

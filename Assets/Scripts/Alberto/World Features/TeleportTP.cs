@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Teleport_TP : MonoBehaviour
+public class TeleportTP : MonoBehaviour
 {
     public List<GameObject> tps;
     public GameObject player;

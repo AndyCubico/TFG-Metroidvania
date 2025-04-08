@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Dash_Effect : MonoBehaviour
+public class DashEffect : MonoBehaviour
 {
-    public Character_Controller player;
+    public CharacterPlayerController player;
     List<GameObject> clones;
     public float separationTime;
     public float timeFading;
@@ -15,7 +15,7 @@ public class Dash_Effect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<Character_Controller>();
+        player = GetComponent<CharacterPlayerController>();
         clones = new List<GameObject>();
     }
 

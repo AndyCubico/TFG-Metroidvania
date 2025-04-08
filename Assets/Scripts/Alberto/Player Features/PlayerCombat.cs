@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
-public class Combat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour
 {
     enum AttackType
     {
@@ -44,7 +44,7 @@ public class Combat : MonoBehaviour
     [Space(10)]
 
     //Character Controller
-    Character_Controller characterController;
+    CharacterPlayerController characterController;
 
     //Checkers
     bool leftAttack;
@@ -59,7 +59,7 @@ public class Combat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        characterController = GetComponent<Character_Controller>();
+        characterController = GetComponent<CharacterPlayerController>();
         animator = GetComponent<Animator>();
     }
 

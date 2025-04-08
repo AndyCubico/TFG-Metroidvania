@@ -16,7 +16,7 @@ public class TimerToTest : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Character_Controller Character_Controller;
+    CharacterPlayerController Character_Controller;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class TimerToTest : MonoBehaviour
         lastPos = Vector3.zero;
 
         rb = GetComponent<Rigidbody2D>();
-        Character_Controller = GetComponent<Character_Controller>();
+        Character_Controller = GetComponent<CharacterPlayerController>();
     }
 
     // Update is called once per frame

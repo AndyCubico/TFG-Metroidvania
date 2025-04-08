@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering;
 
-public class Character_Controller : MonoBehaviour
+public class CharacterPlayerController : MonoBehaviour
 {
     //Enum Movement Player Status 
     public enum PLAYER_STATUS
@@ -18,7 +18,9 @@ public class Character_Controller : MonoBehaviour
         CROUCH,
         AIR,
         WALL,
-        DASH
+        DASH,
+        HANGED,
+        NONE
     }
 
     public enum PLAYER_FACE_DIRECTION
@@ -74,9 +76,11 @@ public class Character_Controller : MonoBehaviour
     public float dashCooldown;
     [Header("_________________________ EARING _________________________")]
     public float maxAngleFloor;
-    [Header("_________________________ EARING _________________________")]
+    [Header("_________________________ HANG WALLS _________________________")]
     public float hangWallImpulseUp;
     public float hangWallImpulseSides;
+    [Header("_________________________ INPUT BUFFER _________________________")]
+    public float maxTimeInputBuffer;
 
     private float spaceTime;
     private float dashTime;
@@ -117,6 +121,7 @@ public class Character_Controller : MonoBehaviour
     private bool isRightWall;
     private bool isHangingWall;
     private bool isUnderground;
+    public bool isHangingEdge;
     public bool flipAnimation;
     public bool isTooMuchEarring;
     public bool doubleJump;
@@ -174,6 +179,7 @@ public class Character_Controller : MonoBehaviour
     [Space(5)]
     public InputActionReference movement;
     public InputActionReference jumpingHold;
+    public InputActionReference jumpingDown;
     public InputActionReference crouchingHold;
     public InputActionReference crouchingDown;
     public InputActionReference dashing;
@@ -186,6 +192,7 @@ public class Character_Controller : MonoBehaviour
     [Space(10)]
 
     //Bool keys
+    [SerializeField]public bool jumpKeyDown;
     bool jumpKeyHold;
     bool impactHitHold;
     bool impactHitDown;
@@ -204,7 +211,7 @@ public class Character_Controller : MonoBehaviour
     [Space(10)]
 
     //Actual Player state on Movement
-    PLAYER_STATUS playerState;
+    [SerializeField]public PLAYER_STATUS playerState;
 
     PLAYER_FACE_DIRECTION playerFaceDir;
     PLAYER_FACE_DIRECTION dashFacing;
@@ -213,11 +220,15 @@ public class Character_Controller : MonoBehaviour
     private Vector2 gravityVector;
 
     //Scripts
-    private Combat combatScript;
+    private PlayerCombat combatScript;
+
+    //Input Buffer
+    Dictionary<PLAYER_STATUS, float> inputBufferSaver;
 
     private void OnEnable()
     {
         jumpingHold.action.started += JumpingHoldEvent;
+        jumpingDown.action.started += JumpingDownEvent;
         impactHittingHold.action.started += ImpactHitHoldEvent;
         impactHittingDown.action.started += ImpactHitDownEvent;
         dashing.action.started += DashDownEvent;
@@ -232,6 +243,7 @@ public class Character_Controller : MonoBehaviour
     private void OnDisable()
     {
         jumpingHold.action.started -= JumpingHoldEvent;
+        jumpingDown.action.started -= JumpingDownEvent;
         impactHittingHold.action.started -= ImpactHitHoldEvent;
         impactHittingDown.action.started -= ImpactHitDownEvent;
         dashing.action.started -= DashDownEvent;
@@ -248,10 +260,19 @@ public class Character_Controller : MonoBehaviour
         if (context.performed)
         {
             jumpKeyHold = true;
+
+            if (inputBufferSaver.ContainsKey(PLAYER_STATUS.JUMP))
+            {
+                inputBufferSaver[PLAYER_STATUS.JUMP] = maxTimeInputBuffer;
+            }
+            else
+            {
+                inputBufferSaver.Add(PLAYER_STATUS.JUMP, maxTimeInputBuffer);
+            }
         }
         else
         {
-            jumpKeyHold = false;
+            //jumpKeyHold = false;
         }
 
         if (context.canceled)
@@ -273,7 +294,7 @@ public class Character_Controller : MonoBehaviour
             }
         }
     }
-    
+
     public void ImpactHitHoldEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -285,6 +306,19 @@ public class Character_Controller : MonoBehaviour
             impactHitHold = false;
         }
     }
+
+    public void JumpingDownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            jumpKeyDown = true;
+        }
+        else
+        {
+            jumpKeyDown = false;
+        }
+    }
+
     public void ImpactHitDownEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -388,7 +422,8 @@ public class Character_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerSprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        combatScript = GetComponent<Combat>();
+        combatScript = GetComponent<PlayerCombat>();
+        inputBufferSaver = new Dictionary<PLAYER_STATUS, float>();
 
         gravityEffect = rb.gravityScale;
 
@@ -430,10 +465,19 @@ public class Character_Controller : MonoBehaviour
         //Hanging Wall mechanic
         CheckWalls();
         //CHECK_WALLS_
+
+        //HangingEdges
+        if (isHangingEdge)
+        {
+            HangingEdges();
+        }
     }
 
     private void Update()
     {
+        //Input buffer update
+        InputBufferUpdate();
+
         //Add the basic movement force to the player
         AddMovementSpeed();
 
@@ -497,6 +541,60 @@ public class Character_Controller : MonoBehaviour
         {
             cheatMode = !cheatMode;
             Debug.Log("Cheats: " + cheatMode);
+        }
+    }
+
+    //Here the inputs are check for turn off if they are active
+    private void InputBufferUpdate()
+    {
+        for (int i = 0; i < (int)PLAYER_STATUS.NONE; i++) //Pass for all PLAYER_STATUS
+        {
+            if (inputBufferSaver.ContainsKey((PLAYER_STATUS)i))
+            {
+                if (inputBufferSaver[(PLAYER_STATUS)i] > 0) //Check if the timer is more than 0
+                {
+                    inputBufferSaver[(PLAYER_STATUS)i] -= Time.deltaTime; //Rest to the timer each time
+                }
+                else //Inc case timer reaches 0
+                {
+                    switch ((PLAYER_STATUS)i) //Serch for the input to turn off
+                    {
+                        case PLAYER_STATUS.JUMP:
+                            if (jumpKeyHold)
+                            {
+                                jumpKeyHold = false;
+                            }
+                            break;
+                        default: 
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void HangingEdges()
+    {
+        if (jumpKeyDown)
+        {
+            PlayerUnFrezze();
+
+            rb.AddForce(Vector2.up * 3);
+
+            isHangingEdge = false;
+        }
+
+        if (playerState != PLAYER_STATUS.HANGED && isHangingEdge)
+        {
+            PlayerFrezze();
+            canJump = true;
+
+            if (jumpKeyHold && !jumpStopper)
+            {
+                jumpStopper = true;
+            }
+
+            playerState = PLAYER_STATUS.HANGED;
         }
     }
 
@@ -829,7 +927,7 @@ public class Character_Controller : MonoBehaviour
 
             playerUpCollider.enabled = true;
 
-            if (playerState != PLAYER_STATUS.WALL)
+            if (playerState != PLAYER_STATUS.WALL && playerState != PLAYER_STATUS.HANGED)
             {
                 jumpStopper = false; //Here we unblock the jump when you are crouch
             }
@@ -863,7 +961,7 @@ public class Character_Controller : MonoBehaviour
                 isImpactHitting = false;
             }
 
-            if(rb.linearVelocity.y <= 0 && !jumpKeyHold) //Return jump and avoid jumping if the Space is Holded
+            if(rb.linearVelocity.y <= 0) //Return jump
             {
                 canJump = true;
             }
@@ -884,7 +982,7 @@ public class Character_Controller : MonoBehaviour
         }
 
         //Put player in AIR status if is not in ground and not Sliding in Ramp
-        if (!isGrounded && playerState != PLAYER_STATUS.JUMP && playerState != PLAYER_STATUS.AIR && playerState != PLAYER_STATUS.WALL && !isImpactHitting && !isSlide && !isDashing) //Also check to not do infinit ImpactHit
+        if (!isGrounded && playerState != PLAYER_STATUS.JUMP && playerState != PLAYER_STATUS.AIR && playerState != PLAYER_STATUS.WALL && !isImpactHitting && !isSlide && !isDashing && !isHangingEdge) //Also check to not do infinit ImpactHit
         {
             hasImpactHit = true;
 
@@ -952,7 +1050,7 @@ public class Character_Controller : MonoBehaviour
             }
         }
 
-        if(playerState == PLAYER_STATUS.AIR && rb.constraints == RigidbodyConstraints2D.FreezePosition)
+        if(playerState == PLAYER_STATUS.AIR && rb.constraints == RigidbodyConstraints2D.FreezePosition && !isHangingEdge)
         {
             PlayerUnFrezze();
             canJump = true;

@@ -5,12 +5,12 @@ using UnityEngine;
 public class Checkpoint_Ground : MonoBehaviour
 {
     public GameObject checkpoint;
-    Character_Controller characterController;
+    CharacterPlayerController characterController;
 
     // Start is called before the first frame update
     void Start()
     {
-        characterController = GetComponent<Character_Controller>();
+        characterController = GetComponent<CharacterPlayerController>();
     }
 
     // Update is called once per frame

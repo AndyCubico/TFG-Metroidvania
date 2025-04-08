@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jump_Pad : MonoBehaviour
+public class JumpPad : MonoBehaviour
 {
     public float jumpForce;
-    Character_Controller playerController;
+    CharacterPlayerController playerController;
 
     public Vector2 anglePad;
     public float angle;
@@ -29,7 +29,7 @@ public class Jump_Pad : MonoBehaviour
         if(collision.tag == "Player")
         {
             Rigidbody2D rbPlayer = collision.GetComponent<Rigidbody2D>();
-            playerController = collision.GetComponent<Character_Controller>();
+            playerController = collision.GetComponent<CharacterPlayerController>();
 
             rbPlayer.linearVelocity = Vector3.zero;
 

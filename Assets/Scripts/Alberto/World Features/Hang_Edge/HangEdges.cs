@@ -23,7 +23,7 @@ public class HangEdges : MonoBehaviour
 
         if(playerController != null)
         {
-            if (playerController.jumpKeyDown)
+            if (playerController.jumpKeyHold)
             {
                 isHanged = false;
             }

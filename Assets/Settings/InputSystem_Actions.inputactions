@@ -87,12 +87,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "JumpDown",
+                    "name": "JumpRelease",
                     "type": "Button",
                     "id": "3a364b5b-19c8-4e8f-a9f6-c8171bbccda7",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
                 },
                 {
@@ -483,10 +483,10 @@
                     "name": "",
                     "id": "3c339e7a-621a-4f0f-bd9d-f4443c22d0a8",
                     "path": "<Keyboard>/space",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "JumpDown",
+                    "action": "JumpRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -494,10 +494,10 @@
                     "name": "",
                     "id": "efe6c3b4-0d37-49a7-a9d3-3c253b3ba6dd",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "JumpDown",
+                    "action": "JumpRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -508,7 +508,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "JumpDown",
+                    "action": "JumpRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

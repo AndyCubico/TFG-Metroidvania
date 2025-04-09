@@ -126,6 +126,7 @@ public class CharacterPlayerController : MonoBehaviour
     public bool isTooMuchEarring;
     public bool doubleJump;
     public bool canDash;
+    public bool canUnhang;
 
     public bool hasImpactHit;
     [SerializeField]public bool isImpactHitting;
@@ -192,8 +193,8 @@ public class CharacterPlayerController : MonoBehaviour
     [Space(10)]
 
     //Bool keys
-    [SerializeField]public bool jumpKeyDown;
-    bool jumpKeyHold;
+    [SerializeField]public bool jumpKeyRelease;
+    [SerializeField] public bool jumpKeyHold;
     bool impactHitHold;
     bool impactHitDown;
     bool dashDown;
@@ -311,11 +312,14 @@ public class CharacterPlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            jumpKeyDown = true;
+            jumpKeyRelease = true;
+
+            //Hang Edges
+            canUnhang = true;
         }
         else
         {
-            jumpKeyDown = false;
+            jumpKeyRelease = false;
         }
     }
 
@@ -439,6 +443,7 @@ public class CharacterPlayerController : MonoBehaviour
         isDashing = false;
         doubleJump = false;
         flipAnimation = false;
+        canUnhang = false;
 
         playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player facing Right
         dashFacing = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player dash facing Right
@@ -575,18 +580,19 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
-        if (jumpKeyDown)
+        if (canUnhang && jumpKeyHold)
         {
             PlayerUnFrezze();
 
             rb.AddForce(Vector2.up * 3);
 
+            canUnhang = false;
             isHangingEdge = false;
         }
 
         if (playerState != PLAYER_STATUS.HANGED && isHangingEdge)
         {
-             PlayerFrezze();
+            PlayerFrezze();
             canJump = true;
 
             if (jumpKeyHold && !jumpStopper)

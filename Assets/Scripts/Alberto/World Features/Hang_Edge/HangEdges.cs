@@ -23,7 +23,7 @@ public class HangEdges : MonoBehaviour
 
         if(playerController != null)
         {
-            if (playerController.jumpKeyHold)
+            if (!playerController.canUnhang)
             {
                 isHanged = false;
             }
@@ -32,12 +32,12 @@ public class HangEdges : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Edge"))
         {
-            playerController = collision.GetComponent<CharacterPlayerController>();
+            playerController = collision.transform.parent.parent.GetComponent<CharacterPlayerController>();
 
             playerController.isHangingEdge = true;
-            player = collision.gameObject;
+            player = collision.transform.parent.parent.gameObject;
 
             //collision.gameObject.transform.position = playerPosition.position;
             //collision.gameObject.transform.rotation = playerPosition.rotation;

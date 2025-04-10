@@ -293,6 +293,9 @@ public class CharacterPlayerController : MonoBehaviour
             {
                 JumpReset();
             }
+
+            //HangWalls
+            canUnhang = true;
         }
     }
 
@@ -580,6 +583,11 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
+        if (playerState == PLAYER_STATUS.GROUND)
+        {
+            canUnhang = false;
+        }
+
         if (canUnhang && jumpKeyHold)
         {
             PlayerUnFrezze();

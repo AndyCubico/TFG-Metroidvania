@@ -6,10 +6,11 @@ public class Test : MonoBehaviour
     private Grid grid;
     [SerializeField] private int width, height;
     [SerializeField] private float cellSize;
+    [SerializeField] private Vector2 origin;
 
     void Start()
     {
-        grid = new Grid(width, height, cellSize);
+        grid = new Grid(width, height, cellSize, origin);
     }
 
     void Update()

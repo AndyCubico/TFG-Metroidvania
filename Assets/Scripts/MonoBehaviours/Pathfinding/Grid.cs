@@ -7,15 +7,17 @@ public class Grid : MonoBehaviour
     private int m_Height;
     private float m_CellSize;
     private int[,] m_GridArray;
+    private Vector2 m_originPosition;
 
     // Debug draw numbers in screen
     private TextMesh[,] m_DebugTextArray;
 
-    public Grid(int width, int height, float cellSize)
+    public Grid(int width, int height, float cellSize, Vector2 originPosition)
     {
         m_Width = width;
         m_Height = height;
         m_CellSize = cellSize;
+        m_originPosition = originPosition;
 
         m_GridArray = new int[width, height];
         m_DebugTextArray = new TextMesh[width, height];
@@ -24,7 +26,7 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < m_GridArray.GetLength(1); y++)
             {
-                m_DebugTextArray[x, y] = CreateDisplayText(m_GridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 20, Color.white);
+                m_DebugTextArray[x, y] = CreateDisplayText(m_GridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f, 20, Color.white);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
             }
@@ -34,15 +36,15 @@ public class Grid : MonoBehaviour
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
     }
 
-    private Vector3 GetWorldPosition(int x, int y)
+    private Vector2 GetWorldPosition(int x, int y)
     {
-        return new Vector3(x, y) * m_CellSize;
+        return new Vector2(x, y) * m_CellSize + m_originPosition;
     }
 
-    private void GetXYPosition(Vector3 worldPosition, out int x, out int y)
+    private void GetXYPosition(Vector2 worldPosition, out int x, out int y)
     {
-        x = Mathf.FloorToInt(worldPosition.x / m_CellSize);
-        y = Mathf.FloorToInt(worldPosition.y / m_CellSize);
+        x = Mathf.FloorToInt((worldPosition - m_originPosition).x / m_CellSize);
+        y = Mathf.FloorToInt((worldPosition - m_originPosition).y / m_CellSize);
     }
 
     public int GetValue(int x, int y)
@@ -57,7 +59,7 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public int GetValue(Vector3 worldPosition)
+    public int GetValue(Vector2 worldPosition)
     {
         int x, y;
         GetXYPosition(worldPosition, out x, out y);
@@ -74,7 +76,7 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public void SetValue(Vector3 worldPosition, int value)
+    public void SetValue(Vector2 worldPosition, int value)
     {
         int x, y;
         GetXYPosition(worldPosition, out x, out y);
@@ -82,7 +84,7 @@ public class Grid : MonoBehaviour
     }
 
     // Debug Grid values
-    private static TextMesh CreateDisplayText(string text = "", Transform parent = null, Vector3 localPosition = default, int fontSize = 10, Color color = default,
+    private static TextMesh CreateDisplayText(string text = "", Transform parent = null, Vector2 localPosition = default, int fontSize = 10, Color color = default,
                                                 TextAnchor textAnchor = TextAnchor.MiddleCenter, int sortingOrder = 500, TextAlignment textAlignment = TextAlignment.Center)
     {
         GameObject go = new GameObject("Display Text", typeof(TextMesh));
@@ -90,7 +92,7 @@ public class Grid : MonoBehaviour
         transform.SetParent(parent, false);
         transform.localPosition = localPosition;
 
-        transform.localScale = Vector3.one * 0.1f; // This makes the text readable at small sizes
+        transform.localScale = Vector2.one * 0.1f; // This makes the text readable at small sizes
 
         TextMesh textMesh = go.GetComponent<TextMesh>();
         textMesh.anchor = textAnchor;

@@ -278,7 +278,7 @@ public class CharacterPlayerController : MonoBehaviour
 
         if (context.canceled)
         {
-            if ((isHangingWall || isGrounded) && !isCrouch)
+            if ((isHangingWall || isGrounded || isHangingEdge) && !isCrouch)
             {
                 jumpStopper = false;
             }
@@ -295,7 +295,10 @@ public class CharacterPlayerController : MonoBehaviour
             }
 
             //HangWalls
-            canUnhang = true;
+            if (isHangingEdge)
+            {
+                canUnhang = true;
+            }
         }
     }
 
@@ -316,9 +319,6 @@ public class CharacterPlayerController : MonoBehaviour
         if (context.performed)
         {
             jumpKeyRelease = true;
-
-            //Hang Edges
-            canUnhang = true;
         }
         else
         {
@@ -583,12 +583,7 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
-        if (playerState == PLAYER_STATUS.GROUND)
-        {
-            canUnhang = false;
-        }
-
-        if (canUnhang && jumpKeyHold)
+        if (canUnhang && playerState == PLAYER_STATUS.JUMP)
         {
             PlayerUnFrezze();
 
@@ -598,9 +593,15 @@ public class CharacterPlayerController : MonoBehaviour
             isHangingEdge = false;
         }
 
+        if(playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) 
+        {
+            canUnhang = true;
+        }
+
         if (playerState != PLAYER_STATUS.HANGED && isHangingEdge)
         {
             PlayerFrezze();
+            rb.linearVelocity = Vector2.zero;
             canJump = true;
 
             if (jumpKeyHold && !jumpStopper)
@@ -1013,6 +1014,12 @@ public class CharacterPlayerController : MonoBehaviour
                     canJump = false;
                 }
             }
+        }
+
+        //Check ground to return canUnhang to edges
+        if (isGrounded && canUnhang)
+        {
+            canUnhang = false;
         }
     }
 

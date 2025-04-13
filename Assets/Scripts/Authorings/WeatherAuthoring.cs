@@ -14,7 +14,7 @@ public class WeatherAuthoring : MonoBehaviour
 
             AddComponent(entity, new weather.RainComponent
             {
-                entity = GetEntity(authoring.gameObject, TransformUsageFlags.WorldSpace)
+                entity = entity
             });
 
             AddComponent(entity, new utils.SetActiveComponent

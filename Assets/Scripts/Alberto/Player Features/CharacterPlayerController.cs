@@ -79,6 +79,8 @@ public class CharacterPlayerController : MonoBehaviour
     [Header("_________________________ HANG WALLS _________________________")]
     public float hangWallImpulseUp;
     public float hangWallImpulseSides;
+    [Header("_________________________ SLIDING _________________________")]
+    public float slidingForce;
     [Header("_________________________ INPUT BUFFER _________________________")]
     public float maxTimeInputBuffer;
 
@@ -993,6 +995,11 @@ public class CharacterPlayerController : MonoBehaviour
             if (isImpactHitting && Mathf.Abs(earringFloor) > 25f)
             {
                 rb.AddForce(new Vector2(0, -impactHit / 2));
+            }
+            else if (Mathf.Abs(earringFloor) > 25f) 
+            {
+                rb.AddForce(new Vector2(0, -slidingForce));
+                Debug.Log("IsSliding");
             }
         }
 

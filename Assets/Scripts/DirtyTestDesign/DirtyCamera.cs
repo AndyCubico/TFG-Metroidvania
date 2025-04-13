@@ -29,7 +29,7 @@ public class DirtyCamera : MonoBehaviour
     //[Range(0.0f, 1.0f)]
     //public float cameraMargin; //Max Distance the player can get away from camera before camera locking in.
     [SerializeField] int cameraState = 0; //0 is player is inside margin, -1 is player went to rigth so camera is displaced to the left, 1 is player went to left so camera is displaced to the rigth
-
+    GameObject[] pullLimits = new GameObject[2];
 
     float camHeigth;
     float camWidth;
@@ -41,6 +41,22 @@ public class DirtyCamera : MonoBehaviour
     {
         camHeigth = camRef.orthographicSize;
         camWidth = camRef.aspect * camHeigth;
+
+        switch (hMode)
+        {
+            case HorizonralMovement.FowardByLooking:
+                break;
+            case HorizonralMovement.FreeCenterDirectionPull:
+                pullLimits[0] = Instantiate(camTargetPos,Vector3.zero,Quaternion.identity, camRef.gameObject.transform);
+                pullLimits[1] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
+
+                pullLimits[0].transform.position = new Vector3(camRef.transform.position.x+camWidth * cameraDistance,camRef.transform.position.y,0);
+                pullLimits[1].transform.position = new Vector3(camRef.transform.position.x - camWidth * cameraDistance, camRef.transform.position.y, 0);
+
+                break;
+            case HorizonralMovement.FowardByMoving:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -95,7 +111,6 @@ public class DirtyCamera : MonoBehaviour
                             cameraState = -1; //Player moving left
                         }
                     }
-                    
                 }
                 else if (cameraState == 1) 
                 {

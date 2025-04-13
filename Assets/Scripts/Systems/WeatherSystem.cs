@@ -21,19 +21,21 @@ partial struct WeatherStartSystem : ISystem
                 .WithDisabled<weather.WeatherStartComponent>()
                 .WithEntityAccess())
         {
-            Debug.Log("holaa");
             switch (weatherComp.ValueRO.weather)
             {
                 case WEATHER.RAIN:
-                    Helper.EnableComponent<weather.RainComponent>(ref state, entity, true);
-                    var comp = SystemAPI.GetComponentRO<weather.RainComponent>(entity);
+                    {
+                        //Helper.EnableComponent<weather.RainComponent>(ref state, entity, true);
+                        //var comp = SystemAPI.GetComponentRO<weather.RainComponent>(entity);
 
-                    Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, true);
-                    var activeComp = SystemAPI.GetComponentRW<utils.SetActiveComponent>(entity);
-                    activeComp.ValueRW.isActive = true;
-                    activeComp.ValueRW.entity = comp.ValueRO.entity;
+                        //var activeComp = SystemAPI.GetComponentRW<utils.SetActiveComponent>(entity);
+                        //activeComp.ValueRW.isActive = true;
+                        //activeComp.ValueRW.entity = comp.ValueRO.entity;
 
-                    Helper.EnableComponent<weather.WeatherStartComponent>(ref state, entity, true);
+                        //Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, true);
+                        Helper.EnableComponent<utils.SetActiveComponent>(ref state, weatherComp.ValueRO.rainEntity, true);
+                        Helper.EnableComponent<weather.WeatherStartComponent>(ref state, entity, true);
+                    }
                     break;
                 case WEATHER.SNOW:
                     Helper.EnableComponent<weather.SnowComponent>(ref state, entity, true);

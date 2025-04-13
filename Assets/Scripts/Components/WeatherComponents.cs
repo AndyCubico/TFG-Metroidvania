@@ -15,6 +15,10 @@ namespace weather
     {
         public WEATHER weather;
         public float duration;  // rl minutes
+        
+        public Entity rainEntity;
+        public Entity snowEntity;
+        public Entity sunEntity;
     }
 
     public struct RainComponent : QG_IEnableComponent

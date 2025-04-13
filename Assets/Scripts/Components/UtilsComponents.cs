@@ -2,6 +2,7 @@ using Unity.Entities;
 
 namespace utils
 {
+    // If added, change the entity's active state to isActive
     public struct SetActiveComponent : QG_IEnableComponent
     {
         public bool isActive;

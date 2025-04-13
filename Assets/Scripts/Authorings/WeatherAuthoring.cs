@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class WeatherAuthoring : MonoBehaviour
 {
-    public GameObject rainGO;
-    public GameObject snowGO;
-    public GameObject sunGO;
-    public float duration = 10.0f;
+    public GameObject weatherGO;
+    public WEATHER weatherType;
 
     public class Baker : Baker<WeatherAuthoring>
     {
@@ -14,43 +12,63 @@ public class WeatherAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.WorldSpace);
 
-            // Singleton Component
-            AddComponent(entity, new weather.WeatherComponent { /*weather = WEATHER.UNKNOWN*/ });
-
-            // Weathers
             AddComponent(entity, new weather.RainComponent
             {
-                entity = GetEntity(authoring.rainGO, TransformUsageFlags.Renderable)
+                entity = GetEntity(authoring.gameObject, TransformUsageFlags.WorldSpace)
             });
-            SetComponentEnabled<weather.RainComponent>(entity, false);
 
-            AddComponent(entity, new weather.SnowComponent
+            AddComponent(entity, new utils.SetActiveComponent
             {
-                entity = GetEntity(authoring.snowGO, TransformUsageFlags.Renderable)
+                entity = entity
             });
-            SetComponentEnabled<weather.SnowComponent>(entity, false);
+            SetComponentEnabled<utils.SetActiveComponent>(entity, false);
 
-            AddComponent(entity, new weather.SunComponent
-            {
-                entity = GetEntity(authoring.sunGO, TransformUsageFlags.Renderable)
-            });
-            SetComponentEnabled<weather.SunComponent>(entity, false);
+            AddComponentObject(entity, authoring.weatherGO.gameObject);
 
-            AddComponent(entity, new weather.WeatherStartComponent { });
-            SetComponentEnabled<weather.WeatherStartComponent>(entity, false);
+            //switch (authoring.weatherType)
+            //{
+            //    case WEATHER.RAIN:
+            //        {
+            //            Entity temp = GetEntity(authoring.weatherGO, TransformUsageFlags.Renderable);
+            //            AddComponent(entity, new weather.RainComponent
+            //            {
+            //                entity = GetEntity(authoring.gameObject, TransformUsageFlags.Renderable)
+            //            });
 
-            AddComponent(entity, new weather.WeatherEndComponent { });
-            SetComponentEnabled<weather.WeatherEndComponent>(entity, false);
+            //            AddComponent(entity, new utils.SetActiveComponent
+            //            {
+            //                entity = GetEntity(authoring.gameObject, TransformUsageFlags.Renderable)
+            //            });
+            //            SetComponentEnabled<utils.SetActiveComponent>(entity, false);
 
-            // Timer
-            AddComponent(entity, new utils.TimerComponent
-            {
-                targetDuration = authoring.duration,
-                timer = authoring.duration,
-            });
+            //            AddComponentObject(entity, authoring.gameObject);
+            //        }
+            //        break;
 
-            AddComponent(entity, new utils.TimerTriggerComponent { });
-            SetComponentEnabled<utils.TimerTriggerComponent>(entity, false);
+            //    case WEATHER.SNOW:
+            //        {
+            //            AddComponent(entity, new weather.SnowComponent
+            //            {
+            //                entity = GetEntity(authoring.weatherGO, TransformUsageFlags.Renderable)
+            //            });
+            //        }
+            //        break;
+
+            //    case WEATHER.SUN:
+            //        {
+            //            AddComponent(entity, new weather.SunComponent
+            //            {
+            //                entity = GetEntity(authoring.weatherGO, TransformUsageFlags.Renderable)
+            //            });
+            //        }
+            //        break;
+
+            //    case WEATHER.UNKNOWN:
+            //        {
+            //            Debug.Log("[ERROR] Weather not set");
+            //        }
+            //        break;
+            //}
         }
     }
 }

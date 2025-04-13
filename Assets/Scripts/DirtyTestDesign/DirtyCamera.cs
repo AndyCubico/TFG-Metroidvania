@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -58,7 +59,7 @@ public class DirtyCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        float extraSpeed = 0;
+        float smoothModifier = 1;
 
         float xTarget = target.transform.position.x;
         switch (hMode)
@@ -84,6 +85,7 @@ public class DirtyCamera : MonoBehaviour
 
                     if (Mathf.Abs(target.transform.position.x - this.transform.position.x) > camWidth * cameraDistance)
                     {
+                        Debug.Log(Mathf.Abs(target.transform.position.x - this.transform.position.x));
                         if (target.transform.position.x - this.transform.position.x > 0)
                         {
                             cameraState = 1; //Player moving rigth
@@ -97,12 +99,15 @@ public class DirtyCamera : MonoBehaviour
                 }
                 else if (cameraState == 1) 
                 {
-                    if(target.transform.position.x - this.transform.position.x > camWidth * cameraDistance) 
+                    if(target.transform.position.x - this.transform.position.x >= this.transform.position.x + camWidth * cameraDistance) 
                     {
-                        xTarget = this.transform.position.x + camWidth * cameraDistance;
-                        extraSpeed = -0.1f;
+                        //xTarget = this.transform.position.x + camWidth * cameraDistance;
+                        xTarget = target.transform.position.x + camWidth * cameraDistance;
+                        //smoothModifier = 0f;
+
+
                     }
-                    else 
+                    else if(target.transform.position.x - this.transform.position.x < camWidth * cameraDistance * 0.5f)
                     {
                         cameraState = 0;
                     }
@@ -110,13 +115,13 @@ public class DirtyCamera : MonoBehaviour
                 }
                 else if (cameraState == -1)
                 {
-                    if (target.transform.position.x - this.transform.position.x < camWidth * cameraDistance)
+                    if (target.transform.position.x - this.transform.position.x <= this.transform.position.x - camWidth * cameraDistance)
                     {
-                        xTarget = this.transform.position.x - camWidth * cameraDistance;
-                        xTarget = (target.transform.position.x - this.transform.position.x) - camWidth * cameraDistance;
-                        extraSpeed = -0.1f;
+                        //xTarget = this.transform.position.x - camWidth * cameraDistance;
+                        xTarget = target.transform.position.x  - camWidth * cameraDistance;
+                        //smoothModifier = 0f;
                     }
-                    else
+                    else if (target.transform.position.x - this.transform.position.x > camWidth * cameraDistance * 0.5f)
                     {
                         cameraState = 0;
                     }
@@ -136,6 +141,6 @@ public class DirtyCamera : MonoBehaviour
             );
 
         camTargetPos.transform.position = new Vector3(xTarget,yTarget,target.transform.position.z);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, (smoothTime+extraSpeed),10);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, (smoothTime*smoothModifier));
     }
 }

@@ -74,8 +74,9 @@ public class CharacterPlayerController : MonoBehaviour
     public float dashForce;
     public float dashDuration;
     public float dashCooldown;
-    [Header("_________________________ EARING _________________________")]
+    [Header("_________________________ EARRING _________________________")]
     public float maxAngleFloor;
+    public float minAngleSlide;
     [Header("_________________________ HANG WALLS _________________________")]
     public float hangWallImpulseUp;
     public float hangWallImpulseSides;
@@ -585,7 +586,7 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
-        if (canUnhang && playerState == PLAYER_STATUS.JUMP)
+        if (canUnhang && playerState == PLAYER_STATUS.JUMP) //Exit from the hang edge situation with an impulse.
         {
             PlayerUnFrezze();
 
@@ -595,12 +596,12 @@ public class CharacterPlayerController : MonoBehaviour
             isHangingEdge = false;
         }
 
-        if(playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) 
+        if(playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) //Gain access to exit from the hang situation
         {
             canUnhang = true;
         }
 
-        if (playerState != PLAYER_STATUS.HANGED && isHangingEdge)
+        if (playerState != PLAYER_STATUS.HANGED && isHangingEdge) //Enter in the hang edge situation, frezzing the player, and giving the posibility to jump, also quit the actual jump of the player if it is happening.
         {
             PlayerFrezze();
             rb.linearVelocity = Vector2.zero;
@@ -992,14 +993,13 @@ public class CharacterPlayerController : MonoBehaviour
             hasImpactHit = false;
 
             //Check if is Slide and has ImpactHit
-            if (isImpactHitting && Mathf.Abs(earringFloor) > 25f)
+            if (isImpactHitting && Mathf.Abs(earringFloor) > minAngleSlide)
             {
                 rb.AddForce(new Vector2(0, -impactHit / 2));
             }
-            else if (Mathf.Abs(earringFloor) > 25f) 
+            else if (Mathf.Abs(earringFloor) > minAngleSlide) 
             {
                 rb.AddForce(new Vector2(0, -slidingForce));
-                Debug.Log("IsSliding");
             }
         }
 

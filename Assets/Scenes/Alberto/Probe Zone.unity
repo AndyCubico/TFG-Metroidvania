@@ -36453,12 +36453,16 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: minAngleSlide
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: playerUpCollider
       value: 
       objectReference: {fileID: 1447127292}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: hangWallImpulseUp
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: DownCrouchCollider
@@ -36470,7 +36474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: hangWallImpulseSides
-      value: 12
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8124750564690187424, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_BodyType

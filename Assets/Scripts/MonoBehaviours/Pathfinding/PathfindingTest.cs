@@ -19,7 +19,7 @@ public class PathfindingTest : MonoBehaviour
 
     private void FindPath(int2 startPosition, int2 endPosition)
     {
-        // Testing with custom grid, later on do with the grid done in Grid.cs
+        // Testing with custom grid, later on do with the grid done in Grid.cs.
         int2 gridSize = new int2(4, 4);
         NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
         for (int x = 0; x < gridSize.x; x++)
@@ -39,7 +39,7 @@ public class PathfindingTest : MonoBehaviour
                 pathNode.isWalkable = true;
                 pathNode.previousNodeIndex = -1; // Invalid value, just to initialize the path node values.
 
-                pathNodeArray[pathNode.index] = pathNode; // Fill the native array with the different nodes
+                pathNodeArray[pathNode.index] = pathNode; // Fill the native array with the different nodes.
             }
         }
 
@@ -67,7 +67,7 @@ public class PathfindingTest : MonoBehaviour
         startNode.CalculateFCost();
         pathNodeArray[startNode.index] = startNode;
 
-        // Lists of indexes to manage the algorithm
+        // Lists of indexes to manage the algorithm.
         NativeList<int> openList = new NativeList<int>(Allocator.Temp); // Indexes of the nodes not visited visited.
         NativeList<int> closedList = new NativeList<int>(Allocator.Temp); // Indexes of the nodes already visited.
 
@@ -81,7 +81,7 @@ public class PathfindingTest : MonoBehaviour
 
             if (currentNodeIndex == endNodeIndex)
             {
-                // Reached goal
+                // Reached goal.
                 break;
             }
 
@@ -106,7 +106,7 @@ public class PathfindingTest : MonoBehaviour
                 // Check if the neighbour is inside the grid.
                 if (!IsPositionInGrid(neighbourPoistion, gridSize))
                 {
-                    // Not a valid neighbour
+                    // Not a valid neighbour.
                     continue;
                 }
 
@@ -114,7 +114,7 @@ public class PathfindingTest : MonoBehaviour
 
                 if (closedList.Contains(neighbourNodeIndex))
                 {
-                    // Altready visited this node
+                    // Altready visited this node.
                     continue;
                 }
 
@@ -122,7 +122,7 @@ public class PathfindingTest : MonoBehaviour
 
                 if (!neighbourNode.isWalkable)
                 {
-                    // Invalid node, not walkable
+                    // Invalid node, not walkable.
                     continue;
                 }
 
@@ -148,12 +148,12 @@ public class PathfindingTest : MonoBehaviour
         PathNode endNode = pathNodeArray[endNodeIndex];
         if (endNode.previousNodeIndex == -1)
         {
-            // No path was found
+            // No path was found.
             Debug.Log("No path was found");
         }
         else
         {
-            // Found a path
+            // Found a path.
             NativeList<int2> path = CalculatePath(pathNodeArray, endNode);
 
             foreach (int2 pathPosition in path)
@@ -271,13 +271,13 @@ public class PathfindingTest : MonoBehaviour
         public int y;
 
         // Indexes
-        public int index; // Current index
-        public int previousNodeIndex; // Node previous to this node when calculating the path
+        public int index; // Node's index.
+        public int previousNodeIndex; // Node's index previous to this node when calculating the path.
 
         // A* values
-        public int gCost; // Move cost from start node to this node
-        public int hCost; // Move cost from this node to the end node
-        public int fCost; // gCost + hCost
+        public int gCost; // Move cost from start node to this node.
+        public int hCost; // Move cost from this node to the end node.
+        public int fCost; // gCost + hCost.
 
         public bool isWalkable;
 

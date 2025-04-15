@@ -1,10 +1,8 @@
-using System.IO;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PathfindingTest : MonoBehaviour

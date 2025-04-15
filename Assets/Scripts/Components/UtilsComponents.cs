@@ -5,8 +5,9 @@ namespace utils
     // If added, change the entity's active state to isActive
     public struct SetActiveComponent : QG_IEnableComponent
     {
-        public bool isActive;
+        public bool toEnable;
         public Entity entity;
+        public int index;
     }
 
     public struct TimerComponent : QG_IComponent

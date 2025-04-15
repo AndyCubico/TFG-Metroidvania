@@ -23,7 +23,7 @@ public class RainController : MonoBehaviour
     [SerializeField] private AudioSource lightAudio;
     [SerializeField] private AudioSource mediumAudio;
     //[SerializeField] private AudioSource heavyAudio;
-    public AudioMixerGroup RainSoundAudioMixer;
+    //public AudioMixerGroup RainSoundAudioMixer;
 
     [SerializeField] AudioData currentAudioData;
     [SerializeField] AudioData lightAudioData;
@@ -36,18 +36,35 @@ public class RainController : MonoBehaviour
         ParticleSystem.EmissionModule e = mainParticles.emission;
         maxParticles = e.rateOverTime.constant;
 
-        lightAudioData = new AudioData(lightAudio);
-        mediumAudioData = new AudioData(mediumAudio);
-        //heavyAudioData = new AudioData(heavyAudio);
+        if (lightAudio)
+        {
+            lightAudioData = new AudioData(lightAudio);
 
-        if (lightAudio && rainIntensity < 0.45)
-        {
-            currentAudioData = lightAudioData;
+            if (rainIntensity < 0.45)
+            {
+                currentAudioData = lightAudioData;
+            }
         }
-        else if (mediumAudio && rainIntensity >= 0.45)
+
+        if (mediumAudio)
         {
-            currentAudioData = mediumAudioData;
+            mediumAudioData = new AudioData(mediumAudio);
+
+            if (rainIntensity >= 0.45)
+            {
+                currentAudioData = mediumAudioData;
+            }
         }
+
+        //if (heavyAudio)
+        //{
+        //    heavyAudioData = new AudioData(heavyAudio);
+
+        //    if (rainIntensity >= 0.45)
+        //    {
+        //        currentAudioData = heavyAudioData;
+        //    }
+        //}
 
         StartCoroutine(currentAudioData.TransitionAudio(0, currentAudioData.defaultVolume));
     }

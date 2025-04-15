@@ -4,6 +4,7 @@ using UnityEngine;
 
 partial struct SetActiveSystem : ISystem
 {
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<utils.SetActiveComponent>();
@@ -11,27 +12,15 @@ partial struct SetActiveSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var (activeComp,
-            entity)
+        foreach (var (activeComp, entity)
             in SystemAPI.Query<RefRO<utils.SetActiveComponent>>()
             .WithEntityAccess())
         {
-            //Debug.Log("Enabling " + activeComp.ValueRO.entity.ToString());
+            bool toEnable = activeComp.ValueRO.toEnable;
+            WeatherInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.index].SetActive(toEnable);
 
-            //if (!state.EntityManager.HasComponent<GameObject>(activeComp.ValueRO.entity))
-            //{
-            //    Debug.LogWarning($"[SetActiveSystem] Entity {activeComp.ValueRO.entity} has NO GameObject.");
-            //}
-            //else
-            //{
-            //    Debug.Log($"[SetActiveSystem] Entity {activeComp.ValueRO.entity} has a GameObject!");
-            //}
-
-            //var gameObject = state.EntityManager.GetComponentObject<Transform>(activeComp.ValueRO.entity).gameObject;
-            ////gameObject.SetActive(activeComp.ValueRO.isActive);
-            //gameObject.SetActive(false);
-
-            //Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, false);
+            Debug.Log($"Enabling {WeatherInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.index].name}: {toEnable}");
+            Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, false);
         }
     }
 }

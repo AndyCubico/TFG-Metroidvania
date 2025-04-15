@@ -1,12 +1,18 @@
+using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 public class WeatherManagerAuthoring : MonoBehaviour
 {
-    public GameObject rainGO;
-    public GameObject snowGO;
-    public GameObject sunGO;
+    public int rainIndex;
+    public int snowIndex;
+    public int sunIndex;
+
     public float duration = 10.0f;
+
+    public int rainRate;
+    public int snowRate;
+    public int sunRate;
 
     public class Baker : Baker<WeatherManagerAuthoring>
     {
@@ -15,48 +21,36 @@ public class WeatherManagerAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.WorldSpace);
 
             // Singleton Component
-            AddComponent(entity, new weather.WeatherComponent
+            AddComponent(entity, new weather.WeatherComponent 
             {
-                rainEntity = GetEntity(authoring.rainGO, TransformUsageFlags.Renderable),
-                snowEntity = GetEntity(authoring.snowGO, TransformUsageFlags.Renderable),
-                sunEntity = GetEntity(authoring.sunGO, TransformUsageFlags.Renderable)
+                rainRate = authoring.rainRate,
+                snowRate = authoring.snowRate,
+                sunRate = authoring.sunRate,
             });
 
-            //AddComponent(entity, new utils.SetActiveComponent { });
-            //SetComponentEnabled<utils.SetActiveComponent>(entity, false);
 
-            // Weathers
+            Helper.AddComponentWithDisabled(this, entity, new utils.SetActiveComponent { });
+
+            // Weather
             //// Rain
-            //Entity rainEntity = GetEntity(authoring.rainGO, TransformUsageFlags.Renderable);
-            //AddComponent(entity, new weather.RainComponent
-            //{
-            //    entity = rainEntity
-            //});
-            //SetComponentEnabled<weather.RainComponent>(entity, false);
-            ////AddComponent(rainEntity, new utils.SetActiveComponent { });
-            ////SetComponentEnabled<utils.SetActiveComponent>(rainEntity, false);
+            Helper.AddComponentWithDisabled(this, entity, new weather.RainComponent
+            {
+                index = authoring.rainIndex
+            });
 
-            ////// Snow
-            //Entity snowEntity = GetEntity(authoring.snowGO, TransformUsageFlags.Renderable);
-            //AddComponent(entity, new weather.SnowComponent
-            //{
-            //    entity = snowEntity
-            //});
-            //SetComponentEnabled<weather.SnowComponent>(entity, false);
-            ////AddComponent(snowEntity, new utils.SetActiveComponent { });
-            ////SetComponentEnabled<utils.SetActiveComponent>(snowEntity, false);
+            //// Snow
+            Helper.AddComponentWithDisabled(this, entity, new weather.SnowComponent
+            {
+                index = authoring.snowIndex
+            });
 
-            ////// Sun
-            //Entity sunEntity = GetEntity(authoring.sunGO, TransformUsageFlags.Renderable);
-            //AddComponent(entity, new weather.SunComponent
-            //{
-            //    entity = sunEntity
-            //});
-            //SetComponentEnabled<weather.SunComponent>(entity, false);
-            ////AddComponent(sunEntity, new utils.SetActiveComponent { });
-            ////SetComponentEnabled<utils.SetActiveComponent>(sunEntity, false);
+            //// Sun
+            Helper.AddComponentWithDisabled(this, entity, new weather.SunComponent
+            {
+                index = authoring.sunIndex
+            });
 
-            // Weathers
+            // Weather specifics
             AddComponent(entity, new weather.WeatherStartComponent { });
             SetComponentEnabled<weather.WeatherStartComponent>(entity, false);
 

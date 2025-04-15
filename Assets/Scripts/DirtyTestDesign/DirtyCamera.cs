@@ -31,6 +31,10 @@ public class DirtyCamera : MonoBehaviour
     [SerializeField] int cameraState = 0; //0 is player is inside margin, -1 is player went to rigth so camera is displaced to the left, 1 is player went to left so camera is displaced to the rigth
     GameObject[] pullLimits = new GameObject[2];
 
+    //Foward by moving
+    float lastPlayerPosition;
+    float cameraPosition; //Value goes from -1 (maximun left) to 1 (maximun rigth)
+
     float camHeigth;
     float camWidth;
 
@@ -55,6 +59,13 @@ public class DirtyCamera : MonoBehaviour
 
                 break;
             case HorizonralMovement.FowardByMoving:
+                lastPlayerPosition = target.transform.position.x;
+
+                pullLimits[0] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
+                pullLimits[1] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
+
+                pullLimits[0].transform.position = new Vector3(camRef.transform.position.x + camWidth * cameraDistance, camRef.transform.position.y, 0);
+                pullLimits[1].transform.position = new Vector3(camRef.transform.position.x - camWidth * cameraDistance, camRef.transform.position.y, 0);
                 break;
         }
     }
@@ -143,6 +154,22 @@ public class DirtyCamera : MonoBehaviour
                 }
                 break;
             case HorizonralMovement.FowardByMoving:
+
+                if (lastPlayerPosition<target.transform.position.x) 
+                {
+                    cameraPosition += 0.01f;
+                    cameraPosition= Mathf.Min(1,cameraPosition);
+                }
+                else if (lastPlayerPosition > target.transform.position.x)
+                {
+                    cameraPosition -= 0.01f;
+                    cameraPosition = Mathf.Max(-1, cameraPosition);
+                }
+
+                lastPlayerPosition = target.transform.position.x;
+                Debug.Log(cameraPosition);
+                xTarget += cameraDistance * cameraPosition * camWidth * 2;
+
                 break;
         }
 

@@ -110,7 +110,7 @@ public class CharacterPlayerController : MonoBehaviour
     private Vector2 move;
 
     //Rigid Body
-    private Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
 
     [Header("Checkers of Movement")]
     [Space(5)]
@@ -130,6 +130,7 @@ public class CharacterPlayerController : MonoBehaviour
     public bool doubleJump;
     public bool canDash;
     public bool canUnhang;
+    public bool playerOnEdgeUnfrezze;
 
     public bool hasImpactHit;
     [SerializeField]public bool isImpactHitting;
@@ -137,7 +138,7 @@ public class CharacterPlayerController : MonoBehaviour
 
     public bool canJump;
 
-    bool jumpStopper;
+    [SerializeField] public bool jumpStopper;
     bool moveStopper;
     bool cheatMode;
 
@@ -450,6 +451,7 @@ public class CharacterPlayerController : MonoBehaviour
         doubleJump = false;
         flipAnimation = false;
         canUnhang = false;
+        playerOnEdgeUnfrezze = false;
 
         playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player facing Right
         dashFacing = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player dash facing Right
@@ -586,17 +588,30 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
-        if (canUnhang && playerState == PLAYER_STATUS.JUMP) //Exit from the hang edge situation with an impulse.
+        //if (canUnhang && playerState == PLAYER_STATUS.JUMP) //Exit from the hang edge situation with an impulse.
+        //{
+        //    PlayerUnFrezze();
+
+        //    rb.AddForce(Vector2.up * 3);
+
+        //    canUnhang = false;
+        //    isHangingEdge = false;
+        //}
+
+        if (playerOnEdgeUnfrezze)
         {
             PlayerUnFrezze();
+            JumpReset();
+            canJump = true;
 
-            rb.AddForce(Vector2.up * 3);
+            playerState = PLAYER_STATUS.GROUND;
 
             canUnhang = false;
             isHangingEdge = false;
+            playerOnEdgeUnfrezze = false;
         }
 
-        if(playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) //Gain access to exit from the hang situation
+        if (playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) //Gain access to exit from the hang situation
         {
             canUnhang = true;
         }
@@ -605,7 +620,8 @@ public class CharacterPlayerController : MonoBehaviour
         {
             PlayerFrezze();
             rb.linearVelocity = Vector2.zero;
-            canJump = true;
+            //canJump = true;
+            canJump = false;
 
             if (jumpKeyHold && !jumpStopper)
             {
@@ -672,7 +688,7 @@ public class CharacterPlayerController : MonoBehaviour
             }
         }
 
-        if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player or the earring of the floor is able to jump
+        if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof && !isHangingEdge) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player or the earring of the floor is able to jump
         {
             //Check if you can Jump
             if (canJump)

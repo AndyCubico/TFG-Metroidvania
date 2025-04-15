@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerCombat : MonoBehaviour
 {
-    enum AttackType
+    enum ATTACK_TYPE
     {
         NONE,
         SOFT_ATTACK,
@@ -42,7 +42,7 @@ public class PlayerCombat : MonoBehaviour
     public AttackDetectors rightDetector;
     public AttackDetectors impactHitDetector;
 
-    [Header("Asigned Layers")]
+    [Header("Assigned Layers")]
     [Space(5)]
 
     //Layers
@@ -88,13 +88,15 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    void BasicAttack(int attackType)
+    void BasicAttack(ATTACK_TYPE attackType)
     {
         EnemyHealth enemyHealth = new EnemyHealth();
 
-        if (attackType == 1)
+        switch (attackType)
         {
-            animator.SetTrigger("Attactk_Sides"); //Say the animator to do the side attack
+            case ATTACK_TYPE.SOFT_ATTACK:
+                    animator.SetTrigger("Attactk_Sides"); //Say the animator to do the side attack
+                break;
         }
 
         if (characterController.flipAnimation) //Se what direction is facing the player
@@ -106,7 +108,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 enemyHealth = leftDetector.SendEnemyCollision();
 
-                HitEnemy((AttackType)attackType, enemyHealth);
+                HitEnemy(attackType, enemyHealth);
             }
         }
         else
@@ -118,7 +120,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 enemyHealth = rightDetector.SendEnemyCollision();
 
-                HitEnemy((AttackType)attackType, enemyHealth);
+                HitEnemy(attackType, enemyHealth);
             }
         }
     }
@@ -131,7 +133,7 @@ public class PlayerCombat : MonoBehaviour
         if (comboCounter > 0 && comboCounter <= 3) //Basic Attack
         {
             //Debug.Log("Attack " + comboCounter);
-            BasicAttack(comboCounter); //Exectue the attack
+            BasicAttack((ATTACK_TYPE)comboCounter); //Exectue the attack
             comboTimer = 0f; //Resets the combo
         }
     }
@@ -154,30 +156,30 @@ public class PlayerCombat : MonoBehaviour
         {
             enemyHealth = impactHitDetector.SendEnemyCollision();
 
-            HitEnemy(AttackType.MID_ATTACK, enemyHealth);
+            HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth);
         }
     }
 
-    void HitEnemy(AttackType attackType, EnemyHealth enemyHealth)
+    void HitEnemy(ATTACK_TYPE attackType, EnemyHealth enemyHealth)
     {
         float damage = 0;
 
         switch (attackType)
         {
-            case AttackType.SOFT_ATTACK:
+            case ATTACK_TYPE.SOFT_ATTACK:
                 damage = softDamage;
                 break;
-            case AttackType.MID_ATTACK:
+            case ATTACK_TYPE.MID_ATTACK:
                 damage = midDamage;
                 break;
-            case AttackType.HARD_ATTACK:
+            case ATTACK_TYPE.HARD_ATTACK:
                 damage = hardDamage;
                 break;
             default:
                 break;
         }
 
-        Debug.Log("Enemy Hitted with: " + damage);
-        enemyHealth.RecieveDamage(damage);
+        Debug.Log("Enemy Hit with: " + damage);
+        enemyHealth.ReceiveDamage(damage);
     }
 }

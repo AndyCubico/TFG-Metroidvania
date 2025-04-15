@@ -17,7 +17,7 @@ public class PathfindingTest : MonoBehaviour
         FindPathJob findPathJob = new FindPathJob
         {
             startPosition = new int2(0, 0),
-            endPosition = new int2(2, 3),
+            endPosition = new int2(3, 1),
             resultPath = path,
         };
         JobHandle handle = findPathJob.Schedule();

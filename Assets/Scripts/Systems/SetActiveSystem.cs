@@ -16,22 +16,22 @@ partial struct SetActiveSystem : ISystem
             in SystemAPI.Query<RefRO<utils.SetActiveComponent>>()
             .WithEntityAccess())
         {
-            Debug.Log("Enabling " + activeComp.ValueRO.entity.ToString());
+            //Debug.Log("Enabling " + activeComp.ValueRO.entity.ToString());
 
-            if (!state.EntityManager.HasComponent<GameObject>(activeComp.ValueRO.entity))
-            {
-                Debug.LogWarning($"[SetActiveSystem] Entity {activeComp.ValueRO.entity} has NO GameObject.");
-            }
-            else
-            {
-                Debug.Log($"[SetActiveSystem] Entity {activeComp.ValueRO.entity} has a GameObject!");
-            }
+            //if (!state.EntityManager.HasComponent<GameObject>(activeComp.ValueRO.entity))
+            //{
+            //    Debug.LogWarning($"[SetActiveSystem] Entity {activeComp.ValueRO.entity} has NO GameObject.");
+            //}
+            //else
+            //{
+            //    Debug.Log($"[SetActiveSystem] Entity {activeComp.ValueRO.entity} has a GameObject!");
+            //}
 
-            var gameObject = state.EntityManager.GetComponentObject<GameObject>(activeComp.ValueRO.entity);
-            //gameObject.SetActive(activeComp.ValueRO.isActive);
-            gameObject.SetActive(false);
+            //var gameObject = state.EntityManager.GetComponentObject<Transform>(activeComp.ValueRO.entity).gameObject;
+            ////gameObject.SetActive(activeComp.ValueRO.isActive);
+            //gameObject.SetActive(false);
 
-            Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, false);
+            //Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, false);
         }
     }
 }

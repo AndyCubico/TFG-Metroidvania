@@ -23,7 +23,7 @@ public class WeatherAuthoring : MonoBehaviour
             });
             SetComponentEnabled<utils.SetActiveComponent>(entity, false);
 
-            AddComponentObject(entity, authoring.weatherGO.gameObject);
+            AddComponentObject(entity, authoring.weatherGO.gameObject.transform);
 
             //switch (authoring.weatherType)
             //{

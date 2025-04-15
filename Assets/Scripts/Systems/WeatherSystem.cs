@@ -46,7 +46,7 @@ partial struct WeatherStartSystem : ISystem
                     Helper.EnableComponent<weather.WeatherStartComponent>(ref state, entity, true);
                     break;
                 case WEATHER.UNKNOWN:
-                    Debug.Log("[Error] Weather was unknown");
+                    //Debug.Log("[Error] Weather was unknown");
                     break;
                 default:
                     break;

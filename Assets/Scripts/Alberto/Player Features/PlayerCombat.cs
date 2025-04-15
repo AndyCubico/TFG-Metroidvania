@@ -36,6 +36,12 @@ public class PlayerCombat : MonoBehaviour
     //Animator
     Animator animator;
 
+    [Header("________________________ ATTACK DETECTORS ________________________")]
+    //Animator
+    public AttackDetectors leftDetector;
+    public AttackDetectors rightDetector;
+    public AttackDetectors impactHitDetector;
+
     [Header("Asigned Layers")]
     [Space(5)]
 
@@ -71,11 +77,11 @@ public class PlayerCombat : MonoBehaviour
             ComboAttack();
         }
 
-        if(isOnCombo) //Here the combo counter counts
+        if (isOnCombo) //Here the combo counter counts
         {
-           comboTimer += Time.deltaTime;
+            comboTimer += Time.deltaTime;
 
-            if(comboTimer > 0.5f) //Auto Reset if passes certain time
+            if (comboTimer > 0.5f) //Auto Reset if passes certain time
             {
                 ResetCombo();
             }
@@ -84,7 +90,9 @@ public class PlayerCombat : MonoBehaviour
 
     void BasicAttack(int attackType)
     {
-        if(attackType == 1)
+        EnemyHealth enemyHealth = new EnemyHealth();
+
+        if (attackType == 1)
         {
             animator.SetTrigger("Attactk_Sides"); //Say the animator to do the side attack
         }
@@ -96,7 +104,9 @@ public class PlayerCombat : MonoBehaviour
 
             if (leftAttack)
             {
-                HitEnemy((AttackType)attackType);
+                enemyHealth = leftDetector.SendEnemyCollision();
+
+                HitEnemy((AttackType)attackType, enemyHealth);
             }
         }
         else
@@ -106,7 +116,9 @@ public class PlayerCombat : MonoBehaviour
 
             if (rightAttack)
             {
-                HitEnemy((AttackType)attackType);
+                enemyHealth = rightDetector.SendEnemyCollision();
+
+                HitEnemy((AttackType)attackType, enemyHealth);
             }
         }
     }
@@ -116,7 +128,7 @@ public class PlayerCombat : MonoBehaviour
         comboCounter++;
         isOnCombo = true;
 
-        if(comboCounter > 0 && comboCounter <= 3) //Basic Attack
+        if (comboCounter > 0 && comboCounter <= 3) //Basic Attack
         {
             //Debug.Log("Attack " + comboCounter);
             BasicAttack(comboCounter); //Exectue the attack
@@ -133,16 +145,20 @@ public class PlayerCombat : MonoBehaviour
 
     public void ImpactHit()
     {
+        EnemyHealth enemyHealth = new EnemyHealth();
+
         //Check if is there is something at LeftAttack
         downAttack = Physics2D.OverlapAreaAll(DownHit.bounds.min, DownHit.bounds.max, enemyMask).Length > 0;
 
-        if(downAttack)
+        if (downAttack)
         {
-            HitEnemy(AttackType.MID_ATTACK);
+            enemyHealth = impactHitDetector.SendEnemyCollision();
+
+            HitEnemy(AttackType.MID_ATTACK, enemyHealth);
         }
     }
 
-    void HitEnemy(AttackType attackType)
+    void HitEnemy(AttackType attackType, EnemyHealth enemyHealth)
     {
         float damage = 0;
 
@@ -162,5 +178,6 @@ public class PlayerCombat : MonoBehaviour
         }
 
         Debug.Log("Enemy Hitted with: " + damage);
+        enemyHealth.RecieveDamage(damage);
     }
 }

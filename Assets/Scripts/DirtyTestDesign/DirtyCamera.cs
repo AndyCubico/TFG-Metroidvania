@@ -20,10 +20,13 @@ public class DirtyCamera : MonoBehaviour
         FowardByMoving //Prince of Persia
     }
 
-
+    public enum VerticalMovement
+    {
+        FowardByLooking, //Hollow Knigth
+    }
 
     [Range(0.0f, 1.0f)]
-    public float cameraDistance; //Maximun distance the camera will decenter from the player, 1 is the player is in the cam border, 0 player center of cam
+    public float cameraDistance; //Maximun distance the camera will decenter from the player, 1 is when the player is on the cam border, 0 the player is centered on cam
 
     //FreeCenterDirectionPull parameters
     //[Range(0.0f, 1.0f)]
@@ -35,10 +38,15 @@ public class DirtyCamera : MonoBehaviour
     float lastPlayerPosition;
     float cameraPosition; //Value goes from -1 (maximun left) to 1 (maximun rigth)
 
+    //Edge vertical peak.
+    float cameraDescend = 0;
+
     float camHeigth;
     float camWidth;
 
     public HorizonralMovement hMode;
+    //public VerticalMovement vMode;
+    public bool downwoardEdgeLook;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -81,6 +89,21 @@ public class DirtyCamera : MonoBehaviour
                 break;
             case HorizonralMovement.FowardByMoving:
                 break;
+        }
+        
+        //Guarrada 
+        if (Input.GetKeyDown(KeyCode.T)) 
+        {
+            if (cameraDescend == 0) 
+            {
+                cameraDescend = -0.4f * camHeigth;
+            }
+            else 
+            {
+                cameraDescend = 0;
+            }
+            
+            
         }
     }
 
@@ -174,6 +197,8 @@ public class DirtyCamera : MonoBehaviour
         }
 
         float yTarget = target.transform.position.y;
+
+        yTarget += cameraDescend;
 
         Vector3 targetPosition = new Vector3
             (

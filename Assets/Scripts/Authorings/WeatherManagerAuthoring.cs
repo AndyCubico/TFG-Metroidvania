@@ -28,7 +28,6 @@ public class WeatherManagerAuthoring : MonoBehaviour
                 sunRate = authoring.sunRate,
             });
 
-
             Helper.AddComponentWithDisabled(this, entity, new utils.SetActiveComponent { });
 
             // Weather

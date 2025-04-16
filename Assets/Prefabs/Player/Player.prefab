@@ -803,8 +803,8 @@ MonoBehaviour:
   playerStateMessage: GROUND, LEFT
   unlockAirDash: 0
   unlockDoubleJump: 0
-  speed: 50
-  maxSpeedX: 10
+  speed: 40
+  maxSpeedX: 8
   airSpeedReduction: 1.2
   icedFloorEffect: 1
   crouchSpeedReduction: 2
@@ -816,7 +816,7 @@ MonoBehaviour:
   coyoteTime: 0.07
   dashForce: 500
   dashDuration: 0.25
-  dashCooldown: 0.2
+  dashCooldown: 0.4
   maxAngleFloor: 40
   minAngleSlide: 25
   hangWallImpulseUp: 7
@@ -824,6 +824,7 @@ MonoBehaviour:
   slidingForce: 100
   maxTimeInputBuffer: 0.2
   impactHit: 1000
+  rb: {fileID: 0}
   isGrounded: 1
   isHangingEdge: 0
   flipAnimation: 1
@@ -831,10 +832,12 @@ MonoBehaviour:
   doubleJump: 0
   canDash: 1
   canUnhang: 0
+  playerOnEdgeUnfrezze: 0
   hasImpactHit: 0
   isImpactHitting: 0
   isDashing: 0
   canJump: 1
+  jumpStopper: 0
   GroundCheck: {fileID: 7226356396405873184}
   LeftWallCheck: {fileID: 8713087575390552015}
   RightWallCheck: {fileID: 5326237975850142560}
@@ -1308,6 +1311,9 @@ MonoBehaviour:
   softDamage: 10
   midDamage: 15
   hardDamage: 20
+  leftDetector: {fileID: 0}
+  rightDetector: {fileID: 0}
+  impactHitDetector: {fileID: 0}
   enemyMask:
     serializedVersion: 2
     m_Bits: 1024

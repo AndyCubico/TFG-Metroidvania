@@ -59,6 +59,7 @@ public class CharacterPlayerController : MonoBehaviour
     [Header("__________________________ SPEED __________________________")]
     public float speed;
     public float maxSpeedX;
+    public float maxSpeedY;
     public float airSpeedReduction;
     public float icedFloorEffect;
     [Header("__________________________ CROUCH __________________________")]
@@ -1246,6 +1247,18 @@ public class CharacterPlayerController : MonoBehaviour
                     {
                         rb.linearVelocity += new Vector2((speed / airSpeedReduction) * Time.deltaTime, 0); //In case you go Left
                     }
+                }
+            }
+
+            if (rb.linearVelocity.y < -maxSpeedY) //Max reach velocity at Y when falling
+            {
+                if (isImpactHitting)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxSpeedY * 2);
+                }
+                else
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxSpeedY);
                 }
             }
         }

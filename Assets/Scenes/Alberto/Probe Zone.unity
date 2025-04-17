@@ -36101,7 +36101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1f3ace98eafb648a0f3872dccac71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 100
+  life: 5000
 --- !u!1 &2134108093
 GameObject:
   m_ObjectHideFlags: 0
@@ -36570,6 +36570,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4970506031060333455}
     - target: {fileID: 6282790690952300471, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: comboResetTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282790690952300471, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: enemyMask.m_Bits
       value: 2048
       objectReference: {fileID: 0}
@@ -36577,6 +36581,10 @@ PrefabInstance:
       propertyPath: impactHitDetector
       value: 
       objectReference: {fileID: 4970506031060333454}
+    - target: {fileID: 6282790690952300471, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: basicAttackCooldown
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6333175396450957891, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: checkpoint
       value: 

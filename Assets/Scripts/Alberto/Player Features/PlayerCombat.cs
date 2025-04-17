@@ -22,6 +22,15 @@ public class PlayerCombat : MonoBehaviour
     public BoxCollider2D DownHit;
     [Space(10)]
 
+    [Header("________________________ TIMERS ________________________")]
+    [Space(10)]
+    //Basic Attack
+    public float basicAttackCooldown;
+    float basicAttackCooldownLocal;
+
+    public float comboResetTime;
+
+
     [Header("________________________ DAMAGES ________________________")]
     [Space(10)]
 
@@ -61,31 +70,57 @@ public class PlayerCombat : MonoBehaviour
     int comboCounter;
     float comboTimer;
     bool isOnCombo;
+    bool canHitCombo;
 
     // Start is called before the first frame update
     void Start()
     {
         characterController = GetComponent<CharacterPlayerController>();
         animator = GetComponent<Animator>();
+
+        basicAttackCooldownLocal = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //_Basic Attack + Combo
         if (Input.GetMouseButtonDown(0))
         {
-            ComboAttack();
+            if(basicAttackCooldownLocal == 0)
+            {
+                ComboAttack();
+                canHitCombo = false;
+            }
+
+            basicAttackCooldownLocal += Time.deltaTime;
         }
+
+        if(basicAttackCooldownLocal > 0)
+        {
+            basicAttackCooldownLocal += Time.deltaTime;
+
+            if(basicAttackCooldownLocal > basicAttackCooldown)
+            {
+                canHitCombo = true;
+                basicAttackCooldownLocal = 0;
+            }
+        }
+
 
         if (isOnCombo) //Here the combo counter counts
         {
-            comboTimer += Time.deltaTime;
+            if(canHitCombo)
+            {
+                comboTimer += Time.deltaTime;
+            }
 
-            if (comboTimer > 0.5f) //Auto Reset if passes certain time
+            if (comboTimer > comboResetTime) //Auto Reset if passes certain time
             {
                 ResetCombo();
             }
         }
+        //Basic Attack + Combo_
     }
 
     void BasicAttack(ATTACK_TYPE attackType)
@@ -136,6 +171,10 @@ public class PlayerCombat : MonoBehaviour
             BasicAttack((ATTACK_TYPE)comboCounter); //Exectue the attack
             comboTimer = 0f; //Resets the combo
         }
+        else
+        {
+            ResetCombo();
+        }
     }
 
     void ResetCombo() //This function restarts the timer
@@ -143,6 +182,7 @@ public class PlayerCombat : MonoBehaviour
         comboCounter = 0;
         comboTimer = 0;
         isOnCombo = false;
+        canHitCombo = false;
     }
 
     public void ImpactHit()

@@ -1309,6 +1309,8 @@ MonoBehaviour:
   LeftHit: {fileID: 8248696880090209829}
   RightHit: {fileID: 2480144430548749248}
   DownHit: {fileID: 5513452302537982659}
+  basicAttackCooldown: 0.2
+  comboResetTime: 0.5
   softDamage: 10
   midDamage: 15
   hardDamage: 20

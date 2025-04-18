@@ -33,8 +33,7 @@ public class HangEdges : MonoBehaviour
 
             playerController.jumpStopper = true;
 
-
-            if (player.transform.position == playerFinalPosition.position)
+            if (Vector3.Distance(player.transform.position, playerFinalPosition.position) < 0.1f || Vector3.Distance(player.transform.position, playerFinalPosition.position) > 5f)
             {
                 playerController.rb.linearVelocity = Vector2.zero;
 

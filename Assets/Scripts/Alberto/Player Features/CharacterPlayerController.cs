@@ -195,6 +195,7 @@ public class CharacterPlayerController : MonoBehaviour
     public InputActionReference DownAction;
     public InputActionReference LeftAction;
     public InputActionReference RightAction;
+    public InputActionReference DropAction;
     [Space(10)]
 
     //Bool keys
@@ -205,6 +206,7 @@ public class CharacterPlayerController : MonoBehaviour
     bool dashDown;
     bool crouchDown;
     bool crouchHold;
+    bool dropDown;
     bool upKey;
     bool downKey;
     bool leftKey;
@@ -244,6 +246,7 @@ public class CharacterPlayerController : MonoBehaviour
         DownAction.action.started += DownEvent;
         LeftAction.action.started += LeftEvent;
         RightAction.action.started += RightEvent;
+        DropAction.action.started += DropEvent;
     }
 
     private void OnDisable()
@@ -259,6 +262,7 @@ public class CharacterPlayerController : MonoBehaviour
         DownAction.action.started -= DownEvent;
         LeftAction.action.started -= LeftEvent;
         RightAction.action.started -= RightEvent;
+        DropAction.action.started -= DropEvent;
     }
 
     public void JumpingHoldEvent(InputAction.CallbackContext context)
@@ -427,6 +431,18 @@ public class CharacterPlayerController : MonoBehaviour
         }
     }
 
+    public void DropEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            dropDown = true;
+        }
+        else
+        {
+            dropDown = false;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -527,9 +543,19 @@ public class CharacterPlayerController : MonoBehaviour
         //Aniamte the player
         AnimatePlayer();
 
-        if (crouchDown && playerState == PLAYER_STATUS.WALL) //Player can deatach walls if press Left Control
+        if (dropDown && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can deatach walls if press Left Control
         {
             PlayerUnFrezze();
+
+            if (isHangingEdge)
+            {
+                canUnhang = false;
+                playerOnEdgeUnfrezze = false;
+                DownCrouchCollider.isTrigger = false;
+                isHangingEdge = false;
+            }
+
+            playerState = PLAYER_STATUS.AIR;
         }
 
         //Rotate Player depending earring floor
@@ -609,6 +635,7 @@ public class CharacterPlayerController : MonoBehaviour
 
             canUnhang = false;
             isHangingEdge = false;
+            DownCrouchCollider.isTrigger = false;
             playerOnEdgeUnfrezze = false;
         }
 
@@ -621,6 +648,7 @@ public class CharacterPlayerController : MonoBehaviour
         {
             PlayerFrezze();
             rb.linearVelocity = Vector2.zero;
+            DownCrouchCollider.isTrigger = true;
             //canJump = true;
             canJump = false;
 

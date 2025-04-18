@@ -30,7 +30,7 @@ partial struct SetActiveSystem : ISystem
             Debug.Log($"Enabling {WeatherInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.index].name}: {toEnable}");
             Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, false);
 
-            var myMono = SystemAPI.ManagedAPI.GetComponentObject<GameObject>(entity);
+            //var myMono = SystemAPI.ManagedAPI.GetComponentObject<GameObject>(entity);
         }
     }
 }

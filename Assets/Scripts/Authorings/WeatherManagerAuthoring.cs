@@ -23,6 +23,8 @@ public class WeatherManagerAuthoring : MonoBehaviour
             // Singleton Component
             AddComponent(entity, new weather.WeatherComponent 
             {
+                duration = authoring.duration,
+
                 rainRate = authoring.rainRate,
                 snowRate = authoring.snowRate,
                 sunRate = authoring.sunRate,
@@ -52,9 +54,6 @@ public class WeatherManagerAuthoring : MonoBehaviour
             // Weather specifics
             AddComponent(entity, new weather.WeatherStartComponent { });
             SetComponentEnabled<weather.WeatherStartComponent>(entity, false);
-
-            AddComponent(entity, new weather.WeatherEndComponent { });
-            SetComponentEnabled<weather.WeatherEndComponent>(entity, false);
 
             // Timer
             AddComponent(entity, new utils.TimerComponent

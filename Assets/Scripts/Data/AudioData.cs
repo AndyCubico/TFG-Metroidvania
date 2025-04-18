@@ -4,6 +4,9 @@ using UnityEngine;
 
 /// <summary>
 /// Wrapper to help with audio functions
+/// defaultVolume --> used to handle volume changes and resets
+/// transitionTime --> in case of transition with another audio, time needed to change from
+/// one to another
 /// </summary>
 [Serializable]
 public class AudioData
@@ -20,6 +23,12 @@ public class AudioData
         transitionTime = tTime;
 
         audioSource.volume = 0;
+        audioSource.Stop();
+    }
+
+    public void Reset()
+    {
+        audioSource.volume = defaultVolume;
         audioSource.Stop();
     }
 

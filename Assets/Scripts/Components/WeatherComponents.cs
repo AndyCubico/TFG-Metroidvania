@@ -25,23 +25,22 @@ namespace weather
     public struct RainComponent : QG_IEnableComponent
     {
         public int index;
+        public float duration;  // rl minutes
     }
 
     public struct SnowComponent : QG_IEnableComponent
     {
         public int index;
+        public float duration;  // rl minutes
     }
 
     public struct SunComponent : QG_IEnableComponent
     {
         public int index;
+        public float duration;  // rl minutes
     }
 
     public struct WeatherStartComponent : QG_IEnableComponent
-    {
-    }
-
-    public struct WeatherEndComponent : QG_IEnableComponent
     {
     }
 }

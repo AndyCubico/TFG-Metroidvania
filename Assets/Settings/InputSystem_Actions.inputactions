@@ -490,6 +490,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c701f43a-bc46-4794-b53d-2a593887e6ab",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "603f3daf-40bd-4854-8724-93e8017f59e3",
                     "path": "<XRController>/secondaryButton",
                     "interactions": "",
@@ -525,6 +536,17 @@
                     "name": "",
                     "id": "efe6c3b4-0d37-49a7-a9d3-3c253b3ba6dd",
                     "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "JumpRelease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7bea8cb-e169-46f3-a9e1-b7fe6aa5ff56",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",

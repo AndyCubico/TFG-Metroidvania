@@ -5,10 +5,13 @@ using UnityEngine;
 /// <summary>
 /// Handle enabling and disabling (main) GameObjects from systems
 /// When SetActiveComponent enabled, system will be executed
-/// Needs Monobehaviour with a List of GameObjects. Hardcode the position in list
-/// to set it in SetActiveComponent.index.
-/// Monobehaviour must have a 
-/// Check WeatherInstanceSingleton.cs as a working example
+/// Needs GameObject (ECS manager) with SetActiveInstanceSingleton.cs in Scene.
+/// Create a List from inspector and Add the GameObject(s) in the sublist.
+/// Hardcode the position in gameObjectsList: SetActiveComponent.setIndex
+/// Hardcode the position in subList (List in gameObjectsList): SetActiveComponent.index
+/// Example:
+/// Check WeatherManagerAuthoring.cs Ln-39 --> setting the component to store the indices
+/// Check WeatherStartSystem.cs Ln-38 --> setting the SetActiveComponent parameters
 /// </summary>
 partial struct SetActiveSystem : ISystem
 {
@@ -25,12 +28,10 @@ partial struct SetActiveSystem : ISystem
             .WithEntityAccess())
         {
             bool toEnable = activeComp.ValueRO.toEnable;
-            WeatherInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.index].SetActive(toEnable);
+            SetActiveInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.setIndex][activeComp.ValueRO.index].SetActive(toEnable);
 
-            Debug.Log($"Enabling {WeatherInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.index].name}: {toEnable}");
+            Debug.Log($"Enabling {SetActiveInstanceSingleton.Instance.gameObjectsList[activeComp.ValueRO.setIndex][activeComp.ValueRO.index].name}: {toEnable}");
             Helper.EnableComponent<utils.SetActiveComponent>(ref state, entity, false);
-
-            //var myMono = SystemAPI.ManagedAPI.GetComponentObject<GameObject>(entity);
         }
     }
 }

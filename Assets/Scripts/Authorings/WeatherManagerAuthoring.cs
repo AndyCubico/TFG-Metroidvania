@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 public class WeatherManagerAuthoring : MonoBehaviour
 {
+    public int setIndex;
     public int rainIndex;
     public int snowIndex;
     public int sunIndex;
@@ -21,7 +23,7 @@ public class WeatherManagerAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.WorldSpace);
 
             // Singleton Component
-            AddComponent(entity, new weather.WeatherComponent 
+            AddComponent(entity, new weather.WeatherComponent
             {
                 duration = authoring.duration,
 
@@ -36,19 +38,22 @@ public class WeatherManagerAuthoring : MonoBehaviour
             //// Rain
             Helper.AddComponentWithDisabled(this, entity, new weather.RainComponent
             {
-                index = authoring.rainIndex
+                setIndex = authoring.setIndex,
+                index = authoring.rainIndex,
             });
 
             //// Snow
             Helper.AddComponentWithDisabled(this, entity, new weather.SnowComponent
             {
-                index = authoring.snowIndex
+                setIndex = authoring.setIndex,
+                index = authoring.snowIndex,
             });
 
             //// Sun
             Helper.AddComponentWithDisabled(this, entity, new weather.SunComponent
             {
-                index = authoring.sunIndex
+                setIndex = authoring.setIndex,
+                index = authoring.sunIndex,
             });
 
             // Weather specifics

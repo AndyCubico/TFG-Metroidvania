@@ -6,6 +6,7 @@ namespace utils
     public struct SetActiveComponent : QG_IEnableComponent
     {
         public bool toEnable;
+        public int setIndex;    // Index of the List (in SetActiveSingleton.cs)
         public int index;
     }
 

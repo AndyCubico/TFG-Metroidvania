@@ -43,6 +43,7 @@ partial struct WeatherStartSystem : ISystem
                         var comp = SystemAPI.GetComponentRO<weather.RainComponent>(entity);
 
                         var activeComp = SystemAPI.GetComponentRW<utils.SetActiveComponent>(entity);
+                        activeComp.ValueRW.setIndex = comp.ValueRO.setIndex;
                         activeComp.ValueRW.index = comp.ValueRO.index;
                         activeComp.ValueRW.toEnable = true;
 
@@ -55,6 +56,7 @@ partial struct WeatherStartSystem : ISystem
                         var comp = SystemAPI.GetComponentRO<weather.SnowComponent>(entity);
 
                         var activeComp = SystemAPI.GetComponentRW<utils.SetActiveComponent>(entity);
+                        activeComp.ValueRW.setIndex = comp.ValueRO.setIndex;
                         activeComp.ValueRW.index = comp.ValueRO.index;
                         activeComp.ValueRW.toEnable = true;
 
@@ -67,6 +69,7 @@ partial struct WeatherStartSystem : ISystem
                         var comp = SystemAPI.GetComponentRO<weather.SunComponent>(entity);
 
                         var activeComp = SystemAPI.GetComponentRW<utils.SetActiveComponent>(entity);
+                        activeComp.ValueRW.setIndex = comp.ValueRO.setIndex;
                         activeComp.ValueRW.index = comp.ValueRO.index;
                         activeComp.ValueRW.toEnable = true;
 

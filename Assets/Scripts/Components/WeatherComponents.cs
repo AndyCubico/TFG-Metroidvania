@@ -24,18 +24,21 @@ namespace weather
 
     public struct RainComponent : QG_IEnableComponent
     {
+        public int setIndex;    // Index of the List (in SetActiveSingleton.cs)
         public int index;
         public float duration;  // rl minutes
     }
 
     public struct SnowComponent : QG_IEnableComponent
     {
+        public int setIndex;    // Index of the List (in SetActiveSingleton.cs)
         public int index;
         public float duration;  // rl minutes
     }
 
     public struct SunComponent : QG_IEnableComponent
     {
+        public int setIndex;    // Index of the List (in SetActiveSingleton.cs)
         public int index;
         public float duration;  // rl minutes
     }

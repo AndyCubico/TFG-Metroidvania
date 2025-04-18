@@ -13,25 +13,25 @@ public class RainController : MonoBehaviour
     //
 
     [Header("Particles")]
-    [SerializeField] private ParticleSystem mainParticles;
+    [SerializeField] private ParticleSystem m_mainParticles;
     [Range(0.0f, 1.0f)]
     public float rainIntensity;
-    private float maxParticles;
+    private float m_maxParticles;
 
     public event Action<float> eIntentisityChange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ParticleSystem.EmissionModule e = mainParticles.emission;
-        maxParticles = e.rateOverTime.constant;
+        ParticleSystem.EmissionModule e = m_mainParticles.emission;
+        m_maxParticles = e.rateOverTime.constant;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ParticleSystem.EmissionModule e = mainParticles.emission;
-        e.rateOverTime = rainIntensity * maxParticles;
+        ParticleSystem.EmissionModule e = m_mainParticles.emission;
+        e.rateOverTime = rainIntensity * m_maxParticles;
 
         if (Input.GetKeyDown(KeyCode.K))
         {

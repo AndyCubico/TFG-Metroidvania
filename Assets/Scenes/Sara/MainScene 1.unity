@@ -21986,9 +21986,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1611221a3be902f41915a8522cf30ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectsList:
-  - {fileID: 1575725190}
-  - {fileID: 1503341955}
+  _gameObjectsList:
+    list:
+    - subList:
+      - {fileID: 1575725190}
+      - {fileID: 1503341955}
 --- !u!1 &1491528439
 GameObject:
   m_ObjectHideFlags: 0
@@ -22453,8 +22455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2adba5f0873a847819c6d8615c36fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainParticles: {fileID: 1597247151}
-  rainIntensity: 0
+  m_mainParticles: {fileID: 1597247151}
+  rainIntensity: 1
 --- !u!1 &1509863487
 GameObject:
   m_ObjectHideFlags: 0
@@ -23275,7 +23277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2adba5f0873a847819c6d8615c36fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainParticles: {fileID: 1899058030}
+  m_mainParticles: {fileID: 1899058030}
   rainIntensity: 1
 --- !u!114 &1575725196
 MonoBehaviour:
@@ -23289,19 +23291,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2d6bfa45d799f4ab9a407b9e06452d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cs_RainController: {fileID: 1575725195}
-  lightAudio: {fileID: 781150116}
-  mediumAudio: {fileID: 781150115}
+  m_cs_RainController: {fileID: 1575725195}
+  m_lightAudio: {fileID: 781150116}
+  m_mediumAudio: {fileID: 781150115}
   transitionTime: 2
-  currentAudioData:
+  m_currentAudioData:
     audioSource: {fileID: 0}
     defaultVolume: 0
     transitionTime: 0
-  lightAudioData:
+  m_lightAudioData:
     audioSource: {fileID: 0}
     defaultVolume: 0
     transitionTime: 0
-  mediumAudioData:
+  m_mediumAudioData:
     audioSource: {fileID: 0}
     defaultVolume: 0
     transitionTime: 0

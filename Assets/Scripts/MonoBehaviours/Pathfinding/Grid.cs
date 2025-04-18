@@ -1,32 +1,42 @@
-using TMPro;
+using System;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class Grid<T>
 {
-    private int m_Width;
-    private int m_Height;
+    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
+    public class OnGridObjectChangedEventArgs
+    {
+        public int x, y;
+    }
+
+    private int m_Width, m_Height;
     private float m_CellSize;
-    private int[,] m_GridArray;
-    private Vector2 m_originPosition;
+    private Vector2 m_OriginPosition;
+    private T[,] m_GridArray;
 
     // Debug draw numbers in screen
     private TextMesh[,] m_DebugTextArray;
 
-    public Grid(int width, int height, float cellSize, Vector2 originPosition)
+    public Grid(int width, int height, float cellSize, Vector2 originPosition, Func<Grid<T>, int, int, T> createGridObject)
     {
         m_Width = width;
         m_Height = height;
         m_CellSize = cellSize;
-        m_originPosition = originPosition;
+        m_OriginPosition = originPosition;
 
-        m_GridArray = new int[width, height];
+        m_GridArray = new T[width, height];
+
         m_DebugTextArray = new TextMesh[width, height];
 
         for (int x = 0; x < m_GridArray.GetLength(0); x++)
         {
             for (int y = 0; y < m_GridArray.GetLength(1); y++)
             {
-                m_DebugTextArray[x, y] = CreateDisplayText(m_GridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f, 20, Color.white);
+                // Create and assign the grid object first
+                m_GridArray[x, y] = createGridObject(this, x, y);
+
+                m_DebugTextArray[x, y] = CreateDisplayText($"{x}, {y}", null, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f,
+                                                            20, WalkableDebugColor(m_GridArray[x, y]));
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
             }
@@ -36,18 +46,29 @@ public class Grid : MonoBehaviour
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
     }
 
+    public void TriggerGridObjectChanged(int x, int y)
+    {
+        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, y = y });
+
+        if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
+        {
+            m_DebugTextArray[x, y].text = $"{x}, {y}";
+            m_DebugTextArray[x, y].color = WalkableDebugColor(m_GridArray[x, y]);
+        }
+    }
+
     private Vector2 GetWorldPosition(int x, int y)
     {
-        return new Vector2(x, y) * m_CellSize + m_originPosition;
+        return new Vector2(x, y) * m_CellSize + m_OriginPosition;
     }
 
-    private void GetXYPosition(Vector2 worldPosition, out int x, out int y)
+    public void GetXYPosition(Vector2 worldPosition, out int x, out int y)
     {
-        x = Mathf.FloorToInt((worldPosition - m_originPosition).x / m_CellSize);
-        y = Mathf.FloorToInt((worldPosition - m_originPosition).y / m_CellSize);
+        x = Mathf.FloorToInt((worldPosition - m_OriginPosition).x / m_CellSize);
+        y = Mathf.FloorToInt((worldPosition - m_OriginPosition).y / m_CellSize);
     }
 
-    public int GetValue(int x, int y)
+    public T GetValue(int x, int y)
     {
         if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
         {
@@ -55,32 +76,15 @@ public class Grid : MonoBehaviour
         }
         else
         {
-            return -1;
+            return default;
         }
     }
 
-    public int GetValue(Vector2 worldPosition)
+    public T GetValue(Vector2 worldPosition)
     {
         int x, y;
         GetXYPosition(worldPosition, out x, out y);
         return GetValue(x, y);
-    }
-
-    // Change cell value
-    public void SetValue(int x, int y, int value)
-    {
-        if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
-        {
-            m_GridArray[x, y] = value;
-            m_DebugTextArray[x, y].text = value.ToString();
-        }
-    }
-
-    public void SetValue(Vector2 worldPosition, int value)
-    {
-        int x, y;
-        GetXYPosition(worldPosition, out x, out y);
-        SetValue(x, y, value);
     }
 
     // Debug Grid values
@@ -102,5 +106,43 @@ public class Grid : MonoBehaviour
         textMesh.color = color;
         textMesh.GetComponent<MeshRenderer>().sortingOrder = sortingOrder;
         return textMesh;
+    }
+
+    private Color WalkableDebugColor(T gridObject)
+    {
+        if (gridObject is GridNode node)
+        {
+            return node.IsWalkable() ? Color.white : Color.black;
+        }
+
+        return Color.white;
+    }
+}
+
+public class GridNode
+{
+    private Grid<GridNode> grid;
+    private int x;
+    private int y;
+
+    private bool isWalkable;
+
+    public GridNode(Grid<GridNode> grid, int x, int y)
+    {
+        this.grid = grid;
+        this.x = x;
+        this.y = y;
+        isWalkable = true;
+    }
+
+    public bool IsWalkable()
+    {
+        return isWalkable;
+    }
+
+    public void SetIsWalkable(bool isWalkable)
+    {
+        this.isWalkable = isWalkable;
+        grid.TriggerGridObjectChanged(x, y);
     }
 }

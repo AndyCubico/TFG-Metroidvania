@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Grid<T>
 {
+    // Event to adjust a cell of the grid at any given time, mostly for debug. Example: make a node not walkable.
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
     public class OnGridObjectChangedEventArgs
     {
@@ -11,12 +12,20 @@ public class Grid<T>
 
     private int m_Width, m_Height;
     private float m_CellSize;
-    private Vector2 m_OriginPosition;
-    private T[,] m_GridArray;
+    private Vector2 m_OriginPosition; // Starting point of the grid.
+    private T[,] m_GridArray; // Array that stores each <T> node (almost always will be a GridNode)
 
-    // Debug draw numbers in screen
+    // Debug draw cell position in the grid.
     private TextMesh[,] m_DebugTextArray;
 
+    /// <summary>
+    /// Contructor of a grid of <T> nodes.
+    /// </summary>
+    /// <param name="width"> Width of grid (x). </param>
+    /// <param name="height"> Height of grid (y). </param>
+    /// <param name="cellSize"> Width and height of each cell (squares). </param>
+    /// <param name="originPosition"> Starting position in the world from which to start drawing the grid. </param>
+    /// <param name="createGridObject"> Delegate to create the grid object in each cell. </param>
     public Grid(int width, int height, float cellSize, Vector2 originPosition, Func<Grid<T>, int, int, T> createGridObject)
     {
         m_Width = width;
@@ -46,6 +55,11 @@ public class Grid<T>
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
     }
 
+    /// <summary>
+    /// Event that modifies a given cell of the grid.
+    /// </summary>
+    /// <param name="x"> </param>
+    /// <param name="y"></param>
     public void TriggerGridObjectChanged(int x, int y)
     {
         OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, y = y });
@@ -87,7 +101,7 @@ public class Grid<T>
         return GetValue(x, y);
     }
 
-    // Debug Grid values
+    // Debug grid cell values
     private static TextMesh CreateDisplayText(string text = "", Transform parent = null, Vector2 localPosition = default, int fontSize = 10, Color color = default,
                                                 TextAnchor textAnchor = TextAnchor.MiddleCenter, int sortingOrder = 500, TextAlignment textAlignment = TextAlignment.Center)
     {
@@ -108,6 +122,7 @@ public class Grid<T>
         return textMesh;
     }
 
+    // Change colour of the cell's text, white if walkbale black otherwise.
     private Color WalkableDebugColor(T gridObject)
     {
         if (gridObject is GridNode node)

@@ -3,7 +3,7 @@ using UnityEngine;
 public class RainAudioController : MonoBehaviour
 {
     [SerializeField] RainController cs_RainController;
-    
+
     [SerializeField] private AudioSource lightAudio;
     [SerializeField] private AudioSource mediumAudio;
     //[SerializeField] private AudioSource heavyAudio;
@@ -18,6 +18,19 @@ public class RainAudioController : MonoBehaviour
     private void OnEnable()
     {
         cs_RainController.eIntentisityChange += SetTargetAudio;
+
+        if (lightAudioData != null && mediumAudioData != null)
+        {
+            ChangeAudioData(cs_RainController.rainIntensity);
+        }
+    }
+
+    private void OnDisable()
+    {
+        cs_RainController.eIntentisityChange -= SetTargetAudio;
+
+        lightAudioData.Reset();
+        mediumAudioData.Reset();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

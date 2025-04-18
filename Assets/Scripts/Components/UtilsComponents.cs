@@ -6,7 +6,6 @@ namespace utils
     public struct SetActiveComponent : QG_IEnableComponent
     {
         public bool toEnable;
-        public Entity entity;
         public int index;
     }
 

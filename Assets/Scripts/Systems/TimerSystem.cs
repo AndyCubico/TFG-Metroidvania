@@ -47,6 +47,7 @@ public partial struct TimerJob : IJobEntity
 
         if (timerComp.timer <= 0)
         {
+            timerComp.timer = timerComp.targetDuration;
             ecb.SetComponentEnabled<utils.TimerTriggerComponent>(entityIndex, entity, true);
         }
     }

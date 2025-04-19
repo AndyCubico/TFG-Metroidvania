@@ -46,7 +46,7 @@ public class RainAudioController : MonoBehaviour
         //        currentAudioData = heavyAudioData;
         //    }
 
-        StartCoroutine(m_currentAudioData.TransitionAudio(0, m_currentAudioData.defaultVolume));
+        StartCoroutine(m_currentAudioData.BlendAudio(0, m_currentAudioData.defaultVolume));
     }
 
     void SetTargetAudio(float rainIntensity)
@@ -63,8 +63,8 @@ public class RainAudioController : MonoBehaviour
 
         if (m_currentAudioData != targetData)
         {
-            StartCoroutine(m_currentAudioData.TransitionAudio(m_currentAudioData.defaultVolume, 0));
-            StartCoroutine(targetData.TransitionAudio(0, m_currentAudioData.defaultVolume));
+            StartCoroutine(m_currentAudioData.BlendAudio(m_currentAudioData.defaultVolume, 0));
+            StartCoroutine(targetData.BlendAudio(0, m_currentAudioData.defaultVolume));
 
             m_currentAudioData = targetData;
         }

@@ -33,7 +33,7 @@ public class AudioData
     }
 
     // Manage transition between two audios
-    public IEnumerator TransitionAudio(float defaultVol, float targetVol)
+    public IEnumerator BlendAudio(float defaultVol, float targetVol)
     {
         float percentage = 0;
 

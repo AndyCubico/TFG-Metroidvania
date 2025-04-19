@@ -36459,7 +36459,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 28
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[26].m_ActionId
@@ -36470,12 +36470,20 @@ PrefabInstance:
       value: 5ffe7a01-93f5-4100-882d-104a64cb813b
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_ActionId
+      value: 35b2149c-e2f7-4b8d-b17c-5b1847520c26
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[26].m_ActionName
       value: 'Player/JumpDown[/Keyboard/space]'
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_ActionName
       value: 'Player/DropOff[/Keyboard/s]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_ActionName
+      value: 'Player/ClimbEdges[/Keyboard/w]'
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.size
@@ -36487,6 +36495,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
@@ -36502,6 +36514,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1447127301}
@@ -36514,6 +36530,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1447127301}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1447127301}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -36523,6 +36543,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
@@ -36542,6 +36566,10 @@ PrefabInstance:
       value: DropEvent
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClimbEdgesEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: CharacterPlayerController, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -36558,6 +36586,10 @@ PrefabInstance:
       value: CharacterPlayerController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharacterPlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -36567,6 +36599,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[28].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 888315877125306867, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
@@ -36705,6 +36741,10 @@ PrefabInstance:
       propertyPath: minAngleSlide
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: ClimbEdgesAction
+      value: 
+      objectReference: {fileID: -8498610326548418346, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: playerUpCollider
       value: 

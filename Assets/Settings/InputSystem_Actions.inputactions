@@ -60,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ClimbEdges",
+                    "type": "Button",
+                    "id": "35b2149c-e2f7-4b8d-b17c-5b1847520c26",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "DropOff",
                     "type": "Button",
                     "id": "5ffe7a01-93f5-4100-882d-104a64cb813b",
@@ -468,17 +477,6 @@
                 },
                 {
                     "name": "",
-                    "id": "7eac4cf3-ed10-4c75-ae60-b14daffa98e2",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "daba33a1-ad0c-4742-a909-43ad1cdfbeb6",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -514,17 +512,6 @@
                     "name": "",
                     "id": "3c339e7a-621a-4f0f-bd9d-f4443c22d0a8",
                     "path": "<Keyboard>/space",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "JumpRelease",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7704ce6c-79aa-409a-bfe9-ba72839413f0",
-                    "path": "<Keyboard>/w",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -650,6 +637,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "CrouchDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebef0d7e-c930-4879-b77a-459a8ef54283",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ClimbEdges",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ed7e6f1-2e60-4e3c-b461-cb3ff36ff548",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ClimbEdges",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

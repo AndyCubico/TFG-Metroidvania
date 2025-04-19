@@ -196,21 +196,23 @@ public class CharacterPlayerController : MonoBehaviour
     public InputActionReference LeftAction;
     public InputActionReference RightAction;
     public InputActionReference DropAction;
+    public InputActionReference ClimbEdgesAction;
     [Space(10)]
 
     //Bool keys
     [SerializeField]public bool jumpKeyRelease;
     [SerializeField] public bool jumpKeyHold;
+    [SerializeField] public bool climbEdges;
     bool impactHitHold;
     bool impactHitDown;
     bool dashDown;
     bool crouchDown;
     bool crouchHold;
-    bool dropDown;
     bool upKey;
     bool downKey;
     bool leftKey;
     bool rightKey;
+    bool dropDown;
 
     [Header("Player Material")]
     [Space(5)]
@@ -247,6 +249,7 @@ public class CharacterPlayerController : MonoBehaviour
         LeftAction.action.started += LeftEvent;
         RightAction.action.started += RightEvent;
         DropAction.action.started += DropEvent;
+        ClimbEdgesAction.action.started += ClimbEdgesEvent;
     }
 
     private void OnDisable()
@@ -263,6 +266,7 @@ public class CharacterPlayerController : MonoBehaviour
         LeftAction.action.started -= LeftEvent;
         RightAction.action.started -= RightEvent;
         DropAction.action.started -= DropEvent;
+        ClimbEdgesAction.action.started -= ClimbEdgesEvent;
     }
 
     public void JumpingHoldEvent(InputAction.CallbackContext context)
@@ -440,6 +444,18 @@ public class CharacterPlayerController : MonoBehaviour
         else
         {
             dropDown = false;
+        }
+    }
+
+    public void ClimbEdgesEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            climbEdges = true;
+        }
+        else
+        {
+            climbEdges = false;
         }
     }
 
@@ -639,7 +655,7 @@ public class CharacterPlayerController : MonoBehaviour
             playerOnEdgeUnfrezze = false;
         }
 
-        if (playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) //Gain access to exit from the hang situation
+        if (playerState == PLAYER_STATUS.HANGED /*&& !jumpKeyHold*/) //Gain access to exit from the hang situation
         {
             canUnhang = true;
         }

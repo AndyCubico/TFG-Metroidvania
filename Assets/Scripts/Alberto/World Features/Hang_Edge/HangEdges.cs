@@ -20,7 +20,7 @@ public class HangEdges : MonoBehaviour
     {
         if (isHanged)
         {
-            if(playerController.canUnhang && playerController.jumpKeyHold)
+            if(playerController.canUnhang && playerController.climbEdges)
             {
                 moveToNewPosition = true;
                 isHanged= false;

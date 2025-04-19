@@ -101,6 +101,16 @@ public class Grid<T>
         return GetValue(x, y);
     }
 
+    public int GetWidth()
+    {
+        return m_Width;
+    } 
+    
+    public int GetHeight()
+    {
+        return m_Height;
+    }
+
     // Debug grid cell values
     private static TextMesh CreateDisplayText(string text = "", Transform parent = null, Vector2 localPosition = default, int fontSize = 10, Color color = default,
                                                 TextAnchor textAnchor = TextAnchor.MiddleCenter, int sortingOrder = 500, TextAlignment textAlignment = TextAlignment.Center)
@@ -136,28 +146,28 @@ public class Grid<T>
 
 public class GridNode
 {
-    private Grid<GridNode> grid;
-    private int x;
-    private int y;
+    private Grid<GridNode> m_Grid;
+    private int m_X;
+    private int m_Y;
 
-    private bool isWalkable;
+    private bool m_isWalkable;
 
     public GridNode(Grid<GridNode> grid, int x, int y)
     {
-        this.grid = grid;
-        this.x = x;
-        this.y = y;
-        isWalkable = true;
+        this.m_Grid = grid;
+        this.m_X = x;
+        this.m_Y = y;
+        m_isWalkable = true;
     }
 
     public bool IsWalkable()
     {
-        return isWalkable;
+        return m_isWalkable;
     }
 
     public void SetIsWalkable(bool isWalkable)
     {
-        this.isWalkable = isWalkable;
-        grid.TriggerGridObjectChanged(x, y);
+        this.m_isWalkable = isWalkable;
+        m_Grid.TriggerGridObjectChanged(m_X, m_Y);
     }
 }

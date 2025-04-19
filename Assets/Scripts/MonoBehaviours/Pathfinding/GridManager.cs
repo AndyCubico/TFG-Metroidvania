@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class GridManager : MonoBehaviour
 {
     // Test Grid class
-    private Grid<GridNode> grid;
+    public Grid<GridNode> grid;
     [SerializeField] private int width, height;
     [SerializeField] private float cellSize;
     [SerializeField] private Vector2 origin;
 
-    public static Test instance { private set; get; }
+    public static GridManager Instance { private set; get; }
 
     public void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     void Start()

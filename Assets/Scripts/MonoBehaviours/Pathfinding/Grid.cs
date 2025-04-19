@@ -154,9 +154,9 @@ public class GridNode
 
     public GridNode(Grid<GridNode> grid, int x, int y)
     {
-        this.m_Grid = grid;
-        this.m_X = x;
-        this.m_Y = y;
+        m_Grid = grid;
+        m_X = x;
+        m_Y = y;
         m_isWalkable = true;
     }
 
@@ -167,7 +167,7 @@ public class GridNode
 
     public void SetIsWalkable(bool isWalkable)
     {
-        this.m_isWalkable = isWalkable;
+        m_isWalkable = isWalkable;
         m_Grid.TriggerGridObjectChanged(m_X, m_Y);
     }
 }

@@ -8,6 +8,11 @@ partial struct PathfindingSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
+        if (GridManager.Instance == null)
+        {
+            return; // No grid present in the scene, skip pathfinding
+        }
+
         int2 gridSize = new int2(GridManager.Instance.grid.GetWidth(), GridManager.Instance.grid.GetHeight());
 
         PathfindingJob job = new PathfindingJob

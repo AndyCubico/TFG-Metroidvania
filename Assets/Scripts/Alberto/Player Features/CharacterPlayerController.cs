@@ -185,6 +185,7 @@ public class CharacterPlayerController : MonoBehaviour
     [Space(5)]
     public InputActionReference movement;
     public InputActionReference jumpingHold;
+    public InputActionReference jumpingRelease;
     public InputActionReference jumpingDown;
     public InputActionReference crouchingHold;
     public InputActionReference crouchingDown;
@@ -205,6 +206,7 @@ public class CharacterPlayerController : MonoBehaviour
     [SerializeField] public bool climbEdges;
     bool impactHitHold;
     bool impactHitDown;
+    bool jumpKeyDown;
     bool dashDown;
     bool crouchDown;
     bool crouchHold;
@@ -238,6 +240,7 @@ public class CharacterPlayerController : MonoBehaviour
     private void OnEnable()
     {
         jumpingHold.action.started += JumpingHoldEvent;
+        jumpingRelease.action.started += JumpingReleaseEvent;
         jumpingDown.action.started += JumpingDownEvent;
         impactHittingHold.action.started += ImpactHitHoldEvent;
         impactHittingDown.action.started += ImpactHitDownEvent;
@@ -255,6 +258,7 @@ public class CharacterPlayerController : MonoBehaviour
     private void OnDisable()
     {
         jumpingHold.action.started -= JumpingHoldEvent;
+        jumpingRelease.action.started -= JumpingReleaseEvent;
         jumpingDown.action.started -= JumpingDownEvent;
         impactHittingHold.action.started -= ImpactHitHoldEvent;
         impactHittingDown.action.started -= ImpactHitDownEvent;
@@ -327,7 +331,7 @@ public class CharacterPlayerController : MonoBehaviour
         }
     }
 
-    public void JumpingDownEvent(InputAction.CallbackContext context)
+    public void JumpingReleaseEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -336,6 +340,23 @@ public class CharacterPlayerController : MonoBehaviour
         else
         {
             jumpKeyRelease = false;
+        }
+    }
+
+    public void JumpingDownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            jumpKeyDown = true;
+        }
+        else
+        {
+            jumpKeyDown = false;
+        }
+
+        if (context.canceled)
+        {
+            jumpKeyDown = false;
         }
     }
 
@@ -631,11 +652,11 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
-        //if (canUnhang && playerState == PLAYER_STATUS.JUMP) //Exit from the hang edge situation with an impulse.
+        //if (canUnhang && jumpKeyHold) //Exit from the hang edge situation with an impulse.
         //{
         //    PlayerUnFrezze();
 
-        //    rb.AddForce(Vector2.up * 3);
+        //    rb.AddForce(Vector2.left * 3 * playerDir);
 
         //    canUnhang = false;
         //    isHangingEdge = false;

@@ -863,7 +863,8 @@ MonoBehaviour:
     m_Bits: 1025
   movement: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpingHold: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  jumpingDown: {fileID: -6304885635427134008, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  jumpingRelease: {fileID: -6304885635427134008, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  jumpingDown: {fileID: -172502266616131840, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   crouchingHold: {fileID: 7040659881675835329, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   crouchingDown: {fileID: -49480745969038332, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   dashing: {fileID: -7471211009204490832, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -874,8 +875,10 @@ MonoBehaviour:
   LeftAction: {fileID: -4503380700899818797, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   RightAction: {fileID: 4806974397292948443, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   DropAction: {fileID: 8594606948321114743, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  ClimbEdgesAction: {fileID: -8498610326548418346, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpKeyRelease: 0
   jumpKeyHold: 0
+  climbEdges: 0
   player_Material: {fileID: 2100000, guid: 4b1f2e944346f014388d0895afa1da66, type: 2}
   playerState: 0
 --- !u!114 &6082794612244999840
@@ -1256,7 +1259,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7804950762158198664}
         m_TargetAssemblyTypeName: CharacterPlayerController, Assembly-CSharp
-        m_MethodName: JumpingDownEvent
+        m_MethodName: JumpingReleaseEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1284,6 +1287,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5ffe7a01-93f5-4100-882d-104a64cb813b
     m_ActionName: 'Player/DropOff[/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7804950762158198664}
+        m_TargetAssemblyTypeName: CharacterPlayerController, Assembly-CSharp
+        m_MethodName: ClimbEdgesEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 35b2149c-e2f7-4b8d-b17c-5b1847520c26
+    m_ActionName: 'Player/ClimbEdges[/DualShock4GamepadHID/leftStick/up,/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7804950762158198664}
+        m_TargetAssemblyTypeName: CharacterPlayerController, Assembly-CSharp
+        m_MethodName: JumpingDownEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6850fe02-fef1-4ade-975a-867fe6805517
+    m_ActionName: 'Player/JumpDown[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6282790690952300471}
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
+        m_MethodName: BasicAttackEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 43b9ac94-9212-46cf-92f9-0fc387c65f5a
+    m_ActionName: 'Player/BasicAttack[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1334,6 +1385,7 @@ MonoBehaviour:
   leftDetector: {fileID: 0}
   rightDetector: {fileID: 0}
   impactHitDetector: {fileID: 0}
+  BasicAttackAction: {fileID: 0}
   enemyMask:
     serializedVersion: 2
     m_Bits: 1024

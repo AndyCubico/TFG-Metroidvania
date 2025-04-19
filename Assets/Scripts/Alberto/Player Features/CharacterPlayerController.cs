@@ -185,6 +185,7 @@ public class CharacterPlayerController : MonoBehaviour
     [Space(5)]
     public InputActionReference movement;
     public InputActionReference jumpingHold;
+    public InputActionReference jumpingRelease;
     public InputActionReference jumpingDown;
     public InputActionReference crouchingHold;
     public InputActionReference crouchingDown;
@@ -196,21 +197,24 @@ public class CharacterPlayerController : MonoBehaviour
     public InputActionReference LeftAction;
     public InputActionReference RightAction;
     public InputActionReference DropAction;
+    public InputActionReference ClimbEdgesAction;
     [Space(10)]
 
     //Bool keys
     [SerializeField]public bool jumpKeyRelease;
     [SerializeField] public bool jumpKeyHold;
+    [SerializeField] public bool climbEdges;
     bool impactHitHold;
     bool impactHitDown;
+    bool jumpKeyDown;
     bool dashDown;
     bool crouchDown;
     bool crouchHold;
-    bool dropDown;
     bool upKey;
     bool downKey;
     bool leftKey;
     bool rightKey;
+    bool dropDown;
 
     [Header("Player Material")]
     [Space(5)]
@@ -236,6 +240,7 @@ public class CharacterPlayerController : MonoBehaviour
     private void OnEnable()
     {
         jumpingHold.action.started += JumpingHoldEvent;
+        jumpingRelease.action.started += JumpingReleaseEvent;
         jumpingDown.action.started += JumpingDownEvent;
         impactHittingHold.action.started += ImpactHitHoldEvent;
         impactHittingDown.action.started += ImpactHitDownEvent;
@@ -247,11 +252,13 @@ public class CharacterPlayerController : MonoBehaviour
         LeftAction.action.started += LeftEvent;
         RightAction.action.started += RightEvent;
         DropAction.action.started += DropEvent;
+        ClimbEdgesAction.action.started += ClimbEdgesEvent;
     }
 
     private void OnDisable()
     {
         jumpingHold.action.started -= JumpingHoldEvent;
+        jumpingRelease.action.started -= JumpingReleaseEvent;
         jumpingDown.action.started -= JumpingDownEvent;
         impactHittingHold.action.started -= ImpactHitHoldEvent;
         impactHittingDown.action.started -= ImpactHitDownEvent;
@@ -263,6 +270,7 @@ public class CharacterPlayerController : MonoBehaviour
         LeftAction.action.started -= LeftEvent;
         RightAction.action.started -= RightEvent;
         DropAction.action.started -= DropEvent;
+        ClimbEdgesAction.action.started -= ClimbEdgesEvent;
     }
 
     public void JumpingHoldEvent(InputAction.CallbackContext context)
@@ -323,7 +331,7 @@ public class CharacterPlayerController : MonoBehaviour
         }
     }
 
-    public void JumpingDownEvent(InputAction.CallbackContext context)
+    public void JumpingReleaseEvent(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -332,6 +340,23 @@ public class CharacterPlayerController : MonoBehaviour
         else
         {
             jumpKeyRelease = false;
+        }
+    }
+
+    public void JumpingDownEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            jumpKeyDown = true;
+        }
+        else
+        {
+            jumpKeyDown = false;
+        }
+
+        if (context.canceled)
+        {
+            jumpKeyDown = false;
         }
     }
 
@@ -440,6 +465,18 @@ public class CharacterPlayerController : MonoBehaviour
         else
         {
             dropDown = false;
+        }
+    }
+
+    public void ClimbEdgesEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            climbEdges = true;
+        }
+        else
+        {
+            climbEdges = false;
         }
     }
 
@@ -615,11 +652,11 @@ public class CharacterPlayerController : MonoBehaviour
 
     private void HangingEdges()
     {
-        //if (canUnhang && playerState == PLAYER_STATUS.JUMP) //Exit from the hang edge situation with an impulse.
+        //if (canUnhang && jumpKeyHold) //Exit from the hang edge situation with an impulse.
         //{
         //    PlayerUnFrezze();
 
-        //    rb.AddForce(Vector2.up * 3);
+        //    rb.AddForce(Vector2.left * 3 * playerDir);
 
         //    canUnhang = false;
         //    isHangingEdge = false;
@@ -639,7 +676,7 @@ public class CharacterPlayerController : MonoBehaviour
             playerOnEdgeUnfrezze = false;
         }
 
-        if (playerState == PLAYER_STATUS.HANGED && !jumpKeyHold) //Gain access to exit from the hang situation
+        if (playerState == PLAYER_STATUS.HANGED /*&& !jumpKeyHold*/) //Gain access to exit from the hang situation
         {
             canUnhang = true;
         }

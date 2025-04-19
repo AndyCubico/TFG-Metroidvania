@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerCombat : MonoBehaviour
@@ -51,9 +52,14 @@ public class PlayerCombat : MonoBehaviour
     public AttackDetectors rightDetector;
     public AttackDetectors impactHitDetector;
 
+    [Header("Input Actions")]
+    [Space(5)]
+    public InputActionReference BasicAttackAction;
+
+    bool basicAttackDown;
+
     [Header("Assigned Layers")]
     [Space(5)]
-
     //Layers
     public LayerMask enemyMask;
     [Space(10)]
@@ -72,6 +78,28 @@ public class PlayerCombat : MonoBehaviour
     bool isOnCombo;
     bool canHitCombo;
 
+    private void OnEnable()
+    {
+        BasicAttackAction.action.started += BasicAttackEvent;
+    }
+
+    private void OnDisable()
+    {
+        BasicAttackAction.action.started -= BasicAttackEvent;
+    }
+
+    public void BasicAttackEvent(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            basicAttackDown = true;
+        }
+        else
+        {
+            basicAttackDown = false;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,7 +113,7 @@ public class PlayerCombat : MonoBehaviour
     void Update()
     {
         //_Basic Attack + Combo
-        if (Input.GetMouseButtonDown(0))
+        if (basicAttackDown)
         {
             if(basicAttackCooldownLocal == 0)
             {

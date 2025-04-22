@@ -1,15 +1,15 @@
 using UnityEngine;
-using Player_Controller;
+using PlayerController;
 using UnityEngine.Splines.ExtrusionShapes;
 
-public class Player_Save_Load : MonoBehaviour
+public class PlayerSaveLoad : MonoBehaviour
 {
-    private Save_And_Load_Game_Handler saveLoad;
+    private SaveAndLoadGameHandler saveLoad;
     CharacterController characterController;
 
     private void OnEnable()
     {
-        saveLoad = GameObject.Find("GameManager")?.GetComponent<Save_And_Load_Game_Handler>();
+        saveLoad = GameObject.Find("GameManager")?.GetComponent<SaveAndLoadGameHandler>();
 
         if (saveLoad != null)
         {

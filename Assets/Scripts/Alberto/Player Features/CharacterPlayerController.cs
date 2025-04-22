@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering;
 
-namespace Player_Controller
+namespace PlayerController
 {
     public class CharacterPlayerController : MonoBehaviour
     {

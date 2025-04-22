@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Player_Controller;
+using PlayerController;
 
 public class JumpPad : MonoBehaviour
 {

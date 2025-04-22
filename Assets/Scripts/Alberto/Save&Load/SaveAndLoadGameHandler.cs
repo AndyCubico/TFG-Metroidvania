@@ -7,7 +7,7 @@ public class player_SL //SL -> Save&Load
     public Vector3 playerPosition;
 }
 
-public class Save_And_Load_Game_Handler : MonoBehaviour
+public class SaveAndLoadGameHandler : MonoBehaviour
 {
     //Here the different bools for which data will be stored
     [Header("Selected Savings")]
@@ -20,7 +20,7 @@ public class Save_And_Load_Game_Handler : MonoBehaviour
     void Start()
     {
         //Create the Save folder in case if is not already been created
-        SaveLoad_Manager.Save_And_Load_Manager.Init();
+        SaveLoadManager.SaveAndLoadManager.Init();
     }
 
     void Update()
@@ -40,13 +40,13 @@ public class Save_And_Load_Game_Handler : MonoBehaviour
     //This function sends the data to save in a .txt folder with the data in a Json string format and the name of the file
     public void Save(string json, string filename)
     {
-        SaveLoad_Manager.Save_And_Load_Manager.Save(json, filename);
+        SaveLoadManager.SaveAndLoadManager.Save(json, filename);
     }
 
     //This function with the name of the file will load the information previously saved in /Saves/filename.txt
     public string Load(string filename)
     {
-        string loadJson = SaveLoad_Manager.Save_And_Load_Manager.Load(filename);
+        string loadJson = SaveLoadManager.SaveAndLoadManager.Load(filename);
         return loadJson;
     }
 }

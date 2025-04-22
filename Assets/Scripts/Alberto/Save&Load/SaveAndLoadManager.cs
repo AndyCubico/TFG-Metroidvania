@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.IO;
 
-namespace SaveLoad_Manager
+namespace SaveLoadManager
 {
-    public static class Save_And_Load_Manager
+    public static class SaveAndLoadManager
     {
         private static readonly string saveFolder = Application.dataPath + "/Saves/";
 
@@ -26,6 +26,10 @@ namespace SaveLoad_Manager
             {
                 string savedString = File.ReadAllText(saveFolder + "/" + fileName + ".txt");
                 return savedString;
+            }
+            else
+            {
+                Debug.Log("File: " + fileName + ".txt not found");
             }
 
             return null;

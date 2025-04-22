@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using Player_Controller;
+using PlayerController;
 
 public class Hang_Edges : MonoBehaviour
 {

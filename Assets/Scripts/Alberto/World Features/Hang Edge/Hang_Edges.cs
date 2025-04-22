@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using Player_Controller;
 
-public class HangEdges : MonoBehaviour
+public class Hang_Edges : MonoBehaviour
 {
     public Transform playerPosition;
     public Transform playerFinalPosition;
@@ -18,26 +19,26 @@ public class HangEdges : MonoBehaviour
 
     private void Update()
     {
-        if (isHanged)
+        if (isHanged) //Once the player is hanged
         {
-            if(playerController.canUnhang && playerController.climbEdges)
+            if(playerController.canUnhang && playerController.climbEdges) //If the player has released the space button and the climb edge key is pressed move the player to the new position
             {
                 moveToNewPosition = true;
                 isHanged= false;
             }
         }
 
-        if (moveToNewPosition)
+        if (moveToNewPosition) //Here is where the player will be moved to the exit position
         {
-            player.transform.position = Vector3.MoveTowards(player.transform.position, playerFinalPosition.position, speedTransform * Time.deltaTime);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, playerFinalPosition.position, speedTransform * Time.deltaTime); //The function that moves the player
 
             playerController.jumpStopper = true;
 
-            if (Vector3.Distance(player.transform.position, playerFinalPosition.position) < 0.1f || Vector3.Distance(player.transform.position, playerFinalPosition.position) > 5f)
+            if (Vector3.Distance(player.transform.position, playerFinalPosition.position) < 0.1f || Vector3.Distance(player.transform.position, playerFinalPosition.position) > 5f) //If the player is close enought or to far away exit the hang situation
             {
                 playerController.rb.linearVelocity = Vector2.zero;
 
-                if(!playerController.jumpKeyHold)
+                if(!playerController.jumpKeyHold) //Check that the player is not pressing the jump button to not make an involuntary jump when ending the climb
                 {
                     playerController.jumpStopper = false;
                     playerController.playerOnEdgeUnfrezze = true;

@@ -603,6 +603,7 @@ namespace PlayerController
             if (dropDown && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can detach walls or edges if press S or Down joystick
             {
                 PlayerUnFrezze();
+                canJump = false;
 
                 if (isHangingEdge) //In case player is on an Edge
                 {

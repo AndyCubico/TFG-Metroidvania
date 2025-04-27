@@ -215,6 +215,7 @@ namespace PlayerController
         [SerializeField] public bool jumpKeyRelease;
         [SerializeField] public bool jumpKeyHold;
         [SerializeField] public bool climbEdges;
+        [SerializeField] public bool dropDown;
         bool impactHitHold;
         bool impactHitDown;
         bool jumpKeyDown;
@@ -225,7 +226,6 @@ namespace PlayerController
         bool downKey;
         bool leftKey;
         bool rightKey;
-        bool dropDown;
 
         [Header("Player Material")]
         [Space(5)]
@@ -618,17 +618,9 @@ namespace PlayerController
                 playerState = PLAYER_STATUS.AIR;
             }
 
-            if(hasExitWall)
+            if(hasExitWall) //When the player has exit the wall hanging, from a brief of time is going to be block
             {
                 exitWallTimer += Time.deltaTime;
-                
-                //if(hasExitWallLeft && (playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_UP || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_DOWN) || hasExitWallRight && (playerFaceDir == PLAYER_FACE_DIRECTION.LEFT || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_UP || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_DOWN))
-                //{
-                //    moveStopper = false;
-                //    exitWallTimer = 0f;
-                //    hasExitWallLeft = false;
-                //    hasExitWallRight = false;
-                //}
 
                 if (exitWallTimer >= 0.1f || isGrounded)
                 {
@@ -1173,11 +1165,23 @@ namespace PlayerController
             //If you are hanged and jump, unfreeze player to move again
             if (playerState == PLAYER_STATUS.JUMP && isHangingWall)
             {
+                int dir = 1;
+
+                if (isRightWall)
+                {
+                    dir = -1;
+                }
+
+                if (isLeftWall)
+                {
+                    dir = 1;
+                }
+
                 PlayerUnFrezze();
 
-                rb.AddForce(new Vector2(hangWallImpulseSides * (isRightWall ? -1 : 1), hangWallImpulseUp)); //Extra impulse to get out of the wall
+                rb.AddForce(new Vector2(hangWallImpulseSides * dir, hangWallImpulseUp), ForceMode2D.Force); //Extra impulse to get out of the wall
 
-                if((playerFaceDir == PLAYER_FACE_DIRECTION.LEFT && isLeftWall) || (playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT && isRightWall))
+                if ((playerFaceDir == PLAYER_FACE_DIRECTION.LEFT && isLeftWall) || (playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT && isRightWall)) //To make an easier an intuitive way of hanging from the edge it will be stopped from movement for a brief of time, unless he jumps to the contrary face of the wall 
                 {
                     hasExitWall = true;
                     moveStopper = true;

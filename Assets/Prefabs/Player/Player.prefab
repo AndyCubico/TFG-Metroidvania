@@ -360,9 +360,9 @@ GameObject:
   - component: {fileID: 3855523926803173217}
   - component: {fileID: 888315877125306867}
   - component: {fileID: 8124750564690187424}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: HangEdgeCheck
-  m_TagString: Edge
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
     m_Bits: 512
   roofMask:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 1024
   movement: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpingHold: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpingRelease: {fileID: -6304885635427134008, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

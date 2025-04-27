@@ -1569,6 +1569,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3310032456041218831, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: isLeftEdge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310032456041218831, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: isRightEdge
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4426635826458365443, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.45481914
@@ -1625,6 +1633,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 9080859090279238795, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: leftEdgeCollider
+      value: 
+      objectReference: {fileID: 1133301299}
+    - target: {fileID: 9080859090279238795, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: rightEdgeCollider
+      value: 
+      objectReference: {fileID: 143410763}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1633,6 +1649,11 @@ PrefabInstance:
 --- !u!4 &143410762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4426635826458365443, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+  m_PrefabInstance: {fileID: 143410761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &143410763 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 233490007715043363, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
   m_PrefabInstance: {fileID: 143410761}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &151400640
@@ -9052,6 +9073,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9397,6 +9422,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9971,6 +10000,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11047,6 +11080,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11334,6 +11371,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12254,6 +12295,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14019,6 +14064,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14233,6 +14282,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15021,6 +15074,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15098,6 +15155,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15455,6 +15516,11 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!61 &1133301299 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1696593359952134509, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+  m_PrefabInstance: {fileID: 143410761}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1135442349
 GameObject:
   m_ObjectHideFlags: 0
@@ -15893,6 +15959,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22851,6 +22921,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23164,6 +23238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23301,6 +23379,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29372,6 +29454,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31023,6 +31109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31387,6 +31477,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32531,6 +32625,10 @@ PrefabInstance:
     - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
       propertyPath: m_Name
       value: HangEdge (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34866,6 +34964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HangEdge (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854413777744026338, guid: 5e52eee9e2215c8469c70fa90e0151ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -36720,11 +36822,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2908932512810116978, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2908932512810116978, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_TagString
-      value: Edge
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3389563662447400771, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Enabled

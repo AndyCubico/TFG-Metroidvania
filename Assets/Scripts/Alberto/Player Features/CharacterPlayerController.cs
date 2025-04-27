@@ -102,6 +102,7 @@ namespace PlayerController
         private float earringFloor;
         private float coyoteTimeCounter;
         private float gravityEffect;
+        private float exitWallTimer;
 
         private int maxAirJumps;
 
@@ -151,6 +152,7 @@ namespace PlayerController
         [SerializeField] public bool jumpStopper;
         bool moveStopper;
         bool cheatMode;
+        bool hasExitWall;
 
         [Space(10)]
 
@@ -614,6 +616,26 @@ namespace PlayerController
                 }
 
                 playerState = PLAYER_STATUS.AIR;
+            }
+
+            if(hasExitWall)
+            {
+                exitWallTimer += Time.deltaTime;
+                
+                //if(hasExitWallLeft && (playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_UP || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_DOWN) || hasExitWallRight && (playerFaceDir == PLAYER_FACE_DIRECTION.LEFT || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_UP || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_DOWN))
+                //{
+                //    moveStopper = false;
+                //    exitWallTimer = 0f;
+                //    hasExitWallLeft = false;
+                //    hasExitWallRight = false;
+                //}
+
+                if (exitWallTimer >= 0.1f || isGrounded)
+                {
+                    moveStopper = false;
+                    exitWallTimer = 0f;
+                    hasExitWall = false;
+                }
             }
 
             //Rotate Player depending earring floor
@@ -1153,7 +1175,14 @@ namespace PlayerController
             {
                 PlayerUnFrezze();
 
-                rb.AddForce(new Vector2(hangWallImpulseSides * (isRightWall ? 1 : -1), hangWallImpulseUp)); //Extra impulse to get out of the wall
+                rb.AddForce(new Vector2(hangWallImpulseSides * (isRightWall ? -1 : 1), hangWallImpulseUp)); //Extra impulse to get out of the wall
+
+                if((playerFaceDir == PLAYER_FACE_DIRECTION.LEFT && isLeftWall) || (playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT && isRightWall))
+                {
+                    hasExitWall = true;
+                    moveStopper = true;
+                    exitWallTimer = 0f;
+                }
             }
 
             //Check if is not touching walls

@@ -1,84 +1,79 @@
+using TMPro;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using static PathfindingJob;
 
-public class PathfindingTest : MonoBehaviour
+public class PathfindingManager : MonoBehaviour
 {
+    [SerializeField] private int2 m_StartPosition;
+    [SerializeField] private int2 m_EndPosition;
+
     // Testing
     void Start()
     {
-        NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
 
-        FindPathJob findPathJob = new FindPathJob
-        {
-            startPosition = new int2(0, 0),
-            endPosition = new int2(3, 1),
-            resultPath = path,
-        };
-        JobHandle handle = findPathJob.Schedule();
-        handle.Complete();
-
-        foreach (int2 pathPosition in path)
-        {
-            Debug.Log(pathPosition);
-        }
-
-        path.Dispose();
     }
 
-    // Movement costs
-    private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Start pathfinding");
+
+            NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
+
+            FindPathJob findPathJob = new FindPathJob
+            {
+                startPosition = m_StartPosition,
+                endPosition = m_EndPosition,
+                resultPath = path,
+                gridSize = new int2(GridManager.Instance.grid.GetWidth(), GridManager.Instance.grid.GetHeight()),
+                pathNodeArray = GetPathNodeArray(),
+            };
+            JobHandle handle = findPathJob.Schedule();
+            handle.Complete();
+
+            foreach (int2 pathPosition in path)
+            {
+                Debug.Log(pathPosition);
+            }
+
+            path.Dispose();
+        }
+    }
 
     [BurstCompile]
-    private struct FindPathJob : IJob // Use IJobEntity when doing real ECS
+    private struct FindPathJob : IJob 
     {
         public int2 startPosition;
         public int2 endPosition;
+
         public NativeList<int2> resultPath;
+
+        [DeallocateOnJobCompletion]
+        public NativeArray<PathNode> pathNodeArray;
+
+        public int2 gridSize;
+
+        // Movement costs
+        private const int MOVE_STRAIGHT_COST = 10;
+        private const int MOVE_DIAGONAL_COST = 14;
 
         public void Execute()
         {
-            // Testing with custom grid, later on do with the grid done in Grid.cs.
-            int2 gridSize = new int2(4, 4);
-            NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
-            for (int x = 0; x < gridSize.x; x++)
+            // Set up grid
+            for (int i = 0; i < pathNodeArray.Length; i++)
             {
-                for (int y = 0; y < gridSize.y; y++)
-                {
-                    PathNode pathNode = new PathNode();
-                    pathNode.x = x;
-                    pathNode.y = y;
+                PathNode pathNode = pathNodeArray[i];
+                pathNode.hCost = CalculateDistanceCost(new int2(pathNode.x, pathNode.y), endPosition);
+                pathNode.previousNodeIndex = -1; // Invalid value, just to initialize the path node values.
 
-                    pathNode.index = CalculateIndex(x, y, gridSize.x);
-
-                    pathNode.gCost = int.MaxValue;
-                    pathNode.hCost = CalculateDistanceCost(new int2(x, y), endPosition);
-                    pathNode.CalculateFCost();
-
-                    pathNode.isWalkable = true;
-                    pathNode.previousNodeIndex = -1; // Invalid value, just to initialize the path node values.
-
-                    pathNodeArray[pathNode.index] = pathNode; // Fill the native array with the different nodes.
-                }
+                pathNodeArray[i] = pathNode;
             }
-
-            // Test non walkable zones, here we add them
-            //PathNode walkablePathNode = pathNodeArray[CalculateIndex(1, 0, gridSize.x)];
-            //walkablePathNode.SetIsWalkable(false);
-            //pathNodeArray[CalculateIndex(1, 0, gridSize.x)] = walkablePathNode;
-
-            //walkablePathNode = pathNodeArray[CalculateIndex(1, 1, gridSize.x)];
-            //walkablePathNode.SetIsWalkable(false);
-            //pathNodeArray[CalculateIndex(1, 1, gridSize.x)] = walkablePathNode;
-
-            //walkablePathNode = pathNodeArray[CalculateIndex(1, 2, gridSize.x)];
-            //walkablePathNode.SetIsWalkable(false);
-            //pathNodeArray[CalculateIndex(1, 2, gridSize.x)] = walkablePathNode;
-
 
             // A* algorithm
 
@@ -199,7 +194,6 @@ public class PathfindingTest : MonoBehaviour
                 path.Dispose();
             }
 
-            pathNodeArray.Dispose();
             neighbourOffsetArray.Dispose();
             openList.Dispose();
             closedList.Dispose();
@@ -211,7 +205,7 @@ public class PathfindingTest : MonoBehaviour
         /// <param name="pathNodeArray"> Array with all the nodes of the path. </param>
         /// <param name="endNode"> End node of the array. </param>
         /// <returns> NativeList<int2> of all the indexes. </returns>
-        private NativeList<int2> CalculatePath(NativeArray<PathNode> pathNodeArray, PathNode endNode)
+        private static NativeList<int2> CalculatePath(NativeArray<PathNode> pathNodeArray, PathNode endNode)
         {
             if (endNode.previousNodeIndex == -1)
             {
@@ -242,7 +236,7 @@ public class PathfindingTest : MonoBehaviour
         /// <param name="gridPosition"> Position to check. </param>
         /// <param name="gridSize"> Grid that sets the limits. </param>
         /// <returns> True if the gridPosition is valid within the grid. </returns>
-        private bool IsPositionInGrid(int2 gridPosition, int2 gridSize)
+        private static bool IsPositionInGrid(int2 gridPosition, int2 gridSize)
         {
             return
                 gridPosition.x >= 0 &&
@@ -258,7 +252,7 @@ public class PathfindingTest : MonoBehaviour
         /// <param name="y"> Y position of the node int the graph. </param>
         /// <param name="gridWidth"> Size of the graph widthwise. </param>
         /// <returns> Index of the X,Y position of a node in a graph. </returns>
-        private int CalculateIndex(int x, int y, int gridWidth)
+        private static int CalculateIndex(int x, int y, int gridWidth)
         {
             return x + y * gridWidth;
         }
@@ -269,7 +263,7 @@ public class PathfindingTest : MonoBehaviour
         /// <param name="aPosition"> int2 of a position. </param>
         /// <param name="bPosition"> int2 of b position. </param>
         /// <returns> The cost from point a to b with the defined diagonal and straight costs. </returns>
-        private int CalculateDistanceCost(int2 aPosition, int2 bPosition)
+        private static int CalculateDistanceCost(int2 aPosition, int2 bPosition)
         {
             int xDistance = math.abs(aPosition.x - bPosition.x);
             int yDistance = math.abs(aPosition.y - bPosition.y);
@@ -283,7 +277,7 @@ public class PathfindingTest : MonoBehaviour
         /// <param name="openList"> List of nodes not visited. </param>
         /// <param name="pathNodeArray"> List of all nodes. </param>
         /// <returns> Index of the node with the lowest F value. </returns>
-        private int GetLowestCostFNodeIndex(NativeList<int> openList, NativeArray<PathNode> pathNodeArray)
+        private static int GetLowestCostFNodeIndex(NativeList<int> openList, NativeArray<PathNode> pathNodeArray)
         {
             PathNode lowestCostPathNode = pathNodeArray[openList[0]];
 
@@ -298,40 +292,73 @@ public class PathfindingTest : MonoBehaviour
 
             return lowestCostPathNode.index;
         }
+    }
 
-        private struct PathNode
+    private static NativeArray<PathNode> GetPathNodeArray()
+    {
+        Grid<GridNode> grid = GridManager.Instance.grid;
+        int2 gridSize = new int2(GridManager.Instance.grid.GetWidth(), GridManager.Instance.grid.GetHeight());
+
+        NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(
+            gridSize.x * gridSize.y,
+            Allocator.TempJob
+        );
+
+        for (int x = 0; x < gridSize.x; x++)
         {
-            // Position
-            public int x;
-            public int y;
-
-            // Indexes
-            public int index; // Node's index.
-            public int previousNodeIndex; // Node's index previous to this node when calculating the path.
-
-            // A* values
-            public int gCost; // Move cost from start node to this node.
-            public int hCost; // Move cost from this node to the end node.
-            public int fCost; // gCost + hCost.
-
-            public bool isWalkable;
-
-            /// <summary>
-            /// Calculate F cost value of the node.
-            /// </summary>
-            public void CalculateFCost()
+            for (int y = 0; y < gridSize.y; y++)
             {
-                fCost = gCost + hCost;
-            }
+                PathNode pathNode = new PathNode();
+                pathNode.x = x;
+                pathNode.y = y;
 
-            /// <summary>
-            /// Set the node to be walkable or not
-            /// </summary>
-            /// <param name="isWalkable"></param>
-            public void SetIsWalkable(bool isWalkable)
-            {
-                this.isWalkable = isWalkable;
+                pathNode.index = CalculateIndex(x, y, gridSize.x);
+
+                pathNode.gCost = int.MaxValue;
+
+                pathNode.isWalkable = grid.GetValue(x, y).IsWalkable();
+                pathNode.previousNodeIndex = -1;
+
+                pathNodeArray[pathNode.index] = pathNode; // Fill the native array with the different nodes.
             }
+        }
+
+        return pathNodeArray;
+    }
+
+    // Struct to manage each individual node in the gid.
+    public struct PathNode
+    {
+        // Position
+        public int x;
+        public int y;
+
+        // Indexes
+        public int index; // Node's index.
+        public int previousNodeIndex; // Node's index previous to this node when calculating the path.
+
+        // A* values
+        public int gCost; // Move cost from start node to this node.
+        public int hCost; // Move cost from this node to the end node.
+        public int fCost; // gCost + hCost.
+
+        public bool isWalkable;
+
+        /// <summary>
+        /// Calculate F cost value of the node.
+        /// </summary>
+        public void CalculateFCost()
+        {
+            fCost = gCost + hCost;
+        }
+
+        /// <summary>
+        /// Set the node to be walkable or nots
+        /// </summary>
+        /// <param name="isWalkable"></param>
+        public void SetIsWalkable(bool isWalkable)
+        {
+            this.isWalkable = isWalkable;
         }
     }
 }

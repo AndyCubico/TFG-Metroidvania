@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using PlayerController;
 
-public class PlayerCombat : MonoBehaviour
+public class Player_Combat : MonoBehaviour
 {
     enum ATTACK_TYPE
     {
@@ -49,9 +49,9 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("________________________ ATTACK DETECTORS ________________________")]
     //Animator
-    public AttackDetectors leftDetector;
-    public AttackDetectors rightDetector;
-    public AttackDetectors impactHitDetector;
+    public Attack_Detectors leftDetector;
+    public Attack_Detectors rightDetector;
+    public Attack_Detectors impactHitDetector;
 
     [Header("Input Actions")]
     [Space(5)]
@@ -67,6 +67,9 @@ public class PlayerCombat : MonoBehaviour
 
     //Character Controller
     CharacterPlayerController characterController;
+
+    //Enemy list
+    List<EnemyHealth> enemyHealth = new List<EnemyHealth>();
 
     //Checkers
     bool leftAttack;
@@ -154,8 +157,6 @@ public class PlayerCombat : MonoBehaviour
 
     void BasicAttack(ATTACK_TYPE attackType)
     {
-        EnemyHealth enemyHealth = new EnemyHealth();
-
         switch (attackType)
         {
             case ATTACK_TYPE.SOFT_ATTACK:
@@ -216,8 +217,6 @@ public class PlayerCombat : MonoBehaviour
 
     public void ImpactHit()
     {
-        EnemyHealth enemyHealth = new EnemyHealth();
-
         //Check if is there is something at LeftAttack
         downAttack = Physics2D.OverlapAreaAll(DownHit.bounds.min, DownHit.bounds.max, enemyMask).Length > 0;
 
@@ -229,7 +228,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    void HitEnemy(ATTACK_TYPE attackType, EnemyHealth enemyHealth)
+    void HitEnemy(ATTACK_TYPE attackType, List<EnemyHealth> enemyHealth)
     {
         float damage = 0;
 
@@ -249,6 +248,10 @@ public class PlayerCombat : MonoBehaviour
         }
 
         Debug.Log("Enemy Hit with: " + damage);
-        enemyHealth.ReceiveDamage(damage);
+
+        for (int i = 0; i < enemyHealth.Count; i++)
+        {
+            enemyHealth[i].ReceiveDamage(damage);
+        }
     }
 }

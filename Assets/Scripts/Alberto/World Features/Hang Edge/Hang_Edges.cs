@@ -78,7 +78,7 @@ public class Hang_Edges : MonoBehaviour
                 if(!characterPlayerController.jumpKeyHold) //Check that the player is not pressing the jump button to not make an involuntary jump when ending the climb
                 {
                     characterPlayerController.jumpStopper = false;
-                    characterPlayerController.playerOnEdgeUnfrezze = true;
+                    characterPlayerController.playerOnEdgeUnfreeze = true;
                     finishClimb = false;
                     moveToNewPosition = false;
                 }

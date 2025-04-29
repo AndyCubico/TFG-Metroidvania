@@ -141,7 +141,7 @@ namespace PlayerController
         public bool doubleJump;
         public bool canDash;
         public bool canUnhang;
-        public bool playerOnEdgeUnfrezze;
+        public bool playerOnEdgeUnfreeze;
 
         public bool hasImpactHit;
         [SerializeField] public bool isImpactHitting;
@@ -243,7 +243,7 @@ namespace PlayerController
         private Vector2 gravityVector;
 
         //Scripts
-        private PlayerCombat combatScript;
+        private Player_Combat combatScript;
 
         //Input Buffer
         Dictionary<INPUT_BUFFER, float> inputBufferSaver;
@@ -509,7 +509,7 @@ namespace PlayerController
             rb = GetComponent<Rigidbody2D>();
             playerSprite = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-            combatScript = GetComponent<PlayerCombat>();
+            combatScript = GetComponent<Player_Combat>();
             inputBufferSaver = new Dictionary<INPUT_BUFFER, float>();
 
             gravityEffect = rb.gravityScale;
@@ -527,7 +527,7 @@ namespace PlayerController
             doubleJump = false;
             flipAnimation = false;
             canUnhang = false;
-            playerOnEdgeUnfrezze = false;
+            playerOnEdgeUnfreeze = false;
 
             playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player facing Right
             dashFacing = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player dash facing Right
@@ -604,13 +604,13 @@ namespace PlayerController
 
             if (dropDown && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can detach walls or edges if press S or Down joystick
             {
-                PlayerUnFrezze();
+                PlayerUnFreeze();
                 canJump = false;
 
                 if (isHangingEdge) //In case player is on an Edge
                 {
                     canUnhang = false;
-                    playerOnEdgeUnfrezze = false;
+                    playerOnEdgeUnfreeze = false;
                     DownCrouchCollider.isTrigger = false;
                     isHangingEdge = false;
                 }
@@ -695,7 +695,7 @@ namespace PlayerController
         {
             //if (canUnhang && jumpKeyHold) //Exit from the hang edge situation with an impulse.
             //{
-            //    PlayerUnFrezze();
+            //    PlayerUnFreeze();
 
             //    rb.AddForce(Vector2.left * 3 * playerDir);
 
@@ -703,9 +703,9 @@ namespace PlayerController
             //    isHangingEdge = false;
             //}
 
-            if (playerOnEdgeUnfrezze) //Once the player is ready to get off, he will be Unfrezzed and return to be able to jump or walk
+            if (playerOnEdgeUnfreeze) //Once the player is ready to get off, he will be Unfreezed and return to be able to jump or walk
             {
-                PlayerUnFrezze();
+                PlayerUnFreeze();
                 JumpReset();
                 canJump = true;
 
@@ -714,7 +714,7 @@ namespace PlayerController
                 canUnhang = false;
                 isHangingEdge = false;
                 DownCrouchCollider.isTrigger = false;
-                playerOnEdgeUnfrezze = false;
+                playerOnEdgeUnfreeze = false;
             }
 
             if (playerState == PLAYER_STATUS.HANGED /*&& !jumpKeyHold*/) //Gain access to exit from the hang situation
@@ -724,7 +724,7 @@ namespace PlayerController
 
             if (playerState != PLAYER_STATUS.HANGED && isHangingEdge) //Enter in the hang edge situation, frezzing the player, and giving the posibility to jump, also quit the actual jump of the player if it is happening.
             {
-                PlayerFrezze();
+                PlayerFreeze();
                 rb.linearVelocity = Vector2.zero;
                 DownCrouchCollider.isTrigger = true;
                 //canJump = true;
@@ -930,7 +930,7 @@ namespace PlayerController
 
                 if (dashFacing != playerFaceDir && isDashing) // If you change face direction cancell dash
                 {
-                    DashCancell();
+                    DashCancelled();
                     //rb.velocity -= rb.velocity * 2 * Time.deltaTime;
                     //rb.velocity -= rb.velocity * 2 * Time.deltaTime;
                 }
@@ -977,7 +977,7 @@ namespace PlayerController
             }
         }
 
-        public void DashCancell()
+        public void DashCancelled()
         {
             rb.linearVelocity = Vector2.zero;
             rb.gravityScale = gravityEffect;
@@ -1177,7 +1177,7 @@ namespace PlayerController
                     dir = 1;
                 }
 
-                PlayerUnFrezze();
+                PlayerUnFreeze();
 
                 rb.AddForce(new Vector2(hangWallImpulseSides * dir, hangWallImpulseUp), ForceMode2D.Force); //Extra impulse to get out of the wall
 
@@ -1206,7 +1206,7 @@ namespace PlayerController
                     dashTime = 0;
                 }
 
-                PlayerFrezze();
+                PlayerFreeze();
                 JumpReset();
                 playerState = PLAYER_STATUS.WALL;
                 isHangingWall = true;
@@ -1222,20 +1222,20 @@ namespace PlayerController
 
             if (playerState == PLAYER_STATUS.AIR && rb.constraints == RigidbodyConstraints2D.FreezePosition && !isHangingEdge)
             {
-                PlayerUnFrezze();
+                PlayerUnFreeze();
                 canJump = true;
                 maxAirJumps = 0;
             }
         }
 
         //Freeze player position
-        void PlayerFrezze()
+        void PlayerFreeze()
         {
             rb.constraints = RigidbodyConstraints2D.FreezePosition;
         }
 
-        //Frezze player rotation
-        void PlayerUnFrezze()
+        //Freeze player rotation
+        void PlayerUnFreeze()
         {
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             //this.gameObject.transform.rotation = new Quaternion(0,0,0,1);

@@ -38,7 +38,7 @@ public class JumpPad : MonoBehaviour
             {
                 if (playerController.isDashing) //If player si Dashing when collide with JumpPad cancell Dash
                 {
-                    playerController.DashCancell();
+                    playerController.DashCancelled();
                 }
 
                 if (playerController.isImpactHitting)

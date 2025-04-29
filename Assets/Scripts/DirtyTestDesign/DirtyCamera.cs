@@ -69,11 +69,15 @@ public class DirtyCamera : MonoBehaviour
             case HorizonralMovement.FowardByMoving:
                 lastPlayerPosition = target.transform.position.x;
 
-                pullLimits[0] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
-                pullLimits[1] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
-
-                pullLimits[0].transform.position = new Vector3(camRef.transform.position.x + camWidth * cameraDistance, camRef.transform.position.y, 0);
-                pullLimits[1].transform.position = new Vector3(camRef.transform.position.x - camWidth * cameraDistance, camRef.transform.position.y, 0);
+                if (camTargetPos != null)
+                {
+                    pullLimits[0] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
+                    pullLimits[1] = Instantiate(camTargetPos, Vector3.zero, Quaternion.identity, camRef.gameObject.transform);
+                    
+                    pullLimits[0].transform.position = new Vector3(camRef.transform.position.x + camWidth * cameraDistance, camRef.transform.position.y, 0);
+                    pullLimits[1].transform.position = new Vector3(camRef.transform.position.x - camWidth * cameraDistance, camRef.transform.position.y, 0);
+                }
+                
                 break;
         }
     }

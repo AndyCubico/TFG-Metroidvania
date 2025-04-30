@@ -128,11 +128,11 @@ public class Player_Combat : MonoBehaviour
             basicAttackCooldownLocal += Time.deltaTime;
         }
 
-        if(basicAttackCooldownLocal > 0)
+        if(basicAttackCooldownLocal > 0) // Here the cooldown of attack is starting to sum up
         {
             basicAttackCooldownLocal += Time.deltaTime;
 
-            if(basicAttackCooldownLocal > basicAttackCooldown)
+            if(basicAttackCooldownLocal > basicAttackCooldown) // If the cooldown is reached the combo timer will start to happen and the basic attack will be ready again
             {
                 canHitCombo = true;
                 basicAttackCooldownLocal = 0;

@@ -87,6 +87,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Block_Parry",
+                    "type": "Button",
+                    "id": "311ffb07-9265-4c29-8f5e-05e4154ddd83",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ImpactHitDown",
                     "type": "Button",
                     "id": "7f9a330d-7d15-4076-a850-0961602f8b70",
@@ -463,7 +472,7 @@
                 {
                     "name": "",
                     "id": "8cbb2f4b-a784-49cc-8d5e-c010b8c7f4e6",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
@@ -771,11 +780,33 @@
                 {
                     "name": "",
                     "id": "0416c9e7-a9ac-4fc4-a528-d00393de4553",
-                    "path": "<Keyboard>/s",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ImpactHitHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f9995cc-e375-4c34-9196-646d4d8072c6",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Block_Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f81e81ed-c00c-4267-bf9d-f5b78b40570e",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Block_Parry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

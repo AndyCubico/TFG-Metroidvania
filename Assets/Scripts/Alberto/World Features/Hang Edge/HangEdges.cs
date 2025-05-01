@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 using PlayerController;
 using UnityEngine.UI;
 
-public class Hang_Edges : MonoBehaviour
+public class HangEdges : MonoBehaviour
 {
     public Transform playerFinalPosition;
     private GameObject player;
@@ -35,7 +35,6 @@ public class Hang_Edges : MonoBehaviour
     {
         isHanged = false;
         finishClimb = false;
-        characterPlayerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
 
         if (isLeftEdge)
         {
@@ -93,9 +92,19 @@ public class Hang_Edges : MonoBehaviour
             }
         }
 
-        if(characterPlayerController.isGrounded)
+        if(characterPlayerController != null)
         {
-            isHanged = false;
+            if (isHanged && characterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
+            {
+                if (characterPlayerController.isGrounded)
+                {
+                    isHanged = false;
+                }
+            }
+            else if (!isHanged && characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.HANGED)
+            {
+                isHanged = true;
+            }
         }
 
         if (isLeftEdge)
@@ -110,6 +119,8 @@ public class Hang_Edges : MonoBehaviour
 
         if(playerCollision && !isHanged && !finishClimb)
         {
+            characterPlayerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
+
             characterPlayerController.isHangingEdge = true;
             player = characterPlayerController.gameObject;
 

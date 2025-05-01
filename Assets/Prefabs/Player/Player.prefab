@@ -714,7 +714,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 0.35, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &23380348951475902
 MonoBehaviour:
@@ -728,8 +728,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7b7f4b78d570b4fb44736d521a0a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxParryTime: 0.5
+  blockCooldown: 0.1
+  maxParryTime: 0.2
+  invencibilityTime: 0.7
+  damageBlock: 5
+  damageNoBlock: 15
   BlockAndParryAction: {fileID: 5344755155262996938, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  enemyTesting: 0
+  rb: {fileID: 2501051149002799573}
 --- !u!1 &4866913984916925832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1462,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 43b9ac94-9212-46cf-92f9-0fc387c65f5a
     m_ActionName: 'Player/BasicAttack[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 311ffb07-9265-4c29-8f5e-05e4154ddd83
+    m_ActionName: 'Player/Block_Parry[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

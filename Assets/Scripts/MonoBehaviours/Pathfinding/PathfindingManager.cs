@@ -6,20 +6,23 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using static PathfindingJob;
+using static UnityEngine.UI.Image;
 
 public class PathfindingManager : MonoBehaviour
 {
     [SerializeField] private int2 m_StartPosition;
     [SerializeField] private int2 m_EndPosition;
 
-    // Testing
-    void Start()
-    {
+    public static PathfindingManager Instance { private set; get; }
 
+    public void Awake()
+    {
+        Instance = this;
     }
 
     private void Update()
     {
+        // Debug
         if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Start pathfinding");
@@ -43,6 +46,31 @@ public class PathfindingManager : MonoBehaviour
             }
 
             path.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Create a path with a given starting and ending position, then store it in NativeList Path.
+    /// </summary>
+    /// <param name="path"> List to store the path</param>
+    /// <param name="start"> Starting position of path. </param>
+    /// <param name="end"> Ending position of path. </param>
+    public void StartPathfinding(NativeList<int2> path, int2 start, int2 end)
+    {
+        FindPathJob findPathJob = new FindPathJob
+        {
+            startPosition = start,
+            endPosition = end,
+            resultPath = path,
+            gridSize = new int2(GridManager.Instance.grid.GetWidth(), GridManager.Instance.grid.GetHeight()),
+            pathNodeArray = GetPathNodeArray(),
+        };
+        JobHandle handle = findPathJob.Schedule();
+        handle.Complete();
+
+        foreach (int2 pathPosition in path)
+        {
+            Debug.Log(pathPosition);
         }
     }
 

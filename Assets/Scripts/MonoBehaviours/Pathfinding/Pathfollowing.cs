@@ -8,6 +8,10 @@ public class Pathfollowing : MonoBehaviour
     private int m_PathIndex = 0; // Index to keep track of the next step to follow.
     [SerializeField] private float m_Speed;
 
+    // Debug
+    [SerializeField] private int2 m_StartPosition;
+    [SerializeField] private int2 m_EndPosition;
+
     private void Awake()
     {
         m_Path = new NativeList<int2>(Allocator.Persistent);
@@ -19,17 +23,22 @@ public class Pathfollowing : MonoBehaviour
         // Debug
         if (Input.GetKeyDown(KeyCode.A))
         {
-            SetPath(new int2(0, 0), new int2(3, 1));
+            SetPath(m_StartPosition, m_EndPosition);
         }
 
         if (m_PathIndex >= 0 && !m_Path.IsEmpty)
         {
-            Vector3 targetPosition = new Vector3(m_Path[m_PathIndex].x, m_Path[m_PathIndex].y, 0);
+            Vector3 targetPosition = new Vector3(m_Path[m_PathIndex].x + 0.5f, m_Path[m_PathIndex].y + 0.5f, 0);
             Vector3 moveDirection = math.normalizesafe(targetPosition - transform.position);
 
             transform.position += moveDirection * m_Speed * Time.deltaTime;
 
-            if (math.distance(transform.position, targetPosition) < 0.1f)
+            if (moveDirection.y > 0)
+            {
+                // Jump
+            }
+
+            if (math.distance(transform.position, targetPosition) < 0.01f)
             {
                 // Go to next index
                 m_PathIndex--;

@@ -157,7 +157,7 @@ public class GridNode
         m_Grid = grid;
         m_X = x;
         m_Y = y;
-        m_isWalkable = true;
+        m_isWalkable = false; // All nodes are not walkable from the start.
     }
 
     public bool IsWalkable()

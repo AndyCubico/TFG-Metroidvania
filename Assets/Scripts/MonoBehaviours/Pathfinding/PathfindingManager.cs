@@ -10,6 +10,7 @@ using static UnityEngine.UI.Image;
 
 public class PathfindingManager : MonoBehaviour
 {
+    // Debug
     [SerializeField] private int2 m_StartPosition;
     [SerializeField] private int2 m_EndPosition;
 

@@ -31,10 +31,14 @@ public class HangEdges : MonoBehaviour
     [Header("Edge Mask")]
     public LayerMask playerEdgeMask;
 
+    float climbCooldown;
+    float hangCooldown;
+
     private void Start()
     {
         isHanged = false;
         finishClimb = false;
+        climbCooldown = 0f;
 
         if (isLeftEdge)
         {
@@ -55,14 +59,21 @@ public class HangEdges : MonoBehaviour
 
     private void Update()
     {
-        if (isHanged) //Once the player is hanged
+        if (climbCooldown > 0f)
         {
-            if(characterPlayerController.canUnhang && characterPlayerController.climbEdges) //If the player has released the space button and the climb edge key is pressed move the player to the new position
-            {
-                moveToNewPosition = true;
-                isHanged= false;
-            }
+            isHanged = false;
+            climbCooldown -= Time.deltaTime;
         }
+
+        if (isHanged) //Once the player is hanged
+         {
+             if (characterPlayerController.canUnhang && characterPlayerController.climbEdges) //If the player has released the space button and the climb edge key is pressed move the player to the new position
+             {
+                 moveToNewPosition = true;
+                 isHanged = false;
+                 climbCooldown = 0.2f;
+             }
+         }
 
         if (moveToNewPosition) //Here is where the player will be moved to the exit position
         {
@@ -84,26 +95,12 @@ public class HangEdges : MonoBehaviour
             }
         }
 
-        if (finishClimb)
-        {
-            if (characterPlayerController.dropDown)
-            {
-                finishClimb = false;
-            }
-        }
-
         if(characterPlayerController != null)
         {
-            if (isHanged && characterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
+            if (isHanged && (characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND || characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.WALL))
             {
-                if (characterPlayerController.isGrounded)
-                {
-                    isHanged = false;
-                }
-            }
-            else if (!isHanged && characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.HANGED)
-            {
-                isHanged = true;
+                finishClimb = false;
+                isHanged = false;
             }
         }
 
@@ -136,6 +133,28 @@ public class HangEdges : MonoBehaviour
 
             finishClimb = true;
             isHanged = true;
+        }
+
+        if (finishClimb)
+        {
+            if (characterPlayerController.dropDown)
+            {
+                finishClimb = false;
+                hangCooldown = 0.3f;
+            }
+        }
+
+        if (isHanged && hangCooldown > 0.01f)
+        {
+            hangCooldown -= Time.deltaTime;
+        }
+        else
+        {
+            if(hangCooldown >= 0)
+            {
+                isHanged = false;
+                hangCooldown = -1f;
+            }
         }
     }
 

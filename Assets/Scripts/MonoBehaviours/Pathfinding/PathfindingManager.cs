@@ -1,4 +1,3 @@
-using TMPro;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -6,7 +5,6 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using static PathfindingJob;
-using static UnityEngine.UI.Image;
 
 public class PathfindingManager : MonoBehaviour
 {

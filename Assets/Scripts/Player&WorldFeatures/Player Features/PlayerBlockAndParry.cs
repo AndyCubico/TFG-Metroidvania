@@ -1,3 +1,4 @@
+using PlayerController;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,10 +13,10 @@ public class PlayerBlockAndParry : MonoBehaviour
     public float maxParryTime;
     float parryCounter;
 
-    public float invencibilityTime;
-    float invencibilityCounter;
+    public float invincibilityTime;
+    float invincibilityCounter;
 
-    [Header("Recieve Damages")]
+    [Header("Receive Damages")]
     [Space(5)]
     public float damageBlock;
     public float damageNoBlock;
@@ -36,6 +37,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     // Player Rigidbody
     public Rigidbody2D rb;
 
+    // Player Controller
+    public CharacterPlayerController characterPlayerController;
+
     // Controls Action Input Delegates
     private void OnEnable()
     {
@@ -49,30 +53,31 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     public void BlockAndParryEvent(InputAction.CallbackContext context)
     {
-        if(blockTimer <= 0f) // Timer to be able to block again
+        if(characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND || characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.AIR)
         {
-            if (context.performed)
+            if (blockTimer <= 0f) // Timer to be able to block again
             {
-                isBlocking = true;
-                rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-            }
+                if (context.performed)
+                {
+                    isBlocking = true;
+                    rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+                }
 
-            if (context.canceled)
-            {
-                isBlocking = false;
-                blockTimer = blockCooldown; // When the block is quit the timer is applied
-                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                if (context.canceled)
+                {
+                    isBlocking = false;
+                    blockTimer = blockCooldown; // When the block is quit the timer is applied
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                }
             }
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isBlocking = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(blockTimer > 0f) // In case of have block, the cooldown will happen
@@ -89,13 +94,13 @@ public class PlayerBlockAndParry : MonoBehaviour
             parryCounter = 0; // The parry time returns to 0 at the moment of stop blocking
         }
 
-        if(invencibilityCounter <= 0f) // When the player recieves damage, bloks or parries a little invencivility will happen to different contemplated situations
+        if(invincibilityCounter <= 0f) // When the player receives damage, blocks or parries a little invincibility will happen to different contemplated situations
         {
-            if (enemyIsAttacking) // If an enemy attack is htting on the player
+            if (enemyIsAttacking) // If an enemy attack is hitting on the player
             {
                 if (isBlocking) // If the block action is executed correctly
                 {
-                    if (parryCounter > 0 && parryCounter <= maxParryTime) // If the time of parry is aviable
+                    if (parryCounter > 0 && parryCounter <= maxParryTime) // If the time of parry is available
                     {
                         ReciveAttackParryWindow(); // Call the function of parry
                     }
@@ -112,7 +117,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         }
         else
         {
-            invencibilityCounter -= Time.deltaTime; // Invencibility timer starts reducing
+            invincibilityCounter -= Time.deltaTime; // Invincibility timer starts reducing
         }
     }
 
@@ -123,7 +128,7 @@ public class PlayerBlockAndParry : MonoBehaviour
 
         //Send that the parry has been done correcltly
 
-        ActiveInvencibility(); // Active the invencibility
+        ActiveInvincibility(); // Active the invencibility
 
         if (enemyTesting) // Enemy color testing
         {
@@ -136,7 +141,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         enemyIsAttacking = false;
 
-        //The attack has been blocked
+        // The attack has been blocked
 
         if (enemyTesting) // Enemy color testing
         {
@@ -149,9 +154,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         enemyIsAttacking = false;
 
-        //Damage player
+        // Damage player
 
-        ActiveInvencibility(); // Active the invencibility
+        ActiveInvincibility(); // Active the invincibility
 
         if (enemyTesting) // Enemy color testing
         {
@@ -159,15 +164,15 @@ public class PlayerBlockAndParry : MonoBehaviour
         }
     }
 
-    // Enables invencibility
-    void ActiveInvencibility()
+    // Enables invincibility
+    void ActiveInvincibility()
     {
-        invencibilityCounter = invencibilityTime;
+        invincibilityCounter = invincibilityTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyAttack")) // If the type og collision is "EnemyAttack"
+        if (collision.CompareTag("EnemyAttack")) // If the type of collision is "EnemyAttack"
         {
             enemyIsAttacking = true; // Active the bool of attacking
 
@@ -180,9 +185,9 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyAttack")) // If the type og collision is "EnemyAttack"
+        if (collision.CompareTag("EnemyAttack")) // If the type of collision is "EnemyAttack"
         {
-            enemyIsAttacking = false; // Desactivate the enemy attack
+            enemyIsAttacking = false; // Deactivate the enemy attack
         }
     }
 }

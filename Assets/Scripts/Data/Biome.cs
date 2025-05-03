@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public enum BIOME
 {
+    NONE = 0,
     DESERT,
     JUNGLE,
     MEADOW,

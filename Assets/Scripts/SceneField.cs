@@ -7,13 +7,13 @@ using UnityEditor;
 [System.Serializable]
 public class SceneField
 {
-    [SerializeField] private Object m_sceneAsset;
+    [SerializeField] private Object _sceneAsset;
 
-    [SerializeField] private string m_sceneName = "";
+    [SerializeField] private string _sceneName = "";
 
     public string SceneName
     {
-        get { return m_sceneName; }
+        get { return _sceneName; }
     }
 
     // Make this code work with existing Unity methods
@@ -32,15 +32,17 @@ public class SceneFieldPropertyDrawer : PropertyDrawer
     {
         EditorGUI.BeginProperty(position, GUIContent.none, property);
 
-        SerializedProperty sceneAsset = property.FindPropertyRelative("m_sceneAsset");
-        SerializedProperty sceneName = property.FindPropertyRelative("m_sceneName");
+        SerializedProperty sceneAsset = property.FindPropertyRelative("_sceneAsset");
+        SerializedProperty sceneName = property.FindPropertyRelative("_sceneName");
+
+        position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
         if (sceneAsset != null)
         {
             sceneAsset.objectReferenceValue = EditorGUI.ObjectField(position, sceneAsset.objectReferenceValue, typeof(SceneAsset), false);
 
             if (sceneAsset.objectReferenceValue != null)
             {
-                sceneAsset.stringValue = (sceneName.objectReferenceValue as SceneAsset).name;
+                sceneName.stringValue = (sceneAsset.objectReferenceValue as SceneAsset).name;
             }
         }
 

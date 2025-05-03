@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
@@ -14,6 +15,18 @@ public class ChangeScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Collision Detected");
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if(m_sceneToLoad != null)
+            {
+                SceneManager.LoadScene(m_sceneToLoad.SceneName);
+            }
+        }
     }
 }

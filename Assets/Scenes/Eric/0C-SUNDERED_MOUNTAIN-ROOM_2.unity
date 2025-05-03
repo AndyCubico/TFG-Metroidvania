@@ -2226,7 +2226,7 @@ GameObject:
   - component: {fileID: 880514803}
   m_Layer: 0
   m_Name: OBJECTS
-  m_TagString: EditorOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4335,53 +4335,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7913157064699955596, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
   m_PrefabInstance: {fileID: 1705964897}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1752440832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1752440834}
-  - component: {fileID: 1752440833}
-  m_Layer: 0
-  m_Name: ChangeScene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1752440833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752440832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c10853f9aa4b1e4fb3aa333341b7baa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sceneToLoad:
-    _sceneAsset: {fileID: 102900000, guid: 86fb7cd5bd2caa9448316abe19df7020, type: 3}
-    _sceneName: 
---- !u!4 &1752440834
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752440832}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.92215, y: 7.873785, z: -0.07348779}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1754770384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6195,4 +6148,3 @@ SceneRoots:
   - {fileID: 1635910599}
   - {fileID: 1754770384}
   - {fileID: 343187309}
-  - {fileID: 1752440834}

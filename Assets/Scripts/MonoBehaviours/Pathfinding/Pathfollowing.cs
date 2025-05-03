@@ -1,6 +1,8 @@
+using System;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Pathfollowing : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     public Transform groundCheck;
     public float groundCheckRadius = 0.1f;
+
+    private Vector3 m_PreviousPosition;
 
     // Debug
     [SerializeField] private int2 m_StartPosition;
@@ -37,40 +41,46 @@ public class Pathfollowing : MonoBehaviour
         if (m_PathIndex >= 0 && !m_Path.IsEmpty)
         {
             Vector3 targetPosition = new Vector3(m_Path[m_PathIndex].x + 0.5f, m_Path[m_PathIndex].y + 0.5f, 0);
-            Vector3 moveDirection = math.normalizesafe(targetPosition - transform.position);
+            Vector3 moveDirection = targetPosition - transform.position;
 
-            transform.position += moveDirection * m_Speed * Time.deltaTime;
+            Debug.Log("TARGET: " + targetPosition);
+            Debug.Log("CURRENT: " + transform.position);
+            Debug.Log("DIRECTION: " + moveDirection);
 
-            if (CheckJump(transform.position))
+            if (CheckJump(targetPosition))
             {
                 // Jump
                 Jump();
             }
-
-            if (math.distance(transform.position, targetPosition) < 0.01f)
+            else
             {
+                MoveToX(moveDirection);
+            }
+
+            if (Mathf.Abs(transform.position.x - targetPosition.x) < 0.1f)
+            {
+                m_PreviousPosition = new Vector3(m_Path[m_PathIndex].x + 0.5f, m_Path[m_PathIndex].y + 0.5f, 0);
+
                 // Go to next index
                 m_PathIndex--;
             }
         }
     }
 
-    private void MoveToX(Vector3 targetPosition)
+    private void MoveToX(Vector3 direction)
     {
-        float directionX = targetPosition.x - transform.position.x;
-        directionX = Mathf.Sign(directionX); // -1, 0 or 1
-
-        transform.position += new Vector3(directionX, 0f, 0f) * m_Speed * Time.deltaTime;
+        int moveDir = MathF.Sign(direction.x);
+        m_rb.linearVelocityX = m_Speed * Time.deltaTime;
     }
 
     private void Jump()
     {
-        m_rb.linearVelocity += new Vector2(0, m_JumpForce);
+        m_rb.AddForceY(m_JumpForce, ForceMode2D.Impulse);
     }
 
     private bool CheckJump(Vector3 targetPosition)
     {
-        return targetPosition.y > transform.position.y + 0.1f && m_IsGrounded; // Add 0.1f to avoid jumping when the difference in y is too small. 
+        return targetPosition.y > m_PreviousPosition.y + 0.1f && CheckIsGrounded(); // Add 0.1f to avoid jumping when the difference in y is too small. 
     }
 
     private bool CheckIsGrounded()
@@ -98,6 +108,7 @@ public class Pathfollowing : MonoBehaviour
         }
 
         m_PathIndex = m_Path.Length - 1;
+        m_PreviousPosition = new Vector3(m_Path[m_Path.Length - 1].x + 0.5f, m_Path[m_Path.Length - 1].y + 0.5f, 0);
 
         path.Dispose();
     }

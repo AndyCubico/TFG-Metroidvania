@@ -57,6 +57,13 @@ public class EnemyShooter : MonoBehaviour
             e.timer = enemiesLifeTime;
             e.rb = e.obj.GetComponent<Rigidbody2D>();
 
+            e.obj.GetComponent<EnemyHit>().canBeParried = Random.value < 0.5f; // Generates a random true or false to indicate if it can be parried
+
+            if (!e.obj.GetComponent<EnemyHit>().canBeParried)
+            {
+                e.obj.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+
             if (!enemiesGravity) // Quit gravity in case of want it
             {
                 e.rb.gravityScale = 0;

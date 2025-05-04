@@ -622,7 +622,7 @@ namespace PlayerController
             {
                 exitWallTimer += Time.deltaTime;
 
-                if (exitWallTimer >= 0.1f || isGrounded)
+                if (exitWallTimer >= 0.2f || isGrounded)
                 {
                     moveStopper = false;
                     exitWallTimer = 0f;

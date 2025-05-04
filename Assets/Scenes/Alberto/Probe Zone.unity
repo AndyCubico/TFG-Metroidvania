@@ -36602,6 +36602,10 @@ PrefabInstance:
       propertyPath: invencibilityTime
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 23380348951475902, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: damageBlockPercentage
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.size
       value: 32
@@ -36996,7 +37000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: minAngleSlide
-      value: 25
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: jumpingRelease

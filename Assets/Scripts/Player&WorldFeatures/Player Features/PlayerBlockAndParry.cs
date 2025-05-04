@@ -7,8 +7,11 @@ public class PlayerBlockAndParry : MonoBehaviour
     [Header("Times")]
     [Space(5)]
     bool isBlocking;
-    public float blockCooldown;
-    float blockTimer;
+    public float blockCooldownTime;
+    float blockCooldownCounter;
+
+    float blockCounter;
+    public float blockTime;
 
     public float maxParryTime;
     float parryCounter;
@@ -18,8 +21,10 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     [Header("Receive Damages")]
     [Space(5)]
-    public float damageBlock;
-    public float damageNoBlock;
+    public float damageBlockPercentage;
+    float damageBlock;
+    float damageNoBlock;
+    bool canAttackBeParried;
 
 
     [Header("Input Actions")]
@@ -55,7 +60,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         if(characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND || characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.AIR)
         {
-            if (blockTimer <= 0f) // Timer to be able to block again
+            if (blockCooldownCounter <= 0f) // Timer to be able to block again
             {
                 if (context.performed)
                 {
@@ -65,9 +70,9 @@ public class PlayerBlockAndParry : MonoBehaviour
 
                 if (context.canceled)
                 {
-                    isBlocking = false;
-                    blockTimer = blockCooldown; // When the block is quit the timer is applied
-                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                //    isBlocking = false;
+                //    blockTimer = blockCooldown; // When the block is quit the timer is applied
+                //    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 }
             }
         }
@@ -76,22 +81,33 @@ public class PlayerBlockAndParry : MonoBehaviour
     void Start()
     {
         isBlocking = false;
+        canAttackBeParried = false;
+        parryCounter = 0f;
+        blockCounter = 0f;
+        invincibilityCounter = 0f;
     }
 
     void Update()
     {
-        if(blockTimer > 0f) // In case of have block, the cooldown will happen
+        if (blockCooldownCounter > 0f) // In case of have block, the cooldown will happen
         {
-            blockTimer -= Time.deltaTime;
+            blockCooldownCounter -= Time.deltaTime;
         }
 
         if (isBlocking) // The parry starts counting from the moment the player has blocked
         {
-            parryCounter += Time.deltaTime;
-        }
-        else
-        {
-            parryCounter = 0; // The parry time returns to 0 at the moment of stop blocking
+            if(parryCounter <= maxParryTime && canAttackBeParried) // Check if the time for parry is still open and the attack can be parried
+            {
+                parryCounter += Time.deltaTime;
+            }
+            else if(blockCounter <= blockTime) // Check if the parry apperture has passed and the block time stills open
+            {
+                blockCounter += Time.deltaTime;
+            }
+            else
+            {
+                ResetBlock(); // Reset the block when ends the process
+            }
         }
 
         if(invincibilityCounter <= 0f) // When the player receives damage, blocks or parries a little invincibility will happen to different contemplated situations
@@ -100,13 +116,22 @@ public class PlayerBlockAndParry : MonoBehaviour
             {
                 if (isBlocking) // If the block action is executed correctly
                 {
-                    if (parryCounter > 0 && parryCounter <= maxParryTime) // If the time of parry is available
+                    if (parryCounter > 0 && parryCounter <= maxParryTime && canAttackBeParried) // Check if the time for parry is still open and the attack can be parried
                     {
                         ReciveAttackParryWindow(); // Call the function of parry
+                        ResetBlock();
                     }
                     else
                     {
-                        ReciveAttackBlockWindow(); // Call the function of block
+                        if(blockCounter > 0f && blockCounter <= blockTime)
+                        {
+                            ReciveAttackBlockWindow(); // Call the function of block
+                            ResetBlock();
+                        }
+                        else
+                        {
+                            ResetBlock();
+                        }
                     }
                 }
                 else
@@ -121,14 +146,22 @@ public class PlayerBlockAndParry : MonoBehaviour
         }
     }
 
+    private void ResetBlock()
+    {
+        isBlocking = false;
+        blockCounter = 0;
+        parryCounter = 0;
+        blockCooldownCounter = blockCooldownTime;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
     // Execute a parry
     void ReciveAttackParryWindow()
     {
         enemyIsAttacking = false;
 
         //Send that the parry has been done correcltly
-
-        ActiveInvincibility(); // Active the invencibility
+        Debug.Log("Parry");
 
         if (enemyTesting) // Enemy color testing
         {
@@ -142,6 +175,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         enemyIsAttacking = false;
 
         // The attack has been blocked
+        Debug.Log(damageBlock);
 
         if (enemyTesting) // Enemy color testing
         {
@@ -155,6 +189,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         enemyIsAttacking = false;
 
         // Damage player
+        Debug.Log(damageNoBlock);
 
         ActiveInvincibility(); // Active the invincibility
 
@@ -172,13 +207,30 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyAttack")) // If the type of collision is "EnemyAttack"
+        if (invincibilityCounter <= 0f) //No new attacks entry if player is invencible
         {
-            enemyIsAttacking = true; // Active the bool of attacking
-
-            if (enemyTesting) //Take the enemy sprite renderer if is on testing
+            if (collision.CompareTag("EnemyAttack")) // If the type of collision is "EnemyAttack"
             {
-                enemyTest = collision.gameObject.GetComponent<SpriteRenderer>();
+                enemyIsAttacking = true; // Active the bool of attacking
+
+                EnemyHit enemyHit;
+
+                // Recieve here the damage that the hit is going to make
+                if(collision.TryGetComponent(out enemyHit))
+                {
+                    damageNoBlock = enemyHit.damage;
+                    canAttackBeParried = enemyHit.canBeParried;
+                    damageBlock = (damageNoBlock * (100 - damageBlockPercentage)) / 100; // Damage blocking is a % of the total incoming damage, is calculated here
+                }
+                else
+                {
+                    damageNoBlock = 0f;
+                }
+
+                if (enemyTesting) //Take the enemy sprite renderer if is on testing
+                {
+                    enemyTest = collision.gameObject.GetComponent<SpriteRenderer>();
+                }
             }
         }
     }

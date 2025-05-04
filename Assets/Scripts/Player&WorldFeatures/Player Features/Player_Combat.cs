@@ -32,7 +32,6 @@ public class Player_Combat : MonoBehaviour
 
     public float comboResetTime;
 
-
     [Header("________________________ DAMAGES ________________________")]
     [Space(10)]
 
@@ -63,7 +62,6 @@ public class Player_Combat : MonoBehaviour
     [Space(5)]
     //Layers
     public LayerMask enemyMask;
-    [Space(10)]
 
     //Character Controller
     CharacterPlayerController characterController;
@@ -81,6 +79,9 @@ public class Player_Combat : MonoBehaviour
     float comboTimer;
     bool isOnCombo;
     bool canHitCombo;
+
+    //Rigidbody
+    Rigidbody2D rb;
 
     private void OnEnable()
     {
@@ -109,6 +110,7 @@ public class Player_Combat : MonoBehaviour
     {
         characterController = GetComponent<CharacterPlayerController>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
         basicAttackCooldownLocal = 0;
     }
@@ -121,6 +123,7 @@ public class Player_Combat : MonoBehaviour
         {
             if(basicAttackCooldownLocal == 0)
             {
+                rb.constraints = RigidbodyConstraints2D.FreezePositionX;
                 ComboAttack();
                 canHitCombo = false;
             }
@@ -160,7 +163,7 @@ public class Player_Combat : MonoBehaviour
         switch (attackType)
         {
             case ATTACK_TYPE.SOFT_ATTACK:
-                    animator.SetTrigger("Attactk_Sides"); //Say the animator to do the side attack
+                    animator.SetTrigger("Attack_Sides"); //Say the animator to do the side attack
                 break;
         }
 
@@ -253,5 +256,10 @@ public class Player_Combat : MonoBehaviour
         {
             enemyHealth[i].ReceiveDamage(damage);
         }
+    }
+
+    public void AnimationHasFinished()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

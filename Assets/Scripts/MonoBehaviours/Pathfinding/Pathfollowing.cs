@@ -106,7 +106,7 @@ public class Pathfollowing : MonoBehaviour
         m_IsJumping = true;
         m_CoroutineExecution = true;
 
-        //// Go to jump position, which is the last node in the path that was reached.
+        // Go to jump position, which is the last node in the path that was reached.
         if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
         {
             Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
@@ -122,10 +122,6 @@ public class Pathfollowing : MonoBehaviour
         m_rb.linearVelocity = Vector2.zero;
         m_rb.angularVelocity = 0f;
 
-        // Make agent wait a X seconds to perform the jump
-        //yield return new WaitForSeconds(waitTime);
-
-        //m_rb.linearVelocityX = m_Speed * MathF.Sign(m_MoveDirection.x); // Reset direction.
         m_rb.AddForce(new Vector2(m_JumpForce / 2, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.
     }
 

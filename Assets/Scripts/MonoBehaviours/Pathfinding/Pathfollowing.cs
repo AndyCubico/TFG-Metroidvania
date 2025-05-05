@@ -3,7 +3,6 @@ using System.Collections;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Pathfollowing : MonoBehaviour
 {
@@ -108,15 +107,23 @@ public class Pathfollowing : MonoBehaviour
         m_CoroutineExecution = true;
 
         //// Go to jump position, which is the last node in the path that was reached.
-        //if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
-        //{
-        //    Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
-        //    Vector3 moveDirection = targetPosition - transform.position;
-        //    m_rb.linearVelocityX = m_Speed * MathF.Sign(moveDirection.x);
-        //}
+        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
+        {
+            Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
+            Vector3 moveDirection = targetPosition - transform.position;
+            m_rb.linearVelocityX = m_Speed * MathF.Sign(moveDirection.x);
+            yield return new WaitForSeconds(waitTime);
+        }
+        else
+        {
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        m_rb.linearVelocity = Vector2.zero;
+        m_rb.angularVelocity = 0f;
 
         // Make agent wait a X seconds to perform the jump
-        yield return new WaitForSeconds(waitTime);
+        //yield return new WaitForSeconds(waitTime);
 
         //m_rb.linearVelocityX = m_Speed * MathF.Sign(m_MoveDirection.x); // Reset direction.
         m_rb.AddForce(new Vector2(m_JumpForce / 2, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.

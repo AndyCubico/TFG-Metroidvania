@@ -33,15 +33,20 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_JumpWait = 1.0f;
     [SerializeField] private bool m_IsGrounded;
 
+    private Helper.Int2Comparer m_Comparer;
+
     // TODO: REWORK USING COMPONENTS
     private bool m_IsJumping = false;
     private bool m_CoroutineExecution = false;
 
-    private Helper.Int2Comparer m_Comparer;
+    // Debug
+    private NativeList<int2> m_DebugPath;
 
     private void Awake()
     {
         m_Path = new NativeList<int2>(Allocator.Persistent);
+        m_DebugPath = new NativeList<int2>(Allocator.Persistent);
+
         m_rb = GetComponent<Rigidbody2D>();
 
         m_Comparer = new Helper.Int2Comparer();
@@ -67,6 +72,8 @@ public class Pathfollowing : MonoBehaviour
                 SetPath(new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y)), new int2(x, y));
             }
         }
+
+        DrawPath();
     }
 
     private void FixedUpdate()
@@ -154,27 +161,6 @@ public class Pathfollowing : MonoBehaviour
         return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
     }
 
-    private void OnDrawGizmos()
-    {
-        if (m_GroundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(m_GroundCheck.position, m_GroundCheckRadius);
-        }
-
-        if (m_RightCliffCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(m_RightCliffCheck.position, m_RightCliffCheckRadius);
-        }
-
-        if (m_LeftCliffCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(m_LeftCliffCheck.position, m_LeftCliffCheckRadius);
-        }
-    }
-
     /// <summary>
     /// Set the path for the agent to follow.
     /// </summary>
@@ -196,12 +182,19 @@ public class Pathfollowing : MonoBehaviour
         if (m_Path.IsCreated)
             m_Path.Clear();
 
+        // Debug
+        if (m_DebugPath.IsCreated)
+            m_DebugPath.Clear();
+
         // Make sure path is valid. If there is no path or the final position is a cliff, invalid.
         if (path.Length != 0 && !GridManager.Instance.grid.GetValue(Mathf.FloorToInt(path[0].x), path[0].y).IsCliff())
         {
             for (int i = 0; i < path.Length; i++)
             {
                 m_Path.Add(path[i]);
+
+                // Debug
+                m_DebugPath.Add(path[i]);
             }
 
             m_PathIndex = m_Path.Length - 1;
@@ -213,6 +206,42 @@ public class Pathfollowing : MonoBehaviour
         }
 
         path.Dispose();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (m_GroundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_GroundCheck.position, m_GroundCheckRadius);
+        }
+
+        if (m_RightCliffCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_RightCliffCheck.position, m_RightCliffCheckRadius);
+        }
+
+        if (m_LeftCliffCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_LeftCliffCheck.position, m_LeftCliffCheckRadius);
+        }
+    }
+
+    private void DrawPath()
+    {
+        if (m_DebugPath.IsCreated)
+        {
+            for (int i = m_PathIndex; i > 0; i--)
+            {
+                Vector3 worldStart = new Vector3(m_Path[i].x + 0.5f, m_Path[i].y + 0.5f, 0);
+                Vector3 worldEnd = new Vector3(m_Path[i - 1].x + 0.5f, m_Path[i - 1].y + 0.5f, 0);
+                Debug.DrawLine(worldStart, worldEnd, Color.green); // Game view
+
+                Debug.DrawRay(worldStart, Vector3.up * 0.5f, Color.yellow);
+            }
+        }
     }
 
     // TODO: rework into components.
@@ -228,5 +257,8 @@ public class Pathfollowing : MonoBehaviour
     {
         if (m_Path.IsCreated)
             m_Path.Dispose();
+
+        if (m_DebugPath.IsCreated)
+            m_DebugPath.Dispose();
     }
 }

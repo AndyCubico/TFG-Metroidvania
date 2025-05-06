@@ -7,7 +7,7 @@ public class DirtyCamera : MonoBehaviour
     //Base follow
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 0.25f;
-    public GameObject camTargetPos;
+    public GameObject camTargetPos = null;
 
     [SerializeField] GameObject target;
     public Camera camRef; //Reference to this camera
@@ -40,6 +40,9 @@ public class DirtyCamera : MonoBehaviour
 
     //Edge vertical peak.
     float cameraDescend = 0;
+
+    //Camera bounds
+    [SerializeField] Rect cameraBounds = null;
 
     float camHeigth;
     float camWidth;

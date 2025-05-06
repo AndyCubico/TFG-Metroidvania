@@ -165,6 +165,12 @@ public class Player_Combat : MonoBehaviour
             case ATTACK_TYPE.SOFT_ATTACK:
                     animator.SetTrigger("Attack_Sides"); //Say the animator to do the side attack
                 break;
+            case ATTACK_TYPE.MID_ATTACK:
+                animator.SetTrigger("Attack_Sides"); //Say the animator to do the side attack
+                break;
+            case ATTACK_TYPE.HARD_ATTACK:
+                animator.SetTrigger("Attack_Sides"); //Say the animator to do the side attack
+                break;
         }
 
         if (characterController.flipAnimation) //Se what direction is facing the player

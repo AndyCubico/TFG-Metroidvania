@@ -15,16 +15,18 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_JumpForce;
 
+    // TODO: if check radius ends up not changing between checkers, delete variables and use only one.
     [Header("Collision management")]
     private Rigidbody2D m_rb;
     [SerializeField] private LayerMask m_GroundLayer;
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private float m_GroundCheckRadius = 0.1f;
-    // Jump in ledge
-    [SerializeField] private Transform m_RightLedgeCheck;
-    [SerializeField] private float m_RightLedgeCheckRadius = 0.1f;
-    [SerializeField] private Transform m_LeftLedgeCheck;
-    [SerializeField] private float m_LeftLedgeCheckRadius = 0.1f;
+
+    // Jump in cliff
+    [SerializeField] private Transform m_RightCliffCheck;
+    [SerializeField] private float m_RightCliffCheckRadius = 0.1f;
+    [SerializeField] private Transform m_LeftCliffCheck;
+    [SerializeField] private float m_LeftCliffCheckRadius = 0.1f;
 
     [Header("Jump management")]
     private Vector3 m_PreviousPosition;
@@ -35,10 +37,14 @@ public class Pathfollowing : MonoBehaviour
     private bool m_IsJumping = false;
     private bool m_CoroutineExecution = false;
 
+    private Helper.Int2Comparer m_Comparer;
+
     private void Awake()
     {
         m_Path = new NativeList<int2>(Allocator.Persistent);
         m_rb = GetComponent<Rigidbody2D>();
+
+        m_Comparer = new Helper.Int2Comparer();
     }
 
     // Update is called once per frame
@@ -69,12 +75,17 @@ public class Pathfollowing : MonoBehaviour
         {
             m_TargetPosition = new Vector3(m_Path[m_PathIndex].x + 0.5f, m_Path[m_PathIndex].y + 0.5f, 0);
             m_MoveDirection = m_TargetPosition - transform.position;
+            bool isCliff = GridManager.Instance.grid.GetValue(Mathf.FloorToInt(m_Path[m_PathIndex].x), m_Path[m_PathIndex].y).IsCliff();
 
             if (!m_CoroutineExecution)
             {
-                if (CheckJump(m_TargetPosition) /*|| 
-                    !CheckIsGrounded(m_RightLedgeCheck, m_RightLedgeCheckRadius) || 
-                    !CheckIsGrounded(m_LeftLedgeCheck, m_LeftLedgeCheckRadius)*/)
+                if (CheckJump(m_TargetPosition))
+                {
+                    StartCoroutine(Jump(m_JumpWait));
+                }
+                else if (isCliff &&
+                    (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
+                    !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
                 {
                     StartCoroutine(Jump(m_JumpWait));
                 }
@@ -113,11 +124,12 @@ public class Pathfollowing : MonoBehaviour
         m_IsJumping = true;
         m_CoroutineExecution = true;
 
+        Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
+        Vector3 moveDirection = targetPosition - transform.position;
+
         // Go to jump position, which is the last node in the path that was reached.
         if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
         {
-            Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
-            Vector3 moveDirection = targetPosition - transform.position;
             m_rb.linearVelocityX = m_Speed * MathF.Sign(moveDirection.x);
             yield return new WaitForSeconds(waitTime);
         }
@@ -129,7 +141,7 @@ public class Pathfollowing : MonoBehaviour
         m_rb.linearVelocity = Vector2.zero;
         m_rb.angularVelocity = 0f;
 
-        m_rb.AddForce(new Vector2(m_JumpForce / 2, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.
+        m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce / 2, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.
     }
 
     private bool CheckJump(Vector3 targetPosition)
@@ -148,18 +160,18 @@ public class Pathfollowing : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(m_GroundCheck.position, m_GroundCheckRadius);
-        }      
-        
-        if (m_RightLedgeCheck != null)
+        }
+
+        if (m_RightCliffCheck != null)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(m_RightLedgeCheck.position, m_RightLedgeCheckRadius);
-        } 
-        
-        if (m_LeftLedgeCheck != null)
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_RightCliffCheck.position, m_RightCliffCheckRadius);
+        }
+
+        if (m_LeftCliffCheck != null)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(m_LeftLedgeCheck.position, m_LeftLedgeCheckRadius);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_LeftCliffCheck.position, m_LeftCliffCheckRadius);
         }
     }
 
@@ -174,11 +186,18 @@ public class Pathfollowing : MonoBehaviour
 
         PathfindingManager.Instance.StartPathfinding(path, start, end);
 
+        // Delete starting position if it is the same of the previous path taken,
+        // to avoid the agent restarting their path each time the target changes destination.
+        if (m_Path.Length != 0 && path.Length != 0 && m_Comparer.Equals(m_Path[m_Path.Length - 1], path[path.Length - 1]))
+        {
+            path.RemoveAt(path.Length - 1);
+        }
+
         if (m_Path.IsCreated)
             m_Path.Clear();
 
-        // Make sure path is valid.
-        if (path.Length != 0)
+        // Make sure path is valid. If there is no path or the final position is a cliff, invalid.
+        if (path.Length != 0 && !GridManager.Instance.grid.GetValue(Mathf.FloorToInt(path[0].x), path[0].y).IsCliff())
         {
             for (int i = 0; i < path.Length; i++)
             {
@@ -187,6 +206,10 @@ public class Pathfollowing : MonoBehaviour
 
             m_PathIndex = m_Path.Length - 1;
             m_PreviousPosition = new Vector3(m_Path[m_Path.Length - 1].x + 0.5f, m_Path[m_Path.Length - 1].y + 0.5f, 0);
+        }
+        else
+        {
+            Debug.Log("Path is not valid.");
         }
 
         path.Dispose();

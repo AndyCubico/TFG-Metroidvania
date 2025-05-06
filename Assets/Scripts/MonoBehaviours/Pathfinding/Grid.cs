@@ -5,6 +5,7 @@ public class Grid<T>
 {
     // Event to adjust a cell of the grid at any given time, mostly for debug. Example: make a node not walkable.
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
+
     public class OnGridObjectChangedEventArgs
     {
         public int x, y;
@@ -104,8 +105,8 @@ public class Grid<T>
     public int GetWidth()
     {
         return m_Width;
-    } 
-    
+    }
+
     public int GetHeight()
     {
         return m_Height;
@@ -137,7 +138,7 @@ public class Grid<T>
     {
         if (gridObject is GridNode node)
         {
-            return node.IsWalkable() ? Color.white : Color.black;
+            return node.IsCliff() ? Color.red : node.IsWalkable() ? Color.white : Color.black;
         }
 
         return Color.white;
@@ -150,24 +151,37 @@ public class GridNode
     private int m_X;
     private int m_Y;
 
-    private bool m_isWalkable;
+    private bool m_IsWalkable;
+    private bool m_IsCliff;
 
     public GridNode(Grid<GridNode> grid, int x, int y)
     {
         m_Grid = grid;
         m_X = x;
         m_Y = y;
-        m_isWalkable = false; // All nodes are not walkable from the start.
+        m_IsWalkable = false; // All nodes are not walkable from the start.
+        m_IsCliff = false; // Flag to indicate nodes that are walkable but have to be jumped.
     }
 
     public bool IsWalkable()
     {
-        return m_isWalkable;
+        return m_IsWalkable;
     }
 
     public void SetIsWalkable(bool isWalkable)
     {
-        m_isWalkable = isWalkable;
+        m_IsWalkable = isWalkable;
+        m_Grid.TriggerGridObjectChanged(m_X, m_Y);
+    }
+
+    public bool IsCliff()
+    {
+        return m_IsCliff;
+    }
+
+    public void SetIsCliff(bool isCliff)
+    {
+        m_IsCliff = isCliff;
         m_Grid.TriggerGridObjectChanged(m_X, m_Y);
     }
 }

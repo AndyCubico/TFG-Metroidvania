@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    // Test Grid class
     public Grid<GridNode> grid;
     [SerializeField] private int width, height;
     [SerializeField] private float cellSize;
@@ -38,12 +37,12 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        // Check which cells have ground just beneath, they are walkable.
+        // Check which nodes have ground just beneath, they are walkable.
         for (int x = 0; x < grid.GetWidth(); x++)
         {
             for (int y = 1; y < grid.GetHeight(); y++) // Start from y = 1 to allow y - 1.
             {
-                // Walkable above ground (cell below is blocked, current cell is empty).
+                // Nodes that are walkable above ground (node below is blocked, current cell is empty).
                 if (blockedNodes[x, y - 1] && !blockedNodes[x, y])
                 {
                     grid.GetValue(x, y)?.SetIsWalkable(true);
@@ -51,9 +50,9 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        // In this last step, check if there are any ledges, and if there are, make all nodes below it walkable until reaching ground.
-        // This will create walkable zones for the agents to jump.
-        HashSet<int2> jumpOrLedgeNodes = new HashSet<int2>(new Int2Comparer()); // Store grid nodes that are ledges or jump nodes.
+        // In this last step, check if there are any cliffs, and if there are, make all nodes below it walkable until reaching ground.
+        // Cliffs are walkable zones that tell the agent to jump instead of to just go walking.
+        HashSet<int2> cliffNodes = new HashSet<int2>(new Helper.Int2Comparer()); // Store grid nodes that are cliffs.
 
         for (int x = 0; x < grid.GetWidth(); x++)
         {
@@ -62,23 +61,24 @@ public class GridManager : MonoBehaviour
                 // Not walkable but not blocked by ground.
                 if (!blockedNodes[x, y] && grid.GetValue(x, y)?.IsWalkable() == false)
                 {
-                    // Check if right or left nodes are walkable and have not been previously checked for being either a ledge or jump node.
-                    bool leftIsWalkable = x > 0 && grid.GetValue(x - 1, y)?.IsWalkable() == true && !jumpOrLedgeNodes.Contains(new int2(x - 1, y));
-                    bool rightIsWalkable = x < grid.GetWidth() - 1 && grid.GetValue(x + 1, y)?.IsWalkable() == true && !jumpOrLedgeNodes.Contains(new int2(x + 1, y));
+                    // Check if right or left nodes are walkable and have not been previously checked for being a cliff.
+                    bool leftIsWalkable = x > 0 && grid.GetValue(x - 1, y)?.IsWalkable() == true && !cliffNodes.Contains(new int2(x - 1, y));
+                    bool rightIsWalkable = x < grid.GetWidth() - 1 && grid.GetValue(x + 1, y)?.IsWalkable() == true && !cliffNodes.Contains(new int2(x + 1, y));
 
-                    // If true, the current node being checked is considered a ledge.
+                    // If true, the current node being checked is considered a cliff.
                     if (leftIsWalkable || rightIsWalkable)
                     {
-                        // Mark this ledge as walkable
+                        // Mark this node as walkable and as a cliff.
                         grid.GetValue(x, y)?.SetIsWalkable(true);
-                        jumpOrLedgeNodes.Add(new int2(x, y));
+                        grid.GetValue(x, y)?.SetIsCliff(true);
+                        cliffNodes.Add(new int2(x, y));
 
-                        // Mark all cells below as walkable until a ground node to create the jump nodes.
+                        // Mark all cells below as walkable until a ground node.
                         for (int z = y - 1; z >= 0; z--)
                         {
                             if (blockedNodes[x, z]) break;
                             grid.GetValue(x, z)?.SetIsWalkable(true);
-                            jumpOrLedgeNodes.Add(new int2(x, z));
+                            cliffNodes.Add(new int2(x, z));
                         }
                     }
                 }
@@ -110,19 +110,6 @@ public class GridManager : MonoBehaviour
             {
                 Debug.Log($"Node at ({x}, {y}) is {(node.IsWalkable() ? "Walkable" : "Blocked")}");
             }
-        }
-    }
-
-    class Int2Comparer : IEqualityComparer<int2>
-    {
-        public bool Equals(int2 a, int2 b)
-        {
-            return a.x == b.x && a.y == b.y;
-        }
-
-        public int GetHashCode(int2 obj)
-        {
-            return obj.x.GetHashCode() ^ obj.y.GetHashCode();
         }
     }
 }

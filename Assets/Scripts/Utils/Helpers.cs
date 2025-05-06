@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 
 public static class Helper
 {
@@ -28,5 +30,19 @@ public static class Helper
     {
         baker.AddComponent(entity, component);
         baker.SetComponentEnabled<T>(entity, isEnabled);
+    }
+
+    // Class to compare Int2, useful for pathfinding, maybe it can have other uses.
+    public class Int2Comparer : IEqualityComparer<int2>
+    {
+        public bool Equals(int2 a, int2 b)
+        {
+            return a.x == b.x && a.y == b.y;
+        }
+
+        public int GetHashCode(int2 obj)
+        {
+            return obj.x.GetHashCode() ^ obj.y.GetHashCode();
+        }
     }
 }

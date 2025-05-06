@@ -15,6 +15,11 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_JumpForce;
 
+    [Header("Jump management")]
+    private Vector3 m_PreviousPosition;
+    [SerializeField] private float m_JumpWait = 1.0f;
+    [SerializeField] private bool m_IsGrounded;
+
     // TODO: If check radius ends up not changing between checkers, delete variables and use only one.
     [Header("Collision management")]
     private Rigidbody2D m_rb;
@@ -27,11 +32,6 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_RightCliffCheckRadius = 0.1f;
     [SerializeField] private Transform m_LeftCliffCheck;
     [SerializeField] private float m_LeftCliffCheckRadius = 0.1f;
-
-    [Header("Jump management")]
-    private Vector3 m_PreviousPosition;
-    [SerializeField] private float m_JumpWait = 1.0f;
-    [SerializeField] private bool m_IsGrounded;
 
     private Helper.Int2Comparer m_Comparer;
 

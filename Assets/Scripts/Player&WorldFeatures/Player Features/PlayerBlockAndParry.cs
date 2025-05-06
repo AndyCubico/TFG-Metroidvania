@@ -18,6 +18,8 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     public float invincibilityTime;
     float invincibilityCounter;
+    bool isInvencible;
+    bool isDashing;
 
     [Header("Receive Damages")]
     [Space(5)]
@@ -110,7 +112,16 @@ public class PlayerBlockAndParry : MonoBehaviour
             }
         }
 
-        if(invincibilityCounter <= 0f) // When the player receives damage, blocks or parries a little invincibility will happen to different contemplated situations
+        if (characterPlayerController.isDashing)
+        {
+            isDashing = true;
+        }
+        else
+        {
+            isDashing = false;
+        }
+
+        if (!isInvencible && !isDashing) // When the player receives damage, blocks or parries a little invincibility will happen to different contemplated situations
         {
             if (enemyIsAttacking) // If an enemy attack is hitting on the player
             {
@@ -143,6 +154,11 @@ public class PlayerBlockAndParry : MonoBehaviour
         else
         {
             invincibilityCounter -= Time.deltaTime; // Invincibility timer starts reducing
+
+            if(invincibilityCounter <= 0)
+            {
+                isInvencible = false;
+            }
         }
     }
 
@@ -202,6 +218,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     // Enables invincibility
     void ActiveInvincibility()
     {
+        isInvencible = true;
         invincibilityCounter = invincibilityTime;
     }
 

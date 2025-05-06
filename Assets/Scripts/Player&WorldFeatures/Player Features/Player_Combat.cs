@@ -156,6 +156,15 @@ public class Player_Combat : MonoBehaviour
             }
         }
         //Basic Attack + Combo_
+
+        if(characterController.playerState == CharacterPlayerController.PLAYER_STATUS.DASH)
+        {
+            Physics2D.IgnoreLayerCollision(6, 11, true);
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(6, 11, false);
+        }
     }
 
     void BasicAttack(ATTACK_TYPE attackType)

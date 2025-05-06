@@ -308,6 +308,22 @@ PrefabInstance:
       propertyPath: camTargetPos
       value: 
       objectReference: {fileID: 1713000230}
+    - target: {fileID: 7361114521443116912, guid: 6a9b4fa9b3be2be42ab2527cec7e6ee3, type: 3}
+      propertyPath: cameraBounds.x
+      value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361114521443116912, guid: 6a9b4fa9b3be2be42ab2527cec7e6ee3, type: 3}
+      propertyPath: cameraBounds.y
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361114521443116912, guid: 6a9b4fa9b3be2be42ab2527cec7e6ee3, type: 3}
+      propertyPath: cameraBounds.width
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361114521443116912, guid: 6a9b4fa9b3be2be42ab2527cec7e6ee3, type: 3}
+      propertyPath: cameraBounds.height
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

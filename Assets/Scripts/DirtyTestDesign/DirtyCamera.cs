@@ -42,7 +42,7 @@ public class DirtyCamera : MonoBehaviour
     float cameraDescend = 0;
 
     //Camera bounds
-    [SerializeField] Rect cameraBounds = null;
+    [SerializeField] Rect cameraBounds;
 
     float camHeigth;
     float camWidth;
@@ -206,6 +206,12 @@ public class DirtyCamera : MonoBehaviour
         float yTarget = target.transform.position.y;
 
         yTarget += cameraDescend;
+
+        //Respect camera bounds
+        xTarget = Mathf.Min(cameraBounds.width - camWidth, xTarget);
+        xTarget = Mathf.Max(cameraBounds.x + camWidth, (xTarget));
+        yTarget = Mathf.Min(cameraBounds.height - camHeigth, yTarget);
+        yTarget = Mathf.Max(cameraBounds.y + camHeigth, (yTarget));
 
         Vector3 targetPosition = new Vector3
             (

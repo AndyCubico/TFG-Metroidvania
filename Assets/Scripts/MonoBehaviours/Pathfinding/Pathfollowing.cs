@@ -17,16 +17,21 @@ public class Pathfollowing : MonoBehaviour
 
     [Header("Collision management")]
     private Rigidbody2D m_rb;
-    [SerializeField] private LayerMask groundLayer;
-    public Transform groundCheck;
-    public float groundCheckRadius = 0.1f;
+    [SerializeField] private LayerMask m_GroundLayer;
+    [SerializeField] private Transform m_GroundCheck;
+    [SerializeField] private float m_GroundCheckRadius = 0.1f;
+    // Jump in ledge
+    [SerializeField] private Transform m_RightLedgeCheck;
+    [SerializeField] private float m_RightLedgeCheckRadius = 0.1f;
+    [SerializeField] private Transform m_LeftLedgeCheck;
+    [SerializeField] private float m_LeftLedgeCheckRadius = 0.1f;
 
     [Header("Jump management")]
     private Vector3 m_PreviousPosition;
     [SerializeField] private float m_JumpWait = 1.0f;
     [SerializeField] private bool m_IsGrounded;
 
-    // TODO: REWORK, TOO DIRTY
+    // TODO: REWORK USING COMPONENTS
     private bool m_IsJumping = false;
     private bool m_CoroutineExecution = false;
 
@@ -67,7 +72,9 @@ public class Pathfollowing : MonoBehaviour
 
             if (!m_CoroutineExecution)
             {
-                if (CheckJump(m_TargetPosition))
+                if (CheckJump(m_TargetPosition) /*|| 
+                    !CheckIsGrounded(m_RightLedgeCheck, m_RightLedgeCheckRadius) || 
+                    !CheckIsGrounded(m_LeftLedgeCheck, m_LeftLedgeCheckRadius)*/)
                 {
                     StartCoroutine(Jump(m_JumpWait));
                 }
@@ -77,7 +84,7 @@ public class Pathfollowing : MonoBehaviour
                 }
                 else
                 {
-                    m_IsJumping = !CheckIsGrounded();
+                    m_IsJumping = !CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius);
                 }
             }
 
@@ -127,20 +134,32 @@ public class Pathfollowing : MonoBehaviour
 
     private bool CheckJump(Vector3 targetPosition)
     {
-        return targetPosition.y > m_PreviousPosition.y + 0.1f && CheckIsGrounded(); // Add 0.1f to avoid jumping when the difference in y is too small. 
+        return targetPosition.y > m_PreviousPosition.y + 0.1f && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius); // Add 0.1f to avoid jumping when the difference in y is too small. 
     }
 
-    private bool CheckIsGrounded()
+    private bool CheckIsGrounded(Transform check, float radius)
     {
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
     }
 
     private void OnDrawGizmos()
     {
-        if (groundCheck != null)
+        if (m_GroundCheck != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Gizmos.DrawWireSphere(m_GroundCheck.position, m_GroundCheckRadius);
+        }      
+        
+        if (m_RightLedgeCheck != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(m_RightLedgeCheck.position, m_RightLedgeCheckRadius);
+        } 
+        
+        if (m_LeftLedgeCheck != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(m_LeftLedgeCheck.position, m_LeftLedgeCheckRadius);
         }
     }
 
@@ -176,7 +195,7 @@ public class Pathfollowing : MonoBehaviour
     // TODO: rework into components.
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (((1 << collision.gameObject.layer) & groundLayer) != 0 && m_CoroutineExecution)
+        if (((1 << collision.gameObject.layer) & m_GroundLayer) != 0 && m_CoroutineExecution)
         {
             m_CoroutineExecution = false;
         }

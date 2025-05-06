@@ -15,7 +15,7 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_JumpForce;
 
-    // TODO: if check radius ends up not changing between checkers, delete variables and use only one.
+    // TODO: If check radius ends up not changing between checkers, delete variables and use only one.
     [Header("Collision management")]
     private Rigidbody2D m_rb;
     [SerializeField] private LayerMask m_GroundLayer;
@@ -237,14 +237,14 @@ public class Pathfollowing : MonoBehaviour
             {
                 Vector3 worldStart = new Vector3(m_Path[i].x + 0.5f, m_Path[i].y + 0.5f, 0);
                 Vector3 worldEnd = new Vector3(m_Path[i - 1].x + 0.5f, m_Path[i - 1].y + 0.5f, 0);
-                Debug.DrawLine(worldStart, worldEnd, Color.green); // Game view
+                Debug.DrawLine(worldStart, worldEnd, Color.green); 
 
                 Debug.DrawRay(worldStart, Vector3.up * 0.5f, Color.yellow);
             }
         }
     }
 
-    // TODO: rework into components.
+    // TODO: Rework into components.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (((1 << collision.gameObject.layer) & m_GroundLayer) != 0 && m_CoroutineExecution)

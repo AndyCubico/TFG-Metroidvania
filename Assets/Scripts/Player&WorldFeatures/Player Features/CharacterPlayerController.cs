@@ -627,7 +627,7 @@ namespace PlayerController
             {
                 exitWallTimer += Time.deltaTime;
 
-                if (exitWallTimer >= 0.2f || isGrounded)
+                if (exitWallTimer >= 0.3f || isGrounded || playerState == PLAYER_STATUS.WALL)
                 {
                     moveStopper = false;
                     exitWallTimer = 0f;
@@ -1186,7 +1186,7 @@ namespace PlayerController
 
                 rb.AddForce(new Vector2(hangWallImpulseSides * dir, hangWallImpulseUp), ForceMode2D.Force); //Extra impulse to get out of the wall
 
-                if ((playerFaceDir == PLAYER_FACE_DIRECTION.LEFT && isLeftWall) || (playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT && isRightWall)) //To make an easier an intuitive way of hanging from the edge it will be stopped from movement for a brief of time, unless he jumps to the contrary face of the wall 
+                if (((playerFaceDir == PLAYER_FACE_DIRECTION.LEFT || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_DOWN || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_UP) && isLeftWall) || ((playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_DOWN || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_DOWN) && isRightWall)) //To make an easier an intuitive way of hanging from the edge it will be stopped from movement for a brief of time, unless he jumps to the contrary face of the wall 
                 {
                     hasExitWall = true;
                     moveStopper = true;

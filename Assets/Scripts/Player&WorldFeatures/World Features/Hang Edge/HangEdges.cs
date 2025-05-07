@@ -137,7 +137,7 @@ public class HangEdges : MonoBehaviour
 
         if (finishClimb)
         {
-            if (characterPlayerController.dropDown)
+            if (characterPlayerController.dropDown || characterPlayerController.downControllerSensitivity < -0.8f)
             {
                 finishClimb = false;
                 hangCooldown = 0.3f;

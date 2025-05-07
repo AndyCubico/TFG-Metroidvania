@@ -103,6 +103,7 @@ namespace PlayerController
         private float coyoteTimeCounter;
         private float gravityEffect;
         private float exitWallTimer;
+        [SerializeField]public float downControllerSensitivity;
 
         private int maxAirJumps;
 
@@ -205,6 +206,7 @@ namespace PlayerController
         public InputActionReference impactHittingDown;
         public InputActionReference UpAction;
         public InputActionReference DownAction;
+        public InputActionReference DownControllerAction;
         public InputActionReference LeftAction;
         public InputActionReference RightAction;
         public InputActionReference DropAction;
@@ -575,6 +577,9 @@ namespace PlayerController
             move.x = movement.action.ReadValue<Vector2>().x;
             //MOVEMENT_
 
+            //_CheckDownControllerInput
+            downControllerSensitivity = DownControllerAction.action.ReadValue<Vector2>().y;
+
             //_COYOTE_TIME
             CoyoteTime();
             //COYOTE_TIME_
@@ -602,7 +607,7 @@ namespace PlayerController
             //Aniamte the player
             AnimatePlayer();
 
-            if (dropDown && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can detach walls or edges if press S or Down joystick
+            if ((dropDown || downControllerSensitivity < -0.8f) && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can detach walls or edges if press S or Down joystick
             {
                 PlayerUnFreeze();
                 canJump = false;
@@ -868,7 +873,7 @@ namespace PlayerController
         //Make the action of ground hit
         private void GroundHit()
         {
-            if (playerState == PLAYER_STATUS.AIR || playerState == PLAYER_STATUS.WALL)
+            if (playerState == PLAYER_STATUS.AIR)
             {
                 if (jumpKeyHold && impactHitHold && hasImpactHit && !isCrouch && rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
                 {

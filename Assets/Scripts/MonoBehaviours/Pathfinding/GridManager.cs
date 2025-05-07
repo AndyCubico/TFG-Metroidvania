@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < grid.GetHeight(); y++)
             {
                 Vector2 worldPos = origin + new Vector2(x + 0.5f, y + 0.5f) * cellSize;
-                Collider2D hit = Physics2D.OverlapBox(worldPos, Vector2.one * cellSize * 0.8f, 0, m_NotWalkable);// * 0.9f to avoid false positives.
+                Collider2D hit = Physics2D.OverlapBox(worldPos, Vector2.one * cellSize * 0.8f, 0, m_NotWalkable);// * 0.8f to avoid false positives.
                 blockedNodes[x, y] = hit != null;
             }
         }
@@ -73,13 +73,13 @@ public class GridManager : MonoBehaviour
                         grid.GetValue(x, y)?.SetIsCliff(true);
                         cliffNodes.Add(new int2(x, y));
 
-                        // Mark all cells below as walkable until a ground node.
-                        for (int z = y - 1; z >= 0; z--)
-                        {
-                            if (blockedNodes[x, z]) break;
-                            grid.GetValue(x, z)?.SetIsWalkable(true);
-                            cliffNodes.Add(new int2(x, z));
-                        }
+                        //// Mark all cells below as walkable until a ground node.
+                        //for (int z = y - 1; z >= 0; z--)
+                        //{
+                        //    if (blockedNodes[x, z]) break;
+                        //    grid.GetValue(x, z)?.SetIsWalkable(true);
+                        //    cliffNodes.Add(new int2(x, z));
+                        //}
                     }
                 }
             }
@@ -126,13 +126,13 @@ public class GridManager : MonoBehaviour
                                 grid.GetValue(gapX, y)?.SetIsCliff(true);
                                 cliffNodes.Add(new int2(gapX, y));
 
-                                // Fill down until hitting ground
-                                for (int z = y - 1; z >= 0; z--)
-                                {
-                                    if (blockedNodes[gapX, z]) break;
-                                    grid.GetValue(gapX, z)?.SetIsWalkable(true);
-                                    cliffNodes.Add(new int2(gapX, z));
-                                }
+                                //// Fill down until hitting ground
+                                //for (int z = y - 1; z >= 0; z--)
+                                //{
+                                //    if (blockedNodes[gapX, z]) break;
+                                //    grid.GetValue(gapX, z)?.SetIsWalkable(true);
+                                //    cliffNodes.Add(new int2(gapX, z));
+                                //}
                             }
                         }
 

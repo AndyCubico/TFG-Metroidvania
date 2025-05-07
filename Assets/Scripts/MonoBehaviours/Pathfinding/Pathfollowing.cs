@@ -35,17 +35,19 @@ public class Pathfollowing : MonoBehaviour
 
     private Helper.Int2Comparer m_Comparer;
 
+    [Header("Stuck management")]
+    // Manage the agent if it gets stuck.
+    private float m_Timer = 0.0f;
+    [SerializeField] private float m_StuckTime = 2.0f;
+    private int m_LastPathIndex = 0;
+
     // TODO: REWORK USING COMPONENTS
     private bool m_IsJumping = false;
     private bool m_CoroutineExecution = false;
 
-    // Debug
-    private NativeList<int2> m_DebugPath;
-
     private void Awake()
     {
         m_Path = new NativeList<int2>(Allocator.Persistent);
-        m_DebugPath = new NativeList<int2>(Allocator.Persistent);
 
         m_rb = GetComponent<Rigidbody2D>();
 
@@ -90,11 +92,11 @@ public class Pathfollowing : MonoBehaviour
                 {
                     StartCoroutine(Jump(m_JumpWait));
                 }
-                else if (isCliff &&
+                else if (isCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
                     !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
                 {
-                    StartCoroutine(Jump(m_JumpWait));
+                    StartCoroutine(Jump(m_JumpWait, 0.5f));
                 }
                 else if (!m_IsJumping)
                 {
@@ -104,6 +106,22 @@ public class Pathfollowing : MonoBehaviour
                 {
                     m_IsJumping = !CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius);
                 }
+
+                if (m_PathIndex == m_LastPathIndex)
+                {
+                    m_Timer += Time.deltaTime;
+
+                    // If the agent is stucked, cancel path and return to origin.
+                    if (m_Timer >= m_StuckTime)
+                    {
+                        m_Timer = 0;
+
+                        if (m_PathIndex + 1 < m_Path.Length)
+                        {
+                            SetPath(new int2(m_Path[m_PathIndex + 1].x, m_Path[m_PathIndex + 1].y), new int2(m_Path[m_Path.Length - 1].x, m_Path[m_Path.Length - 1].y));
+                        }
+                    }
+                }
             }
 
             if (Mathf.Abs(transform.position.x - m_TargetPosition.x) < 0.1f)
@@ -112,6 +130,10 @@ public class Pathfollowing : MonoBehaviour
 
                 // Go to next index
                 m_PathIndex--;
+                m_LastPathIndex = m_PathIndex;
+
+                // Reset timer to check if stuck.
+                m_Timer = 0;
 
                 if (m_PathIndex == -1)
                 {
@@ -126,10 +148,14 @@ public class Pathfollowing : MonoBehaviour
         m_rb.linearVelocityX = m_Speed * MathF.Sign(direction.x);
     }
 
-    private IEnumerator Jump(float waitTime)
+    private IEnumerator Jump(float waitTime, float forceX = 0.35f)
     {
+        Debug.Log("JUMP");
+
         m_IsJumping = true;
         m_CoroutineExecution = true;
+
+        yield return new WaitForSeconds(waitTime / 2);
 
         Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
         Vector3 moveDirection = targetPosition - transform.position;
@@ -140,15 +166,15 @@ public class Pathfollowing : MonoBehaviour
             m_rb.linearVelocityX = m_Speed * MathF.Sign(moveDirection.x);
             yield return new WaitForSeconds(waitTime);
         }
-        else
-        {
-            yield return new WaitForSeconds(waitTime);
-        }
+        //else
+        //{
+        //    yield return new WaitForSeconds(waitTime);
+        //}
 
         m_rb.linearVelocity = Vector2.zero;
         m_rb.angularVelocity = 0f;
 
-        m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce / 2, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.
+        m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce * forceX, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.
     }
 
     private bool CheckJump(Vector3 targetPosition)
@@ -182,22 +208,16 @@ public class Pathfollowing : MonoBehaviour
         if (m_Path.IsCreated)
             m_Path.Clear();
 
-        // Debug
-        if (m_DebugPath.IsCreated)
-            m_DebugPath.Clear();
-
         // Make sure path is valid. If there is no path or the final position is a cliff, invalid.
         if (path.Length != 0 && !GridManager.Instance.grid.GetValue(Mathf.FloorToInt(path[0].x), path[0].y).IsCliff())
         {
             for (int i = 0; i < path.Length; i++)
             {
                 m_Path.Add(path[i]);
-
-                // Debug
-                m_DebugPath.Add(path[i]);
             }
 
             m_PathIndex = m_Path.Length - 1;
+            m_LastPathIndex = m_PathIndex;
             m_PreviousPosition = new Vector3(m_Path[m_Path.Length - 1].x + 0.5f, m_Path[m_Path.Length - 1].y + 0.5f, 0);
         }
         else
@@ -231,13 +251,13 @@ public class Pathfollowing : MonoBehaviour
 
     private void DrawPath()
     {
-        if (m_DebugPath.IsCreated)
+        if (m_Path.Length != 0)
         {
             for (int i = m_PathIndex; i > 0; i--)
             {
                 Vector3 worldStart = new Vector3(m_Path[i].x + 0.5f, m_Path[i].y + 0.5f, 0);
                 Vector3 worldEnd = new Vector3(m_Path[i - 1].x + 0.5f, m_Path[i - 1].y + 0.5f, 0);
-                Debug.DrawLine(worldStart, worldEnd, Color.green); 
+                Debug.DrawLine(worldStart, worldEnd, Color.green);
 
                 Debug.DrawRay(worldStart, Vector3.up * 0.5f, Color.yellow);
             }
@@ -257,8 +277,5 @@ public class Pathfollowing : MonoBehaviour
     {
         if (m_Path.IsCreated)
             m_Path.Dispose();
-
-        if (m_DebugPath.IsCreated)
-            m_DebugPath.Dispose();
     }
 }

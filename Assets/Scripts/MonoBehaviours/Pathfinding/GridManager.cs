@@ -147,18 +147,6 @@ public class GridManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            grid.GetXYPosition(mouseWorldPos, out int x, out int y);
-            GridNode node = grid.GetValue(x, y);
-            if (node != null)
-            {
-                node.SetIsWalkable(!node.IsWalkable()); // Toggle walkability
-            }
-        }
-
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

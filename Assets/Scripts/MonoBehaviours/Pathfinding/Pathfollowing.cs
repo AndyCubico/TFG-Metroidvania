@@ -47,6 +47,10 @@ public class Pathfollowing : MonoBehaviour
     private bool m_IsJumping = false;
     private bool m_JumpCoroutineExecution = false;
 
+    // Debug
+    [SerializeField] private LineRenderer lineRenderer;
+
+
     private void Awake()
     {
         m_Path = new NativeList<int2>(Allocator.Persistent);
@@ -54,8 +58,9 @@ public class Pathfollowing : MonoBehaviour
         m_rb = GetComponent<Rigidbody2D>();
 
         m_Comparer = new Helper.Int2Comparer();
-    }
 
+        lineRenderer = GetComponent<LineRenderer>();
+    }
 
     void Update()
     {
@@ -82,7 +87,6 @@ public class Pathfollowing : MonoBehaviour
 
         DrawPath();
     }
-
 
     private void FixedUpdate()
     {
@@ -163,7 +167,6 @@ public class Pathfollowing : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Set the path for the agent to follow.
     /// </summary>
@@ -208,7 +211,6 @@ public class Pathfollowing : MonoBehaviour
         path.Dispose();
     }
 
-
     /// <summary>
     /// Move towards a given direction in the X axis.
     /// </summary>
@@ -217,7 +219,6 @@ public class Pathfollowing : MonoBehaviour
     {
         m_rb.linearVelocityX = m_Speed * MathF.Sign(direction.x);
     }
-
 
     /// <summary>
     /// Check if the agent should jump, checking if it is grounded and if the 
@@ -230,7 +231,6 @@ public class Pathfollowing : MonoBehaviour
         return targetPosition.y > m_PreviousPosition.y + 0.1f && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius); // Add 0.1f to avoid jumping when the difference in y is too small. 
     }
 
-
     /// <summary>
     /// Check if the agent is touching the ground, using a child GameObject 
     /// to determine if it is colliding with the ground.
@@ -242,7 +242,6 @@ public class Pathfollowing : MonoBehaviour
     {
         return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
     }
-
 
     /// <summary>
     /// Coroutine to allow delays for the jumping action, allowing to perform 
@@ -294,7 +293,6 @@ public class Pathfollowing : MonoBehaviour
         m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce * forceX, m_JumpForce), ForceMode2D.Impulse);
     }
 
-
     // TODO: Rework into components.
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -304,13 +302,11 @@ public class Pathfollowing : MonoBehaviour
         }
     }
 
-
     private void OnDestroy()
     {
         if (m_Path.IsCreated)
             m_Path.Dispose();
     }
-
 
     // Debug
     private void OnDrawGizmos()
@@ -334,20 +330,18 @@ public class Pathfollowing : MonoBehaviour
         }
     }
 
-
     // Debug
     private void DrawPath()
     {
-        if (m_Path.Length != 0)
-        {
-            for (int i = m_PathIndex; i > 0; i--)
-            {
-                Vector3 worldStart = new Vector3(m_Path[i].x + 0.5f, m_Path[i].y + 0.5f, 0);
-                Vector3 worldEnd = new Vector3(m_Path[i - 1].x + 0.5f, m_Path[i - 1].y + 0.5f, 0);
-                Debug.DrawLine(worldStart, worldEnd, Color.green);
+        if (m_Path.Length == 0 || lineRenderer == null)
+            return;
 
-                Debug.DrawRay(worldStart, Vector3.up * 0.5f, Color.yellow);
-            }
+        lineRenderer.positionCount = m_PathIndex + 1;
+
+        for (int i = m_PathIndex; i >= 0; i--)
+        {
+            Vector3 pos = new Vector3(m_Path[i].x + 0.5f, m_Path[i].y + 0.5f, 0);
+            lineRenderer.SetPosition(m_PathIndex - i, pos);
         }
     }
 }

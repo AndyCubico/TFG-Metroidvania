@@ -8,10 +8,10 @@ public class Teleport : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            m_Enemy.transform.position = m_TP.transform.position;
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    m_Enemy.transform.position = m_TP.transform.position;
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

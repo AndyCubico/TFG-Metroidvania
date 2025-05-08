@@ -103,7 +103,7 @@ namespace PlayerController
         private float coyoteTimeCounter;
         private float gravityEffect;
         private float exitWallTimer;
-        [SerializeField]public float downControllerSensitivity;
+        [HideInInspector] public float downControllerSensitivity;
 
         private int maxAirJumps;
 
@@ -122,7 +122,7 @@ namespace PlayerController
         private Vector2 move;
 
         //Rigid Body
-        [SerializeField] public Rigidbody2D rb;
+        [HideInInspector] public Rigidbody2D rb;
 
         [Header("Checkers of Movement")]
         [Space(5)]
@@ -145,8 +145,8 @@ namespace PlayerController
         public bool playerOnEdgeUnfreeze;
 
         public bool hasImpactHit;
-        [SerializeField] public bool isImpactHitting;
-        [SerializeField] public bool isDashing;
+        [HideInInspector] public bool isImpactHitting;
+        [HideInInspector] public bool isDashing;
 
         public bool canJump;
 
@@ -214,10 +214,10 @@ namespace PlayerController
         [Space(10)]
 
         //Bool keys
-        [SerializeField] public bool jumpKeyRelease;
-        [SerializeField] public bool jumpKeyHold;
-        [SerializeField] public bool climbEdges;
-        [SerializeField] public bool dropDown;
+        [HideInInspector] public bool jumpKeyRelease;
+        [HideInInspector] public bool jumpKeyHold;
+        [HideInInspector] public bool climbEdges;
+        [HideInInspector] public bool dropDown;
         bool impactHitHold;
         bool impactHitDown;
         bool jumpKeyDown;
@@ -236,7 +236,7 @@ namespace PlayerController
         [Space(10)]
 
         //Actual Player state on Movement
-        [SerializeField] public PLAYER_STATUS playerState;
+        [HideInInspector] public PLAYER_STATUS playerState;
 
         PLAYER_FACE_DIRECTION playerFaceDir;
         PLAYER_FACE_DIRECTION dashFacing;
@@ -627,7 +627,7 @@ namespace PlayerController
             {
                 exitWallTimer += Time.deltaTime;
 
-                if (exitWallTimer >= 0.3f || isGrounded || playerState == PLAYER_STATUS.WALL)
+                if (exitWallTimer >= 0.23f || isGrounded || playerState == PLAYER_STATUS.WALL)
                 {
                     moveStopper = false;
                     exitWallTimer = 0f;

@@ -585,7 +585,7 @@ Transform:
   m_GameObject: {fileID: 3583168046156720182}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.31499994, y: 0.25099987, z: 0}
+  m_LocalPosition: {x: 0.3040002, y: 0.25099987, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -951,6 +951,7 @@ MonoBehaviour:
   hangWallImpulseSides: 25
   slidingForce: 100
   maxTimeInputBuffer: 0.2
+  downControllerSensitivity: 0
   impactHit: 1000
   rb: {fileID: 0}
   isGrounded: 1
@@ -999,6 +1000,7 @@ MonoBehaviour:
   impactHittingDown: {fileID: -8680991738361691527, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   UpAction: {fileID: 5669993627503631196, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   DownAction: {fileID: 4797119804628937381, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  DownControllerAction: {fileID: -5550485386949472793, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   LeftAction: {fileID: -4503380700899818797, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   RightAction: {fileID: 4806974397292948443, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   DropAction: {fileID: 8594606948321114743, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -1467,6 +1469,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 311ffb07-9265-4c29-8f5e-05e4154ddd83
     m_ActionName: 'Player/Block_Parry[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d63faa3-0079-4ac9-a701-ca15cd10c64b
+    m_ActionName: 'Player/DownSensitivity[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

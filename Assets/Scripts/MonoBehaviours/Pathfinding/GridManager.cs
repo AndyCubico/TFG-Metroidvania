@@ -74,12 +74,12 @@ public class GridManager : MonoBehaviour
                         cliffNodes.Add(new int2(x, y));
 
                         //// Mark all cells below as walkable until a ground node.
-                        //for (int z = y - 1; z >= 0; z--)
-                        //{
-                        //    if (blockedNodes[x, z]) break;
-                        //    grid.GetValue(x, z)?.SetIsWalkable(true);
-                        //    cliffNodes.Add(new int2(x, z));
-                        //}
+                        for (int z = y - 1; z >= 0; z--)
+                        {
+                            if (blockedNodes[x, z]) break;
+                            grid.GetValue(x, z)?.SetIsWalkable(true);
+                            cliffNodes.Add(new int2(x, z));
+                        }
                     }
                 }
             }
@@ -127,12 +127,12 @@ public class GridManager : MonoBehaviour
                                 cliffNodes.Add(new int2(gapX, y));
 
                                 //// Fill down until hitting ground
-                                //for (int z = y - 1; z >= 0; z--)
-                                //{
-                                //    if (blockedNodes[gapX, z]) break;
-                                //    grid.GetValue(gapX, z)?.SetIsWalkable(true);
-                                //    cliffNodes.Add(new int2(gapX, z));
-                                //}
+                                for (int z = y - 1; z >= 0; z--)
+                                {
+                                    if (blockedNodes[gapX, z]) break;
+                                    grid.GetValue(gapX, z)?.SetIsWalkable(true);
+                                    cliffNodes.Add(new int2(gapX, z));
+                                }
                             }
                         }
 

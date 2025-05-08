@@ -16,7 +16,7 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_JumpForce;
 
     [Header("Jump management")]
-    private Vector3 m_PreviousPosition;
+    private Vector3 m_PreviousPosition; // Required for the step back performed before jumping.
     [SerializeField] private float m_JumpWait = 1.0f;
     [SerializeField] private bool m_IsGrounded;
 
@@ -27,13 +27,12 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private float m_GroundCheckRadius = 0.1f;
 
-    // Jump in cliff
+    // Jump in cliff parameters.
     [SerializeField] private Transform m_RightCliffCheck;
     [SerializeField] private float m_RightCliffCheckRadius = 0.1f;
     [SerializeField] private Transform m_LeftCliffCheck;
     [SerializeField] private float m_LeftCliffCheckRadius = 0.1f;
-
-    private Helper.Int2Comparer m_Comparer;
+    private bool m_IsCliff = false;
 
     [Header("Stuck management")]
     // Manage the agent if it gets stuck.
@@ -41,9 +40,12 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_StuckTime = 2.0f;
     private int m_LastPathIndex = 0;
 
+    // Needed to compare int2 values.
+    private Helper.Int2Comparer m_Comparer;
+
     // TODO: REWORK USING COMPONENTS
     private bool m_IsJumping = false;
-    private bool m_CoroutineExecution = false;
+    private bool m_JumpCoroutineExecution = false;
 
     private void Awake()
     {
@@ -54,10 +56,13 @@ public class Pathfollowing : MonoBehaviour
         m_Comparer = new Helper.Int2Comparer();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         // Debug
+        // TODO: When doing the set path with a moving player,
+        // create some sort of timer to not create too many paths
+        // and check if the agent is jumping.
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,44 +83,56 @@ public class Pathfollowing : MonoBehaviour
         DrawPath();
     }
 
+
     private void FixedUpdate()
     {
+        // Perform pathfollowing if the path is valid and has not finished.
         if (m_PathIndex >= 0 && !m_Path.IsEmpty)
         {
+            // Get the world position of the node to go.
             m_TargetPosition = new Vector3(m_Path[m_PathIndex].x + 0.5f, m_Path[m_PathIndex].y + 0.5f, 0);
             m_MoveDirection = m_TargetPosition - transform.position;
-            bool isCliff = GridManager.Instance.grid.GetValue(Mathf.FloorToInt(m_Path[m_PathIndex].x), m_Path[m_PathIndex].y).IsCliff();
 
-            if (!m_CoroutineExecution)
+            // Check if the next node is a cliff, needed to perform the jump.
+            m_IsCliff = GridManager.Instance.grid.GetValue(Mathf.FloorToInt(m_Path[m_PathIndex].x), m_Path[m_PathIndex].y).IsCliff();
+
+            // If agent is not jumping...
+            if (!m_JumpCoroutineExecution)
             {
+                // Check if it should jump if the target node is on higher ground.
                 if (CheckJump(m_TargetPosition))
                 {
                     StartCoroutine(Jump(m_JumpWait));
                 }
-                else if (isCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
+                // Check if it should jump if the next node is a cliff.
+                else if (m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
                     !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
                 {
-                    StartCoroutine(Jump(m_JumpWait, 0.5f));
+                    StartCoroutine(Jump(m_JumpWait, 0.5f)); // 0.5f in the forceX parameter to jump more horizontally.
                 }
+                // Move if it is not jumping.
                 else if (!m_IsJumping)
                 {
                     MoveToX(m_MoveDirection);
                 }
+                // Check when it lands on the ground after jumping.
                 else
                 {
                     m_IsJumping = !CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius);
                 }
 
+                // Check if the agent is stuck in a node.
                 if (m_PathIndex == m_LastPathIndex)
                 {
                     m_Timer += Time.deltaTime;
 
-                    // If the agent is stucked, cancel path and return to origin.
+                    // If the agent is stuck, cancel path and return to origin.
                     if (m_Timer >= m_StuckTime)
                     {
                         m_Timer = 0;
 
+                        // TODO: Change the state of the agent to return to the spawn position or else.
                         if (m_PathIndex + 1 < m_Path.Length)
                         {
                             SetPath(new int2(m_Path[m_PathIndex + 1].x, m_Path[m_PathIndex + 1].y), new int2(m_Path[m_Path.Length - 1].x, m_Path[m_Path.Length - 1].y));
@@ -124,17 +141,20 @@ public class Pathfollowing : MonoBehaviour
                 }
             }
 
+            // Check if the agent has reached the current target node.
             if (Mathf.Abs(transform.position.x - m_TargetPosition.x) < 0.1f)
             {
+                // Set the current position to the previous position.
                 m_PreviousPosition = new Vector3(m_Path[m_PathIndex].x + 0.5f, m_Path[m_PathIndex].y + 0.5f, 0);
 
-                // Go to next index
+                // Go to the next node.
                 m_PathIndex--;
                 m_LastPathIndex = m_PathIndex;
 
-                // Reset timer to check if stuck.
+                // Reset the timer to check if it gets stuck.
                 m_Timer = 0;
 
+                // If it is the last node of the path, stop.
                 if (m_PathIndex == -1)
                 {
                     m_rb.linearVelocityX = 0;
@@ -143,49 +163,6 @@ public class Pathfollowing : MonoBehaviour
         }
     }
 
-    private void MoveToX(Vector3 direction)
-    {
-        m_rb.linearVelocityX = m_Speed * MathF.Sign(direction.x);
-    }
-
-    private IEnumerator Jump(float waitTime, float forceX = 0.35f)
-    {
-        Debug.Log("JUMP");
-
-        m_IsJumping = true;
-        m_CoroutineExecution = true;
-
-        yield return new WaitForSeconds(waitTime / 2);
-
-        Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
-        Vector3 moveDirection = targetPosition - transform.position;
-
-        // Go to jump position, which is the last node in the path that was reached.
-        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
-        {
-            m_rb.linearVelocityX = m_Speed * MathF.Sign(moveDirection.x);
-            yield return new WaitForSeconds(waitTime);
-        }
-        //else
-        //{
-        //    yield return new WaitForSeconds(waitTime);
-        //}
-
-        m_rb.linearVelocity = Vector2.zero;
-        m_rb.angularVelocity = 0f;
-
-        m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce * forceX, m_JumpForce), ForceMode2D.Impulse); // Apply jump force.
-    }
-
-    private bool CheckJump(Vector3 targetPosition)
-    {
-        return targetPosition.y > m_PreviousPosition.y + 0.1f && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius); // Add 0.1f to avoid jumping when the difference in y is too small. 
-    }
-
-    private bool CheckIsGrounded(Transform check, float radius)
-    {
-        return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
-    }
 
     /// <summary>
     /// Set the path for the agent to follow.
@@ -198,8 +175,8 @@ public class Pathfollowing : MonoBehaviour
 
         PathfindingManager.Instance.StartPathfinding(path, start, end);
 
-        // Delete starting position if it is the same of the previous path taken,
-        // to avoid the agent restarting their path each time the target changes destination.
+        // Delete the starting position if it is the same as the previous path taken,
+        // to avoid the agent restarting their path each time the target changes position.
         if (m_Path.Length != 0 && path.Length != 0 && m_Comparer.Equals(m_Path[m_Path.Length - 1], path[path.Length - 1]))
         {
             path.RemoveAt(path.Length - 1);
@@ -208,7 +185,8 @@ public class Pathfollowing : MonoBehaviour
         if (m_Path.IsCreated)
             m_Path.Clear();
 
-        // Make sure path is valid. If there is no path or the final position is a cliff, invalid.
+        // Make sure the path is valid. If there is no path or
+        // the final position is a cliff, invalid.
         if (path.Length != 0 && !GridManager.Instance.grid.GetValue(Mathf.FloorToInt(path[0].x), path[0].y).IsCliff())
         {
             for (int i = 0; i < path.Length; i++)
@@ -216,7 +194,9 @@ public class Pathfollowing : MonoBehaviour
                 m_Path.Add(path[i]);
             }
 
-            m_PathIndex = m_Path.Length - 1;
+            // Ignoring the first node of the path (the one where from where the agent starts) makes
+            // the pathfollowing work better.
+            m_PathIndex = m_Path.Length - 2; // TODO: CAREFUL WITH THIS IT CAN BREAK THE SYSTEM.
             m_LastPathIndex = m_PathIndex;
             m_PreviousPosition = new Vector3(m_Path[m_Path.Length - 1].x + 0.5f, m_Path[m_Path.Length - 1].y + 0.5f, 0);
         }
@@ -228,6 +208,111 @@ public class Pathfollowing : MonoBehaviour
         path.Dispose();
     }
 
+
+    /// <summary>
+    /// Move towards a given direction in the X axis.
+    /// </summary>
+    /// <param name="direction"></param>
+    private void MoveToX(Vector3 direction)
+    {
+        m_rb.linearVelocityX = m_Speed * MathF.Sign(direction.x);
+    }
+
+
+    /// <summary>
+    /// Check if the agent should jump, checking if it is grounded and if the 
+    /// target node position is above the current one.
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    /// <returns></returns>
+    private bool CheckJump(Vector3 targetPosition)
+    {
+        return targetPosition.y > m_PreviousPosition.y + 0.1f && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius); // Add 0.1f to avoid jumping when the difference in y is too small. 
+    }
+
+
+    /// <summary>
+    /// Check if the agent is touching the ground, using a child GameObject 
+    /// to determine if it is colliding with the ground.
+    /// </summary>
+    /// <param name="check"> Transform of the GameObject that checks the ground. </param>
+    /// <param name="radius"></param>
+    /// <returns></returns>
+    private bool CheckIsGrounded(Transform check, float radius)
+    {
+        return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
+    }
+
+
+    /// <summary>
+    /// Coroutine to allow delays for the jumping action, allowing to perform 
+    /// a small step back before jumping, making it feel more realistic.
+    /// It will first wait x time, then move slightly back to prepare for the jump,
+    /// wait again, and finally jump.
+    /// </summary>
+    /// <param name="waitTime"> Time to wait between actions before jumping. </param>
+    /// <param name="forceX"> Parameter to control the jump force in the X axis. </param>
+    /// <returns></returns>
+    private IEnumerator Jump(float waitTime, float forceX = 0.35f)
+    {
+        // If it is a cliff jump and the agent is not moving,
+        // it needs to be just in the edge to perform the jump correctly,
+        // so it will move forward a little bit.
+        if (m_rb.linearVelocityX == 0 && m_IsCliff)
+        {
+            m_rb.linearVelocityX = m_Speed * MathF.Sign(m_MoveDirection.x);
+        }
+
+        m_IsJumping = true;
+        m_JumpCoroutineExecution = true;
+
+        // First wait, very short.
+        yield return new WaitForSeconds(waitTime / 2);
+
+        // Get the position from where it should perform the jump, one node
+        // before the current one.
+        Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
+        Vector3 moveDirection = targetPosition - transform.position;
+
+        // TODO: This should be a while loop but it breaks the whole system.
+        // If it is not close enough, go to the step back position.
+        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
+        {
+            // Go to the opposite direction of the next node to do the step back.
+            m_rb.linearVelocityX = m_Speed * MathF.Sign(-m_MoveDirection.x);
+
+            // Wait before jumping, create the illusion of the agent repositioning
+            // itself and preparing to jump.
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        // Make the agent be completely still.
+        m_rb.linearVelocity = Vector2.zero;
+        m_rb.angularVelocity = 0f;
+
+        // Apply jump with an impulse, with the forceX multiplier if needed.
+        m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce * forceX, m_JumpForce), ForceMode2D.Impulse);
+    }
+
+
+    // TODO: Rework into components.
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & m_GroundLayer) != 0 && m_JumpCoroutineExecution)
+        {
+            m_JumpCoroutineExecution = false;
+        }
+    }
+
+
+    private void OnDestroy()
+    {
+        if (m_Path.IsCreated)
+            m_Path.Dispose();
+    }
+
+
+    // Debug
     private void OnDrawGizmos()
     {
         if (m_GroundCheck != null)
@@ -249,6 +334,8 @@ public class Pathfollowing : MonoBehaviour
         }
     }
 
+
+    // Debug
     private void DrawPath()
     {
         if (m_Path.Length != 0)
@@ -262,20 +349,5 @@ public class Pathfollowing : MonoBehaviour
                 Debug.DrawRay(worldStart, Vector3.up * 0.5f, Color.yellow);
             }
         }
-    }
-
-    // TODO: Rework into components.
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (((1 << collision.gameObject.layer) & m_GroundLayer) != 0 && m_CoroutineExecution)
-        {
-            m_CoroutineExecution = false;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (m_Path.IsCreated)
-            m_Path.Dispose();
     }
 }

@@ -562,9 +562,6 @@ namespace PlayerController
             {
                 HangingEdges();
             }
-
-            //Add the basic movement force to the player
-            AddMovementSpeed();
         }
 
         private void Update()
@@ -579,6 +576,9 @@ namespace PlayerController
 
             //_CheckDownControllerInput
             downControllerSensitivity = DownControllerAction.action.ReadValue<Vector2>().y;
+            
+            //Add the basic movement force to the player
+            AddMovementSpeed();
 
             //_COYOTE_TIME
             CoyoteTime();
@@ -1168,7 +1168,7 @@ namespace PlayerController
             isRightWall = Physics2D.OverlapAreaAll(RightWallCheck.bounds.min, RightWallCheck.bounds.max, wallMask).Length > 0;
 
             //If you are hanged and jump, unfreeze player to move again
-            if (playerState == PLAYER_STATUS.JUMP && isHangingWall)
+            if (playerState == PLAYER_STATUS.JUMP && isHangingWall && !hasExitWall)
             {
                 int dir = 0;
 
@@ -1184,6 +1184,7 @@ namespace PlayerController
 
                 PlayerUnFreeze();
 
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 rb.AddForce(new Vector2(hangWallImpulseSides * dir, hangWallImpulseUp), ForceMode2D.Force); //Extra impulse to get out of the wall
 
                 if (((playerFaceDir == PLAYER_FACE_DIRECTION.LEFT || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_DOWN || playerFaceDir == PLAYER_FACE_DIRECTION.LEFT_UP) && isLeftWall) || ((playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_DOWN || playerFaceDir == PLAYER_FACE_DIRECTION.RIGHT_DOWN) && isRightWall)) //To make an easier an intuitive way of hanging from the edge it will be stopped from movement for a brief of time, unless he jumps to the contrary face of the wall 

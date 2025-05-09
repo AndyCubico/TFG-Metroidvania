@@ -562,15 +562,15 @@ namespace PlayerController
             {
                 HangingEdges();
             }
+
+            //Add the basic movement force to the player
+            AddMovementSpeed();
         }
 
         private void Update()
         {
             //Input buffer update
             InputBufferUpdate();
-
-            //Add the basic movement force to the player
-            AddMovementSpeed();
 
             //_MOVEMENT
             //move = new Vector2(Input.GetAxisRaw("Horizontal"), 0); //Only exist horizontal control for basic movement 
@@ -1170,7 +1170,7 @@ namespace PlayerController
             //If you are hanged and jump, unfreeze player to move again
             if (playerState == PLAYER_STATUS.JUMP && isHangingWall)
             {
-                int dir = 1;
+                int dir = 0;
 
                 if (isRightWall)
                 {

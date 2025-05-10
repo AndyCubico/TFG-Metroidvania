@@ -353,7 +353,7 @@ public class PathfindingManager : MonoBehaviour
         return pathNodeArray;
     }
 
-    // Struct to manage each individual node in the gid.
+    // Struct to manage each individual node in the grid.
     public struct PathNode
     {
         // Position
@@ -380,7 +380,7 @@ public class PathfindingManager : MonoBehaviour
         }
 
         /// <summary>
-        /// Set the node to be walkable or nots
+        /// Set the node to be walkable or not.
         /// </summary>
         /// <param name="isWalkable"></param>
         public void SetIsWalkable(bool isWalkable)

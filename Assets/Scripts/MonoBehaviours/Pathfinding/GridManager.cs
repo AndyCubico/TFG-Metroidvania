@@ -141,8 +141,6 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     void Update()

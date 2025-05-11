@@ -592,16 +592,16 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 973502142}
     m_Modifications:
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
-      value: 0C-SUNDERED_MOUNTAIN-ROOM_10
+      value: 0C-SUNDERED_MOUNTAIN-ROOM_8
       objectReference: {fileID: 0}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: f5836a2bc18c2e1469752db520e05427, type: 3}
+      objectReference: {fileID: 102900000, guid: 38732ae3287b22b4bb5fdb784505cedb, type: 3}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -659,6 +659,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+--- !u!4 &492521427 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+  m_PrefabInstance: {fileID: 492521426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &562600767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1350,7 +1355,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 973502142}
     m_Modifications:
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
@@ -1413,6 +1418,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+--- !u!4 &895523394 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+  m_PrefabInstance: {fileID: 895523393}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &900645031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1484,6 +1494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 973502142}
+  - component: {fileID: 973502143}
   m_Layer: 0
   m_Name: LOGIC
   m_TagString: Untagged
@@ -1503,9 +1514,23 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 895523394}
+  - {fileID: 492521427}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &973502143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973502141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa207a2ebe236d45a5be90adfa00be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1042719186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3555,8 +3580,6 @@ SceneRoots:
   - {fileID: 622221241}
   - {fileID: 1635910599}
   - {fileID: 973502142}
-  - {fileID: 895523393}
-  - {fileID: 492521426}
   - {fileID: 8631500111526901913}
   - {fileID: 1821767201}
   - {fileID: 1713000231}

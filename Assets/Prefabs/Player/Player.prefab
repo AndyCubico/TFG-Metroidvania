@@ -1466,13 +1466,57 @@ MonoBehaviour:
     m_ActionId: 43b9ac94-9212-46cf-92f9-0fc387c65f5a
     m_ActionName: 'Player/BasicAttack[/Mouse/leftButton]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 23380348951475902}
+        m_TargetAssemblyTypeName: PlayerBlockAndParry, Assembly-CSharp
+        m_MethodName: BlockAndParryEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 311ffb07-9265-4c29-8f5e-05e4154ddd83
     m_ActionName: 'Player/Block_Parry[/Mouse/rightButton]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 2d63faa3-0079-4ac9-a701-ca15cd10c64b
     m_ActionName: 'Player/DownSensitivity[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5111995519066811782}
+        m_TargetAssemblyTypeName: Special_Habilities, Assembly-CSharp
+        m_MethodName: SpecialHabilitiesEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 363b5c38-daa8-4441-95b4-c8bfa4d9b9bc
+    m_ActionName: 'Player/SpecialAttacks[/DualShock4GamepadHID/rightTrigger,/Keyboard/leftCtrl]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5111995519066811782}
+        m_TargetAssemblyTypeName: Special_Habilities, Assembly-CSharp
+        m_MethodName: SnowHabilityEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fa8a5998-bdb8-43bf-987c-180a6327a341
+    m_ActionName: 'Player/SnowAttack[/DualShock4GamepadHID/buttonEast,/Keyboard/d]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1666,6 +1710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7900799402940464715}
+  - component: {fileID: 5111995519066811782}
   m_Layer: 6
   m_Name: Combat
   m_TagString: Untagged
@@ -1692,3 +1737,19 @@ Transform:
   - {fileID: 4756261843047339317}
   m_Father: {fileID: 7193643725467410121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5111995519066811782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891637118055805764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f66968a040ad2d449ccdbdbb3b5e4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterPlayerController: {fileID: 7804950762158198664}
+  rb: {fileID: 2501051149002799573}
+  SpecialHabilitiesTrigger: {fileID: -6606324200797737117, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  SnowHability: {fileID: 1626922096970559354, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

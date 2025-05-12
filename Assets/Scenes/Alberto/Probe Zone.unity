@@ -16039,6 +16039,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.9}
   m_EdgeRadius: 0
+--- !u!114 &824526623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5111995519066811782, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+  m_PrefabInstance: {fileID: 4970506031060333450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f66968a040ad2d449ccdbdbb3b5e4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &844507828
 GameObject:
   m_ObjectHideFlags: 0
@@ -46323,7 +46334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 32
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[26].m_ActionId
@@ -46374,6 +46385,18 @@ PrefabInstance:
       value: 'Player/Block_Parry[/Mouse/rightButton]'
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[32].m_ActionName
+      value: 'Player/DownSensitivity[/DualShock4GamepadHID/leftStick,/DualShock4GamepadHID1/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[33].m_ActionName
+      value: 'Player/SpecialAttacks[/DualShock4GamepadHID/rightTrigger,/DualShock4GamepadHID1/rightTrigger,/Keyboard/leftCtrl]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_ActionName
+      value: 'Player/SnowAttack[/DualShock4GamepadHID/buttonEast,/DualShock4GamepadHID1/buttonEast,/Keyboard/d]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -46399,6 +46422,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[31].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
@@ -46430,6 +46457,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[33].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1447127301}
@@ -46457,6 +46492,14 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[31].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 107336686}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[33].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 824526623}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 824526623}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -46518,6 +46561,14 @@ PrefabInstance:
       value: BlockAndParryEvent
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[33].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpecialHabilitiesEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SnowHabilityEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: CharacterPlayerController, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -46550,6 +46601,14 @@ PrefabInstance:
       value: Player_Block_And_Parry, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[33].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Special_Habilities, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Special_Habilities, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -46575,6 +46634,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_ActionEvents.Array.data[31].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[33].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 679954674800442772, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[34].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 888315877125306867, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}

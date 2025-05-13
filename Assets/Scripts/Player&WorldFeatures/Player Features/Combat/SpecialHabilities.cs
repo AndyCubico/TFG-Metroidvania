@@ -190,7 +190,6 @@ public class SpecialHabilities : MonoBehaviour
 
         if (snowAttackTimer > 0 && !isSnowAttacking)
         {
-            Debug.Log("Snow Cooldown");
             snowAttackTimer -= Time.deltaTime;
         }
         //Snow_
@@ -198,18 +197,16 @@ public class SpecialHabilities : MonoBehaviour
 
     public IEnumerator SnowSpecialAttack()
     {
-        Debug.Log("Snow Attack Preparation");
         characterPlayerController.enabled = false;
         isSnowAttacking = true;
 
-        yield return new WaitForSeconds(snowPreparationTime);
-
         rb.AddForce(Vector2.down * downForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(snowPreparationTime);
 
         yield return new WaitUntil(() => isGrounded);
 
         snowExpand = true;
-        Debug.Log("Snow Attack");
 
         yield return new WaitUntil(() => !snowExpand);
 
@@ -237,10 +234,19 @@ public class SpecialHabilities : MonoBehaviour
         {
             StopCoroutine(activeRoutine);
 
+
+            //Hacer STUNNING!
             characterPlayerController.enabled = true;
 
             // Desactivate abilities
-            isSnowAttacking = false;
+            if (isSnowAttacking)
+            {
+                snowCollider.size = new Vector2(0, snowCollider.size.y);
+                sizeSnowExpansion = 0;
+                snowExpand = false;
+
+                isSnowAttacking = false;
+            }
         }
     }
 
@@ -249,7 +255,6 @@ public class SpecialHabilities : MonoBehaviour
         // Snow recovery from the attack
         if(isSnowAttacking)
         {
-            Debug.Log("Snow recuperate");
             yield return new WaitForSeconds(snowRecuperationTime);
             isSnowAttacking = false;
         }

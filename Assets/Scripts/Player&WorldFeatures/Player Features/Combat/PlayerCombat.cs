@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using PlayerController;
 
-public class Player_Combat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour
 {
     enum ATTACK_TYPE
     {
         NONE,
         SOFT_ATTACK,
         MID_ATTACK,
-        HARD_ATTACK
+        HARD_ATTACK,
     }
 
     [Header("Collider Detectors")]

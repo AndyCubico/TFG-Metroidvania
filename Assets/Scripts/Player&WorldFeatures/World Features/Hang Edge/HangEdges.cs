@@ -95,7 +95,7 @@ public class HangEdges : MonoBehaviour
             }
         }
 
-        if(characterPlayerController != null)
+        if (characterPlayerController != null)
         {
             if (isHanged && (characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND || characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.WALL))
             {
@@ -118,21 +118,24 @@ public class HangEdges : MonoBehaviour
         {
             characterPlayerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
 
-            characterPlayerController.isHangingEdge = true;
-            player = characterPlayerController.gameObject;
-
-            if (isLeftEdge)
+            if (characterPlayerController.enabled)
             {
-                player.transform.position = playerPositionLeft.transform.position;
-            }
+                characterPlayerController.isHangingEdge = true;
+                player = characterPlayerController.gameObject;
 
-            if (isRightEdge)
-            {
-                player.transform.position = playerPositionRight.transform.position;
-            }
+                if (isLeftEdge)
+                {
+                    player.transform.position = playerPositionLeft.transform.position;
+                }
 
-            finishClimb = true;
-            isHanged = true;
+                if (isRightEdge)
+                {
+                    player.transform.position = playerPositionRight.transform.position;
+                }
+
+                finishClimb = true;
+                isHanged = true;
+            }
         }
 
         if (finishClimb)

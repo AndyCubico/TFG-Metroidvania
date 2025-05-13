@@ -245,7 +245,7 @@ namespace PlayerController
         private Vector2 gravityVector;
 
         //Scripts
-        private Player_Combat combatScript;
+        private PlayerCombat combatScript;
 
         //Input Buffer
         Dictionary<INPUT_BUFFER, float> inputBufferSaver;
@@ -511,7 +511,7 @@ namespace PlayerController
             rb = GetComponent<Rigidbody2D>();
             playerSprite = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-            combatScript = GetComponent<Player_Combat>();
+            combatScript = GetComponent<PlayerCombat>();
             inputBufferSaver = new Dictionary<INPUT_BUFFER, float>();
 
             gravityEffect = rb.gravityScale;

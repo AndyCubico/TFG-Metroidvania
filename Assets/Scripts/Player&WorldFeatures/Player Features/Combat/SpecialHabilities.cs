@@ -17,17 +17,19 @@ public class SpecialHabilities : MonoBehaviour
     bool rigidbodyFreeze;
 
     [Header("- Habilities -")]
+
     [Space(5)]
     [Header("Snow")]
-    public float snowAttackDuration;
+    public float snowPreparationTime;
+    public float snowRecuperationTime;
+    public float snowAttackCooldown;
     private float snowAttackTimer;
     public float downForce;
     public float snowDamage;
     public float snowExpansionSpeed;
-    public float snowExpansion;
-    private bool snowExapnd;
+    public float snowExpansionMaxSize;
+    private bool snowExpand;
     private float sizeSnowExpansion;
-
 
     [Header("Colliders")]
     [Space(5)]
@@ -54,16 +56,20 @@ public class SpecialHabilities : MonoBehaviour
     bool specialHabilitiesTrigger;
     bool snowHability;
 
+    private Coroutine activeRoutine;
+
     private void OnEnable()
     {
         SpecialHabilitiesTrigger.action.started += SpecialHabilitiesEvent;
         SnowHability.action.started += SnowHabilityEvent;
+        HealthEvents.TakingDamage += ReceiveAnAttack;
     }
 
     private void OnDisable()
     {
         SpecialHabilitiesTrigger.action.started -= SpecialHabilitiesEvent;
         SnowHability.action.started -= SnowHabilityEvent;
+        HealthEvents.TakingDamage -= ReceiveAnAttack;
     }
 
     public void SpecialHabilitiesEvent(InputAction.CallbackContext context)
@@ -90,12 +96,11 @@ public class SpecialHabilities : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rigidbodyFreeze = false;
         isSnowAttacking = false;
-        snowExapnd = false;
+        snowExpand = false;
         defaultGravity = rb.gravityScale;
         snowAttackTimer = 0;
         sizeSnowExpansion = 0;
@@ -103,7 +108,6 @@ public class SpecialHabilities : MonoBehaviour
         snowCollider.size = new Vector2(0, snowCollider.size.y);
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Check if is there is something at LeftAttack
@@ -113,12 +117,10 @@ public class SpecialHabilities : MonoBehaviour
         {
             usingController = true;
         }
-        // Verifica si hay un teclado conectado
         else if (Keyboard.current != null)
         {
             usingController = false;
         }
-        // Si no hay ni teclado ni mando conectado, muestra un mensaje de advertencia
         else
         {
             usingController = false;
@@ -142,9 +144,9 @@ public class SpecialHabilities : MonoBehaviour
 
                 if (specialHabilitiesTrigger && snowHability && !isSnowAttacking && snowAttackTimer <= 0)
                 {
-                    snowAttackTimer = snowAttackDuration;
+                    snowAttackTimer = snowAttackCooldown;
 
-                    SnowSpecialAttack();
+                    activeRoutine = StartCoroutine(SnowSpecialAttack());
                 }
             }
             else
@@ -161,15 +163,15 @@ public class SpecialHabilities : MonoBehaviour
 
                 if (snowHability && !isSnowAttacking && snowAttackTimer <= 0)
                 {
-                    snowAttackTimer = snowAttackDuration;
+                    snowAttackTimer = snowAttackCooldown;
 
-                    StartCoroutine(SnowSpecialAttack());
+                    activeRoutine = StartCoroutine(SnowSpecialAttack());
                 }
             }
         }
 
         //_Snow
-        if (snowExapnd)
+        if (snowExpand)
         {
             //Collider Expansion
             sizeSnowExpansion += Time.deltaTime * snowExpansionSpeed;
@@ -177,54 +179,83 @@ public class SpecialHabilities : MonoBehaviour
 
             enemiesHealth = snowCollider.gameObject.GetComponent<Attack_Detectors>().SendEnemyCollision();
 
-            if (snowCollider.size.x >= snowExpansion)
+            if (snowCollider.size.x >= snowExpansionMaxSize)
             {
                 HitEnemy(snowDamage, enemiesHealth);
                 snowCollider.size = new Vector2(0, snowCollider.size.y);
                 sizeSnowExpansion = 0;
-                snowExapnd = false;
+                snowExpand = false;
             }
         }
 
         if (snowAttackTimer > 0 && !isSnowAttacking)
         {
+            Debug.Log("Snow Cooldown");
             snowAttackTimer -= Time.deltaTime;
         }
         //Snow_
-
-        if (!isSnowAttacking /*Other abilities*/)
-        {
-            characterPlayerController.enabled = true;
-            rb.gravityScale = defaultGravity;
-            rigidbodyFreeze = false;
-        }
     }
 
     public IEnumerator SnowSpecialAttack()
     {
+        Debug.Log("Snow Attack Preparation");
         characterPlayerController.enabled = false;
         isSnowAttacking = true;
+
+        yield return new WaitForSeconds(snowPreparationTime);
 
         rb.AddForce(Vector2.down * downForce, ForceMode2D.Impulse);
 
         yield return new WaitUntil(() => isGrounded);
 
-        snowExapnd = true;
+        snowExpand = true;
+        Debug.Log("Snow Attack");
 
-        yield return new WaitUntil(() => !snowExapnd);
+        yield return new WaitUntil(() => !snowExpand);
 
-        isSnowAttacking = false;
+        activeRoutine = StartCoroutine(RecuperateFromAttack());
     }
 
     void HitEnemy(float damage, List<EnemyHealth> enemyHealth)
     {
-        Debug.Log("Enemy Hit with: " + damage);
-
-        for (int i = 0; i < enemyHealth.Count; i++)
+        if(enemyHealth.Count > 0)
         {
-            enemyHealth[i].ReceiveDamage(damage);
+            Debug.Log("Enemy Hit with: " + damage);
+
+            for (int i = 0; i < enemyHealth.Count; i++)
+            {
+                enemyHealth[i].ReceiveDamage(damage);
+            }
+
+            enemyHealth.Clear();
+        }
+    }
+
+    void ReceiveAnAttack()
+    {
+        if(activeRoutine != null)
+        {
+            StopCoroutine(activeRoutine);
+
+            characterPlayerController.enabled = true;
+
+            // Desactivate abilities
+            isSnowAttacking = false;
+        }
+    }
+
+    public IEnumerator RecuperateFromAttack()
+    {
+        // Snow recovery from the attack
+        if(isSnowAttacking)
+        {
+            Debug.Log("Snow recuperate");
+            yield return new WaitForSeconds(snowRecuperationTime);
+            isSnowAttacking = false;
         }
 
-        enemyHealth.Clear();
+        characterPlayerController.enabled = true;
+        rb.gravityScale = defaultGravity;
+        rigidbodyFreeze = false;
     }
 }

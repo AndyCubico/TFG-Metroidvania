@@ -127,7 +127,7 @@ public class PlayerCamera : MonoBehaviour
         float targetPositionZ = gameObject.transform.position.z;
 
         //Threshold triggered dual-foward-focus (X axis)
-        targetPositionX = m_Target.transform.position.x * (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold;
+        //targetPositionX = m_Target.transform.position.x /** (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold*/;
 
         // Edge snapping
         targetPositionX = Mathf.Min(cameraBounds.width - m_CameraWidth, targetPositionX);

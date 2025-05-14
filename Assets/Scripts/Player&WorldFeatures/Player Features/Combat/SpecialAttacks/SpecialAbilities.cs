@@ -41,10 +41,12 @@ public class SpecialAbilities : MonoBehaviour
     [Header("Layers")]
     [Space(5)]
     public LayerMask groundLayer;
+    public LayerMask abilityCancel;
 
     float defaultGravity;
 
     bool isGrounded;
+    bool isSlide;
     bool isSnowAttacking;
 
     [Header("Input Actions")]
@@ -114,6 +116,7 @@ public class SpecialAbilities : MonoBehaviour
     {
         //Check if is there is something at LeftAttack
         isGrounded = Physics2D.OverlapAreaAll(groundCollider.bounds.min, groundCollider.bounds.max, groundLayer).Length > 0;
+        isSlide = Physics2D.OverlapAreaAll(groundCollider.bounds.min, groundCollider.bounds.max, abilityCancel).Length > 0;
 
         //Check what type of controller the player is using
         if (Gamepad.current != null)
@@ -196,6 +199,11 @@ public class SpecialAbilities : MonoBehaviour
             snowAttackTimer -= Time.deltaTime;
         }
         //Snow_
+
+        if (isSlide)
+        {
+            ReceiveAnAttack(0);
+        }
     }
 
     public IEnumerator SnowSpecialAttack() // This coroutine controls the snow attack

@@ -20133,7 +20133,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 980120631}
@@ -46732,6 +46732,14 @@ PrefabInstance:
       propertyPath: snowPrefab
       value: 
       objectReference: {fileID: 1496845641106681066, guid: 36ba0c3ec2cae6e4e8a37bbec07c8eae, type: 3}
+    - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: slideLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 2176
+      objectReference: {fileID: 0}
     - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: snowExpansionSpeed
       value: 170

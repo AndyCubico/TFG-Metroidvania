@@ -1659,18 +1659,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPlayerController: {fileID: 7804950762158198664}
   rb: {fileID: 2501051149002799573}
+  snowPrefab: {fileID: 1496845641106681066, guid: 36ba0c3ec2cae6e4e8a37bbec07c8eae, type: 3}
   snowPreparationTime: 1
   snowRecuperationTime: 1
   snowAttackCooldown: 2
   downForce: 25
   snowDamage: 50
-  snowExpansionSpeed: 100
-  snowExpansionMaxSize: 50
+  snowExpansionSpeed: 170
+  snowExpansionMaxSize: 80
   groundCollider: {fileID: 7226356396405873184}
   snowCollider: {fileID: 6195398072127129980}
   groundLayer:
     serializedVersion: 2
     m_Bits: 2176
+  abilityCancel:
+    serializedVersion: 2
+    m_Bits: 256
   SpecialHabilitiesTrigger: {fileID: -6606324200797737117, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   SnowHability: {fileID: 1626922096970559354, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1 &8043182413465834454

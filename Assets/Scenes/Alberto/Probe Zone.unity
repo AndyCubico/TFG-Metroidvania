@@ -46728,6 +46728,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: snowPrefab
+      value: 
+      objectReference: {fileID: 1496845641106681066, guid: 36ba0c3ec2cae6e4e8a37bbec07c8eae, type: 3}
+    - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: snowExpansionSpeed
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: snowPreparationTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287052150226677647, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: snowExpansionMaxSize
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 3389563662447400771, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -46779,6 +46795,10 @@ PrefabInstance:
     - target: {fileID: 5134751569559662571, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6195398072127129980, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_Size.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6282790690952300471, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: leftDetector

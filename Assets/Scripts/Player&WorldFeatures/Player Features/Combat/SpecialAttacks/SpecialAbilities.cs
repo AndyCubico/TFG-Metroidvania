@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SpecialHabilities : MonoBehaviour
+public class SpecialAbilities : MonoBehaviour
 {
     [Header("Character Player Controller")]
     [Space(5)]
@@ -20,6 +20,7 @@ public class SpecialHabilities : MonoBehaviour
 
     [Space(5)]
     [Header("Snow")]
+    public GameObject snowPrefab;
     public float snowPreparationTime;
     public float snowRecuperationTime;
     public float snowAttackCooldown;
@@ -30,6 +31,7 @@ public class SpecialHabilities : MonoBehaviour
     public float snowExpansionMaxSize;
     private bool snowExpand;
     private float sizeSnowExpansion;
+    private GameObject snowGameObj;
 
     [Header("Colliders")]
     [Space(5)]
@@ -207,6 +209,8 @@ public class SpecialHabilities : MonoBehaviour
 
         yield return new WaitUntil(() => isGrounded); // Wait until touching the ground
 
+        snowGameObj = Instantiate(snowPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+
         snowExpand = true; // Start the attack collider expansion
 
         yield return new WaitUntil(() => !snowExpand); // Wait until the expansion arrives to the end
@@ -236,6 +240,11 @@ public class SpecialHabilities : MonoBehaviour
             StopCoroutine(activeRoutine); // Stop the coroutine that is happening in this moment
 
             characterPlayerController.enabled = true; // Reactivate the player
+
+            if(snowGameObj != null)
+            {
+                Destroy(snowGameObj);
+            }
 
             // Desactivate abilities
             if (isSnowAttacking)

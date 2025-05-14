@@ -91,7 +91,7 @@ public class PlayerCamera : MonoBehaviour
                 break;
             case TargetDirection.STATIC:
 
-                if (m_CurrentDistanceTreshold != 0) // Once the camera is perfectly centered in the characther it must stop tring to center, otherwise, it shakes
+                if (m_CurrentDistanceTreshold != 0) // Once the camera is perfectly centered in the characther it must stop tring to center, otherwise, it shakes.
                 {
                     m_CurrentDistanceTreshold -= Mathf.Sign(m_CurrentDistanceTreshold) * Time.deltaTime / m_TimeToReachThreshold;
                     if(Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / m_TimeToReachThreshold)) // If we are very near to 0, make the value 0. 

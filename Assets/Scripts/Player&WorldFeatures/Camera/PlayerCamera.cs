@@ -19,22 +19,23 @@ public class PlayerCamera : MonoBehaviour
     }
     private TargetDirection m_TargetMovementDirection = TargetDirection.STATIC;
 
-    [Header("Threshold Parameters")]
     private float m_TimeForUpdate = 0.0f;
+    [Header("Threshold Parameters")]
     [SerializeField] private float m_TimeBetweenPositionUpdates;
     [SerializeField] private float m_DistanceThreshold; // Minimum distance the target must move for m_TargetMovementDirection to change.
     private Vector3 m_LastPositionTarget;
 
     // Camera "Threshold triggered dual-forward-focus" movement
     [SerializeField] private float m_MaximunDistanceTreshold; // Value between 0-1, determines the percentatge of distance the player is placed off-center of the camera.
-    private float m_CurrentDistanceTreshold; // Value where the player is at the moment in comprasion to the camera centre. Value is betwenn -1 (left) and 1 (rigth)
     [SerializeField] private float m_TimeToReachThreshold; // Time that the camera takes to reach from 0 to 1 or -1 in m_CurrentDistanceTreshold.
+    private float m_CurrentDistanceTreshold; // Value where the player is at the moment in comprasion to the camera centre. Value is betwenn -1 (left) and 1 (rigth)
 
     // Camera debug
-    [Header("Debug")]
     private bool m_IsDebugMode = false; 
+    [Header("Debug")]
     [SerializeField] private GameObject m_CenterCamera;
-    [SerializeField] private GameObject m_HorizontalTarget;
+    [SerializeField] private GameObject m_HorizontalTargetLeft;
+    [SerializeField] private GameObject m_HorizontalTargetRigth;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -108,7 +109,9 @@ public class PlayerCamera : MonoBehaviour
         if (m_IsDebugMode)
         {
             m_CenterCamera.transform.position = transform.position;
-            m_HorizontalTarget.transform.position = new Vector3((transform.position.x * (1-m_CurrentDistanceTreshold) + m_CameraWidth*m_MaximunDistanceTreshold*m_CurrentDistanceTreshold),transform.position.y,transform.position.z);
+            //m_HorizontalTarget.transform.position = new Vector3((transform.position.x * (1-m_CurrentDistanceTreshold) + m_CameraWidth*m_MaximunDistanceTreshold*m_CurrentDistanceTreshold),transform.position.y,transform.position.z);
+            m_HorizontalTargetLeft.transform.position = new Vector3(m_Target.transform.position.x - (-m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
+            m_HorizontalTargetRigth.transform.position = new Vector3(m_Target.transform.position.x - (m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
         }
 
         if(Input.GetKeyUp(KeyCode.F4)) 
@@ -127,7 +130,8 @@ public class PlayerCamera : MonoBehaviour
         float targetPositionZ = gameObject.transform.position.z;
 
         //Threshold triggered dual-foward-focus (X axis)
-        //targetPositionX = m_Target.transform.position.x /** (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold*/;
+        Debug.Log("Movement: " + (0 * (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold));
+        targetPositionX = m_Target.transform.position.x - (0 * (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold);
 
         // Edge snapping
         targetPositionX = Mathf.Min(cameraBounds.width - m_CameraWidth, targetPositionX);
@@ -141,7 +145,8 @@ public class PlayerCamera : MonoBehaviour
     public bool SetDebugStatus(bool active) 
     {
         m_CenterCamera.SetActive(active);
-        m_HorizontalTarget.SetActive(active);
+        m_HorizontalTargetLeft.SetActive(active);
+        m_HorizontalTargetRigth.SetActive(active);
 
         return active;
     }

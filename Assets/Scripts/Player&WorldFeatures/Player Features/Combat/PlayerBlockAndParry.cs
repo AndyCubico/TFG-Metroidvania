@@ -1,6 +1,12 @@
 using PlayerController;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
+
+public static class HealthEvents
+{
+    public static Action<float> TakingDamage;
+}
 
 public class PlayerBlockAndParry : MonoBehaviour
 {
@@ -28,6 +34,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     float damageNoBlock;
     bool canAttackBeParried;
 
+    [Header("Extra variables")]
+    [Space(5)]
+    public float hittedForce;
 
     [Header("Input Actions")]
     [Space(5)]
@@ -40,6 +49,9 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     // Bool to check if an enemy attack has hitted
     bool enemyIsAttacking;
+
+    // Controls from where the attack is comming
+    int attackDirection;
 
     // Player Rigidbody
     public Rigidbody2D rb;
@@ -87,6 +99,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         parryCounter = 0f;
         blockCounter = 0f;
         invincibilityCounter = 0f;
+        attackDirection = 0;
     }
 
     void Update()
@@ -205,6 +218,9 @@ public class PlayerBlockAndParry : MonoBehaviour
         enemyIsAttacking = false;
 
         // Damage player
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
+        HealthEvents.TakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
         Debug.Log(damageNoBlock);
 
         ActiveInvincibility(); // Active the invincibility
@@ -228,25 +244,50 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             if (collision.CompareTag("EnemyAttack")) // If the type of collision is "EnemyAttack"
             {
-                enemyIsAttacking = true; // Active the bool of attacking
+                //Check for the direction of the attack
+                float distance = 0;
+                distance = transform.position.x - collision.transform.position.x;
+
+                if (distance > 0f)
+                {
+                    attackDirection = 1;
+                }
+                else if (distance < 0f)
+                {
+                    attackDirection = -1;
+                }
+                else
+                {
+                    attackDirection = 0;
+                }
 
                 EnemyHit enemyHit;
 
                 // Recieve here the damage that the hit is going to make
                 if(collision.TryGetComponent(out enemyHit))
                 {
-                    damageNoBlock = enemyHit.damage;
-                    canAttackBeParried = enemyHit.canBeParried;
-                    damageBlock = (damageNoBlock * (100 - damageBlockPercentage)) / 100; // Damage blocking is a % of the total incoming damage, is calculated here
+                    if (!enemyHit.hasHittedPlayer) // If the attack already does not hit the player
+                    {
+                        damageNoBlock = enemyHit.damage;
+                        canAttackBeParried = enemyHit.canBeParried;
+                        enemyHit.hasHittedPlayer = true;
+                        damageBlock = (damageNoBlock * (100 - damageBlockPercentage)) / 100; // Damage blocking is a % of the total incoming damage, is calculated here
+
+                        enemyIsAttacking = true; // Active the bool of attacking
+
+                        if (enemyTesting) //Take the enemy sprite renderer if is on testing
+                        {
+                            enemyTest = collision.gameObject.GetComponent<SpriteRenderer>();
+                        }
+                    }
+                    else
+                    {
+                        damageNoBlock = 0f;
+                    }
                 }
                 else
                 {
                     damageNoBlock = 0f;
-                }
-
-                if (enemyTesting) //Take the enemy sprite renderer if is on testing
-                {
-                    enemyTest = collision.gameObject.GetComponent<SpriteRenderer>();
                 }
             }
         }

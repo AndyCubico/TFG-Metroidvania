@@ -113,6 +113,7 @@ public class SpecialHabilities : MonoBehaviour
         //Check if is there is something at LeftAttack
         isGrounded = Physics2D.OverlapAreaAll(groundCollider.bounds.min, groundCollider.bounds.max, groundLayer).Length > 0;
 
+        //Check what type of controller the player is using
         if (Gamepad.current != null)
         {
             usingController = true;
@@ -126,7 +127,7 @@ public class SpecialHabilities : MonoBehaviour
             usingController = false;
         }
 
-        if (!characterPlayerController.isDashing)
+        if (!characterPlayerController.isDashing) // If the player is dashing can't make an ability
         {
             if (usingController)
             {
@@ -142,7 +143,7 @@ public class SpecialHabilities : MonoBehaviour
                 //    rigidbodyFreeze = false;
                 //}
 
-                if (specialHabilitiesTrigger && snowHability && !isSnowAttacking && snowAttackTimer <= 0)
+                if (specialHabilitiesTrigger && snowHability && !isSnowAttacking && snowAttackTimer <= 0) // Check for the inputs be pressed and not be already doing  the attack, and the cooldown be zero
                 {
                     snowAttackTimer = snowAttackCooldown;
 
@@ -161,7 +162,7 @@ public class SpecialHabilities : MonoBehaviour
                 //    }
                 //}
 
-                if (snowHability && !isSnowAttacking && snowAttackTimer <= 0)
+                if (snowHability && !isSnowAttacking && snowAttackTimer <= 0) // Check for the input be pressed and not be already doing  the attack, and the cooldown be zero
                 {
                     snowAttackTimer = snowAttackCooldown;
 
@@ -171,49 +172,49 @@ public class SpecialHabilities : MonoBehaviour
         }
 
         //_Snow
-        if (snowExpand)
+        if (snowExpand) // If the snow attack is happening
         {
             //Collider Expansion
             sizeSnowExpansion += Time.deltaTime * snowExpansionSpeed;
             snowCollider.size = new Vector2(sizeSnowExpansion, snowCollider.size.y);
 
-            enemiesHealth = snowCollider.gameObject.GetComponent<Attack_Detectors>().SendEnemyCollision();
+            enemiesHealth = snowCollider.gameObject.GetComponent<Attack_Detectors>().SendEnemyCollision(); // Take the enemies life
 
-            if (snowCollider.size.x >= snowExpansionMaxSize)
+            if (snowCollider.size.x >= snowExpansionMaxSize) // If collider arrives to max size
             {
-                HitEnemy(snowDamage, enemiesHealth);
-                snowCollider.size = new Vector2(0, snowCollider.size.y);
+                HitEnemy(snowDamage, enemiesHealth); // Send damage to enemies (TO CHANGE IN THE FUTURE, the enemies cant wait to be damage when the attack ends, have to do it while is happening)
+                snowCollider.size = new Vector2(0, snowCollider.size.y);  // Return collider to normal size
                 sizeSnowExpansion = 0;
                 snowExpand = false;
             }
         }
 
-        if (snowAttackTimer > 0 && !isSnowAttacking)
+        if (snowAttackTimer > 0 && !isSnowAttacking) // Cooldown only starts when the snow attack has finished
         {
             snowAttackTimer -= Time.deltaTime;
         }
         //Snow_
     }
 
-    public IEnumerator SnowSpecialAttack()
+    public IEnumerator SnowSpecialAttack() // This coroutine controls the snow attack
     {
-        characterPlayerController.enabled = false;
-        isSnowAttacking = true;
+        characterPlayerController.enabled = false; // First deactivate the character player controller of the player
+        isSnowAttacking = true; // Activates the attack
 
-        rb.AddForce(Vector2.down * downForce, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.down * downForce, ForceMode2D.Impulse); // Do a force to the ground in case the player stais on air go to the ground
 
-        yield return new WaitForSeconds(snowPreparationTime);
+        yield return new WaitForSeconds(snowPreparationTime); // Wait to the preparation time
 
-        yield return new WaitUntil(() => isGrounded);
+        yield return new WaitUntil(() => isGrounded); // Wait until touching the ground
 
-        snowExpand = true;
+        snowExpand = true; // Start the attack collider expansion
 
-        yield return new WaitUntil(() => !snowExpand);
+        yield return new WaitUntil(() => !snowExpand); // Wait until the expansion arrives to the end
 
-        activeRoutine = StartCoroutine(RecuperateFromAttack());
+        activeRoutine = StartCoroutine(RecoverFromAttack()); // Start the recovery time
     }
 
-    void HitEnemy(float damage, List<EnemyHealth> enemyHealth)
+    void HitEnemy(float damage, List<EnemyHealth> enemyHealth) // This attacks uses other method of hitting enemies, but works the same way
     {
         if(enemyHealth.Count > 0)
         {
@@ -221,27 +222,25 @@ public class SpecialHabilities : MonoBehaviour
 
             for (int i = 0; i < enemyHealth.Count; i++)
             {
-                enemyHealth[i].ReceiveDamage(damage);
+                enemyHealth[i].ReceiveDamage(damage); // For all enemies send the damage to recieve
             }
 
-            enemyHealth.Clear();
+            enemyHealth.Clear(); // Clear the enemy list when the attack ends
         }
     }
 
-    void ReceiveAnAttack()
+    void ReceiveAnAttack(float damage) // This function executes when an enemy hits the player
     {
         if(activeRoutine != null)
         {
-            StopCoroutine(activeRoutine);
+            StopCoroutine(activeRoutine); // Stop the coroutine that is happening in this moment
 
-
-            //Hacer STUNNING!
-            characterPlayerController.enabled = true;
+            characterPlayerController.enabled = true; // Reactivate the player
 
             // Desactivate abilities
             if (isSnowAttacking)
             {
-                snowCollider.size = new Vector2(0, snowCollider.size.y);
+                snowCollider.size = new Vector2(0, snowCollider.size.y); // Return the original values of the snow attack, except the cooldown
                 sizeSnowExpansion = 0;
                 snowExpand = false;
 
@@ -250,7 +249,7 @@ public class SpecialHabilities : MonoBehaviour
         }
     }
 
-    public IEnumerator RecuperateFromAttack()
+    public IEnumerator RecoverFromAttack()
     {
         // Snow recovery from the attack
         if(isSnowAttacking)
@@ -259,6 +258,7 @@ public class SpecialHabilities : MonoBehaviour
             isSnowAttacking = false;
         }
 
+        // Return player to normal state
         characterPlayerController.enabled = true;
         rb.gravityScale = defaultGravity;
         rigidbodyFreeze = false;

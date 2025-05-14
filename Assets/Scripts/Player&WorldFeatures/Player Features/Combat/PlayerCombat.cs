@@ -44,7 +44,7 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("________________________ ANIMATOR ________________________")]
     //Animator
-    Animator animator;
+    public Animator animator;
 
     [Header("________________________ ATTACK DETECTORS ________________________")]
     //Animator
@@ -64,7 +64,7 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyMask;
 
     //Character Controller
-    CharacterPlayerController characterController;
+    public CharacterPlayerController characterController;
 
     //Enemy list
     List<EnemyHealth> enemyHealth = new List<EnemyHealth>();
@@ -81,7 +81,7 @@ public class PlayerCombat : MonoBehaviour
     bool canHitCombo;
 
     //Rigidbody
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     private void OnEnable()
     {
@@ -108,10 +108,6 @@ public class PlayerCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        characterController = GetComponent<CharacterPlayerController>();
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-
         basicAttackCooldownLocal = 0;
     }
 

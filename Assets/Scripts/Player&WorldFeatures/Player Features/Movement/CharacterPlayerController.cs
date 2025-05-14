@@ -145,7 +145,7 @@ namespace PlayerController
         public bool playerOnEdgeUnfreeze;
 
         public bool hasImpactHit;
-        [HideInInspector] public bool isImpactHitting;
+        public bool isImpactHitting;
         [HideInInspector] public bool isDashing;
 
         public bool canJump;
@@ -244,8 +244,9 @@ namespace PlayerController
 
         private Vector2 gravityVector;
 
-        //Scripts
-        private PlayerCombat combatScript;
+        [Header("Scripts")]
+        [Space(5)]
+        public PlayerCombat combatScript;
 
         //Input Buffer
         Dictionary<INPUT_BUFFER, float> inputBufferSaver;
@@ -511,7 +512,6 @@ namespace PlayerController
             rb = GetComponent<Rigidbody2D>();
             playerSprite = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-            combatScript = GetComponent<PlayerCombat>();
             inputBufferSaver = new Dictionary<INPUT_BUFFER, float>();
 
             gravityEffect = rb.gravityScale;

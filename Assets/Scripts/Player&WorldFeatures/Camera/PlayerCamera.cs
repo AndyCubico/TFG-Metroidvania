@@ -46,7 +46,9 @@ public class PlayerCamera : MonoBehaviour
         m_CameraHeight = m_Camera.orthographicSize;
         m_CameraWidth = m_Camera.aspect * m_CameraHeight;
 
-        if (m_Target ??= GameObject.FindGameObjectWithTag("Player")) 
+        m_Target = m_Target == null ? GameObject.FindGameObjectWithTag("Player") : m_Target; // ??= doesn't work
+
+        if (m_Target != null)
         {
             m_LastPositionTarget = m_Target.transform.position;
         }
@@ -94,12 +96,12 @@ public class PlayerCamera : MonoBehaviour
                 if (m_CurrentDistanceTreshold != 0) // Once the camera is perfectly centered in the characther it must stop tring to center, otherwise, it shakes.
                 {
                     m_CurrentDistanceTreshold -= Mathf.Sign(m_CurrentDistanceTreshold) * Time.deltaTime / m_TimeToReachThreshold;
-                    if(Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / m_TimeToReachThreshold)) // If we are very near to 0, make the value 0. 
+                    if (Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / m_TimeToReachThreshold)) // If we are very near to 0, make the value 0. 
                     {
                         m_CurrentDistanceTreshold = 0;
                     }
                 }
-                
+
 
                 break;
             case TargetDirection.MOVING_RIGTH:
@@ -110,6 +112,7 @@ public class PlayerCamera : MonoBehaviour
             default:
                 break;
         }
+        
         // Debug things
         if (m_IsDebugMode)
         {
@@ -134,9 +137,11 @@ public class PlayerCamera : MonoBehaviour
         float targetPositionY = 0;
         float targetPositionZ = gameObject.transform.position.z;
 
-        //Threshold triggered dual-foward-focus (X axis)
+        // Threshold triggered dual-foward-focus (X axis)
         targetPositionX = m_Target.transform.position.x - (0 * (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold);
 
+        // A (Y axis)
+        targetPositionY = m_Target.transform.position.y;
 
         // Edge snapping
         targetPositionX = Mathf.Min(cameraBounds.width - m_CameraWidth, targetPositionX);

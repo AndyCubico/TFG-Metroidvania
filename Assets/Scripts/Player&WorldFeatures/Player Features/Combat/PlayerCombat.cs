@@ -28,7 +28,7 @@ public class PlayerCombat : MonoBehaviour
     [Space(10)]
     //Basic Attack
     public float basicAttackCooldown;
-    float basicAttackCooldownLocal;
+    //float basicAttackCooldownLocal;
 
     public float comboResetTime;
 
@@ -83,19 +83,30 @@ public class PlayerCombat : MonoBehaviour
     //Rigidbody
     public Rigidbody2D rb;
 
+    //Checkers
+    bool cooldown;
+    bool comboReset;
+
     private void OnEnable()
     {
-        BasicAttackAction.action.started += BasicAttackEvent;
     }
 
     private void OnDisable()
     {
-        BasicAttackAction.action.started -= BasicAttackEvent;
     }
 
-    public void BasicAttackEvent(InputAction.CallbackContext context)
+    // Start is called before the first frame update
+    void Start()
     {
-        if (context.performed)
+        //basicAttackCooldownLocal = 0;
+        cooldown = false;
+        canHitCombo = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (BasicAttackAction.action.WasPressedThisFrame())
         {
             basicAttackDown = true;
         }
@@ -103,40 +114,30 @@ public class PlayerCombat : MonoBehaviour
         {
             basicAttackDown = false;
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        basicAttackCooldownLocal = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         //_Basic Attack + Combo
         if (basicAttackDown)
         {
-            if(basicAttackCooldownLocal == 0)
+            if(canHitCombo)
             {
                 rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-                ComboAttack();
                 canHitCombo = false;
-            }
-
-            basicAttackCooldownLocal += Time.deltaTime;
-        }
-
-        if(basicAttackCooldownLocal > 0) // Here the cooldown of attack is starting to sum up
-        {
-            basicAttackCooldownLocal += Time.deltaTime;
-
-            if(basicAttackCooldownLocal > basicAttackCooldown) // If the cooldown is reached the combo timer will start to happen and the basic attack will be ready again
-            {
-                canHitCombo = true;
-                basicAttackCooldownLocal = 0;
+                ComboAttack();
+                cooldown = true;
             }
         }
+
+        //if(cooldown) // Here the cooldown of attack is starting to sum up
+        //{
+        //    basicAttackCooldownLocal += Time.deltaTime;
+
+        //    if(basicAttackCooldownLocal > basicAttackCooldown) // If the cooldown is reached the combo timer will start to happen and the basic attack will be ready again
+        //    {
+        //        canHitCombo = true;
+        //        basicAttackCooldownLocal = 0;
+        //        cooldown = false;
+        //    }
+        //}
 
 
         if (isOnCombo) //Here the combo counter counts
@@ -226,7 +227,7 @@ public class PlayerCombat : MonoBehaviour
         comboCounter = 0;
         comboTimer = 0;
         isOnCombo = false;
-        canHitCombo = false;
+        canHitCombo = true;
     }
 
     public void ImpactHit()
@@ -271,6 +272,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void AnimationHasFinished()
     {
+        canHitCombo = true;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

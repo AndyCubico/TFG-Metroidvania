@@ -30,7 +30,7 @@ public class DashEffect : MonoBehaviour
             if(timeClones > separationTime)
             {
                 GameObject tempGame = Instantiate(cloneSpirte, transform.position, transform.rotation) as GameObject;
-                tempGame.GetComponent<SpriteRenderer>().color = Color.yellow;
+                //tempGame.GetComponent<SpriteRenderer>().color = Color.yellow;
 
                 if (player.flipAnimation)
                 {

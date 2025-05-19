@@ -20103,7 +20103,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 6190227721229430214, guid: df6dba22a491f554b95e9b76232aa37f, type: 3}
   flipDirection: 1
   enemiesGravity: 0
-  enemiesLifeTime: 10
+  enemiesLifeTime: 5
   enemiesSpeed: 100
   spawnRate: 2
 --- !u!1 &1124355797
@@ -28669,7 +28669,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 6190227721229430214, guid: df6dba22a491f554b95e9b76232aa37f, type: 3}
   flipDirection: 0
   enemiesGravity: 0
-  enemiesLifeTime: 10
+  enemiesLifeTime: 5
   enemiesSpeed: 100
   spawnRate: 2
 --- !u!4 &1375901762
@@ -28681,7 +28681,7 @@ Transform:
   m_GameObject: {fileID: 1375901760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 81.09, y: -46.53, z: -0.045498617}
+  m_LocalPosition: {x: 82.69, y: -46.53, z: -0.045498617}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46711,6 +46711,26 @@ PrefabInstance:
     - target: {fileID: 888315877125306867, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Offset.y
       value: 0.20067582
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: basicAttack.m_Name
+      value: Basic Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: basicAttackCooldown
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: basicAttack.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: basicAttack.m_SingletonActionBindings.Array.data[0].m_Id
+      value: 75dce0a7-b925-4fec-9a71-d39af11f1d24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: basicAttack.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Basic Attack
       objectReference: {fileID: 0}
     - target: {fileID: 1193787786420921638, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Enabled

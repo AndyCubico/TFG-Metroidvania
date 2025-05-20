@@ -551,6 +551,7 @@ GameObject:
   - component: {fileID: 632506250}
   - component: {fileID: 632506249}
   - component: {fileID: 632506251}
+  - component: {fileID: 632506254}
   - component: {fileID: 632506248}
   - component: {fileID: 632506252}
   - component: {fileID: 632506253}
@@ -841,6 +842,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &632506254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632506247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dcf2b872c0584b4d8586b837cc7c63b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <m_MaxHealth>k__BackingField: 100
 --- !u!1 &656376345
 GameObject:
   m_ObjectHideFlags: 0

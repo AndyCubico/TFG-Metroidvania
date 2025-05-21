@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 
 public class DirtyCamera : MonoBehaviour
 {
+    [ShowIf("hMode", HorizonralMovement.FowardByLooking)] public bool a;
     //Base follow
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 0.25f;

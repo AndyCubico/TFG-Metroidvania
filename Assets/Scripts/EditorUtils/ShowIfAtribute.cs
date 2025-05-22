@@ -10,11 +10,6 @@ public class ShowIfAttribute : PropertyAttribute
     public string conditionFieldName;
     public object expectedValue;
 
-    public ShowIfAttribute(string conditionFieldName)
-    {
-        this.conditionFieldName = conditionFieldName;
-    }
-
     public ShowIfAttribute(string conditionFieldName, object expectedValue)
     {
         this.conditionFieldName = conditionFieldName;

@@ -967,6 +967,7 @@ MonoBehaviour:
   hasImpactHit: 0
   isImpactHitting: 0
   isDashing: 0
+  activateFallMultiplier: 0
   canJump: 1
   jumpStopper: 0
   GroundCheck: {fileID: 7226356396405873184}
@@ -1825,6 +1826,7 @@ MonoBehaviour:
   softDamage: 10
   midDamage: 15
   hardDamage: 20
+  airTime: 0.4
   animator: {fileID: 7970226017141930321}
   leftDetector: {fileID: 7687846557170121746}
   rightDetector: {fileID: 6376235179294857208}

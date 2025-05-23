@@ -42,6 +42,9 @@ public class PlayerCombat : MonoBehaviour
     public int hardDamage;
     [Space(10)]
 
+    [Header("________________________ VARIABLES ________________________")]
+    public float airTime;
+
     [Header("________________________ ANIMATOR ________________________")]
     //Animator
     public Animator animator;
@@ -87,6 +90,9 @@ public class PlayerCombat : MonoBehaviour
     bool cooldown;
     bool comboReset;
 
+    //Values
+    float gravityScale;
+
     private void OnEnable()
     {
     }
@@ -101,6 +107,8 @@ public class PlayerCombat : MonoBehaviour
         //basicAttackCooldownLocal = 0;
         cooldown = false;
         canHitCombo = true;
+
+        gravityScale = rb.gravityScale;
     }
 
     // Update is called once per frame
@@ -184,6 +192,12 @@ public class PlayerCombat : MonoBehaviour
             //Check if is there is something at LeftAttack
             leftAttack = Physics2D.OverlapAreaAll(LeftHit.bounds.min, LeftHit.bounds.max, enemyMask).Length > 0;
 
+            if (!characterController.isGrounded)
+            {
+                StopCoroutine(AirAttack());
+                StartCoroutine(AirAttack());
+            }
+
             if (leftAttack)
             {
                 enemyHealth = leftDetector.SendEnemyCollision();
@@ -195,6 +209,12 @@ public class PlayerCombat : MonoBehaviour
         {
             //Check if is there is something at RightAttack
             rightAttack = Physics2D.OverlapAreaAll(RightHit.bounds.min, RightHit.bounds.max, enemyMask).Length > 0;
+
+            if (!characterController.isGrounded)
+            {
+                StopCoroutine(AirAttack());
+                StartCoroutine(AirAttack());
+            }
 
             if (rightAttack)
             {
@@ -274,5 +294,19 @@ public class PlayerCombat : MonoBehaviour
     {
         canHitCombo = true;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public IEnumerator AirAttack()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 0f;
+        characterController.activateFallMultiplier = false;
+
+        yield return new WaitUntil(() => canHitCombo);
+
+        yield return new WaitForSeconds(airTime);
+
+        rb.gravityScale = gravityScale;
+        characterController.activateFallMultiplier = true;
     }
 }

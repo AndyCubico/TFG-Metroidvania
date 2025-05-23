@@ -147,6 +147,7 @@ namespace PlayerController
         public bool hasImpactHit;
         public bool isImpactHitting;
         [HideInInspector] public bool isDashing;
+        [HideInInspector] public bool activateFallMultiplier;
 
         public bool canJump;
 
@@ -531,6 +532,8 @@ namespace PlayerController
             canUnhang = false;
             playerOnEdgeUnfreeze = false;
 
+            activateFallMultiplier = true;
+
             playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player facing Right
             dashFacing = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player dash facing Right
             habilityUnlocker = UNLOCK_HABILITIES.NONE;
@@ -599,7 +602,10 @@ namespace PlayerController
             CheckPlayerFaceDirection();
 
             //Here we add an extra false gravity when falling
-            FallDownGravity();
+            if (activateFallMultiplier)
+            {
+                FallDownGravity();
+            }
 
             //Cheater hability Unlocker, send a hability to this function to unlock it
             UnlockHabilities(habilityUnlocker);

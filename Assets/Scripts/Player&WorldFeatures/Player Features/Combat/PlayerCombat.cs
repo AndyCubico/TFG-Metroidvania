@@ -192,14 +192,14 @@ public class PlayerCombat : MonoBehaviour
             //Check if is there is something at LeftAttack
             leftAttack = Physics2D.OverlapAreaAll(LeftHit.bounds.min, LeftHit.bounds.max, enemyMask).Length > 0;
 
-            if (!characterController.isGrounded)
-            {
-                StopCoroutine(AirAttack());
-                StartCoroutine(AirAttack());
-            }
-
             if (leftAttack)
             {
+                if (!characterController.isGrounded)
+                {
+                    StopCoroutine(AirAttack());
+                    StartCoroutine(AirAttack());
+                }
+
                 enemyHealth = leftDetector.SendEnemyCollision();
 
                 HitEnemy(attackType, enemyHealth);
@@ -210,14 +210,14 @@ public class PlayerCombat : MonoBehaviour
             //Check if is there is something at RightAttack
             rightAttack = Physics2D.OverlapAreaAll(RightHit.bounds.min, RightHit.bounds.max, enemyMask).Length > 0;
 
-            if (!characterController.isGrounded)
-            {
-                StopCoroutine(AirAttack());
-                StartCoroutine(AirAttack());
-            }
-
             if (rightAttack)
             {
+                if (!characterController.isGrounded)
+                {
+                    StopCoroutine(AirAttack());
+                    StartCoroutine(AirAttack());
+                }
+
                 enemyHealth = rightDetector.SendEnemyCollision();
 
                 HitEnemy(attackType, enemyHealth);
@@ -301,6 +301,7 @@ public class PlayerCombat : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.gravityScale = 0f;
         characterController.activateFallMultiplier = false;
+        characterController.moveStopper = true;
 
         yield return new WaitUntil(() => canHitCombo);
 
@@ -308,5 +309,6 @@ public class PlayerCombat : MonoBehaviour
 
         rb.gravityScale = gravityScale;
         characterController.activateFallMultiplier = true;
+        characterController.moveStopper = false;
     }
 }

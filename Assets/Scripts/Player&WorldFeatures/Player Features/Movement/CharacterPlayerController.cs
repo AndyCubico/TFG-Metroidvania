@@ -152,7 +152,7 @@ namespace PlayerController
         public bool canJump;
 
         [SerializeField] public bool jumpStopper;
-        bool moveStopper;
+        [HideInInspector] public bool moveStopper;
         bool cheatMode;
         bool hasExitWall;
 

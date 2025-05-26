@@ -46,7 +46,7 @@ public class SpecialAbilities : MonoBehaviour
     float defaultGravity;
 
     bool isGrounded;
-    bool isSlide;
+    bool cancelLayers;
     bool isSnowAttacking;
 
     [Header("Input Actions")]
@@ -116,7 +116,7 @@ public class SpecialAbilities : MonoBehaviour
     {
         //Check if is there is something at LeftAttack
         isGrounded = Physics2D.OverlapAreaAll(groundCollider.bounds.min, groundCollider.bounds.max, groundLayer).Length > 0;
-        isSlide = Physics2D.OverlapAreaAll(groundCollider.bounds.min, groundCollider.bounds.max, abilityCancel).Length > 0;
+        cancelLayers = Physics2D.OverlapAreaAll(groundCollider.bounds.min, groundCollider.bounds.max, abilityCancel).Length > 0;
 
         //Check what type of controller the player is using
         if (Gamepad.current != null)
@@ -200,7 +200,7 @@ public class SpecialAbilities : MonoBehaviour
         }
         //Snow_
 
-        if (isSlide)
+        if (cancelLayers)
         {
             ReceiveAnAttack(0);
         }

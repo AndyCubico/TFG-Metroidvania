@@ -5,6 +5,12 @@ using PlayerController;
 using UnityEngine.UIElements;
 using UnityEngine.Rendering.Universal;
 using Unity.Physics;
+using System;
+
+public static class CheckpointEvents
+{
+    public static Action FastCheckpointEvent;
+}
 
 public class Checkpoint_Ground : MonoBehaviour
 {
@@ -26,6 +32,17 @@ public class Checkpoint_Ground : MonoBehaviour
     public LayerMask groundMask;
 
     Transform lastSecurePosition;
+
+
+    private void OnEnable()
+    {
+        CheckpointEvents.FastCheckpointEvent += FastCheckpoint;
+    }
+
+    private void OnDisable()
+    {
+        CheckpointEvents.FastCheckpointEvent -= FastCheckpoint;
+    }
 
     // Start is called before the first frame update
     void Start()

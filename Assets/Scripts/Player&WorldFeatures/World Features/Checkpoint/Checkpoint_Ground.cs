@@ -116,10 +116,12 @@ public class Checkpoint_Ground : MonoBehaviour
     {
         characterController.enabled = false;
         rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
 
         boxCollider.isTrigger = true;
         circleCollider.isTrigger = true;
 
+        FadeToBlackEvents.FadeToBlackAction?.Invoke();
         isTransitioning = true;
     }
 }

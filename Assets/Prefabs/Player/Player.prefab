@@ -1601,6 +1601,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpoint: {fileID: 0}
+  timeToMoveNextPosition: 0.1
+  speedTranistion: 10
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &7024678312931433838
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public static class CheckpointEvents
 
 public class Checkpoint_Ground : MonoBehaviour
 {
+    [Header("______________________CHECKPOINT______________________")]
+    [Space(5)]
     public GameObject checkpoint;
     CharacterPlayerController characterController;
     Rigidbody2D rb;
@@ -32,6 +34,13 @@ public class Checkpoint_Ground : MonoBehaviour
     public LayerMask groundMask;
 
     Transform lastSecurePosition;
+
+    [Space(5)]
+
+    [Header("______________________FADE TO BLACK______________________")]
+    [Space(5)]
+    public float FadeIn;
+    public float FadeOut;
 
 
     private void OnEnable()
@@ -121,7 +130,7 @@ public class Checkpoint_Ground : MonoBehaviour
         boxCollider.isTrigger = true;
         circleCollider.isTrigger = true;
 
-        FadeToBlackEvents.FadeToBlackAction?.Invoke();
+        FadeToBlackEvents.FadeToBlackAction?.Invoke(FadeIn, FadeOut);
         isTransitioning = true;
     }
 }

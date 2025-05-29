@@ -5,7 +5,7 @@ using UnityEngine;
 public class FallPit : MonoBehaviour
 {
     public float timeToCheckpoint;
-    public float upForce;
+    //public float upForce;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

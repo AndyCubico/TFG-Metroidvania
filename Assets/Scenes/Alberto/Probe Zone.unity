@@ -11430,7 +11430,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToCheckpoint: 0
-  upForce: 0
 --- !u!61 &463992256
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -44084,7 +44083,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToCheckpoint: 0
-  upForce: 0
 --- !u!61 &1999460179
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -47584,6 +47582,14 @@ PrefabInstance:
     - target: {fileID: 6282790690952300471, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: basicAttackCooldown
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333175396450957891, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: FadeIn
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333175396450957891, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: FadeOut
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6333175396450957891, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Enabled

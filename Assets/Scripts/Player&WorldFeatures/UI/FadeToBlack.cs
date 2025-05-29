@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public static class FadeToBlackEvents
 {
-    public static Action FadeToBlackAction;
+    public static Action<float, float> FadeToBlackAction;
 }
 
 public class FadeToBlack : MonoBehaviour
@@ -21,8 +21,8 @@ public class FadeToBlack : MonoBehaviour
 
     FADE_STATUS fadeStatus;
 
-    public float fadeInTime;
-    public float fadeOutTime;
+    float fadeInTime;
+    float fadeOutTime;
 
     float timerToChangeAlpha;
 
@@ -79,8 +79,11 @@ public class FadeToBlack : MonoBehaviour
         }
     }
 
-    public void FadeToBlackTransition()
+    public void FadeToBlackTransition(float timeIn, float timeOut)
     {
+        fadeInTime = timeIn;
+        fadeOutTime = timeOut;
+
         fadeStatus = FADE_STATUS.FADE_IN;
         timerToChangeAlpha = 0;
     }

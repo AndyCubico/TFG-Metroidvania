@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public static class FadeToBlackEvents
 {
-    public static Action<float, float> FadeToBlackAction;
+    public static Action<float, float> eFadeToBlackAction;
 }
 
 public class FadeToBlack : MonoBehaviour
@@ -30,12 +30,12 @@ public class FadeToBlack : MonoBehaviour
 
     private void OnEnable()
     {
-        FadeToBlackEvents.FadeToBlackAction += FadeToBlackTransition;
+        FadeToBlackEvents.eFadeToBlackAction += FadeToBlackTransition;
     }
 
     private void OnDisable()
     {
-        FadeToBlackEvents.FadeToBlackAction -= FadeToBlackTransition;
+        FadeToBlackEvents.eFadeToBlackAction -= FadeToBlackTransition;
     }
 
     void Start()

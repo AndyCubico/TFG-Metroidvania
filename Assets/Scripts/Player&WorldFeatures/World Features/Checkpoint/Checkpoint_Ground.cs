@@ -130,7 +130,7 @@ public class Checkpoint_Ground : MonoBehaviour
         boxCollider.isTrigger = true;
         circleCollider.isTrigger = true;
 
-        FadeToBlackEvents.FadeToBlackAction?.Invoke(FadeIn, FadeOut);
+        FadeToBlackEvents.eFadeToBlackAction?.Invoke(FadeIn, FadeOut);
         isTransitioning = true;
     }
 }

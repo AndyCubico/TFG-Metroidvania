@@ -239,7 +239,7 @@ namespace PlayerController
         //Actual Player state on Movement
         [HideInInspector] public PLAYER_STATUS playerState;
 
-        PLAYER_FACE_DIRECTION playerFaceDir;
+        [HideInInspector] public PLAYER_FACE_DIRECTION playerFaceDir;
         PLAYER_FACE_DIRECTION dashFacing;
         UNLOCK_HABILITIES habilityUnlocker;
 
@@ -1291,7 +1291,7 @@ namespace PlayerController
                 playerFaceDir = PLAYER_FACE_DIRECTION.UP;
             }
 
-            if (downKey)
+            if (downKey || downControllerSensitivity < -0.8f)
             {
                 playerFaceDir = PLAYER_FACE_DIRECTION.DOWN;
             }

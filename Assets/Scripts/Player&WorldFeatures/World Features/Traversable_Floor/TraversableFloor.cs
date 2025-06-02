@@ -75,6 +75,7 @@ public class TraversableFloor : MonoBehaviour
                 characterPlayerController = player.GetComponent<CharacterPlayerController>();
             }
 
+            breakDistanceConexion = player.transform.localScale.y + 0.2f;
             isOnPlatform = true;
         }
     }

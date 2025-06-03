@@ -59,6 +59,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     // Player Controller
     public CharacterPlayerController characterPlayerController;
 
+    // Heavy Attack
+    public HeavyAttack heavyAttack;
+
     // Controls Action Input Delegates
     private void OnEnable()
     {
@@ -188,6 +191,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     void ReciveAttackParryWindow()
     {
         enemyIsAttacking = false;
+        heavyAttack.AddCharges(1);
 
         //Send that the parry has been done correcltly
         Debug.Log("Parry");

@@ -69,7 +69,7 @@ public class HeavyAttack : MonoBehaviour
 
         for(int i = 0; i < 3; i++)
         {
-            chargesUI.Add(GameObject.Find("PlayerCanvas").transform.GetChild(i).GetComponent<Image>());
+            chargesUI.Add(GameObject.Find("Charges").transform.GetChild(i).GetComponent<Image>());
         }
 
         UpdateCharges();

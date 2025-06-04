@@ -21,8 +21,8 @@ public class HeavyAttack : MonoBehaviour
     [Header("Combo Attacks")]
     //Animator
     public int attackDamage;
-    private int midDamage;
-    private int hardDamage;
+    private int m_midDamage;
+    private int m_hardDamage;
     [Space(10)]
 
     public Animator animator;
@@ -91,6 +91,7 @@ public class HeavyAttack : MonoBehaviour
             if (canPerformAttack && heavyCharges > 0)
             {
                 rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+                rb.linearVelocity = Vector2.zero;
                 canPerformAttack = false;
 
                 animator.SetBool("Heavy_Attack", true);
@@ -146,10 +147,10 @@ public class HeavyAttack : MonoBehaviour
                 damage = attackDamage;
                 break;
             case ATTACK_TYPE.MID_ATTACK:
-                damage = midDamage;
+                damage = m_midDamage;
                 break;
             case ATTACK_TYPE.HEAVY_ATTACK:
-                damage = hardDamage;
+                damage = m_hardDamage;
                 break;
             default:
                 break;

@@ -33,8 +33,11 @@ public class PlayerHealth : MonoBehaviour
 
     bool isHealing;
 
-
     private Coroutine healthCoroutine;
+
+    BlockPlayer blockPlayer;
+
+    Rigidbody2D playerRb;
 
     private void OnEnable()
     {
@@ -56,6 +59,9 @@ public class PlayerHealth : MonoBehaviour
         maxHealthText.text = playerHealth.ToString();
 
         healPotionText.text = healPotions.ToString();
+
+        blockPlayer = GetComponent<BlockPlayer>();
+        playerRb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -76,8 +82,9 @@ public class PlayerHealth : MonoBehaviour
 
         if (healPotions > 0 && healPotionInput && playerHealth < 100 && !isHealing)
         {
+            playerRb.linearVelocity = Vector2.zero;
+            playerRb.constraints = RigidbodyConstraints2D.FreezePositionX;
             healthCoroutine = StartCoroutine(Heal(healthQuantity));
-            healPotions--;
             healPotionText.text = healPotions.ToString();
         }
     }
@@ -89,6 +96,12 @@ public class PlayerHealth : MonoBehaviour
         if(healthCoroutine != null)
         {
             StopCoroutine(healthCoroutine);
+
+            playerRb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+            blockPlayer.EnableMovement();
+            blockPlayer.EnableCombat();
+
             isHealing = false;
         }
 
@@ -117,6 +130,8 @@ public class PlayerHealth : MonoBehaviour
 
     public IEnumerator Heal(float quantity)
     {
+        blockPlayer.BlockMovement();
+        blockPlayer.BlockCombat();
         isHealing = true;
 
         yield return new WaitForSeconds(timeToHeal); // Wait to the preparation time
@@ -131,6 +146,9 @@ public class PlayerHealth : MonoBehaviour
         healthBar.fillAmount = playerHealth / maxPlayerHealth;
         healthText.text = playerHealth.ToString();
 
+        blockPlayer.EnableMovement();
+        blockPlayer.EnableCombat();
+        healPotions--;
         isHealing = false;
     }
 }

@@ -20,9 +20,9 @@ public class HeavyAttack : MonoBehaviour
 
     [Header("Combo Attacks")]
     //Animator
-    public int softDamage;
-    public int midDamage;
-    public int hardDamage;
+    public int attackDamage;
+    private int midDamage;
+    private int hardDamage;
     [Space(10)]
 
     public Animator animator;
@@ -120,7 +120,8 @@ public class HeavyAttack : MonoBehaviour
 
     public void Hit()
     {
-        ATTACK_TYPE attackType = (ATTACK_TYPE)heavyCharges;
+        //ATTACK_TYPE attackType = (ATTACK_TYPE)heavyCharges;
+        ATTACK_TYPE attackType = ATTACK_TYPE.SOFT_ATTACK;
         heavyCharges = 0;
 
         UpdateCharges();
@@ -142,7 +143,7 @@ public class HeavyAttack : MonoBehaviour
         switch (attackType)
         {
             case ATTACK_TYPE.SOFT_ATTACK:
-                damage = softDamage;
+                damage = attackDamage;
                 break;
             case ATTACK_TYPE.MID_ATTACK:
                 damage = midDamage;
@@ -179,7 +180,8 @@ public class HeavyAttack : MonoBehaviour
 
     public void AddCharges(int charges)
     {
-        heavyCharges += charges;
+        //heavyCharges += charges;
+        heavyCharges = 1;
 
         UpdateCharges();
     }

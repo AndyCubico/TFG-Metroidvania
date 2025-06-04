@@ -1189,9 +1189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff545890cc1bbc4495402972d8a387d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  softDamage: 50
-  midDamage: 100
-  hardDamage: 150
+  attackDamage: 100
   animator: {fileID: 7970226017141930321}
   characterPlayerController: {fileID: 7804950762158198664}
   HeavyAttackAction: {fileID: 4227112644895659558, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

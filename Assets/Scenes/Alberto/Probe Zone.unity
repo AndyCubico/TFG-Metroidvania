@@ -48659,6 +48659,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1534345205501386500, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2480144430548749248, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -48945,7 +48949,7 @@ PrefabInstance:
       objectReference: {fileID: 1447127293}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: maxTimeInputBuffer
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7804950762158198664, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: DownControllerAction

@@ -162,7 +162,7 @@ public class PlayerCombat : MonoBehaviour
         }
         //Basic Attack + Combo_
 
-        if(characterController.isDashing)
+        if(characterController.isDashing || characterController.isImpactHitting)
         {
             Physics2D.IgnoreLayerCollision(6, 11, true);
         }
@@ -260,6 +260,8 @@ public class PlayerCombat : MonoBehaviour
             enemyHealth = impactHitDetector.SendEnemyCollision();
 
             HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth);
+
+            //Pasar a Andreu los enemigos que han sido golpeados.
         }
     }
 

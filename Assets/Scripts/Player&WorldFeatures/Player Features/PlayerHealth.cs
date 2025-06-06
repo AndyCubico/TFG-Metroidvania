@@ -85,7 +85,6 @@ public class PlayerHealth : MonoBehaviour
             playerRb.linearVelocity = Vector2.zero;
             playerRb.constraints = RigidbodyConstraints2D.FreezePositionX;
             healthCoroutine = StartCoroutine(Heal(healthQuantity));
-            healPotionText.text = healPotions.ToString();
         }
     }
 
@@ -120,6 +119,7 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             playerHealth = 100;
+            healPotions = 3;
 
             healthBar.fillAmount = playerHealth / maxPlayerHealth;
             healthText.text = playerHealth.ToString();
@@ -148,7 +148,10 @@ public class PlayerHealth : MonoBehaviour
 
         blockPlayer.EnableMovement();
         blockPlayer.EnableCombat();
+
         healPotions--;
+        healPotionText.text = healPotions.ToString();
+
         isHealing = false;
     }
 }

@@ -1109,6 +1109,7 @@ GameObject:
   - component: {fileID: 4056104319401248890}
   - component: {fileID: 817962504715778659}
   - component: {fileID: 1462756309172946411}
+  - component: {fileID: 787519678797704424}
   m_Layer: 6
   m_Name: HeavyAttack
   m_TagString: Untagged
@@ -1197,6 +1198,18 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &787519678797704424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4182585858136437257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f37e90c99c2704ebcf316156e0f887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4182924887702744149
 GameObject:
   m_ObjectHideFlags: 0

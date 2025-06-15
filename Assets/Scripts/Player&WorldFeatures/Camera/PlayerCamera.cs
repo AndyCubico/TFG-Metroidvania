@@ -29,6 +29,7 @@ public class PlayerCamera : MonoBehaviour
     // Camera "Threshold triggered dual-forward-focus" movement
     [SerializeField] private float m_MaximunDistanceTreshold; // Value between 0-1, determines the percentatge of distance the player is placed off-center of the camera.
     [SerializeField] private float m_TimeToReachThreshold; // Time that the camera takes to reach from 0 to 1 or -1 in m_CurrentDistanceTreshold.
+    [SerializeField] private float m_TimeToReachCentreMul; // Time that the camera takes to reach from 0 to 1 or -1 in m_CurrentDistanceTreshold.
     private float m_CurrentDistanceTreshold; // Value where the player is at the moment in comprasion to the camera centre. Value is betwenn -1 (left) and 1 (rigth)
 
     // Camera debug
@@ -95,13 +96,12 @@ public class PlayerCamera : MonoBehaviour
 
                 if (m_CurrentDistanceTreshold != 0) // Once the camera is perfectly centered in the characther it must stop tring to center, otherwise, it shakes.
                 {
-                    m_CurrentDistanceTreshold -= Mathf.Sign(m_CurrentDistanceTreshold) * Time.deltaTime / m_TimeToReachThreshold;
-                    if (Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / m_TimeToReachThreshold)) // If we are very near to 0, make the value 0. 
+                    m_CurrentDistanceTreshold -= Mathf.Sign(m_CurrentDistanceTreshold) * Time.deltaTime / (m_TimeToReachThreshold*m_TimeToReachCentreMul); //Return to centre when stopped is slower
+                    if (Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / (m_TimeToReachThreshold * m_TimeToReachCentreMul))) // If we are very near to 0, make the value 0. 
                     {
                         m_CurrentDistanceTreshold = 0;
                     }
                 }
-
 
                 break;
             case TargetDirection.MOVING_RIGTH:
@@ -113,7 +113,7 @@ public class PlayerCamera : MonoBehaviour
                 break;
         }
         
-        // Debug things
+        // Debug
         if (m_IsDebugMode)
         {
             m_CenterCamera.transform.position = transform.position;
@@ -122,7 +122,7 @@ public class PlayerCamera : MonoBehaviour
             m_HorizontalTargetRigth.transform.position = new Vector3(m_Target.transform.position.x - (m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
         }
 
-        if(Input.GetKeyUp(KeyCode.F4)) 
+        if (Input.GetKeyUp(KeyCode.F4)) 
         {
             // Inverse m_IsDebugMode and change active state all elements.
             m_IsDebugMode = !m_IsDebugMode;

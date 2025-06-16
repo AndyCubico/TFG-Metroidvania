@@ -1,14 +1,15 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class FallingHazard : MonoBehaviour
+public class OnBreakFall : MonoBehaviour
 {
-    [TagDropdown] public string[] collisionTag = new string[] { };
+    [SerializeField] GameObject m_ObjectChecked;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Update()     
     {
-        if (collisionTag.Contains(collision.gameObject.tag))
+        if (m_ObjectChecked.IsDestroyed())
         {
             this.gameObject.GetComponent<Rigidbody2D>().WakeUp();
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;

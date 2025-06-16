@@ -30,6 +30,7 @@ public class OnProjetileHit : MonoBehaviour
                 this.gameObject.transform.parent.parent.gameObject.SetActive(false);
                 break;
             case EffectOnCollision.STAY:
+                this.gameObject.transform.parent.parent.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 break;
         }
     }

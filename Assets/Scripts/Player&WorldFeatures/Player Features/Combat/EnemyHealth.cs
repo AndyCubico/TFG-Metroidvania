@@ -7,16 +7,13 @@ public class EnemyHealth : MonoBehaviour
     [Header("Life Variables")]
     public float life;
 
-    private void Update()
-    {
-        if(life <= 0)
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
     public void ReceiveDamage(float damage)
     {
         life -= damage;
+
+        if (life <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

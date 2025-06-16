@@ -42,7 +42,6 @@ public class Checkpoint_Ground : MonoBehaviour
     public float FadeIn;
     public float FadeOut;
 
-
     private void OnEnable()
     {
         CheckpointEvents.FastCheckpointEvent += FastCheckpoint;
@@ -60,6 +59,7 @@ public class Checkpoint_Ground : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         circleCollider = GetComponent<CircleCollider2D>();
+        checkpoint = GameObject.Find("Checkpoint_Ground").gameObject;
 
         gravityScale = rb.gravityScale;
 
@@ -115,10 +115,10 @@ public class Checkpoint_Ground : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.L))
+        /*if(Input.GetKeyDown(KeyCode.L))
         {
             FastCheckpoint();
-        }
+        }*/
     }
 
     public void FastCheckpoint()

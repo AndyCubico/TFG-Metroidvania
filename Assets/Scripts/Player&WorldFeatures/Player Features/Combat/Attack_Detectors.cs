@@ -23,7 +23,7 @@ public class Attack_Detectors : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy")) // ERIC: Porque usas Tag para detectar si son enemigo si luego usas la layer para comprobar si a sido golpeado?
+        if (collision.gameObject.layer == 11)
         {
             enemyObj.Add(collision.GetComponent<EnemyHealth>());
         }
@@ -31,7 +31,7 @@ public class Attack_Detectors : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.gameObject.layer == 11)
         {
             enemyObj.Remove(collision.GetComponent<EnemyHealth>());
         }

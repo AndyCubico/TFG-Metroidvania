@@ -1,66 +1,53 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 {
+    // Damagable variables
     [field: SerializeField] public float m_MaxHealth { get; set; } = 100f;
-    
     public float currentHealth { get; set; }
-    public Pathfollowing pathfollowing { get; set; }
 
-    public bool isTriggered { get; set; }
+    // Movement variables
+    public Pathfollowing pathfollowing { get; set; }
+    public bool isFacingRight { get ; set; } = true; // Default sprite is facing right
+
+    // Trigger variables
+    public bool isAggro { get; set; }
     public bool isWithinRange { get; set; }
 
-    #region State Machine variables
-
+    // State Machine variables
     public StateMachine stateMachine { get; set; }
-    public IdleState idleState { get; set; }
-    public ChaseState chaseState { get; set; }
-    public AttackState attackState { get; set; }
-
-    #endregion
-
-    #region Idle State variables
+    protected Dictionary<System.Type, State> stateRegistry = new();
 
 
-    #endregion
-
-    private void Awake()
+    protected virtual void Awake()
     {
         stateMachine = new StateMachine();
-        idleState = new IdleState(this, stateMachine);
-        chaseState = new ChaseState(this, stateMachine);
-        attackState = new AttackState(this, stateMachine);
     }
 
-    void Start()
+    protected virtual void Start()
     {
         currentHealth = m_MaxHealth;
         pathfollowing = GetComponent<Pathfollowing>();
-
-        // Call starting state of the State Machine
-        stateMachine.Initialize(idleState);
     }
 
-    void Update()
+    protected virtual void Update()
     {
         stateMachine.CurrentState.Update();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         stateMachine.CurrentState.FixedUpdate();
     }
 
-    #region Health & Die functions
+    #region Basic functions
 
     public void Damage(float damage)
     {
         currentHealth -= damage;
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        if (currentHealth <= 0) Die();
     }
 
     public void Die()
@@ -68,22 +55,41 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
         Destroy(gameObject);
     }
 
+    public virtual void PerformAttack()
+    {
+        Debug.LogWarning("PerformAttack not implemented in base Enemy.");
+    }
+
     #endregion
 
     #region Movement Functions
 
-    public void Move(Vector2 velocity)
+    public virtual void Move(Vector2 velocity)
     {
         // TODO: Connect with pathfinding
         // Add check right or left functionality
     }
 
+    public void CheckFacing(Vector2 velocity)
+    {
+        if (isFacingRight && velocity.x < 0f) Flip();
+        else if (!isFacingRight && velocity.x > 0f) Flip();
+    }
+
+    public void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+        isFacingRight = !isFacingRight;
+    }
+
     #endregion
 
     #region Distance check Functions
-    public void SetChaseStatus(bool isTriggered)
+    public void SetAggro(bool isAggro)
     {
-        this.isTriggered = isTriggered;
+        this.isAggro = isAggro;
     }
 
     public void SetAttackDistance(bool isWithinRange)
@@ -109,4 +115,13 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
     }
 
     #endregion
+
+    public virtual T GetState<T>() where T : State
+    {
+        if (stateRegistry.TryGetValue(typeof(T), out var state))
+            return state as T;
+
+        Debug.LogWarning($"State {typeof(T).Name} not found.");
+        return null;
+    }
 }

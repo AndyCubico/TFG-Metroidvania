@@ -15,7 +15,7 @@ public class ChaseCheck : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            m_Enemy.SetChaseStatus(true);
+            m_Enemy.SetAggro(true);
         }
     }
 
@@ -23,7 +23,7 @@ public class ChaseCheck : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            m_Enemy.SetChaseStatus(false);
+            m_Enemy.SetAggro(false);
         }
     }
 }

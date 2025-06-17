@@ -45,7 +45,7 @@ public class AttackState : State
 
         if (/* Player too far away */true)
         {
-            enemy.stateMachine.Transition(enemy.chaseState);
+            enemy.stateMachine.Transition(enemy.GetState<ChaseState>());
         }
 
         m_AttackTimer += Time.deltaTime;

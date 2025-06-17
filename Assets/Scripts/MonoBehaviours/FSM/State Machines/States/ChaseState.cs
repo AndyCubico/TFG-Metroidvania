@@ -32,7 +32,7 @@ public class ChaseState : State
 
         if (enemy.isWithinRange)
         {
-            enemy.stateMachine.Transition(enemy.attackState);
+            enemy.stateMachine.Transition(enemy.GetState<ChaseState>());
         }
 
         // TODO: check with a timer if the player is too far away with no line of sight, return to idle.

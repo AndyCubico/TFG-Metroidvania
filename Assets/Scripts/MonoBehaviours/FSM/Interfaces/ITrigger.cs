@@ -1,8 +1,8 @@
 public interface ITrigger
 {
-    bool isTriggered {  get; set; }
+    bool isAggro {  get; set; }
     bool isWithinRange { get; set; }
 
-    void SetChaseStatus(bool isTriggered);
+    void SetAggro(bool isTriggered);
     void SetAttackDistance(bool isWithinRange);
 }

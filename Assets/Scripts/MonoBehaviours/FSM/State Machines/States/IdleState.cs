@@ -25,14 +25,16 @@ public class IdleState : State
     {
         base.Update();
 
-        if (enemy.isTriggered)
+        if (enemy.isAggro)
         {
-            enemy.stateMachine.Transition(enemy.chaseState);
+            enemy.stateMachine.Transition(enemy.GetState<ChaseState>());
         }
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        // Pathfinding
     }
 }

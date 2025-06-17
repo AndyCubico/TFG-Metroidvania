@@ -1,6 +1,3 @@
-using System.Security.Cryptography;
-using UnityEngine;
-
 public class StateMachine
 {
     public State CurrentState { get; set; }

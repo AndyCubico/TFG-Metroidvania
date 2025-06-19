@@ -12,13 +12,13 @@ public class PlayerHealth : MonoBehaviour
     float maxPlayerHealth;
     [Space(10)]
 
-    [Header("UI Elements")]
-    public Image healthBar;
-    public TextMeshProUGUI healthText; 
-    public TextMeshProUGUI maxHealthText;
+    //[Header("UI Elements")]
+    Image healthBar;
+    TextMeshProUGUI healthText; 
+    TextMeshProUGUI maxHealthText;
 
-    public TextMeshProUGUI healPotionText;
-    [Space(10)]
+    TextMeshProUGUI healPotionText;
+    //[Space(10)]
 
     [Header("Heal Potions")]
     public int healPotions;
@@ -51,6 +51,11 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+        healthBar = GameObject.Find("LifeBar").GetComponent<Image>();
+        healthText = GameObject.Find("LifeText").GetComponent<TextMeshProUGUI>();
+        maxHealthText = GameObject.Find("MaxHealthText").GetComponent<TextMeshProUGUI>();
+        healPotionText = GameObject.Find("PotionsText").GetComponent<TextMeshProUGUI>();
+
         isHealing = false;
 
         maxPlayerHealth = playerHealth;

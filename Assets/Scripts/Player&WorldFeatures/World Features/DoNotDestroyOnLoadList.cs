@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Entities.UniversalDelegates;
 using UnityEngine;
 
 public class DoNotDestroyOnLoadList : MonoBehaviour
@@ -18,5 +19,12 @@ public class DoNotDestroyOnLoadList : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void AddToList(string name)
+    {
+        objectsToNotDestroy.Add(name);
+
+        DontDestroyOnLoad(GameObject.Find(objectsToNotDestroy[objectsToNotDestroy.Count - 1]));
     }
 }

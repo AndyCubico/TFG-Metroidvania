@@ -1,10 +1,7 @@
 using UnityEngine;
-using Unity.Mathematics;
 
 public class ChaseState : State
 {
-    private int2 m_TargetPosition; // Get the player position.
-
     public ChaseState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
     }
@@ -12,34 +9,35 @@ public class ChaseState : State
     public override void AnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
     {
         base.AnimationTrigger(triggerType);
+
+        enemy.chaseSOBaseInstance.DoAnimationTrigger(triggerType);
     }
 
     public override void EnterState()
     {
         base.EnterState();
         Debug.Log("Entering Chase State");
+
+        enemy.chaseSOBaseInstance.DoEnter();
     }
 
     public override void ExitState()
     {
         base.ExitState();
+
+        enemy.chaseSOBaseInstance.DoExit();
     }
 
-    // TODO: call the SetPath function in Pathfollowing.cs
     public override void Update()
     {
         base.Update();
 
-        if (enemy.isWithinRange)
-        {
-            enemy.stateMachine.Transition(enemy.GetState<ChaseState>());
-        }
-
-        // TODO: check with a timer if the player is too far away with no line of sight, return to idle.
+        enemy.chaseSOBaseInstance.DoUpdate();
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        enemy.chaseSOBaseInstance.DoFixedUpdate();
     }
 }

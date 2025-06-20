@@ -3,32 +3,75 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 {
-    // Damagable variables
+    #region Damagable variables
+
     [field: SerializeField] public float m_MaxHealth { get; set; } = 100f;
     public float currentHealth { get; set; }
 
-    // Movement variables
+    #endregion
+
+    #region Movement variables
+
     public Pathfollowing pathfollowing { get; set; }
     public bool isFacingRight { get ; set; } = true; // Default sprite is facing right
+    
+    #endregion
 
-    // Trigger variables
+    #region Trigger variables
+
     public bool isAggro { get; set; }
     public bool isWithinRange { get; set; }
+    
+    #endregion
 
-    // State Machine variables
+    #region State Machine variables
+
     public StateMachine stateMachine { get; set; }
-    protected Dictionary<System.Type, State> stateRegistry = new();
+    public IdleState idleState { get; set; }
+    public ChaseState chaseState { get; set; }
+    public AttackState attackState { get; set; }
+
+    #endregion
+
+    #region Scriptable object variables
+
+    [SerializeField] private IdleSOBase m_IdleSOBase;
+    [SerializeField] private ChaseSOBase m_ChaseSOBase;
+    [SerializeField] private AttackSOBase m_AttackSOBase;
+
+    // Instances so that the scriptable object does not modify every instance in the project.
+    public IdleSOBase idleSOBaseInstance { get; set; }
+    public ChaseSOBase chaseSOBaseInstance { get; set; }
+    public AttackSOBase attackSOBaseInstance { get; set; }
+    
+    #endregion
 
 
     protected virtual void Awake()
     {
+        idleSOBaseInstance = Instantiate(idleSOBaseInstance);
+        chaseSOBaseInstance = Instantiate(chaseSOBaseInstance);
+        attackSOBaseInstance = Instantiate(attackSOBaseInstance);
+
         stateMachine = new StateMachine();
+
+        // Initialize states
+        idleState = new IdleState(this, stateMachine);
+        chaseState = new ChaseState(this, stateMachine);
+        attackState = new AttackState(this, stateMachine);
     }
 
     protected virtual void Start()
     {
         currentHealth = m_MaxHealth;
         pathfollowing = GetComponent<Pathfollowing>();
+
+        idleSOBaseInstance.Initialize(gameObject, this);
+        chaseSOBaseInstance.Initialize(gameObject, this);
+        attackSOBaseInstance.Initialize(gameObject, this);
+
+        // Call starting state of the State Machine
+        stateMachine.Initialize(idleState);
     }
 
     protected virtual void Update()
@@ -40,6 +83,7 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
     {
         stateMachine.CurrentState.FixedUpdate();
     }
+
 
     #region Basic functions
 
@@ -115,13 +159,4 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
     }
 
     #endregion
-
-    public virtual T GetState<T>() where T : State
-    {
-        if (stateRegistry.TryGetValue(typeof(T), out var state))
-            return state as T;
-
-        Debug.LogWarning($"State {typeof(T).Name} not found.");
-        return null;
-    }
 }

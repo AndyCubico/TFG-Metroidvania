@@ -196,14 +196,11 @@ public class PlayerCombatV2 : MonoBehaviour
             nextEnemyHealth = new List<EnemyHealth>(attackDetector.SendEnemyCollision());
             List<EnemyHealth> newEnemiesList = new List<EnemyHealth>();
 
-            for (int i = 0; i < enemyHealth.Count; i++)
+            for (int j = 0; j < nextEnemyHealth.Count; j++)
             {
-                for (int j = 0; j < nextEnemyHealth.Count; j++)
+                if (!enemyHealth.Contains(nextEnemyHealth[j]) && !newEnemiesList.Contains(nextEnemyHealth[j]))
                 {
-                    if (nextEnemyHealth[j] != enemyHealth[i] && !newEnemiesList.Contains(nextEnemyHealth[j]))
-                    {
-                        newEnemiesList.Add(nextEnemyHealth[j]);
-                    }
+                    newEnemiesList.Add(nextEnemyHealth[j]);
                 }
             }
 

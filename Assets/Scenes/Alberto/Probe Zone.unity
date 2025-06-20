@@ -31489,7 +31489,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4970506031060333450}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c992b50d298bd942bcb5fbaa6fdad9a, type: 3}
   m_Name: 
@@ -49413,6 +49413,10 @@ PrefabInstance:
       propertyPath: damageBlockPercentage
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 310292328896430767, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 521464263400792921, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -49762,6 +49766,10 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083735042579663701, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: basicAttack.m_Name
       value: Basic Attack
       objectReference: {fileID: 0}
@@ -49795,6 +49803,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1534345205501386500, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534345205501386500, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2480144430548749248, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
@@ -49847,6 +49859,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3859435546911000447, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182585858136437257, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4644207807309837927, guid: 8a8230390caf56e49a0228f1a2a706eb, type: 3}

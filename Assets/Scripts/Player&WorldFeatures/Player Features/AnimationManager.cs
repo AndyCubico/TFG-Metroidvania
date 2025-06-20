@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    public PlayerCombat playerCombat;
+    public PlayerCombatV2 playerCombat;
     public HeavyAttack heavyAttack;
 
     public void BasicAttackCombatAnimationHasEnded()
     {
         playerCombat.AnimationHasFinished();
+    }
+
+    public void StartBasicAttack()
+    {
+        playerCombat.StartAttacking();
     }
 
     public void HeavyAttackHasEnded()

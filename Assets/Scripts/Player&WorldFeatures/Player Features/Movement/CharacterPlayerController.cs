@@ -147,7 +147,10 @@ namespace PlayerController
         public bool hasImpactHit;
         public bool isImpactHitting;
         [HideInInspector] public bool isDashing;
+
+        //Activators
         [HideInInspector] public bool activateFallMultiplier;
+        [HideInInspector] public bool blockFlip;
 
         public bool canJump;
 
@@ -247,7 +250,7 @@ namespace PlayerController
 
         [Header("Scripts")]
         [Space(5)]
-        public PlayerCombat combatScript;
+        public PlayerCombatV2 combatScript;
 
         //Input Buffer
         Dictionary<INPUT_BUFFER, float> inputBufferSaver;
@@ -533,6 +536,7 @@ namespace PlayerController
             playerOnEdgeUnfreeze = false;
 
             activateFallMultiplier = true;
+            blockFlip = false;
 
             playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player facing Right
             dashFacing = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player dash facing Right
@@ -1475,11 +1479,11 @@ namespace PlayerController
         //Animates de player for movement
         void AnimatePlayer()
         {
-            if (flipAnimation) //Flip the animation if it is necesary
+            if (flipAnimation && !blockFlip) //Flip the animation if it is necesary
             {
                 playerSprite.flipX = true;
             }
-            else
+            else if(!blockFlip)
             {
                 playerSprite.flipX = false;
             }

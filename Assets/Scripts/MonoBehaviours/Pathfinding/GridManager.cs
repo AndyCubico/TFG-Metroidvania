@@ -16,12 +16,29 @@ public class GridManager : MonoBehaviour
     public void Awake()
     {
         Instance = this;
-    }
 
-    void Start()
-    {
         grid = new Grid<GridNode>(width, height, cellSize, origin, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y));
 
+        SetGridWalkability();
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            grid.GetXYPosition(mouseWorldPos, out int x, out int y);
+            GridNode node = grid.GetValue(x, y);
+            if (node != null)
+            {
+                Debug.Log($"Node at ({x}, {y}) is {(node.IsWalkable() ? "Walkable" : "Blocked")}");
+            }
+        }
+    }
+
+    private void SetGridWalkability()
+    {
         // --- Set grid walkability ---
 
         // First check for colliders that are blocked terrain.
@@ -139,21 +156,6 @@ public class GridManager : MonoBehaviour
                         leftCliff = x;
                     }
                 }
-            }
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            grid.GetXYPosition(mouseWorldPos, out int x, out int y);
-            GridNode node = grid.GetValue(x, y);
-            if (node != null)
-            {
-                Debug.Log($"Node at ({x}, {y}) is {(node.IsWalkable() ? "Walkable" : "Blocked")}");
             }
         }
     }

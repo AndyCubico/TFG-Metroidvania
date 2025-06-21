@@ -19,35 +19,6 @@ public class PathfindingManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Update()
-    {
-        // Debug
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Start pathfinding");
-
-            NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
-
-            FindPathJob findPathJob = new FindPathJob
-            {
-                startPosition = m_StartPosition,
-                endPosition = m_EndPosition,
-                resultPath = path,
-                gridSize = new int2(GridManager.Instance.grid.GetWidth(), GridManager.Instance.grid.GetHeight()),
-                pathNodeArray = GetPathNodeArray(),
-            };
-            JobHandle handle = findPathJob.Schedule();
-            handle.Complete();
-
-            foreach (int2 pathPosition in path)
-            {
-                Debug.Log(pathPosition);
-            }
-
-            path.Dispose();
-        }
-    }
-
     /// <summary>
     /// Create a path with a given starting and ending position, then store it in NativeList Path.
     /// </summary>

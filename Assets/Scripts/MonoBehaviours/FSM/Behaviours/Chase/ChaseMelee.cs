@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Chase Melee", menuName = "Enemy Logic/Chase/Chase Melee")]
@@ -13,6 +14,11 @@ public class ChaseMelee : ChaseSOBase
     public override void DoEnter()
     {
         base.DoEnter();
+
+        int2 currentPos = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
+        int2 targetPos = new int2(Mathf.FloorToInt(playerTransform.position.x), Mathf.FloorToInt(playerTransform.position.y));
+
+        enemy.pathfollowing.SetPath(currentPos, targetPos);
     }
 
     public override void DoExit()
@@ -23,6 +29,12 @@ public class ChaseMelee : ChaseSOBase
     public override void DoUpdate()
     {
         base.DoUpdate();
+
+        // DEBUG
+        if (enemy.pathfollowing.IsPathFinished())
+        {
+            enemy.stateMachine.Transition(enemy.idleState);
+        }
     }
 
     public override void DoFixedUpdate()

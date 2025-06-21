@@ -6,13 +6,13 @@ using UnityEngine;
 public class DoNotDestroyOnLoadList : MonoBehaviour
 {
     [Header("Objects List To NOT Destroy")]
-    public List<String> objectsToNotDestroy;
+    public List<GameObject> objectsToNotDestroy;
 
     void Start()
     {
         for (int i = 0; i < objectsToNotDestroy.Count; i++)
         {
-            DontDestroyOnLoad(GameObject.Find(objectsToNotDestroy[i]));
+            DontDestroyOnLoad(objectsToNotDestroy[i]);
         }
     }
 
@@ -21,10 +21,10 @@ public class DoNotDestroyOnLoadList : MonoBehaviour
         
     }
 
-    public void AddToList(string name)
+    public void AddToList(GameObject obj)
     {
-        objectsToNotDestroy.Add(name);
+        objectsToNotDestroy.Add(obj);
 
-        DontDestroyOnLoad(GameObject.Find(objectsToNotDestroy[objectsToNotDestroy.Count - 1]));
+        DontDestroyOnLoad(obj);
     }
 }

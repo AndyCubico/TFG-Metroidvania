@@ -345,18 +345,18 @@ namespace PlayerController
             {
                 impactHitHold = true;
 
-                if (inputBufferSaver.ContainsKey(INPUT_BUFFER.IMPACT_HIT))
-                {
-                    inputBufferSaver[INPUT_BUFFER.IMPACT_HIT] = maxTimeInputBuffer;
-                }
-                else
-                {
-                    inputBufferSaver.Add(INPUT_BUFFER.IMPACT_HIT, maxTimeInputBuffer);
-                }
+                //if (inputBufferSaver.ContainsKey(INPUT_BUFFER.IMPACT_HIT))
+                //{
+                //    inputBufferSaver[INPUT_BUFFER.IMPACT_HIT] = maxTimeInputBuffer;
+                //}
+                //else
+                //{
+                //    inputBufferSaver.Add(INPUT_BUFFER.IMPACT_HIT, maxTimeInputBuffer);
+                //}
             }
             else
             {
-                //impactHitHold = false;
+                impactHitHold = false;
             }
         }
 
@@ -885,12 +885,31 @@ namespace PlayerController
         {
             if (playerState == PLAYER_STATUS.AIR)
             {
-                if (jumpKeyHold && impactHitHold && hasImpactHit && !isCrouch && rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
+                if (jumpKeyHold)
                 {
-                    hasImpactHit = false;
-                    isImpactHitting = true;
-                    rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
+                    if ((dropDown || downControllerSensitivity < -0.8f))
+                    {
+                        if (hasImpactHit)
+                        {
+                            if (!isCrouch)
+                            {
+                                if(rb.linearVelocity.y < 0)
+                                {
+                                    hasImpactHit = false;
+                                    isImpactHitting = true;
+                                    rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
+                                }
+                            }
+                        }
+                    }
                 }
+
+                //if (jumpKeyHold && impactHitHold && hasImpactHit && !isCrouch && rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
+                //{
+                //    hasImpactHit = false;
+                //    isImpactHitting = true;
+                //    rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
+                //}
             }
 
             //if(!isImpactHitting && !hasImpactHit) //Return ImpactHit

@@ -46,12 +46,11 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
     
     #endregion
 
-
     protected virtual void Awake()
     {
-        idleSOBaseInstance = Instantiate(idleSOBaseInstance);
-        chaseSOBaseInstance = Instantiate(chaseSOBaseInstance);
-        attackSOBaseInstance = Instantiate(attackSOBaseInstance);
+        idleSOBaseInstance = Instantiate(m_IdleSOBase);
+        chaseSOBaseInstance = Instantiate(m_ChaseSOBase);
+        attackSOBaseInstance = Instantiate(m_AttackSOBase);
 
         stateMachine = new StateMachine();
 
@@ -59,6 +58,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
         idleState = new IdleState(this, stateMachine);
         chaseState = new ChaseState(this, stateMachine);
         attackState = new AttackState(this, stateMachine);
+
+        pathfollowing = GetComponent<Pathfollowing>();
     }
 
     protected virtual void Start()

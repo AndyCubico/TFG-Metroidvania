@@ -172,7 +172,7 @@ public class Pathfollowing : MonoBehaviour
     /// </summary>
     /// <param name="start"></param>
     /// <param name="end"></param>
-    private void SetPath(int2 start, int2 end)
+    public void SetPath(int2 start, int2 end)
     {
         NativeList<int2> path = new NativeList<int2>(Allocator.TempJob);
 
@@ -344,4 +344,11 @@ public class Pathfollowing : MonoBehaviour
             lineRenderer.SetPosition(m_PathIndex - i, pos);
         }
     }
+
+    // Helper for the AI behaviours
+    public bool IsPathFinished()
+    {
+        return m_PathIndex == -1 || m_Path.IsEmpty;
+    }
+
 }

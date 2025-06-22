@@ -111,15 +111,11 @@ namespace PlayerController
         //Hit variables
         public float impactHit;
 
-        [Header("________________________ ANIMATOR ________________________")]
-        //Animator
-        private Animator animator;
-
-        private SpriteRenderer playerSprite;
+        [HideInInspector]public SpriteRenderer playerSprite;
 
         //[Header("Movement Direction Input")]
 
-        private Vector2 move;
+        [HideInInspector] public Vector2 move;
 
         //Rigid Body
         [HideInInspector] public Rigidbody2D rb;
@@ -132,8 +128,6 @@ namespace PlayerController
         private bool isRoof;
         private bool isSlide;
         private bool isCrouch;
-        private bool isLeftWall;
-        private bool isRightWall;
         private bool isHangingWall;
         private bool isUnderground;
         public bool isHangingEdge;
@@ -147,6 +141,8 @@ namespace PlayerController
         public bool hasImpactHit;
         public bool isImpactHitting;
         [HideInInspector] public bool isDashing;
+        [HideInInspector] public bool isLeftWall;
+        [HideInInspector] public bool isRightWall;
 
         //Activators
         [HideInInspector] public bool activateFallMultiplier;
@@ -515,7 +511,6 @@ namespace PlayerController
             gravityVector = new Vector2(0, -Physics2D.gravity.y);
             rb = GetComponent<Rigidbody2D>();
             playerSprite = GetComponent<SpriteRenderer>();
-            animator = GetComponent<Animator>();
             inputBufferSaver = new Dictionary<INPUT_BUFFER, float>();
 
             gravityEffect = rb.gravityScale;
@@ -583,7 +578,7 @@ namespace PlayerController
 
             //_CheckDownControllerInput
             downControllerSensitivity = DownControllerAction.action.ReadValue<Vector2>().y;
-            
+
             //Add the basic movement force to the player
             AddMovementSpeed();
 
@@ -614,9 +609,6 @@ namespace PlayerController
             //Cheater hability Unlocker, send a hability to this function to unlock it
             UnlockHabilities(habilityUnlocker);
 
-            //Aniamte the player
-            AnimatePlayer();
-
             if ((dropDown || downControllerSensitivity < -0.8f) && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can detach walls or edges if press S or Down joystick
             {
                 PlayerUnFreeze();
@@ -633,7 +625,7 @@ namespace PlayerController
                 playerState = PLAYER_STATUS.AIR;
             }
 
-            if(hasExitWall) //When the player has exit the wall hanging, from a brief of time is going to be block
+            if (hasExitWall) //When the player has exit the wall hanging, from a brief of time is going to be block
             {
                 exitWallTimer += Time.deltaTime;
 
@@ -744,6 +736,7 @@ namespace PlayerController
                 DownCrouchCollider.isTrigger = true;
                 //canJump = true;
                 canJump = false;
+                isImpactHitting = false;
 
                 if (jumpKeyHold && !jumpStopper)
                 {
@@ -893,7 +886,7 @@ namespace PlayerController
                         {
                             if (!isCrouch)
                             {
-                                if(rb.linearVelocity.y < 0)
+                                if (rb.linearVelocity.y < 0)
                                 {
                                     hasImpactHit = false;
                                     isImpactHitting = true;
@@ -925,7 +918,7 @@ namespace PlayerController
         //Make the action of dashing
         private void Dash()
         {
-            if (canDash && !isRoof && !isCrouch)
+            if (canDash && !isRoof && !isCrouch && playerState != PLAYER_STATUS.WALL)
             {
                 if (dashDown && !isImpactHitting && !impactHitDown && playerFaceDir != PLAYER_FACE_DIRECTION.DOWN) //Check if the Left Shift is pressed, is in ground and is not sliding
                 {
@@ -1492,61 +1485,6 @@ namespace PlayerController
             if (Mathf.Abs(earringFloor) < maxAngleFloor)
             {
                 isTooMuchEarring = false;
-            }
-        }
-
-        //Animates de player for movement
-        void AnimatePlayer()
-        {
-            if (flipAnimation && !blockFlip) //Flip the animation if it is necesary
-            {
-                playerSprite.flipX = true;
-            }
-            else if(!blockFlip)
-            {
-                playerSprite.flipX = false;
-            }
-
-            if (playerState != PLAYER_STATUS.CROUCH)
-            {
-                if (animator.enabled == false)
-                {
-                    animator.enabled = true;
-                }
-
-                if (rb.linearVelocity.magnitude > 0.1f && move.x != 0 && move.y == 0 && playerState == PLAYER_STATUS.GROUND)
-                {
-                    animator.SetBool("Idle", false);
-                    animator.SetBool("Run", true);
-                }
-                else
-                {
-                    animator.SetBool("Run", false);
-                }
-
-                //Set an animation of jumping, and falling from jump
-                if (rb.linearVelocity.y > 0f && (playerState == PLAYER_STATUS.AIR || playerState == PLAYER_STATUS.JUMP))
-                {
-                    animator.SetBool("Idle", false);
-                    animator.SetBool("Jump", true);
-                }
-                else if (rb.linearVelocity.y <= 0f && playerState == PLAYER_STATUS.AIR)
-                {
-                    animator.SetBool("Jump", false);
-                }
-
-                //Idle is to return from jumping and wait to touch ground
-                if (!animator.GetBool("Jump") && !animator.GetBool("Run"))
-                {
-                    if ((playerState == PLAYER_STATUS.GROUND || playerState == PLAYER_STATUS.JUMP) && !animator.GetBool("Idle"))
-                    {
-                        animator.SetBool("Idle", true);
-                    }
-                }
-            }
-            else
-            {
-                animator.enabled = false;
             }
         }
     }

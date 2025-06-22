@@ -123,6 +123,15 @@ public class HangEdges : MonoBehaviour
                 characterPlayerController.isHangingEdge = true;
                 player = characterPlayerController.gameObject;
 
+                if(isLeftEdge)
+                {
+                    characterPlayerController.gameObject.GetComponent<AnimationManager>().isLeftEdge = true;
+                }
+                else
+                {
+                    characterPlayerController.gameObject.GetComponent<AnimationManager>().isLeftEdge = false;
+                }
+
                 if (isLeftEdge)
                 {
                     player.transform.position = playerPositionLeft.transform.position;

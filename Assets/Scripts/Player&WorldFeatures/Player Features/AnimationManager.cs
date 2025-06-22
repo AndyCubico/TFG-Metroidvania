@@ -10,6 +10,8 @@ public class AnimationManager : MonoBehaviour
     private CharacterPlayerController characterPlayerController;
     private Animator animator;
 
+    [HideInInspector] public bool isLeftEdge;
+
     private void Start()
     {
         characterPlayerController = GetComponent<CharacterPlayerController>();
@@ -61,9 +63,10 @@ public class AnimationManager : MonoBehaviour
                 animator.enabled = true;
             }
 
-            if (characterPlayerController.rb.linearVelocity.magnitude > 0.1f && characterPlayerController.move.x != 0 && characterPlayerController.move.y == 0 && characterPlayerController.playerState == PLAYER_STATUS.GROUND)
+            if ((characterPlayerController.rb.linearVelocity.magnitude > 0.1f || characterPlayerController.move.x != 0) && characterPlayerController.move.y == 0 && characterPlayerController.playerState == PLAYER_STATUS.GROUND)
             {
                 animator.SetBool("Idle", false);
+                animator.SetBool("Edge", false);
                 animator.SetBool("Run", true);
             }
             else
@@ -88,6 +91,7 @@ public class AnimationManager : MonoBehaviour
                 if ((characterPlayerController.playerState == PLAYER_STATUS.GROUND || characterPlayerController.playerState == PLAYER_STATUS.JUMP) && !animator.GetBool("Idle"))
                 {
                     animator.SetBool("Idle", true);
+                    animator.SetBool("Edge", false);
                 }
             }
 
@@ -95,6 +99,7 @@ public class AnimationManager : MonoBehaviour
             if (animator.GetBool("Jump") && characterPlayerController.playerState == PLAYER_STATUS.GROUND)
             {
                 animator.SetBool("Idle", true);
+                animator.SetBool("Edge", false);
                 animator.SetBool("Jump", false);
             }
 
@@ -104,6 +109,7 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("Idle", false);
                 animator.SetBool("Jump", false);
                 animator.SetBool("Run", false);
+                animator.SetBool("Edge", false);
                 //animator.SetBool("Dash", false);
 
                 characterPlayerController.blockFlip = true;
@@ -118,6 +124,8 @@ public class AnimationManager : MonoBehaviour
                     characterPlayerController.playerSprite.flipX = false;
                 }
             }
+
+            //Get out of hang walls
             if (animator.GetBool("Wall") && (characterPlayerController.playerState == PLAYER_STATUS.JUMP || characterPlayerController.playerState == PLAYER_STATUS.AIR || characterPlayerController.playerState == PLAYER_STATUS.GROUND))
             {
                 characterPlayerController.blockFlip = false;
@@ -130,6 +138,35 @@ public class AnimationManager : MonoBehaviour
                 else if (characterPlayerController.playerState == PLAYER_STATUS.AIR)
                 {
                     animator.SetBool("Jump", false);
+                }
+            }
+
+            if (characterPlayerController.playerState == PLAYER_STATUS.HANGED)
+            {
+                animator.SetBool("Idle", false);
+                animator.SetBool("Jump", false);
+                animator.SetBool("Run", false);
+                animator.SetBool("Wall", false);
+                //animator.SetBool("Dash", false);
+
+                characterPlayerController.blockFlip = false;
+
+                if (isLeftEdge)
+                {
+                    characterPlayerController.playerSprite.flipX = false;
+                }
+                else
+                {
+                    characterPlayerController.playerSprite.flipX = true;
+                }
+
+                if (characterPlayerController.climbEdges || characterPlayerController.playerState == PLAYER_STATUS.GROUND)
+                {
+                    animator.SetBool("Edge", false);
+                }
+                else
+                {
+                    animator.SetBool("Edge", true);
                 }
             }
         }

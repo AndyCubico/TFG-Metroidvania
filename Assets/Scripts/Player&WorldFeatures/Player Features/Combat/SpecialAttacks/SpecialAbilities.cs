@@ -48,6 +48,7 @@ public class SpecialAbilities : MonoBehaviour
     bool isGrounded;
     bool cancelLayers;
     bool isSnowAttacking;
+    [HideInInspector]public bool isAttacking;
 
     [Header("Input Actions")]
     [Space(5)]
@@ -57,10 +58,13 @@ public class SpecialAbilities : MonoBehaviour
     private List<EnemyHealth> enemiesHealth;
 
     bool usingController;
-    bool specialHabilitiesTrigger;
+    [HideInInspector]public bool specialHabilitiesTrigger;
     bool snowHability;
 
     private Coroutine activeRoutine;
+
+    //Scripts
+    private PlayerHealth m_PlayerHealth;
 
     private void OnEnable()
     {
@@ -105,11 +109,14 @@ public class SpecialAbilities : MonoBehaviour
         rigidbodyFreeze = false;
         isSnowAttacking = false;
         snowExpand = false;
+        isAttacking = false;
         defaultGravity = rb.gravityScale;
         snowAttackTimer = 0;
         sizeSnowExpansion = 0;
 
         snowCollider.size = new Vector2(0, snowCollider.size.y);
+
+        m_PlayerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -132,7 +139,7 @@ public class SpecialAbilities : MonoBehaviour
             usingController = false;
         }
 
-        if (!characterPlayerController.isDashing) // If the player is dashing can't make an ability
+        if (!characterPlayerController.isDashing && !m_PlayerHealth.isHealing) // If the player is dashing can't make an ability and is not healing
         {
             if (usingController)
             {
@@ -152,6 +159,7 @@ public class SpecialAbilities : MonoBehaviour
                 {
                     snowAttackTimer = snowAttackCooldown;
 
+                    isAttacking = true;
                     activeRoutine = StartCoroutine(SnowSpecialAttack());
                 }
             }
@@ -171,6 +179,7 @@ public class SpecialAbilities : MonoBehaviour
                 {
                     snowAttackTimer = snowAttackCooldown;
 
+                    isAttacking = true;
                     activeRoutine = StartCoroutine(SnowSpecialAttack());
                 }
             }
@@ -263,6 +272,8 @@ public class SpecialAbilities : MonoBehaviour
 
                 isSnowAttacking = false;
             }
+
+            isAttacking = false;
         }
     }
 
@@ -279,5 +290,6 @@ public class SpecialAbilities : MonoBehaviour
         characterPlayerController.enabled = true;
         rb.gravityScale = defaultGravity;
         rigidbodyFreeze = false;
+        isAttacking = false;
     }
 }

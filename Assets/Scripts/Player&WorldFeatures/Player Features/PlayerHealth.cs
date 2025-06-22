@@ -1,3 +1,4 @@
+using PlayerController;
 using System;
 using System.Collections;
 using TMPro;
@@ -31,13 +32,19 @@ public class PlayerHealth : MonoBehaviour
     public InputActionReference HealPotionAction;
     bool healPotionInput;
 
-    bool isHealing;
+    [HideInInspector]public bool isHealing;
 
     private Coroutine healthCoroutine;
 
     BlockPlayer blockPlayer;
 
     Rigidbody2D playerRb;
+
+    //Scripts
+    private SpecialAbilities m_SpecialAbilities;
+    private CharacterPlayerController m_CharacterPlayerController;
+    private PlayerCombatV2 m_PlayerCombat;
+    private HeavyAttack m_HeavyAttack;
 
     private void OnEnable()
     {
@@ -55,6 +62,10 @@ public class PlayerHealth : MonoBehaviour
         healthText = GameObject.Find("LifeText").GetComponent<TextMeshProUGUI>();
         maxHealthText = GameObject.Find("MaxHealthText").GetComponent<TextMeshProUGUI>();
         healPotionText = GameObject.Find("PotionsText").GetComponent<TextMeshProUGUI>();
+        m_SpecialAbilities = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>();
+        m_PlayerCombat = GameObject.Find("Combat").GetComponent<PlayerCombatV2>();
+        m_HeavyAttack = GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>();
+        m_CharacterPlayerController = gameObject.GetComponent<CharacterPlayerController>();
 
         isHealing = false;
 
@@ -71,7 +82,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        if (HealPotionAction.action.WasPressedThisFrame())
+        if (HealPotionAction.action.WasPressedThisFrame() && !m_SpecialAbilities.specialHabilitiesTrigger && !m_SpecialAbilities.isAttacking && !m_PlayerCombat.isAttacking && !m_HeavyAttack.isAttacking && m_CharacterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND)
         {
             healPotionInput = true;
         }

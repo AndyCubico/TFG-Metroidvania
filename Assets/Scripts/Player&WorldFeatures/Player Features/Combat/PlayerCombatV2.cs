@@ -87,7 +87,8 @@ public class PlayerCombatV2 : MonoBehaviour
     //Checkers
     //bool cooldown;
     //bool comboReset;
-    bool isAttacking;
+    bool isDamaging;
+    [HideInInspector]public bool isAttacking;
 
     //Values
     float gravityScale;
@@ -106,6 +107,7 @@ public class PlayerCombatV2 : MonoBehaviour
         //basicAttackCooldownLocal = 0;
         //cooldown = false;
         canHitCombo = true;
+        isDamaging = false;
         isAttacking = false;
 
         gravityScale = rb.gravityScale;
@@ -131,6 +133,7 @@ public class PlayerCombatV2 : MonoBehaviour
                 if (ComboAttack())
                 {
                     canHitCombo = false;
+                    isAttacking = true;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
                     AnimationSelector((ATTACK_TYPE)comboCounter);
                 }
@@ -174,7 +177,7 @@ public class PlayerCombatV2 : MonoBehaviour
             Physics2D.IgnoreLayerCollision(6, 11, false);
         }
 
-        if (isAttacking)
+        if (isDamaging)
         {
             BasicAttack((ATTACK_TYPE)comboCounter); //Exectue the attack
         }
@@ -294,17 +297,18 @@ public class PlayerCombatV2 : MonoBehaviour
 
     public void StartAttacking()
     {
-        if(!isAttacking)
+        if(!isDamaging)
         {
             characterController.blockFlip = true;
 
-            isAttacking = true;
+            isDamaging = true;
         }
     }
 
     public void AnimationHasFinished()
     {
         canHitCombo = true;
+        isDamaging = false;
         isAttacking = false;
         characterController.blockFlip = false;
         nextEnemyHealth.Clear();

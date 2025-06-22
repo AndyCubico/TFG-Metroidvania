@@ -46,6 +46,7 @@ public class HeavyAttack : MonoBehaviour
 
     bool canPerformAttack;
     bool hasHit;
+    [HideInInspector]public bool isAttacking;
 
     BoxCollider2D attackCollider; 
     Attack_Detectors attackDetector;
@@ -66,6 +67,7 @@ public class HeavyAttack : MonoBehaviour
         heavyCharges = 0;
         heavyAttackInput = false;
         canPerformAttack = true;
+        isAttacking = false;
 
         for(int i = 0; i < 3; i++)
         {
@@ -93,6 +95,7 @@ public class HeavyAttack : MonoBehaviour
                 rb.constraints = RigidbodyConstraints2D.FreezePositionX;
                 rb.linearVelocity = Vector2.zero;
                 canPerformAttack = false;
+                isAttacking = true;
 
                 animator.SetBool("Heavy_Attack", true);
             }
@@ -114,6 +117,7 @@ public class HeavyAttack : MonoBehaviour
     public void AnimationHasFinished()
     {
         canPerformAttack = true;
+        isAttacking = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         animator.SetBool("Heavy_Attack", false);

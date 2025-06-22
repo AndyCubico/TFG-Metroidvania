@@ -823,11 +823,14 @@ MonoBehaviour:
   attackDamage: 100
   animator: {fileID: 7970226017141930321}
   characterPlayerController: {fileID: 7804950762158198664}
+  playerCombat: {fileID: 8591655349491069302}
   HeavyAttackAction: {fileID: 4227112644895659558, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   rb: {fileID: 2501051149002799573}
   enemyMask:
     serializedVersion: 2
     m_Bits: 2048
+  isAttacking: 0
+  isDamaging: 0
 --- !u!114 &787519678797704424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1115,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 1197020301, guid: 60235837b56f7ad42836fe57507dd1ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.5074484, y: 2.5049999}
@@ -1159,6 +1162,8 @@ MonoBehaviour:
   maxTimeInputBuffer: 0.1
   downControllerSensitivity: 0
   impactHit: 1000
+  playerSprite: {fileID: 0}
+  move: {x: 0, y: 0}
   rb: {fileID: 0}
   isGrounded: 1
   isHangingEdge: 0
@@ -1171,6 +1176,8 @@ MonoBehaviour:
   hasImpactHit: 0
   isImpactHitting: 0
   isDashing: 0
+  isLeftWall: 0
+  isRightWall: 0
   activateFallMultiplier: 0
   blockFlip: 0
   canJump: 1
@@ -1267,6 +1274,7 @@ MonoBehaviour:
   healthQuantity: 40
   timeToHeal: 1
   HealPotionAction: {fileID: 2758354821599714866, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  isHealing: 0
 --- !u!50 &2501051149002799573
 Rigidbody2D:
   serializedVersion: 5
@@ -1826,6 +1834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCombat: {fileID: 8591655349491069302}
   heavyAttack: {fileID: 1462756309172946411}
+  isLeftEdge: 0
 --- !u!114 &5754365262335582950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1909,8 +1918,10 @@ MonoBehaviour:
   abilityCancel:
     serializedVersion: 2
     m_Bits: 256
+  isAttacking: 0
   SpecialHabilitiesTrigger: {fileID: -6606324200797737117, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   SnowHability: {fileID: 1626922096970559354, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  specialHabilitiesTrigger: 0
 --- !u!1 &8043182413465834454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,6 +2113,7 @@ MonoBehaviour:
     m_Bits: 2048
   characterController: {fileID: 7804950762158198664}
   rb: {fileID: 2501051149002799573}
+  isAttacking: 0
 --- !u!1 &8946198955536060730
 GameObject:
   m_ObjectHideFlags: 0

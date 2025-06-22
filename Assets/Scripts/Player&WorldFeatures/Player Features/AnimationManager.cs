@@ -41,7 +41,7 @@ public class AnimationManager : MonoBehaviour
 
     public void HeavyAttackHit()
     {
-        heavyAttack.Hit();
+        heavyAttack.StartAttacking();
     }
 
     //Animates de player for movement
@@ -63,10 +63,12 @@ public class AnimationManager : MonoBehaviour
                 animator.enabled = true;
             }
 
-            if ((characterPlayerController.rb.linearVelocity.magnitude > 0.1f || characterPlayerController.move.x != 0) && characterPlayerController.move.y == 0 && characterPlayerController.playerState == PLAYER_STATUS.GROUND)
+            if ((characterPlayerController.rb.linearVelocity.magnitude > 0.1f || characterPlayerController.move.x != 0) && characterPlayerController.move.y == 0 && characterPlayerController.playerState == PLAYER_STATUS.GROUND && characterPlayerController.playerState != PLAYER_STATUS.DASH)
             {
                 animator.SetBool("Idle", false);
                 animator.SetBool("Edge", false);
+                animator.SetBool("Fall", false);
+                animator.SetBool("ImpactHit", false);
                 animator.SetBool("Run", true);
             }
             else
@@ -91,7 +93,9 @@ public class AnimationManager : MonoBehaviour
                 if ((characterPlayerController.playerState == PLAYER_STATUS.GROUND || characterPlayerController.playerState == PLAYER_STATUS.JUMP) && !animator.GetBool("Idle"))
                 {
                     animator.SetBool("Idle", true);
+                    animator.SetBool("Fall", false);
                     animator.SetBool("Edge", false);
+                    animator.SetBool("ImpactHit", false);
                 }
             }
 
@@ -110,7 +114,8 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("Jump", false);
                 animator.SetBool("Run", false);
                 animator.SetBool("Edge", false);
-                //animator.SetBool("Dash", false);
+                animator.SetBool("Dash", false);
+                animator.SetBool("ImpactHit", false);
 
                 characterPlayerController.blockFlip = true;
                 animator.SetBool("Wall", true);
@@ -147,7 +152,8 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("Jump", false);
                 animator.SetBool("Run", false);
                 animator.SetBool("Wall", false);
-                //animator.SetBool("Dash", false);
+                animator.SetBool("Dash", false);
+                animator.SetBool("ImpactHit", false);
 
                 characterPlayerController.blockFlip = false;
 
@@ -168,6 +174,28 @@ public class AnimationManager : MonoBehaviour
                 {
                     animator.SetBool("Edge", true);
                 }
+            }
+
+            //Dash animation
+            if(characterPlayerController.isDashing)
+            {
+                animator.SetBool("Dash", true);
+            }
+            else
+            {
+                animator.SetBool("Dash", false);
+            }
+
+            //Put fall animation
+            if(characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < 0 && !characterPlayerController.isImpactHitting)
+            {
+                animator.SetBool("Fall", true);
+            }
+
+            //Impact hit animation
+            if (characterPlayerController.isImpactHitting)
+            {
+                animator.SetBool("ImpactHit", true);
             }
         }
         else

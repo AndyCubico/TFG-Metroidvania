@@ -29,6 +29,7 @@ public class HeavyAttack : MonoBehaviour
     [Space(5)]
 
     public CharacterPlayerController characterPlayerController;
+    public PlayerCombatV2 playerCombat;
     [Space(5)]
 
     [Header("Input Actions")]
@@ -47,11 +48,13 @@ public class HeavyAttack : MonoBehaviour
     bool canPerformAttack;
     bool hasHit;
     [HideInInspector]public bool isAttacking;
+    [HideInInspector]public bool isDamaging;
 
     BoxCollider2D attackCollider; 
     Attack_Detectors attackDetector;
 
     //Enemy list
+    List<EnemyHealth> nextEnemyHealth = new List<EnemyHealth>();
     List<EnemyHealth> enemyHealth = new List<EnemyHealth>();
 
     //Charges list
@@ -97,7 +100,14 @@ public class HeavyAttack : MonoBehaviour
                 canPerformAttack = false;
                 isAttacking = true;
 
-                animator.SetBool("Heavy_Attack", true);
+                if (characterPlayerController.flipAnimation) //Se what direction is facing the player
+                {
+                    animator.SetTrigger("Heavy_Attack_Left"); //Say the animator to do the heavy attack right
+                }
+                else
+                {
+                    animator.SetTrigger("Heavy_Attack_Right"); //Say the animator to do the heavy attack left
+                }
             }
         }
 
@@ -112,15 +122,23 @@ public class HeavyAttack : MonoBehaviour
                 attackCollider.transform.localPosition = new Vector3(Mathf.Abs(attackCollider.transform.localPosition.x) * -1, attackCollider.transform.localPosition.y, attackCollider.transform.localPosition.z);
             }
         }
+
+        if(isDamaging)
+        {
+            Hit();
+        }
     }
 
     public void AnimationHasFinished()
     {
         canPerformAttack = true;
         isAttacking = false;
+        isDamaging = false;
+        characterPlayerController.blockFlip = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        animator.SetBool("Heavy_Attack", false);
+        animator.SetBool("Heavy_Attack_Right", false);
+        animator.SetBool("Heavy_Attack_Left", false);
     }
 
     public void Hit()
@@ -135,9 +153,40 @@ public class HeavyAttack : MonoBehaviour
 
         if (hasHit)
         {
-            enemyHealth = attackDetector.SendEnemyCollision();
+            if (!characterPlayerController.isGrounded && !characterPlayerController.moveStopper)
+            {
+                StopCoroutine(playerCombat.AirAttack());
+                StartCoroutine(playerCombat.AirAttack());
+            }
 
-            HitEnemy(attackType, enemyHealth);
+            nextEnemyHealth = new List<EnemyHealth>(attackDetector.SendEnemyCollision());
+            List<EnemyHealth> newEnemiesList = new List<EnemyHealth>();
+
+            for (int j = 0; j < nextEnemyHealth.Count; j++)
+            {
+                if (!enemyHealth.Contains(nextEnemyHealth[j]) && !newEnemiesList.Contains(nextEnemyHealth[j]))
+                {
+                    newEnemiesList.Add(nextEnemyHealth[j]);
+                }
+            }
+
+            if (nextEnemyHealth.Count > 0)
+            {
+                for (int i = 0; i < nextEnemyHealth.Count; i++)
+                {
+                    if (!newEnemiesList.Contains(nextEnemyHealth[i]) && enemyHealth.Count == 0)
+                    {
+                        newEnemiesList.Add(nextEnemyHealth[i]);
+                    }
+                }
+            }
+
+            enemyHealth = new List<EnemyHealth>(nextEnemyHealth);
+
+            if (newEnemiesList.Count > 0)
+            {
+                HitEnemy(attackType, newEnemiesList);
+            }
         }
     }
 
@@ -189,5 +238,15 @@ public class HeavyAttack : MonoBehaviour
         heavyCharges = 1;
 
         UpdateCharges();
+    }
+
+    public void StartAttacking()
+    {
+        if (!isDamaging)
+        {
+            characterPlayerController.blockFlip = true;
+
+            isDamaging = true;
+        }
     }
 }

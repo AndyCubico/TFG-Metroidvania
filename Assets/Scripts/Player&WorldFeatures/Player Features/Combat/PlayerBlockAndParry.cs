@@ -12,7 +12,7 @@ public class PlayerBlockAndParry : MonoBehaviour
 {
     [Header("Times")]
     [Space(5)]
-    bool isBlocking;
+    [HideInInspector] public bool isBlocking;
     public float blockCooldownTime;
     float blockCooldownCounter;
 

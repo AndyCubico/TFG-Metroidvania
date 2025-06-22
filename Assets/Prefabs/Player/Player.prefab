@@ -934,6 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7b7f4b78d570b4fb44736d521a0a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlocking: 0
   blockCooldownTime: 0.1
   blockTime: 0.5
   maxParryTime: 0.2
@@ -1833,6 +1834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCombat: {fileID: 8591655349491069302}
+  playerBP: {fileID: 23380348951475902}
+  playerHealth: {fileID: 1490387379144947728}
   heavyAttack: {fileID: 1462756309172946411}
   isLeftEdge: 0
 --- !u!114 &5754365262335582950

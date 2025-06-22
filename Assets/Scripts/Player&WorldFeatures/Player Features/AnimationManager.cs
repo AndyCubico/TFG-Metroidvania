@@ -6,6 +6,8 @@ using PlayerController;
 public class AnimationManager : MonoBehaviour
 {
     public PlayerCombatV2 playerCombat;
+    public PlayerBlockAndParry playerBP;
+    public PlayerHealth playerHealth;
     public HeavyAttack heavyAttack;
     private CharacterPlayerController characterPlayerController;
     private Animator animator;
@@ -15,6 +17,7 @@ public class AnimationManager : MonoBehaviour
     private void Start()
     {
         characterPlayerController = GetComponent<CharacterPlayerController>();
+        playerHealth = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
     }
 
@@ -115,6 +118,8 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("Run", false);
                 animator.SetBool("Edge", false);
                 animator.SetBool("Dash", false);
+                animator.SetBool("BlockParry", false);
+                animator.SetBool("Heal", false);
                 animator.SetBool("ImpactHit", false);
 
                 characterPlayerController.blockFlip = true;
@@ -153,6 +158,8 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("Run", false);
                 animator.SetBool("Wall", false);
                 animator.SetBool("Dash", false);
+                animator.SetBool("BlockParry", false);
+                animator.SetBool("Heal", false);
                 animator.SetBool("ImpactHit", false);
 
                 characterPlayerController.blockFlip = false;
@@ -187,7 +194,7 @@ public class AnimationManager : MonoBehaviour
             }
 
             //Put fall animation
-            if(characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < 0 && !characterPlayerController.isImpactHitting)
+            if(characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < 0 && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
             {
                 animator.SetBool("Fall", true);
             }
@@ -196,6 +203,26 @@ public class AnimationManager : MonoBehaviour
             if (characterPlayerController.isImpactHitting)
             {
                 animator.SetBool("ImpactHit", true);
+            }
+
+            //Health animation
+            if (playerHealth.isHealing)
+            {
+                animator.SetBool("Heal", true);
+            }
+            else
+            {
+                animator.SetBool("Heal", false);
+            }
+
+            //BlockParry animation
+            if (playerBP.isBlocking)
+            {
+                animator.SetBool("BlockParry", true);
+            }
+            else
+            {
+                animator.SetBool("BlockParry", false);
             }
         }
         else

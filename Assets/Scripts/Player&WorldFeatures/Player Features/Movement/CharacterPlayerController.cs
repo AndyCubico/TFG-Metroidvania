@@ -99,7 +99,8 @@ namespace PlayerController
         private float dashTime;
         private float cooldownDashTime;
         private float playerDir;
-        private float earringFloor;
+        private float newEarringFloor;
+        private float actualEarringFloor;
         private float coyoteTimeCounter;
         private float gravityEffect;
         private float exitWallTimer;
@@ -516,6 +517,7 @@ namespace PlayerController
             gravityEffect = rb.gravityScale;
 
             maxAirJumps = 0;
+            actualEarringFloor = 0;
             //maxSpeedX = 8; //Set the max X speed
             //maxSpeedY = 5; //Set the max Y speed
 
@@ -640,7 +642,19 @@ namespace PlayerController
             //Rotate Player depending earring floor
             if (playerState == PLAYER_STATUS.GROUND || isSlide) //Check if player is on GROUND or Sliding to till it or not
             {
-                this.transform.rotation = Quaternion.Euler(0f, 0f, earringFloor); //Tilts player
+                actualEarringFloor = this.transform.rotation.eulerAngles.z;
+
+                if (actualEarringFloor != newEarringFloor)
+                {
+                    float newAngle = newEarringFloor * Mathf.PI / 180;
+                    Quaternion quaternion = Quaternion.Lerp(this.transform.rotation, new Quaternion(this.transform.rotation.x, this.transform.rotation.y, newAngle, 1), 1f);
+                    float x = (float)(quaternion.x * 180 / Math.PI);
+                    float y = (float)(quaternion.y * 180 / Math.PI);
+                    float z = (float)(quaternion.z * 180 / Math.PI);
+                    this.transform.rotation = Quaternion.Euler(x, y, z); //Tilts player
+                }
+
+                //this.transform.rotation = Quaternion.Euler(0f, 0f, newEarringFloor); //Tilts player
             }
             else
             {
@@ -1042,7 +1056,7 @@ namespace PlayerController
                     }
                     else //In case player is in ground after crouching in AIR, return him ground
                     {
-                        if (earringFloor != 0 || isSlide) //Check if player will fall crouch into a ramp, if it is the case, can cause trouble with the underground issue, and fall off
+                        if (newEarringFloor != 0 || isSlide) //Check if player will fall crouch into a ramp, if it is the case, can cause trouble with the underground issue, and fall off
                         {
                             DownCrouchCollider.isTrigger = false;
 
@@ -1143,11 +1157,11 @@ namespace PlayerController
                 hasImpactHit = false;
 
                 //Check if is Slide and has ImpactHit
-                if (isImpactHitting && Mathf.Abs(earringFloor) > minAngleSlide)
+                if (isImpactHitting && Mathf.Abs(newEarringFloor) > minAngleSlide)
                 {
                     rb.AddForce(new Vector2(0, -impactHit / 2));
                 }
-                else if (Mathf.Abs(earringFloor) > minAngleSlide)
+                else if (Mathf.Abs(newEarringFloor) > minAngleSlide)
                 {
                     rb.AddForce(new Vector2(0, -slidingForce));
                 }
@@ -1457,10 +1471,10 @@ namespace PlayerController
             if (hitDownEarringGround && isGrounded)
             {
                 //Calculate the angle between the floor on earringFloor
-                earringFloor = Vector2.Angle(hitDownEarringGround.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
-                earringFloor = earringFloor * Mathf.Sign(hitDownEarringGround.transform.rotation.z); //Here we put the sign
+                newEarringFloor = Vector2.Angle(hitDownEarringGround.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
+                newEarringFloor = newEarringFloor * Mathf.Sign(hitDownEarringGround.transform.rotation.z); //Here we put the sign
 
-                if (earringFloor != 0 && Mathf.Abs(earringFloor) >= maxAngleFloor)
+                if (newEarringFloor != 0 && Mathf.Abs(newEarringFloor) >= maxAngleFloor)
                 {
                     isTooMuchEarring = true;
                 }
@@ -1468,21 +1482,21 @@ namespace PlayerController
             else if (hitDownEarringSlide && isSlide)
             {
                 //Calculate the angle between the floor on earringFloor
-                earringFloor = Vector2.Angle(hitDownEarringSlide.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
-                earringFloor = earringFloor * Mathf.Sign(hitDownEarringSlide.transform.rotation.z); //Here we put the sign
+                newEarringFloor = Vector2.Angle(hitDownEarringSlide.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
+                newEarringFloor = newEarringFloor * Mathf.Sign(hitDownEarringSlide.transform.rotation.z); //Here we put the sign
 
-                if (earringFloor != 0 && Mathf.Abs(earringFloor) >= maxAngleFloor)
+                if (newEarringFloor != 0 && Mathf.Abs(newEarringFloor) >= maxAngleFloor)
                 {
                     isTooMuchEarring = true;
                 }
             }
             else
             {
-                earringFloor = 0; //In case of is not in slide or ground, put the angle to 0
+                newEarringFloor = 0; //In case of is not in slide or ground, put the angle to 0
             }
 
             //In case earringFloor is not more than maxAngleFloor, player will continue able Jumping
-            if (Mathf.Abs(earringFloor) < maxAngleFloor)
+            if (Mathf.Abs(newEarringFloor) < maxAngleFloor)
             {
                 isTooMuchEarring = false;
             }

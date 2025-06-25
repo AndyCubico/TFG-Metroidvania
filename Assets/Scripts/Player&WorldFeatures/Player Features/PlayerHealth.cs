@@ -98,7 +98,7 @@ public class PlayerHealth : MonoBehaviour
         //    HealthEvents.TakingDamage?.Invoke(20);
         //}
 
-        if (healPotions > 0 && healPotionInput && playerHealth < 100 && !isHealing)
+        if (healPotions > 0 && healPotionInput && playerHealth < maxPlayerHealth && !isHealing)
         {
             playerRb.linearVelocity = Vector2.zero;
             playerRb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -178,7 +178,7 @@ public class PlayerHealth : MonoBehaviour
         healPotions = maxHealPotions;
     }
 
-        public void AddPotions(int potions)
+    public void AddPotions(int potions)
     {
         healPotions += potions;
     }

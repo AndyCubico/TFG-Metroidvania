@@ -14,12 +14,12 @@ public class TraversableFloor : MonoBehaviour
 
     private bool isOnPlatform;
 
-    private float breakDistanceConexion;
+    private float breakDistanceConnection;
 
     void Start()
     {
         ground = this.transform.GetChild(0).GetComponent<BoxCollider2D>();
-        breakDistanceConexion = this.transform.localScale.x;
+        breakDistanceConnection = this.transform.localScale.x;
 
         isDropping = false;
         isOnTop = false;
@@ -42,7 +42,7 @@ public class TraversableFloor : MonoBehaviour
                 isDropping = false;
             }
 
-            if(Mathf.Abs(distance) >= breakDistanceConexion)
+            if(Mathf.Abs(distance) >= breakDistanceConnection)
             {
                 isOnPlatform = false;
             }
@@ -75,7 +75,7 @@ public class TraversableFloor : MonoBehaviour
                 characterPlayerController = player.GetComponent<CharacterPlayerController>();
             }
 
-            breakDistanceConexion = player.transform.localScale.y + 0.2f;
+            breakDistanceConnection = player.transform.localScale.y + 0.2f;
             isOnPlatform = true;
         }
     }

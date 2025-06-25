@@ -22,7 +22,8 @@ public class PlayerHealth : MonoBehaviour
     //[Space(10)]
 
     [Header("Heal Potions")]
-    public int healPotions;
+    int healPotions;
+    public int maxHealPotions;
     public float healthQuantity;
 
     public float timeToHeal;
@@ -74,6 +75,7 @@ public class PlayerHealth : MonoBehaviour
         healthText.text = playerHealth.ToString();
         maxHealthText.text = playerHealth.ToString();
 
+        healPotions = maxHealPotions;
         healPotionText.text = healPotions.ToString();
 
         blockPlayer = GetComponent<BlockPlayer>();
@@ -169,5 +171,15 @@ public class PlayerHealth : MonoBehaviour
         healPotionText.text = healPotions.ToString();
 
         isHealing = false;
+    }
+
+    public void RestoreHealthPotions()
+    {
+        healPotions = maxHealPotions;
+    }
+
+        public void AddPotions(int potions)
+    {
+        healPotions += potions;
     }
 }

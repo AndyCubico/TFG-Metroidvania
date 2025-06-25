@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : HittableObject
 {
     [Header("Life Variables")]
     public float life;
 
-    public void ReceiveDamage(float damage)
+    override public void ReceiveDamage(float damage)
     {
         life -= damage;
 

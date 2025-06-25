@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Attack_Detectors : MonoBehaviour
 {
-    List<EnemyHealth> enemyObj;
+    List<HittableObject> enemyObj;
 
     private void Start()
     {
-        enemyObj = new List<EnemyHealth>();
+        enemyObj = new List<HittableObject>();
     }
 
-    public List<EnemyHealth> SendEnemyCollision()
+    public List<HittableObject> SendEnemyCollision()
     {
         if(enemyObj != null)
         {
@@ -25,7 +25,7 @@ public class Attack_Detectors : MonoBehaviour
     {
         if (collision.gameObject.layer == 11)
         {
-            enemyObj.Add(collision.GetComponent<EnemyHealth>());
+            enemyObj.Add(collision.GetComponent<HittableObject>());
         }
     }
 
@@ -33,7 +33,7 @@ public class Attack_Detectors : MonoBehaviour
     {
         if (collision.gameObject.layer == 11)
         {
-            enemyObj.Remove(collision.GetComponent<EnemyHealth>());
+            enemyObj.Remove(collision.GetComponent<HittableObject>());
         }
     }
 }

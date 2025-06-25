@@ -55,7 +55,7 @@ public class SpecialAbilities : MonoBehaviour
     public InputActionReference SpecialHabilitiesTrigger;
     public InputActionReference SnowHability;
 
-    private List<EnemyHealth> enemiesHealth;
+    private List<HittableObject> enemiesHealth;
 
     bool usingController;
     [HideInInspector]public bool specialHabilitiesTrigger;
@@ -235,7 +235,7 @@ public class SpecialAbilities : MonoBehaviour
         activeRoutine = StartCoroutine(RecoverFromAttack()); // Start the recovery time
     }
 
-    void HitEnemy(float damage, List<EnemyHealth> enemyHealth) // This attacks uses other method of hitting enemies, but works the same way
+    void HitEnemy(float damage, List<HittableObject> enemyHealth) // This attacks uses other method of hitting enemies, but works the same way
     {
         if(enemyHealth.Count > 0)
         {

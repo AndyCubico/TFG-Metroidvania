@@ -14,10 +14,17 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 
     public Pathfollowing pathfollowing { get; set; }
     public bool isFacingRight { get ; set; } = true; // Default sprite is facing right
-    
+
     #endregion
 
     #region Trigger variables
+
+    [field: SerializeField] public float viewDistance { get ; set ; } = 8f;
+    [field: SerializeField] public float viewAngle { get ; set ; } = 90f;
+    [field: SerializeField] public LayerMask playerLayer { get ; set ; }
+    [field: SerializeField]  public LayerMask obstacleLayer { get ; set ; }
+    public Color fOVColor { get ; set ; } = Color.yellow;
+    public Color hitColor { get; set; } = Color.red;
 
     public bool isAggro { get; set; }
     public bool isWithinRange { get; set; }
@@ -107,6 +114,7 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 
     #endregion
 
+    // TODO: Remove this interface if not used, pathfinding is done in the FSM states.
     #region Movement Functions
 
     public virtual void Move(Vector2 velocity)
@@ -131,7 +139,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 
     #endregion
 
-    #region Distance check Functions
+    #region Trigger Functions
+
     public void SetAggro(bool isAggro)
     {
         this.isAggro = isAggro;

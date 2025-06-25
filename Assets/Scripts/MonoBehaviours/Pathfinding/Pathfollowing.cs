@@ -50,6 +50,8 @@ public class Pathfollowing : MonoBehaviour
     // Debug
     [SerializeField] private LineRenderer lineRenderer;
 
+    public bool isFacingRight = true;
+
 
     private void Awake()
     {
@@ -218,6 +220,9 @@ public class Pathfollowing : MonoBehaviour
     private void MoveToX(Vector3 direction)
     {
         m_rb.linearVelocityX = m_Speed * MathF.Sign(direction.x);
+
+        // Check facing 
+        CheckFacing(m_rb.linearVelocityX); 
     }
 
     /// <summary>
@@ -260,6 +265,8 @@ public class Pathfollowing : MonoBehaviour
         if (m_rb.linearVelocityX == 0 && m_IsCliff)
         {
             m_rb.linearVelocityX = m_Speed * MathF.Sign(m_MoveDirection.x);
+
+            CheckFacing(m_rb.linearVelocityX);
         }
 
         m_IsJumping = true;
@@ -272,6 +279,8 @@ public class Pathfollowing : MonoBehaviour
         // before the current one.
         Vector3 targetPosition = new Vector3(m_PreviousPosition.x, m_PreviousPosition.y, 0);
         Vector3 moveDirection = targetPosition - transform.position;
+
+        CheckFacing(m_MoveDirection.x);
 
         // TODO: This should be a while loop but it breaks the whole system.
         // If it is not close enough, go to the step back position.
@@ -291,6 +300,20 @@ public class Pathfollowing : MonoBehaviour
 
         // Apply jump with an impulse, with the forceX multiplier if needed.
         m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce * forceX, m_JumpForce), ForceMode2D.Impulse);
+    }
+
+    public void CheckFacing(float velocity)
+    {
+        if (isFacingRight && velocity < 0f) Flip();
+        else if (!isFacingRight && velocity > 0f) Flip();
+    }
+
+    public void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+        isFacingRight = !isFacingRight;
     }
 
     // TODO: Rework into components.

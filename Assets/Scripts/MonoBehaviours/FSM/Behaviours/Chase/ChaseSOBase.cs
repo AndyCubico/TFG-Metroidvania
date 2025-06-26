@@ -21,10 +21,15 @@ public class ChaseSOBase : ScriptableObject
     public virtual void DoExit() { ResetValues(); }
     public virtual void DoUpdate()
     {
-        if (enemy.isWithinRange)
+        if (enemy.isWithinAttackRange)
         {
             enemy.stateMachine.Transition(enemy.attackState);
+            Debug.Log("CHASE --> ATTACK");
         }
+
+        // Cooldown to return to chase
+        //Debug.Log("CHASE --> IDLE");
+
     }
     public virtual void DoFixedUpdate() { }
     public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }

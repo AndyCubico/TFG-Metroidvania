@@ -40,7 +40,7 @@ public class PathfindingManager : MonoBehaviour
 
         foreach (int2 pathPosition in path)
         {
-            Debug.Log(pathPosition);
+            //Debug.Log(pathPosition);
         }
     }
 

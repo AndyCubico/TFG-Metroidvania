@@ -13,7 +13,7 @@ public class AttackDistanceCheck : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            m_Enemy.SetAttackDistance(true);
+            m_Enemy.SetWithinAttackRange(true);
         }
     }
 
@@ -21,7 +21,7 @@ public class AttackDistanceCheck : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            m_Enemy.SetAttackDistance(false);
+            m_Enemy.SetWithinAttackRange(false);
         }
     }
 }

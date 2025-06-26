@@ -19,15 +19,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 
     #region Trigger variables
 
-    [field: SerializeField] public float viewDistance { get ; set ; } = 8f;
-    [field: SerializeField] public float viewAngle { get ; set ; } = 90f;
-    [field: SerializeField] public LayerMask playerLayer { get ; set ; }
-    [field: SerializeField]  public LayerMask obstacleLayer { get ; set ; }
-    public Color fOVColor { get ; set ; } = Color.yellow;
-    public Color hitColor { get; set; } = Color.red;
-
-    public bool isAggro { get; set; }
-    public bool isWithinRange { get; set; }
+    public bool isInSensor { get; set; }
+    public bool isWithinAttackRange { get; set; }
     
     #endregion
 
@@ -141,14 +134,14 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 
     #region Trigger Functions
 
-    public void SetAggro(bool isAggro)
+    public void SetInSensor(bool isInSensor)
     {
-        this.isAggro = isAggro;
+        this.isInSensor = isInSensor;
     }
 
-    public void SetAttackDistance(bool isWithinRange)
+    public void SetWithinAttackRange(bool isWithinAttackRange)
     {
-        this.isWithinRange = isWithinRange;
+        this.isWithinAttackRange = isWithinAttackRange;
     }
 
     #endregion

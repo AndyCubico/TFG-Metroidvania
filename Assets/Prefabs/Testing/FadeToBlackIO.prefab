@@ -88,8 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2641343c0aeb2419045e83d6265d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeInTime: 0.1
-  fadeOutTime: 1
 --- !u!1 &3936633976238039204
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +101,7 @@ GameObject:
   - component: {fileID: 6564145252487258955}
   - component: {fileID: 6465653878188648987}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: FadeToBlackIO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

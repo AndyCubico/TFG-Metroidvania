@@ -902,9 +902,13 @@ namespace PlayerController
                             {
                                 if (rb.linearVelocity.y < 0)
                                 {
-                                    hasImpactHit = false;
-                                    isImpactHitting = true;
-                                    rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
+                                    if(!combatScript.isAttacking)
+                                    {
+                                        combatScript.isAttacking = true;
+                                        hasImpactHit = false;
+                                        isImpactHitting = true;
+                                        rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
+                                    }
                                 }
                             }
                         }
@@ -1050,7 +1054,7 @@ namespace PlayerController
 
                     if (!DownCrouchCollider.isTrigger)
                     {
-                        playerSprite.sprite = Player_Down; //Set player sprite to Down
+                        //playerSprite.sprite = Player_Down; //Set player sprite to Down
                         player_Material.color = new Color(0, 0, 256);
                         UpCrouchCollider.isTrigger = true;
                     }
@@ -1075,7 +1079,7 @@ namespace PlayerController
                 {
                     playerState = PLAYER_STATUS.CROUCH;
 
-                    playerSprite.sprite = Player_Up; //Set player sprite to Up
+                    //playerSprite.sprite = Player_Up; //Set player sprite to Up
                     player_Material.color = new Color(0, 256, 0);
                     DownCrouchCollider.isTrigger = true;
                     UpCrouchCollider.isTrigger = false;
@@ -1086,7 +1090,7 @@ namespace PlayerController
 
             if (isRoof) //In case is a roof on top of player, te state will mantain crouched
             {
-                playerSprite.sprite = Player_Down; //Set player sprite to Down
+                //playerSprite.sprite = Player_Down; //Set player sprite to Down
                 player_Material.color = new Color(0, 0, 256);
                 UpCrouchCollider.isTrigger = true;
                 playerState = PLAYER_STATUS.CROUCH;
@@ -1102,7 +1106,7 @@ namespace PlayerController
                     isUnderground = false;
                 }
 
-                playerSprite.sprite = Player_Full; //Set player sprite to Full
+                //playerSprite.sprite = Player_Full; //Set player sprite to Full
                 player_Material.color = new Color(256, 256, 256);
                 UpCrouchCollider.isTrigger = true;
                 DownCrouchCollider.isTrigger = false;

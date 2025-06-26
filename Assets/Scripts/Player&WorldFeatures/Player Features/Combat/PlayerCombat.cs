@@ -93,6 +93,8 @@ public class PlayerCombat : MonoBehaviour
     //Values
     float gravityScale;
 
+    AttackFlagType attackFlagType = AttackFlagType.None;
+
     private void OnEnable()
     {
     }
@@ -288,7 +290,8 @@ public class PlayerCombat : MonoBehaviour
 
         for (int i = 0; i < enemyHealth.Count; i++)
         {
-            enemyHealth[i].ReceiveDamage(damage);
+            attackFlagType = AttackFlagType.BasicAttack;
+            enemyHealth[i].ReceiveDamage(damage, attackFlagType);
         }
     }
 

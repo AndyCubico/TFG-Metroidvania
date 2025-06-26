@@ -48,7 +48,6 @@ public class SpecialAbilities : MonoBehaviour
     bool isGrounded;
     bool cancelLayers;
     bool isSnowAttacking;
-    [HideInInspector]public bool isAttacking;
 
     [Header("Input Actions")]
     [Space(5)]
@@ -65,6 +64,9 @@ public class SpecialAbilities : MonoBehaviour
 
     //Scripts
     private PlayerHealth m_PlayerHealth;
+    private PlayerCombatV2 m_PlayerCombat;
+
+    AttackFlagType attackFlagType = AttackFlagType.None;
 
     private void OnEnable()
     {
@@ -106,17 +108,19 @@ public class SpecialAbilities : MonoBehaviour
 
     void Start()
     {
+        m_PlayerCombat = this.transform.parent.GetComponent<PlayerCombatV2>();
+        m_PlayerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+
         rigidbodyFreeze = false;
         isSnowAttacking = false;
         snowExpand = false;
-        isAttacking = false;
+        m_PlayerCombat.isAttacking = false;
         defaultGravity = rb.gravityScale;
         snowAttackTimer = 0;
         sizeSnowExpansion = 0;
 
         snowCollider.size = new Vector2(0, snowCollider.size.y);
 
-        m_PlayerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -139,7 +143,7 @@ public class SpecialAbilities : MonoBehaviour
             usingController = false;
         }
 
-        if (!characterPlayerController.isDashing && !m_PlayerHealth.isHealing) // If the player is dashing can't make an ability and is not healing
+        if (!characterPlayerController.isDashing && !m_PlayerHealth.isHealing && !m_PlayerCombat.isAttacking) // If the player is dashing can't make an ability and is not healing
         {
             if (usingController)
             {
@@ -159,7 +163,7 @@ public class SpecialAbilities : MonoBehaviour
                 {
                     snowAttackTimer = snowAttackCooldown;
 
-                    isAttacking = true;
+                    m_PlayerCombat.isAttacking = true;
                     activeRoutine = StartCoroutine(SnowSpecialAttack());
                 }
             }
@@ -179,7 +183,7 @@ public class SpecialAbilities : MonoBehaviour
                 {
                     snowAttackTimer = snowAttackCooldown;
 
-                    isAttacking = true;
+                    m_PlayerCombat.isAttacking = true;
                     activeRoutine = StartCoroutine(SnowSpecialAttack());
                 }
             }
@@ -196,7 +200,8 @@ public class SpecialAbilities : MonoBehaviour
 
             if (snowCollider.size.x >= snowExpansionMaxSize) // If collider arrives to max size
             {
-                HitEnemy(snowDamage, enemiesHealth); // Send damage to enemies (TO CHANGE IN THE FUTURE, the enemies cant wait to be damage when the attack ends, have to do it while is happening)
+                attackFlagType = AttackFlagType.SnowAttack;
+                HitEnemy(snowDamage, enemiesHealth, attackFlagType); // Send damage to enemies (TO CHANGE IN THE FUTURE, the enemies cant wait to be damage when the attack ends, have to do it while is happening)
                 snowCollider.size = new Vector2(0, snowCollider.size.y);  // Return collider to normal size
                 sizeSnowExpansion = 0;
                 snowExpand = false;
@@ -235,7 +240,7 @@ public class SpecialAbilities : MonoBehaviour
         activeRoutine = StartCoroutine(RecoverFromAttack()); // Start the recovery time
     }
 
-    void HitEnemy(float damage, List<HittableObject> enemyHealth) // This attacks uses other method of hitting enemies, but works the same way
+    void HitEnemy(float damage, List<HittableObject> enemyHealth, AttackFlagType flag) // This attacks uses other method of hitting enemies, but works the same way
     {
         if(enemyHealth.Count > 0)
         {
@@ -243,7 +248,7 @@ public class SpecialAbilities : MonoBehaviour
 
             for (int i = 0; i < enemyHealth.Count; i++)
             {
-                enemyHealth[i].ReceiveDamage(damage); // For all enemies send the damage to recieve
+                enemyHealth[i].ReceiveDamage(damage, flag); // For all enemies send the damage to recieve
             }
 
             enemyHealth.Clear(); // Clear the enemy list when the attack ends
@@ -273,7 +278,7 @@ public class SpecialAbilities : MonoBehaviour
                 isSnowAttacking = false;
             }
 
-            isAttacking = false;
+            m_PlayerCombat.isAttacking = false;
         }
     }
 
@@ -290,6 +295,6 @@ public class SpecialAbilities : MonoBehaviour
         characterPlayerController.enabled = true;
         rb.gravityScale = defaultGravity;
         rigidbodyFreeze = false;
-        isAttacking = false;
+        m_PlayerCombat.isAttacking = false;
     }
 }

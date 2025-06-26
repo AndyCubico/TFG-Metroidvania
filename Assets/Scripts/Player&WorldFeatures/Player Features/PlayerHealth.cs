@@ -84,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        if (HealPotionAction.action.WasPressedThisFrame() && !m_SpecialAbilities.specialHabilitiesTrigger && !m_SpecialAbilities.isAttacking && !m_PlayerCombat.isAttacking && !m_HeavyAttack.isAttacking && m_CharacterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND)
+        if (HealPotionAction.action.WasPressedThisFrame() && !m_SpecialAbilities.specialHabilitiesTrigger && !m_PlayerCombat.isAttacking && m_CharacterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND)
         {
             healPotionInput = true;
         }

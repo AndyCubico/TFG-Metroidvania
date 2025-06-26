@@ -2,6 +2,7 @@ using UnityEngine;
 using static PlayerController.CharacterPlayerController;
 using UnityEngine.Playables;
 using PlayerController;
+using Spine.Unity;
 
 public class AnimationManager : MonoBehaviour
 {
@@ -52,11 +53,13 @@ public class AnimationManager : MonoBehaviour
     {
         if (characterPlayerController.flipAnimation && !characterPlayerController.blockFlip) //Flip the animation if it is necesary
         {
-            characterPlayerController.playerSprite.flipX = true;
+            //characterPlayerController.playerSprite.flipX = true;
+            GetComponent<SkeletonMecanim>().Skeleton.FlipX = true;
         }
         else if (!characterPlayerController.blockFlip)
         {
-            characterPlayerController.playerSprite.flipX = false;
+            //characterPlayerController.playerSprite.flipX = false;
+            GetComponent<SkeletonMecanim>().Skeleton.FlipX = false;
         }
 
         if (characterPlayerController.playerState != PLAYER_STATUS.CROUCH)
@@ -127,11 +130,11 @@ public class AnimationManager : MonoBehaviour
 
                 if (characterPlayerController.isLeftWall)
                 {
-                    characterPlayerController.playerSprite.flipX = true;
+                    GetComponent<SkeletonMecanim>().Skeleton.FlipX = true;
                 }
                 else if (characterPlayerController.isRightWall)
                 {
-                    characterPlayerController.playerSprite.flipX = false;
+                    GetComponent<SkeletonMecanim>().Skeleton.FlipX = false;
                 }
             }
 
@@ -166,11 +169,11 @@ public class AnimationManager : MonoBehaviour
 
                 if (isLeftEdge)
                 {
-                    characterPlayerController.playerSprite.flipX = false;
+                    GetComponent<SkeletonMecanim>().Skeleton.FlipX = false;
                 }
                 else
                 {
-                    characterPlayerController.playerSprite.flipX = true;
+                    GetComponent<SkeletonMecanim>().Skeleton.FlipX = true;
                 }
 
                 if (characterPlayerController.climbEdges || characterPlayerController.playerState == PLAYER_STATUS.GROUND)

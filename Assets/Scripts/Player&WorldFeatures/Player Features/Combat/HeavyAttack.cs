@@ -47,7 +47,6 @@ public class HeavyAttack : MonoBehaviour
 
     bool canPerformAttack;
     bool hasHit;
-    [HideInInspector]public bool isAttacking;
     [HideInInspector]public bool isDamaging;
 
     BoxCollider2D attackCollider; 
@@ -62,6 +61,8 @@ public class HeavyAttack : MonoBehaviour
 
     int heavyCharges;
 
+    AttackFlagType attackFlagType = AttackFlagType.None;
+
     void Start()
     {
         attackCollider = GetComponent<BoxCollider2D>();
@@ -70,7 +71,7 @@ public class HeavyAttack : MonoBehaviour
         heavyCharges = 0;
         heavyAttackInput = false;
         canPerformAttack = true;
-        isAttacking = false;
+        playerCombat.isAttacking = false;
 
         for(int i = 0; i < 3; i++)
         {
@@ -91,14 +92,14 @@ public class HeavyAttack : MonoBehaviour
             heavyAttackInput = false;
         }
 
-        if (heavyAttackInput)
+        if (heavyAttackInput && !playerCombat.isAttacking)
         {
             if (canPerformAttack && heavyCharges > 0)
             {
                 rb.constraints = RigidbodyConstraints2D.FreezePositionX;
                 rb.linearVelocity = Vector2.zero;
                 canPerformAttack = false;
-                isAttacking = true;
+                playerCombat.isAttacking = true;
 
                 if (characterPlayerController.flipAnimation) //Se what direction is facing the player
                 {
@@ -132,7 +133,7 @@ public class HeavyAttack : MonoBehaviour
     public void AnimationHasFinished()
     {
         canPerformAttack = true;
-        isAttacking = false;
+        playerCombat.isAttacking = false;
         isDamaging = false;
         characterPlayerController.blockFlip = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -213,7 +214,8 @@ public class HeavyAttack : MonoBehaviour
 
         for (int i = 0; i < enemyHealth.Count; i++)
         {
-            enemyHealth[i].ReceiveDamage(damage);
+            attackFlagType = AttackFlagType.HeavyAttack;
+            enemyHealth[i].ReceiveDamage(damage, attackFlagType);
         }
     }
 

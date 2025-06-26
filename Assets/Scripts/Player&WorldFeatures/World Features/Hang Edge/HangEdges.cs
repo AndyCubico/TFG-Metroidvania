@@ -90,6 +90,8 @@ public class HangEdges : MonoBehaviour
                     characterPlayerController.jumpStopper = false;
                     characterPlayerController.playerOnEdgeUnfreeze = true;
                     finishClimb = false;
+                    characterPlayerController.gameObject.GetComponent<CircleCollider2D>().isTrigger = false;
+                    characterPlayerController.gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
                     moveToNewPosition = false;
                 }
             }
@@ -123,7 +125,10 @@ public class HangEdges : MonoBehaviour
                 characterPlayerController.isHangingEdge = true;
                 player = characterPlayerController.gameObject;
 
-                if(isLeftEdge)
+                characterPlayerController.gameObject.GetComponent<CircleCollider2D>().isTrigger = true;
+                characterPlayerController.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+
+                if (isLeftEdge)
                 {
                     characterPlayerController.gameObject.GetComponent<AnimationManager>().isLeftEdge = true;
                 }

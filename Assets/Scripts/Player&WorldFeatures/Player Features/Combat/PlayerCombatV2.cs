@@ -5,6 +5,16 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using PlayerController;
 
+[System.Flags]
+public enum AttackFlagType
+{
+    None = 0,
+    BasicAttack = 1 << 0,   // 1
+    ImpactHit = 1 << 1,    // 2
+    HeavyAttack = 1 << 2,  // 4
+    SnowAttack = 1 << 3     // 8
+}
+
 public class PlayerCombatV2 : MonoBehaviour
 {
     enum ATTACK_TYPE
@@ -93,6 +103,8 @@ public class PlayerCombatV2 : MonoBehaviour
     //Values
     float gravityScale;
 
+    AttackFlagType attackFlagType = AttackFlagType.None;
+
     private void OnEnable()
     {
     }
@@ -126,7 +138,7 @@ public class PlayerCombatV2 : MonoBehaviour
         }
 
         //_Basic Attack + Combo
-        if (basicAttackDown)
+        if (basicAttackDown && !isAttacking)
         {
             if (canHitCombo)
             {
@@ -222,7 +234,8 @@ public class PlayerCombatV2 : MonoBehaviour
 
             if (newEnemiesList.Count > 0)
             {
-                HitEnemy(attackType, newEnemiesList);
+                attackFlagType = AttackFlagType.BasicAttack;
+                HitEnemy(attackType, newEnemiesList, attackFlagType);
             }
         }
     }
@@ -257,18 +270,18 @@ public class PlayerCombatV2 : MonoBehaviour
     {
         //Check if is there is something at LeftAttack
         downAttack = Physics2D.OverlapAreaAll(downHit.bounds.min, downHit.bounds.max, enemyMask).Length > 0;
+        isAttacking = false;
 
         if (downAttack)
         {
             enemyHealth = impactHitDetector.SendEnemyCollision();
 
-            HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth);
-
-            //Pasar a Andreu los enemigos que han sido golpeados.
+            attackFlagType = AttackFlagType.ImpactHit;
+            HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth, attackFlagType);
         }
     }
 
-    void HitEnemy(ATTACK_TYPE attackType, List<HittableObject> enemyHealth)
+    void HitEnemy(ATTACK_TYPE attackType, List<HittableObject> enemyHealth, AttackFlagType flag)
     {
         float damage = 0;
 
@@ -291,7 +304,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
         for (int i = 0; i < enemyHealth.Count; i++)
         {
-            enemyHealth[i].ReceiveDamage(damage);
+            enemyHealth[i].ReceiveDamage(damage, flag);
         }
     }
 

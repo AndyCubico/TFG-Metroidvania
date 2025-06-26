@@ -53,8 +53,8 @@ public class HeavyAttack : MonoBehaviour
     Attack_Detectors attackDetector;
 
     //Enemy list
-    List<HittableObject> nextEnemyHealth = new List<HittableObject>();
-    List<HittableObject> enemyHealth = new List<HittableObject>();
+    List<IHittableObject> nextEnemyHealth = new List<IHittableObject>();
+    List<IHittableObject> enemyHealth = new List<IHittableObject>();
 
     //Charges list
     List<Image> chargesUI = new List<Image>();
@@ -160,8 +160,8 @@ public class HeavyAttack : MonoBehaviour
                 StartCoroutine(playerCombat.AirAttack());
             }
 
-            nextEnemyHealth = new List<HittableObject>(attackDetector.SendEnemyCollision());
-            List<HittableObject> newEnemiesList = new List<HittableObject>();
+            nextEnemyHealth = new List<IHittableObject>(attackDetector.SendEnemyCollision());
+            List<IHittableObject> newEnemiesList = new List<IHittableObject>();
 
             for (int j = 0; j < nextEnemyHealth.Count; j++)
             {
@@ -182,7 +182,7 @@ public class HeavyAttack : MonoBehaviour
                 }
             }
 
-            enemyHealth = new List<HittableObject>(nextEnemyHealth);
+            enemyHealth = new List<IHittableObject>(nextEnemyHealth);
 
             if (newEnemiesList.Count > 0)
             {
@@ -191,7 +191,7 @@ public class HeavyAttack : MonoBehaviour
         }
     }
 
-    void HitEnemy(ATTACK_TYPE attackType, List<HittableObject> enemyHealth)
+    void HitEnemy(ATTACK_TYPE attackType, List<IHittableObject> enemyHealth)
     {
         float damage = 0;
 

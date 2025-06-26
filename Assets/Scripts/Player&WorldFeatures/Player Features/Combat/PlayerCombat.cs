@@ -70,7 +70,7 @@ public class PlayerCombat : MonoBehaviour
     public CharacterPlayerController characterController;
 
     //Enemy list
-    List<HittableObject> enemyHealth = new List<HittableObject>();
+    List<IHittableObject> enemyHealth = new List<IHittableObject>();
 
     //Checkers
     bool leftAttack;
@@ -267,7 +267,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    void HitEnemy(ATTACK_TYPE attackType, List<HittableObject> enemyHealth)
+    void HitEnemy(ATTACK_TYPE attackType, List<IHittableObject> enemyHealth)
     {
         float damage = 0;
 

@@ -78,8 +78,8 @@ public class PlayerCombatV2 : MonoBehaviour
     public CharacterPlayerController characterController;
 
     //Enemy list
-    List<HittableObject> nextEnemyHealth = new List<HittableObject>();
-    List<HittableObject> enemyHealth = new List<HittableObject>();
+    List<IHittableObject> nextEnemyHealth = new List<IHittableObject>();
+    List<IHittableObject> enemyHealth = new List<IHittableObject>();
 
     //Checkers
     bool basicAttack;
@@ -208,8 +208,8 @@ public class PlayerCombatV2 : MonoBehaviour
                 StartCoroutine(AirAttack());
             }
 
-            nextEnemyHealth = new List<HittableObject>(attackDetector.SendEnemyCollision());
-            List<HittableObject> newEnemiesList = new List<HittableObject>();
+            nextEnemyHealth = new List<IHittableObject>(attackDetector.SendEnemyCollision());
+            List<IHittableObject> newEnemiesList = new List<IHittableObject>();
 
             for (int j = 0; j < nextEnemyHealth.Count; j++)
             {
@@ -230,7 +230,7 @@ public class PlayerCombatV2 : MonoBehaviour
                 }
             }
 
-            enemyHealth = new List<HittableObject>(nextEnemyHealth);
+            enemyHealth = new List<IHittableObject>(nextEnemyHealth);
 
             if (newEnemiesList.Count > 0)
             {
@@ -281,7 +281,7 @@ public class PlayerCombatV2 : MonoBehaviour
         }
     }
 
-    void HitEnemy(ATTACK_TYPE attackType, List<HittableObject> enemyHealth, AttackFlagType flag)
+    void HitEnemy(ATTACK_TYPE attackType, List<IHittableObject> enemyHealth, AttackFlagType flag)
     {
         float damage = 0;
 

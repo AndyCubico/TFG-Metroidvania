@@ -2,12 +2,22 @@ using UnityEngine;
 
 public class MoveWithLerp : MonoBehaviour
 {
-    public ILerpValueReturn lerpReturner; // Inherithing from an interface allows to use any 
+    public Transform initialPosition;
+    public Transform finalPosition;
+    public MonoBehaviour lerpSource;
 
+    private ILerpValueReturn lerpReturner;
 
+    void Awake()
+    {
+        lerpReturner = lerpSource as ILerpValueReturn;
+        if (lerpReturner == null)
+            Debug.LogError("Assigned object does not implement ILerpValueReturn");
+    }
     // Update is called once per frame
     void Update()
     {
-        lerpReturner.GetCurrentValue();
+        float t = lerpReturner.GetCurrentValue();
+        transform.position = Vector3.Lerp(initialPosition.position, finalPosition.position, t);
     }
 }

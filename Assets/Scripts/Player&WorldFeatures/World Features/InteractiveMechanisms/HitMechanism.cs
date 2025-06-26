@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
+[Serializable]
 public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
 {
     public AttackFlagType flagMask;
@@ -30,11 +32,12 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
         if(currentCharges > 0) 
         {
             currentCharges -= Time.deltaTime*m_MaxCharges/(m_timeFromFullToZero);
+            currentCharges = Mathf.Max(0, currentCharges);
         }
     }
 
     public float GetCurrentValue() 
     {
-        return currentCharges;
+        return currentCharges/ m_MaxCharges;
     }
 }

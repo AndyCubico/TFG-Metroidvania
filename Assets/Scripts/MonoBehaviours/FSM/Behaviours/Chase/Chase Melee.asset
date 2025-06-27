@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87041bdc160279c4da49a135c6fc6ab5, type: 3}
   m_Name: Chase Melee
   m_EditorClassIdentifier: 
-  m_ChaseSpeed: 0
+  m_PathCooldown: 1
+  m_PredictionTime: 0.4

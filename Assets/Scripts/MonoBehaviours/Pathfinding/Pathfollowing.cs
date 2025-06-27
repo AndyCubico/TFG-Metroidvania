@@ -18,7 +18,10 @@ public class Pathfollowing : MonoBehaviour
     [Header("Jump management")]
     private Vector3 m_PreviousPosition; // Required for the step back performed before jumping.
     [SerializeField] private float m_JumpWait = 1.0f;
-    [SerializeField] private bool m_IsGrounded;
+
+    // TODO: REWORK USING COMPONENTS
+    public bool isJumping = false;
+    private bool m_JumpCoroutineExecution = false;
 
     // TODO: If check radius ends up not changing between checkers, delete variables and use only one.
     [Header("Collision management")]
@@ -43,14 +46,11 @@ public class Pathfollowing : MonoBehaviour
     // Needed to compare int2 values.
     private Helper.Int2Comparer m_Comparer;
 
-    // TODO: REWORK USING COMPONENTS
-    private bool m_IsJumping = false;
-    private bool m_JumpCoroutineExecution = false;
-
     // Debug
     [SerializeField] private LineRenderer lineRenderer;
 
     public bool isFacingRight = true;
+    public bool isPathValid = true;
 
 
     private void Awake()
@@ -118,14 +118,14 @@ public class Pathfollowing : MonoBehaviour
                     StartCoroutine(Jump(m_JumpWait, 0.5f)); // 0.5f in the forceX parameter to jump more horizontally.
                 }
                 // Move if it is not jumping.
-                else if (!m_IsJumping)
+                else if (!isJumping)
                 {
                     MoveToX(m_MoveDirection);
                 }
                 // Check when it lands on the ground after jumping.
                 else
                 {
-                    m_IsJumping = !CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius);
+                    isJumping = !CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius);
                 }
 
                 // Check if the agent is stuck in a node.
@@ -204,10 +204,13 @@ public class Pathfollowing : MonoBehaviour
             m_PathIndex = m_Path.Length - 2; // TODO: CAREFUL WITH THIS IT CAN BREAK THE SYSTEM.
             m_LastPathIndex = m_PathIndex;
             m_PreviousPosition = new Vector3(m_Path[m_Path.Length - 1].x + 0.5f, m_Path[m_Path.Length - 1].y + 0.5f, 0);
+
+            isPathValid = true;
         }
         else
         {
             Debug.Log("Path is not valid.");
+            isPathValid = false;
         }
 
         path.Dispose();
@@ -269,7 +272,7 @@ public class Pathfollowing : MonoBehaviour
             CheckFacing(m_rb.linearVelocityX);
         }
 
-        m_IsJumping = true;
+        isJumping = true;
         m_JumpCoroutineExecution = true;
 
         // First wait, very short.
@@ -372,6 +375,62 @@ public class Pathfollowing : MonoBehaviour
     public bool IsPathFinished()
     {
         return m_PathIndex == -1 || m_Path.IsEmpty;
+    }
+
+    public int2 FindNearestWalkableTile(int2 origin, int maxRadius = 5, int maxDistanceFromTarget = 5)
+    {
+        Grid<GridNode> grid = GridManager.Instance.grid;
+        int2 gridSize = new int2(grid.GetWidth(), grid.GetHeight());
+
+        NativeList<int2> candidates = new NativeList<int2>(Allocator.Temp);
+
+        for (int dx = -maxRadius; dx <= maxRadius; dx++)
+        {
+            for (int dy = -maxRadius; dy <= maxRadius; dy++)
+            {
+                int2 checkPos = origin + new int2(dx, dy);
+
+                // Direct grid bounds check instead of calling IsPositionInGrid
+                if (checkPos.x < 0 || checkPos.y < 0 ||
+                    checkPos.x >= gridSize.x || checkPos.y >= gridSize.y ||
+                    (dx == 0 && dy == 0))
+                {
+                    continue;
+                }
+
+                if (grid.GetValue(checkPos.x, checkPos.y).IsWalkable())
+                {
+                    float distance = math.distance(origin, checkPos);
+
+                    if (distance <= maxDistanceFromTarget)
+                    {
+                        candidates.Add(checkPos);
+                    }
+                }
+            }
+        }
+
+        if (candidates.Length > 0)
+        {
+            int2 best = candidates[0];
+            float bestDistance = math.distance(origin, best);
+
+            for (int i = 1; i < candidates.Length; i++)
+            {
+                float d = math.distance(origin, candidates[i]);
+                if (d < bestDistance)
+                {
+                    bestDistance = d;
+                    best = candidates[i];
+                }
+            }
+
+            candidates.Dispose();
+            return best;
+        }
+
+        candidates.Dispose();
+        return origin; // fallback
     }
 
 }

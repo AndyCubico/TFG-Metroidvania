@@ -225,7 +225,7 @@ public class Pathfollowing : MonoBehaviour
         m_rb.linearVelocityX = m_Speed * MathF.Sign(direction.x);
 
         // Check facing 
-        CheckFacing(m_rb.linearVelocityX); 
+        CheckFacing(m_rb.linearVelocityX);
     }
 
     /// <summary>
@@ -371,7 +371,7 @@ public class Pathfollowing : MonoBehaviour
         }
     }
 
-    // Helper for the AI behaviours
+    // Helpers for the AI behaviours
     public bool IsPathFinished()
     {
         return m_PathIndex == -1 || m_Path.IsEmpty;
@@ -433,4 +433,31 @@ public class Pathfollowing : MonoBehaviour
         return origin; // fallback
     }
 
+    /// <summary>
+    /// Stops the current pathfinding and clears the path.
+    /// </summary>
+    public void FinishPath()
+    {
+        if (m_Path.IsCreated)
+        {
+            m_Path.Clear();
+        }
+
+        m_PathIndex = -1;
+        isPathValid = true;
+
+        // Stop movement
+        m_rb.linearVelocity = Vector2.zero;
+        m_rb.angularVelocity = 0f;
+
+        // Reset jump state just in case
+        isJumping = false;
+        m_JumpCoroutineExecution = false;
+
+        // Clear debug line
+        if (lineRenderer != null)
+        {
+            lineRenderer.positionCount = 0;
+        }
+    }
 }

@@ -27,9 +27,8 @@ public class ChaseSOBase : ScriptableObject
             Debug.Log("CHASE --> ATTACK");
         }
 
-        // Cooldown to return to chase
+        // Cooldown to return to idle
         //Debug.Log("CHASE --> IDLE");
-
     }
     public virtual void DoFixedUpdate() { }
     public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }

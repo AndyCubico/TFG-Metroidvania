@@ -7,14 +7,18 @@ public class ChaseMelee : ChaseSOBase
     //[SerializeField] float m_ChaseSpeed;
 
     [SerializeField] private float m_PathCooldown = 0.5f;
-    [SerializeField] private float m_PredictionTime = 0.5f;
+    [SerializeField] private float m_LostOfSightTime = 5f;
 
-    private float m_Timer = 0f;
+    private float m_SightTimer = 0f;
+    private float m_PathTimer = 0f;
     private Vector3 m_LastTargetPos;
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
+
+        m_SightTimer = 0f;
+        m_PathTimer = 0f;
     }
 
     public override void DoEnter()
@@ -30,22 +34,40 @@ public class ChaseMelee : ChaseSOBase
     public override void DoExit()
     {
         base.DoExit();
+
+        enemy.pathfollowing.FinishPath();
     }
 
     public override void DoUpdate()
     {
         base.DoUpdate();
+
+        // TODO: Messy, do better
+        if (!enemy.isInSensor)
+        {
+            m_SightTimer += Time.deltaTime;
+
+            if (m_SightTimer >= m_LostOfSightTime)
+            {
+                enemy.stateMachine.Transition(enemy.idleState);
+                Debug.Log("CHASE --> IDLE");
+            }
+        }
+        else if(m_SightTimer > 0f)
+        {
+            m_SightTimer = 0;
+        }
     }
 
     public override void DoFixedUpdate()
     {
         base.DoFixedUpdate();
 
-        m_Timer += Time.fixedDeltaTime;
+        m_PathTimer += Time.fixedDeltaTime;
 
-        if (m_Timer >= m_PathCooldown && !enemy.pathfollowing.isJumping)
+        if (m_PathTimer >= m_PathCooldown && !enemy.pathfollowing.isJumping)
         {
-            m_Timer = 0f;
+            m_PathTimer = 0f;
 
             int2 currentPos = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
             int2 targetPos = new int2(Mathf.FloorToInt(playerTransform.position.x), Mathf.FloorToInt(playerTransform.position.y));

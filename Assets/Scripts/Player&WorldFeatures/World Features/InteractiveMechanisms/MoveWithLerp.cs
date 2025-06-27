@@ -1,23 +1,27 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class MoveWithLerp : MonoBehaviour
 {
     public Transform initialPosition;
     public Transform finalPosition;
-    public MonoBehaviour lerpSource;
+    public MonoBehaviour lerpSource; // We cannot use an Interface as a parameter, so we must use a Mono
 
-    private ILerpValueReturn lerpReturner;
+    private ILerpValueReturn m_LerpReturner;
+
+    // Control of smooth lerp
+    [SerializeField] float m_TargetValue;
 
     void Awake()
     {
-        lerpReturner = lerpSource as ILerpValueReturn;
-        if (lerpReturner == null)
+        m_LerpReturner = lerpSource as ILerpValueReturn;
+        if (m_LerpReturner == null)
             Debug.LogError("Assigned object does not implement ILerpValueReturn");
     }
     // Update is called once per frame
     void Update()
     {
-        float t = lerpReturner.GetCurrentValue();
+        float t = m_LerpReturner.GetCurrentValue();
         transform.position = Vector3.Lerp(initialPosition.position, finalPosition.position, t);
     }
 }

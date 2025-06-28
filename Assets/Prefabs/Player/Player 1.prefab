@@ -864,7 +864,7 @@ MonoBehaviour:
   dashDuration: 0.25
   dashCooldown: 0.4
   maxAngleFloor: 40
-  minAngleSlide: 35
+  minAngleSlide: 30
   hangWallImpulseUp: 12
   hangWallImpulseSides: 30
   slidingForce: 100
@@ -908,6 +908,9 @@ MonoBehaviour:
   slideMask:
     serializedVersion: 2
     m_Bits: 256
+  earingMask:
+    serializedVersion: 2
+    m_Bits: 384
   wallMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1045,8 +1048,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 2}
-  m_Radius: 2
+  m_Offset: {x: 0, y: 1.6}
+  m_Radius: 1.6
 --- !u!61 &4745387653491065041
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1081,7 +1084,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 6.78}
+  m_Offset: {x: 0, y: 6.239141}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1091,7 +1094,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.45, y: 5.5}
+  m_Size: {x: 2.7, y: 6.0740595}
   m_EdgeRadius: 0
 --- !u!114 &4472431708478480792
 MonoBehaviour:

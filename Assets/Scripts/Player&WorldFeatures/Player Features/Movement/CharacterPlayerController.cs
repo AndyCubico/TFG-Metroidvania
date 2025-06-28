@@ -190,6 +190,7 @@ namespace PlayerController
         //Layers
         public LayerMask groundMask;
         public LayerMask slideMask;
+        public LayerMask earingMask;
         public LayerMask wallMask;
         public LayerMask roofMask;
         [Space(10)]
@@ -1462,8 +1463,10 @@ namespace PlayerController
         //Here we check if the player angle between the floor is too much or correct in order to jump or do things
         void CheckEarringFloor()
         {
-            RaycastHit2D hitDownEarringGround = Physics2D.Raycast(transform.position, Vector2.down, (transform.localScale.y / 2) + 1f, groundMask); //Debug ray to check the ground
-            RaycastHit2D hitDownEarringSlide = Physics2D.Raycast(transform.position, Vector2.down, (transform.localScale.y / 2) + 1f, slideMask); //Debug ray to check the slide floor
+            //RaycastHit2D hitDownEarringGround = Physics2D.Raycast(transform.position, Vector2.down, (transform.localScale.y / 2) + 1f, groundMask); //Debug ray to check the ground
+            //RaycastHit2D hitDownEarringSlide = Physics2D.Raycast(transform.position, Vector2.down, (transform.localScale.y / 2) + 1f, slideMask); //Debug ray to check the slide floor
+            //RaycastHit2D hitDownEarringGround = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Vector2.down, 0.4f, groundMask); //Debug ray to check the ground
+            RaycastHit2D hitDownEarringSlide = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Vector2.down, 1f, earingMask); //Debug ray to check the slide floor
 
             //Debugs ray's
             //Debug.DrawRay(transform.position, Vector2.down * ((transform.localScale.y / 2) + 1f), Color.red);
@@ -1472,18 +1475,18 @@ namespace PlayerController
 
 
             //Here we check if the angle is more than the maxAngleFloor
-            if (hitDownEarringGround && isGrounded)
-            {
-                //Calculate the angle between the floor on earringFloor
-                newEarringFloor = Vector2.Angle(hitDownEarringGround.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
-                newEarringFloor = newEarringFloor * Mathf.Sign(hitDownEarringGround.transform.rotation.z); //Here we put the sign
+            //if (hitDownEarringGround && isGrounded)
+            //{
+            //    //Calculate the angle between the floor on earringFloor
+            //    newEarringFloor = Vector2.Angle(hitDownEarringGround.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
+            //    newEarringFloor = newEarringFloor * Mathf.Sign(hitDownEarringGround.transform.rotation.z); //Here we put the sign
 
-                if (newEarringFloor != 0 && Mathf.Abs(newEarringFloor) >= maxAngleFloor)
-                {
-                    isTooMuchEarring = true;
-                }
-            }
-            else if (hitDownEarringSlide && isSlide)
+            //    if (newEarringFloor != 0 && Mathf.Abs(newEarringFloor) >= maxAngleFloor)
+            //    {
+            //        isTooMuchEarring = true;
+            //    }
+            //}
+            if (hitDownEarringSlide && (isSlide || isGrounded))
             {
                 //Calculate the angle between the floor on earringFloor
                 newEarringFloor = Vector2.Angle(hitDownEarringSlide.normal, Vector2.up); //Here we take the raw angle without sign of the earrings

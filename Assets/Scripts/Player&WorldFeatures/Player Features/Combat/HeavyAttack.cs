@@ -92,7 +92,7 @@ public class HeavyAttack : MonoBehaviour
             heavyAttackInput = false;
         }
 
-        if (heavyAttackInput && !playerCombat.isAttacking)
+        if (heavyAttackInput && !playerCombat.isAttacking && !characterPlayerController.isInWater)
         {
             if (canPerformAttack && heavyCharges > 0)
             {

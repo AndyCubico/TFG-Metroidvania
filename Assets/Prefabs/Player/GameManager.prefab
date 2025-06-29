@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7956155414930197540}
   - component: {fileID: 2073999761257726401}
   - component: {fileID: 8917843948486557346}
+  - component: {fileID: 4272582974853665966}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -75,3 +76,17 @@ MonoBehaviour:
   - {fileID: 1029597647899723983, guid: 78fa29db3bf7e854ca58d93c541eb86f, type: 3}
   - {fileID: 2613661099723886223, guid: 60792eed0f53fa64c930d31c85bc35f1, type: 3}
   - {fileID: 3936633976238039204, guid: a28a1782096642f42b5681601fdd2209, type: 3}
+--- !u!114 &4272582974853665966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169640329568517343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c405c01918af04ea4aa36f3aa2bac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snowAction: {fileID: 2287229219543971701, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  climate: 0

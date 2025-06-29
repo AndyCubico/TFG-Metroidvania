@@ -144,6 +144,7 @@ namespace PlayerController
         [HideInInspector] public bool isDashing;
         [HideInInspector] public bool isLeftWall;
         [HideInInspector] public bool isRightWall;
+        [HideInInspector] public bool isInWater;
 
         //Activators
         [HideInInspector] public bool activateFallMultiplier;
@@ -532,6 +533,7 @@ namespace PlayerController
             flipAnimation = false;
             canUnhang = false;
             playerOnEdgeUnfreeze = false;
+            isInWater = false;
 
             activateFallMultiplier = true;
             blockFlip = false;
@@ -594,7 +596,7 @@ namespace PlayerController
             //DASH_
 
             //_CROUCH
-            CrouchingGroundAndAir();
+            //CrouchingGroundAndAir();
             //CROUCH_
 
             //Check angle between player and ground in order to be able to Jump
@@ -802,7 +804,14 @@ namespace PlayerController
         {
             if (playerState == PLAYER_STATUS.AIR && rb.linearVelocity.y < 0f)
             {
-                rb.linearVelocity -= new Vector2(0, gravityVector.y * fallmultiplier * Time.deltaTime);
+                if (!isInWater)
+                {
+                    rb.linearVelocity -= new Vector2(0, gravityVector.y * fallmultiplier * Time.deltaTime);
+                }
+                else
+                {
+                    rb.linearVelocity -= new Vector2(0, gravityVector.y * (fallmultiplier / 2) * Time.deltaTime);
+                }
             }
         }
 
@@ -826,7 +835,15 @@ namespace PlayerController
                     maxAirJumps++;
                     playerState = PLAYER_STATUS.JUMP;
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
-                    rb.AddForce(new Vector2(0, minJumpForce));
+
+                    if (!isInWater)
+                    {
+                        rb.AddForce(new Vector2(0, minJumpForce));
+                    }
+                    else
+                    {
+                        rb.AddForce(new Vector2(0, minJumpForce / 2));
+                    }
 
                     if (unlockDoubleJump)
                     {
@@ -853,7 +870,14 @@ namespace PlayerController
                         finalJumpForce = jumpForceMultiplier; //In case we are not more than the half of the jump, we put the base force of jumping
                     }
 
-                    rb.linearVelocity += new Vector2(0, gravityVector.y * finalJumpForce * Time.deltaTime); //Here finally add the force to the rigidbody, taking count the gravity force and the time.
+                    if (!isInWater)
+                    {
+                        rb.linearVelocity += new Vector2(0, gravityVector.y * finalJumpForce * Time.deltaTime); //Here finally add the force to the rigidbody, taking count the gravity force and the time.
+                    }
+                    else
+                    {
+                        rb.linearVelocity += new Vector2(0, gravityVector.y * (finalJumpForce / 2) * Time.deltaTime); //Here finally add the force to the rigidbody, taking count the gravity force and the time.
+                    }
                 }
             }
 
@@ -1032,98 +1056,98 @@ namespace PlayerController
         }
 
         //Check the action of crouching and the state of it
-        private void CrouchingGroundAndAir()
-        {
-            if (crouchHold && !isDashing)
-            {
-                isCrouch = true;
+        //private void CrouchingGroundAndAir()
+        //{
+        //    if (crouchHold && !isDashing)
+        //    {
+        //        isCrouch = true;
 
-                UpCrouchCollider.enabled = true;
+        //        UpCrouchCollider.enabled = true;
 
-                playerUpCollider.enabled = false;
-            }
-            else
-            {
-                isCrouch = false;
-            }
+        //        playerUpCollider.enabled = false;
+        //    }
+        //    else
+        //    {
+        //        isCrouch = false;
+        //    }
 
-            if (isCrouch)
-            {
-                if (playerState == PLAYER_STATUS.GROUND) //If player is in GROUND, only reduce movility and upper box collider deactivate
-                {
-                    playerState = PLAYER_STATUS.CROUCH;
+        //    if (isCrouch)
+        //    {
+        //        if (playerState == PLAYER_STATUS.GROUND) //If player is in GROUND, only reduce movility and upper box collider deactivate
+        //        {
+        //            playerState = PLAYER_STATUS.CROUCH;
 
-                    if (!DownCrouchCollider.isTrigger)
-                    {
-                        //playerSprite.sprite = Player_Down; //Set player sprite to Down
-                        player_Material.color = new Color(0, 0, 256);
-                        UpCrouchCollider.isTrigger = true;
-                    }
-                    else //In case player is in ground after crouching in AIR, return him ground
-                    {
-                        if (newEarringFloor != 0 || isSlide) //Check if player will fall crouch into a ramp, if it is the case, can cause trouble with the underground issue, and fall off
-                        {
-                            DownCrouchCollider.isTrigger = false;
+        //            if (!DownCrouchCollider.isTrigger)
+        //            {
+        //                //playerSprite.sprite = Player_Down; //Set player sprite to Down
+        //                player_Material.color = new Color(0, 0, 256);
+        //                UpCrouchCollider.isTrigger = true;
+        //            }
+        //            else //In case player is in ground after crouching in AIR, return him ground
+        //            {
+        //                if (newEarringFloor != 0 || isSlide) //Check if player will fall crouch into a ramp, if it is the case, can cause trouble with the underground issue, and fall off
+        //                {
+        //                    DownCrouchCollider.isTrigger = false;
 
-                            this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + DownCrouchCollider.radius, this.gameObject.transform.position.z);
-                            moveStopper = false;
-                            isUnderground = false;
-                        }
-                        else //In case the player is crouched on air, and touch ground (not ramp angle), will return him upward off the ground when release Left_Control
-                        {
-                            moveStopper = true;
-                            isUnderground = true;
-                        }
-                    }
-                }
-                else if (playerState == PLAYER_STATUS.AIR) //If player is in AIR, only down circle collider deactivate
-                {
-                    playerState = PLAYER_STATUS.CROUCH;
+        //                    this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + DownCrouchCollider.radius, this.gameObject.transform.position.z);
+        //                    moveStopper = false;
+        //                    isUnderground = false;
+        //                }
+        //                else //In case the player is crouched on air, and touch ground (not ramp angle), will return him upward off the ground when release Left_Control
+        //                {
+        //                    moveStopper = true;
+        //                    isUnderground = true;
+        //                }
+        //            }
+        //        }
+        //        else if (playerState == PLAYER_STATUS.AIR) //If player is in AIR, only down circle collider deactivate
+        //        {
+        //            playerState = PLAYER_STATUS.CROUCH;
 
-                    //playerSprite.sprite = Player_Up; //Set player sprite to Up
-                    player_Material.color = new Color(0, 256, 0);
-                    DownCrouchCollider.isTrigger = true;
-                    UpCrouchCollider.isTrigger = false;
-                }
-            }
+        //            //playerSprite.sprite = Player_Up; //Set player sprite to Up
+        //            player_Material.color = new Color(0, 256, 0);
+        //            DownCrouchCollider.isTrigger = true;
+        //            UpCrouchCollider.isTrigger = false;
+        //        }
+        //    }
 
-            isRoof = Physics2D.OverlapAreaAll(RoofDetector.bounds.min, RoofDetector.bounds.max, roofMask).Length > 0; //Here we check if is a roof on top of the player
+        //    isRoof = Physics2D.OverlapAreaAll(RoofDetector.bounds.min, RoofDetector.bounds.max, roofMask).Length > 0; //Here we check if is a roof on top of the player
 
-            if (isRoof) //In case is a roof on top of player, te state will mantain crouched
-            {
-                //playerSprite.sprite = Player_Down; //Set player sprite to Down
-                player_Material.color = new Color(0, 0, 256);
-                UpCrouchCollider.isTrigger = true;
-                playerState = PLAYER_STATUS.CROUCH;
-                isCrouch = true;
-            }
+        //    if (isRoof) //In case is a roof on top of player, te state will mantain crouched
+        //    {
+        //        //playerSprite.sprite = Player_Down; //Set player sprite to Down
+        //        player_Material.color = new Color(0, 0, 256);
+        //        UpCrouchCollider.isTrigger = true;
+        //        playerState = PLAYER_STATUS.CROUCH;
+        //        isCrouch = true;
+        //    }
 
-            if (!isCrouch) //Here we return to the not crouch state
-            {
-                if (isUnderground) //Here the player in case is underground, will pop up upward in ground
-                {
-                    this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + DownCrouchCollider.radius, this.gameObject.transform.position.z);
-                    moveStopper = false;
-                    isUnderground = false;
-                }
+        //    if (!isCrouch) //Here we return to the not crouch state
+        //    {
+        //        if (isUnderground) //Here the player in case is underground, will pop up upward in ground
+        //        {
+        //            this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + DownCrouchCollider.radius, this.gameObject.transform.position.z);
+        //            moveStopper = false;
+        //            isUnderground = false;
+        //        }
 
-                //playerSprite.sprite = Player_Full; //Set player sprite to Full
-                player_Material.color = new Color(256, 256, 256);
-                UpCrouchCollider.isTrigger = true;
-                DownCrouchCollider.isTrigger = false;
+        //        //playerSprite.sprite = Player_Full; //Set player sprite to Full
+        //        player_Material.color = new Color(256, 256, 256);
+        //        UpCrouchCollider.isTrigger = true;
+        //        DownCrouchCollider.isTrigger = false;
 
-                playerUpCollider.enabled = true;
+        //        playerUpCollider.enabled = true;
 
-                if (playerState != PLAYER_STATUS.WALL && playerState != PLAYER_STATUS.HANGED)
-                {
-                    jumpStopper = false; //Here we unblock the jump when you are crouch
-                }
-            }
-            else
-            {
-                jumpStopper = true; //Here we block the jump when you are crouch
-            }
-        }
+        //        if (playerState != PLAYER_STATUS.WALL && playerState != PLAYER_STATUS.HANGED)
+        //        {
+        //            jumpStopper = false; //Here we unblock the jump when you are crouch
+        //        }
+        //    }
+        //    else
+        //    {
+        //        jumpStopper = true; //Here we block the jump when you are crouch
+        //    }
+        //}
 
         //Check if Player is touching Layer Ground or Slide Ramp
         void CheckGroundAndSlide()
@@ -1368,14 +1392,21 @@ namespace PlayerController
             //EMERGENCY Stopper for Movement
             if (!moveStopper)
             {
-                if (Mathf.Abs(rb.linearVelocity.x) < (!isCrouch ? maxSpeedX : (maxSpeedX / crouchSpeedReduction)) && !isDashing) //Chech for Max Speed not been overpassed (Also if is crouched maxSpeed is divided / crouchSpeedReduction), also if you are Dashing dont matter you maxSpeed because will be overpassed too
+                if (Mathf.Abs(rb.linearVelocity.x) < (!isCrouch ? maxSpeedX : (maxSpeedX / crouchSpeedReduction)) && !isDashing && Mathf.Abs(rb.linearVelocity.x) < (!isInWater ? maxSpeedX : (maxSpeedX / 2))) //Chech for Max Speed not been overpassed (Also if is crouched maxSpeed is divided / crouchSpeedReduction), also if you are Dashing dont matter you maxSpeed because will be overpassed too, or if the player is on water reduce the maxSpeed
                 {
                     if (!isCrouch) //Check if player is not CROUCH
                     {
                         //Add movement Speed!
                         if (isGrounded)
                         {
-                            rb.linearVelocity += move * speed * Time.deltaTime; //Movement in floor
+                            if (!isInWater)
+                            {
+                                rb.linearVelocity += move * speed * Time.deltaTime; //Movement in floor
+                            }
+                            else
+                            {
+                                rb.linearVelocity += move * (speed / 2) * Time.deltaTime; //Movement in floor
+                            }
                         }
                         else
                         {

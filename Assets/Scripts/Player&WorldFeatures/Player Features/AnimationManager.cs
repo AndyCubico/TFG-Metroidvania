@@ -232,5 +232,14 @@ public class AnimationManager : MonoBehaviour
         {
             animator.enabled = false;
         }
+
+        if(characterPlayerController.isInWater)
+        {
+            animator.SetBool("Water", true);
+        }
+        else
+        {
+            animator.SetBool("Water", false);
+        }
     }
 }

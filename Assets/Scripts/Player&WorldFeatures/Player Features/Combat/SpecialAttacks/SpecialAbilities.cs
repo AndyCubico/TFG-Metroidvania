@@ -143,7 +143,7 @@ public class SpecialAbilities : MonoBehaviour
             usingController = false;
         }
 
-        if (!characterPlayerController.isDashing && !m_PlayerHealth.isHealing && !m_PlayerCombat.isAttacking) // If the player is dashing can't make an ability and is not healing
+        if (!characterPlayerController.isDashing && !m_PlayerHealth.isHealing && !m_PlayerCombat.isAttacking && !characterPlayerController.isInWater) // If the player is dashing can't make an ability and is not healing
         {
             if (usingController)
             {

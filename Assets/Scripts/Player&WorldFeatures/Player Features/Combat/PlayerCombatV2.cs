@@ -138,7 +138,7 @@ public class PlayerCombatV2 : MonoBehaviour
         }
 
         //_Basic Attack + Combo
-        if (basicAttackDown && !isAttacking)
+        if (basicAttackDown && !isAttacking && !characterController.isInWater)
         {
             if (canHitCombo)
             {

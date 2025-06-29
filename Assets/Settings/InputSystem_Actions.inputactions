@@ -247,6 +247,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SnowClimate",
+                    "type": "Button",
+                    "id": "f0cfff55-01d1-42f3-8a88-bda53dd66a1d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -907,6 +916,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9fa248e-d03f-47fd-946c-7de78f32a743",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SnowClimate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73612c05-b406-4d6a-b40a-cb6e0cc12a39",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SnowClimate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

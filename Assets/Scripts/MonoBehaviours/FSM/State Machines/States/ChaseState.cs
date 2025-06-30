@@ -16,7 +16,6 @@ public class ChaseState : State
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Entering Chase State");
 
         enemy.chaseSOBaseInstance.DoEnter();
     }

@@ -26,9 +26,6 @@ public class ChaseSOBase : ScriptableObject
             enemy.stateMachine.Transition(enemy.attackState);
             Debug.Log("CHASE --> ATTACK");
         }
-
-        // Cooldown to return to idle
-        //Debug.Log("CHASE --> IDLE");
     }
     public virtual void DoFixedUpdate() { }
     public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }

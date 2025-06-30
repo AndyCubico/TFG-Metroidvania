@@ -42,11 +42,6 @@ public class AttackSlashCombo : AttackSOBase
             // Attack
         }
 
-        if (/* Player too far away */true)
-        {
-            enemy.stateMachine.Transition(enemy.chaseState);
-        }
-
         m_AttackTimer += Time.deltaTime;
     }
 

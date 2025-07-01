@@ -35,6 +35,7 @@ public class IdleSOBase : ScriptableObject
             if (hit.collider != null && hit.collider.CompareTag("Player"))
             {
                 enemy.stateMachine.Transition(enemy.chaseState);
+                enemy.SetTransitionAnimation("Chase");
                 Debug.Log("IDLE --> CHASE");
             }
         }

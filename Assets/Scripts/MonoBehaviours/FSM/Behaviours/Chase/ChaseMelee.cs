@@ -50,6 +50,7 @@ public class ChaseMelee : ChaseSOBase
             if (m_SightTimer >= m_LostOfSightTime)
             {
                 enemy.stateMachine.Transition(enemy.idleState);
+                enemy.SetTransitionAnimation("Idle");
                 Debug.Log("CHASE --> IDLE");
             }
         }

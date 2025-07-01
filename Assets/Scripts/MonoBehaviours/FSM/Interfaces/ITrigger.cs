@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface ITrigger
 {
     bool isInSensor { get; set; }

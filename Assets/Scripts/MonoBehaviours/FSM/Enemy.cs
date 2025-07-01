@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
+public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger, ITransition
 {
     #region Damagable variables
 
@@ -43,7 +42,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
     public IdleSOBase idleSOBaseInstance { get; set; }
     public ChaseSOBase chaseSOBaseInstance { get; set; }
     public AttackSOBase attackSOBaseInstance { get; set; }
-    
+    public Animator animator { get; set; }
+
     #endregion
 
     protected virtual void Awake()
@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
         attackState = new AttackState(this, stateMachine);
 
         pathfollowing = GetComponent<Pathfollowing>();
+        animator = GetComponent<Animator>();    
     }
 
     protected virtual void Start()
@@ -146,7 +147,12 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger
 
     #endregion
 
-    #region Animation Triggers
+    #region Animation Transitions & Triggers
+
+    public void SetTransitionAnimation(string trigger)
+    {
+        animator.SetTrigger(trigger);
+    }
 
     private void AnimationTrigger(ANIMATION_TRIGGER triggerType)
     {

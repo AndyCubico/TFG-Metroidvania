@@ -15,8 +15,8 @@ public class MoveWithLerp : MonoBehaviour
     void Awake()
     {
         m_LerpReturner = lerpSource as ILerpValueReturn;
-        if (m_LerpReturner == null)
-            Debug.LogError("Assigned object does not implement ILerpValueReturn");
+        if (m_LerpReturner == null) {Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
+            
     }
     // Update is called once per frame
     void Update()

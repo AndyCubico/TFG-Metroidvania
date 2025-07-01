@@ -7,6 +7,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
 {
     public AttackFlagType flagMask;
+    public AttackFlagType snowMask;
 
     [Header("Accumulated hit amount")]
     public float currentCharges;
@@ -19,21 +20,35 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
     [ShowIf("m_HasTimeResetOnHit", true)] public float waitUntilCountdown;
     private float m_CurrentWaitUntilCountdown;
     private bool m_IsCountDown = true;
+    private bool m_IsFrozen; // Frozen mechanism moves at half speed
 
     public void ReceiveDamage(float damage, AttackFlagType flag)
     {
         if ((flagMask & flag) != 0)
         {
-            if (m_HasTimeResetOnHit) 
+            if (m_IsFrozen)
             {
-                m_CurrentWaitUntilCountdown = waitUntilCountdown;
-                m_IsCountDown = false;
+                m_IsFrozen = false;
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             }
-                if (currentCharges < m_MaxCharges) 
+            else
             {
-                currentCharges++;
-                currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+                if (m_HasTimeResetOnHit)
+                {
+                    m_CurrentWaitUntilCountdown = waitUntilCountdown;
+                    m_IsCountDown = false;
+                }
+                if (currentCharges < m_MaxCharges)
+                {
+                    currentCharges++;
+                    currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+                }
             }
+        }
+        if ((snowMask & flag) != 0)
+        {
+            m_IsFrozen = true;
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }
 
@@ -41,7 +56,7 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
     {
         if(currentCharges > 0 && m_IsCountDown) 
         {
-            currentCharges -= Time.deltaTime*m_MaxCharges/(m_timeFromFullToZero);
+            currentCharges -= Time.deltaTime*(m_MaxCharges/m_timeFromFullToZero)*(m_IsFrozen?0.5f:1.0f);
             currentCharges = Mathf.Max(0, currentCharges);
         }
         else if (m_HasTimeResetOnHit)

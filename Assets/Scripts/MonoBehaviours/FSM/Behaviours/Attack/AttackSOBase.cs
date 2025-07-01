@@ -25,6 +25,7 @@ public class AttackSOBase : ScriptableObject
         if (!enemy.isWithinAttackRange)
         {
             enemy.stateMachine.Transition(enemy.chaseState);
+            enemy.SetTransitionAnimation("Chase");
             Debug.Log("ATTACK --> CHASE");
         }
     }

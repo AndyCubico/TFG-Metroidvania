@@ -446,11 +446,7 @@ public class Pathfollowing : MonoBehaviour
         m_PathIndex = -1;
         isPathValid = true;
 
-        // Stop movement
-        m_rb.linearVelocity = Vector2.zero;
-        m_rb.angularVelocity = 0f;
-
-        // Reset jump state just in case
+        // Reset jump state
         isJumping = false;
         m_JumpCoroutineExecution = false;
 

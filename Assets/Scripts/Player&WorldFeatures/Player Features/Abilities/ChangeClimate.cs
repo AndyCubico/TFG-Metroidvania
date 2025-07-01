@@ -34,9 +34,12 @@ public class ChangeClimate : MonoBehaviour
 
         GameObject waterContainer = GameObject.Find("Waters");
 
-        for (int i = 0; i < waterContainer.transform.childCount; i++)
+        if( waterContainer != null)
         {
-            waters.Add(waterContainer.transform.GetChild(i).GetComponent<WaterBehaviour>());
+            for (int i = 0; i < waterContainer.transform.childCount; i++)
+            {
+                waters.Add(waterContainer.transform.GetChild(i).GetComponent<WaterBehaviour>());
+            }
         }
     }
     

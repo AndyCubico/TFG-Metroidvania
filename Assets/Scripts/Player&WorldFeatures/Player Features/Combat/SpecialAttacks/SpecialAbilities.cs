@@ -240,18 +240,18 @@ public class SpecialAbilities : MonoBehaviour
         activeRoutine = StartCoroutine(RecoverFromAttack()); // Start the recovery time
     }
 
-    void HitEnemy(float damage, List<IHittableObject> enemyHealth, AttackFlagType flag) // This attacks uses other method of hitting enemies, but works the same way
+    void HitEnemy(float damage, List<IHittableObject> hittableObjs, AttackFlagType flag) // This attacks uses other method of hitting enemies, but works the same way
     {
-        if(enemyHealth.Count > 0)
+        if(hittableObjs.Count > 0)
         {
             Debug.Log("Enemy Hit with: " + damage);
 
-            for (int i = 0; i < enemyHealth.Count; i++)
+            for (int i = 0; i < hittableObjs.Count; i++)
             {
-                enemyHealth[i].ReceiveDamage(damage, flag); // For all enemies send the damage to recieve
+                hittableObjs[i].ReceiveDamage(damage, flag); // For all enemies send the damage to recieve
             }
 
-            enemyHealth.Clear(); // Clear the enemy list when the attack ends
+            hittableObjs.Clear(); // Clear the enemy list when the attack ends
         }
     }
 

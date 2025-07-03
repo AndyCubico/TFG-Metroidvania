@@ -12,7 +12,7 @@ public class FallPit : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             //collision.GetComponent<Rigidbody2D>().AddForce(Vector2.up * upForce, ForceMode2D.Impulse);
-            collision.GetComponent<CharacterPlayerController>().enabled = false;
+            collision.GetComponent<CharacterPlayerController>().enabled = false; HealthEvents.TakingDamage(20);
             StartCoroutine(TpFastCheckpoint());
         }
     }

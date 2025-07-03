@@ -16,6 +16,8 @@ public class TraversableFloor : MonoBehaviour
 
     private float breakDistanceConnection;
 
+    public float distance;
+
     void Start()
     {
         ground = this.transform.GetChild(0).GetComponent<BoxCollider2D>();
@@ -29,8 +31,15 @@ public class TraversableFloor : MonoBehaviour
     {
         if (isOnPlatform)
         {
-            float distance = 0;
-            distance = transform.position.y - (player.transform.position.y - (player.transform.localScale.y / 2) + 0.1f);
+            //distance = transform.position.y - (player.transform.position.y - (player.transform.localScale.y / 2) + 0.1f);
+            if(Mathf.Sign(this.transform.position.y) < 0)
+            {
+                distance = Mathf.Abs(player.transform.position.y) - Mathf.Abs(transform.position.y);
+            }
+            else
+            {
+                distance = transform.position.y - (player.transform.position.y);
+            }
 
             if (distance < 0f)
             {
@@ -66,7 +75,7 @@ public class TraversableFloor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && collision.gameObject.layer != 12)
         {
             player = collision.gameObject;
 
@@ -75,7 +84,7 @@ public class TraversableFloor : MonoBehaviour
                 characterPlayerController = player.GetComponent<CharacterPlayerController>();
             }
 
-            breakDistanceConnection = player.transform.localScale.y + 0.2f;
+            breakDistanceConnection = /*player.transform.localScale.y*/ 1.6f + 0.2f;
             isOnPlatform = true;
         }
     }

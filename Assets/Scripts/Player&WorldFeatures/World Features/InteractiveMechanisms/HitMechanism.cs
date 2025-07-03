@@ -49,6 +49,18 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
         {
             m_IsFrozen = true;
             this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+            if (currentCharges < m_MaxCharges)
+            {
+                currentCharges+= 0.5f;
+                currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+            }
+
+            // Hit with the snow spell resets the descend of the mechanism
+            if (m_HasTimeResetOnHit)
+            {
+                m_CurrentWaitUntilCountdown = waitUntilCountdown * 2.0f;
+                m_IsCountDown = false;
+            }
         }
     }
 

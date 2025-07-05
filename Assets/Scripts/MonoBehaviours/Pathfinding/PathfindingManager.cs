@@ -8,10 +8,6 @@ using static PathfindingJob;
 
 public class PathfindingManager : MonoBehaviour
 {
-    // Debug
-    [SerializeField] private int2 m_StartPosition;
-    [SerializeField] private int2 m_EndPosition;
-
     public static PathfindingManager Instance { private set; get; }
 
     public void Awake()

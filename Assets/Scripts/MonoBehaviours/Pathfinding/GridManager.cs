@@ -49,7 +49,7 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < grid.GetHeight(); y++)
             {
                 Vector2 worldPos = origin + new Vector2(x + 0.5f, y + 0.5f) * cellSize;
-                Collider2D hit = Physics2D.OverlapBox(worldPos, Vector2.one * cellSize * 0.8f, 0, m_NotWalkable);// * 0.8f to avoid false positives.
+                Collider2D hit = Physics2D.OverlapBox(worldPos, Vector2.one * cellSize * 0.8f, 0, m_NotWalkable); // * 0.8f to avoid false positives.
                 blockedNodes[x, y] = hit != null;
             }
         }
@@ -103,58 +103,105 @@ public class GridManager : MonoBehaviour
         }
 
         // Fill the gap between cliffs
-        for (int y = 0; y < grid.GetHeight(); y++)
+        List<int2> allCliffs = new List<int2>();
+        for (int x = 0; x < grid.GetWidth(); x++)
         {
-            int? leftCliff = null;
-
-            for (int x = 0; x < grid.GetWidth(); x++)
+            for (int y = 0; y < grid.GetHeight(); y++)
             {
                 var node = grid.GetValue(x, y);
-
                 if (node != null && node.IsCliff())
                 {
-                    if (leftCliff == null)
+                    allCliffs.Add(new int2(x, y));
+                }
+            }
+        }
+
+        // Sort cliffs left-to-right
+        allCliffs.Sort((a, b) => a.x.CompareTo(b.x));
+
+        for (int i = 0; i < allCliffs.Count - 1; i++)
+        {
+            int2 left = allCliffs[i];
+            int2 right = allCliffs[i + 1];
+
+            int minX = left.x + 1;
+            int maxX = right.x - 1;
+
+            if (minX > maxX) continue;
+
+            int minY = Mathf.Min(left.y, right.y);
+            int maxY = Mathf.Max(left.y, right.y);
+
+            bool validGap = true;
+
+            // Check if everything between cliffs is empty air
+            for (int xGap = minX; xGap <= maxX && validGap; xGap++)
+            {
+                for (int yGap = minY; yGap <= maxY && validGap; yGap++)
+                {
+                    if (blockedNodes[xGap, yGap]) validGap = false;
+
+                    if (yGap > 0)
                     {
-                        leftCliff = x;
+                        if (blockedNodes[xGap, yGap - 1] || grid.GetValue(xGap, yGap - 1)?.IsWalkable() == true)
+                        {
+                            validGap = false;
+                        }
                     }
-                    else
+                }
+            }
+
+            if (!validGap) continue;
+
+            // Fill the gap with walkable cliff nodes
+            for (int xGap = minX; xGap <= maxX; xGap++)
+            {
+                for (int yGap = minY; yGap <= maxY; yGap++)
+                {
+                    var node = grid.GetValue(xGap, yGap);
+                    if (node != null && !blockedNodes[xGap, yGap])
                     {
-                        int start = leftCliff.Value + 1;
-                        int end = x - 1;
+                        node.SetIsWalkable(true);
+                        cliffNodes.Add(new int2(xGap, yGap));
 
-                        bool validGap = true;
-
-                        for (int gapX = start; gapX <= end; gapX++)
+                        // Fill downward until hitting ground
+                        for (int z = yGap - 1; z >= 0; z--)
                         {
-                            // Must be air above and below
-                            if (blockedNodes[gapX, y] ||
-                                (y > 0 && (blockedNodes[gapX, y - 1] || grid.GetValue(gapX, y - 1)?.IsWalkable() == true)))
-                            {
-                                validGap = false;
-                                break;
-                            }
+                            if (blockedNodes[xGap, z]) break;
+                            grid.GetValue(xGap, z)?.SetIsWalkable(true);
+                            cliffNodes.Add(new int2(xGap, z));
                         }
-
-                        if (validGap)
-                        {
-                            for (int gapX = start; gapX <= end; gapX++)
-                            {
-                                grid.GetValue(gapX, y)?.SetIsWalkable(true);
-                                grid.GetValue(gapX, y)?.SetIsCliff(true);
-                                cliffNodes.Add(new int2(gapX, y));
-
-                                //// Fill down until hitting ground
-                                for (int z = y - 1; z >= 0; z--)
-                                {
-                                    if (blockedNodes[gapX, z]) break;
-                                    grid.GetValue(gapX, z)?.SetIsWalkable(true);
-                                    cliffNodes.Add(new int2(gapX, z));
-                                }
-                            }
-                        }
-
-                        leftCliff = x;
                     }
+                }
+            }
+        }
+
+        // TODO: MAKE CLEANER, THIS IS NOT GOOD
+        // BIG PROBLEM, PATHS THAT END IN CLIFF ARE NOT VALID,
+        // WHICH MEANS THAT WITH THIS PART OF THE ALGORITHM PATHS THAT ARE NOT THE LITERAL VOID ARE NOT VALID, COULD BE BAD.
+        cliffNodes.Clear();
+
+        for (int x = 0; x < grid.GetWidth(); x++)
+        {
+            for (int y = 0; y < grid.GetHeight(); y++)
+            {
+                if (grid.GetValue(x, y).IsCliff())
+                {
+                    cliffNodes.Add(new int2(x, y));
+                }
+            }
+        }
+
+        // Mark only the first walkable node directly below each cliff as a cliff, avoid errors when jumping from a node to a lower one.
+        foreach (int2 cliff in cliffNodes)
+        {
+            if (cliff.y - 1 >= 0)
+            {
+                var belowNode = grid.GetValue(cliff.x, cliff.y - 1);
+
+                if (belowNode != null && belowNode.IsWalkable() && !belowNode.IsCliff())
+                {
+                    belowNode.SetIsCliff(true);
                 }
             }
         }

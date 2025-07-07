@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger, ITransition
@@ -45,6 +46,14 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger, ITransition
     public Animator animator { get; set; }
 
     #endregion
+
+    // TODO: FIX THIS MESS. Not sure if this is the right way to do it, will investigate. 
+    // This is for variables that have to be different between different objects with the same scriptable object.
+    // For instance, two enemies with IdlePatrol will have the same SO. If I want different positions to patrol,
+    // I can't set that up in the SO, because then all enemies with that SO will have the same positions, making me 
+    // do a different SO for each different position, something completely stupid. For now this is the fix, will
+    // think of cleaner ways to do it.
+    public Dictionary<string, object> stateContext { get; private set; } = new Dictionary<string, object>();
 
     protected virtual void Awake()
     {

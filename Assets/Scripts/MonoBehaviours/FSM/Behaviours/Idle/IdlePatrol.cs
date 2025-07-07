@@ -1,14 +1,14 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Idle Wander", menuName = "Enemy Logic/Idle/Idle Patrol")]
+[CreateAssetMenu(fileName = "Idle Patrol", menuName = "Enemy Logic/Idle/Idle Patrol")]
 public class IdlePatrol : IdleSOBase
 {
     [SerializeField] private float m_IdleWaitTime = 2.0f;
 
-    [Header ("Patrol Positions")]
-    [SerializeField] private int2 m_StartPosition = new int2();
-    [SerializeField] private int2 m_EndPosition = new int2();
+    [Header("WARNING, TO SET UP THE PATROL POSITIONS ATTACH PatrolSetup SCRIPT TO THE ENEMY.")]
+    private int2 m_StartPosition = new int2();
+    private int2 m_EndPosition = new int2();
 
     private int2 m_Destination = new int2();
     private float m_Timer = 0f;
@@ -19,6 +19,9 @@ public class IdlePatrol : IdleSOBase
         base.DoEnter();
 
         int2 currentPos = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
+
+        m_StartPosition = (int2)enemy.stateContext["PatrolStart"];
+        m_EndPosition = (int2)enemy.stateContext["PatrolEnd"];
 
         // Start by going to end position
         m_Destination = m_EndPosition;

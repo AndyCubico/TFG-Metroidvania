@@ -71,6 +71,7 @@ namespace PlayerController
         public float maxSpeedY;
         public float airSpeedReduction;
         public float icedFloorEffect;
+        public float waterSpeedReduction;
         [Header("__________________________ CROUCH __________________________")]
         public float crouchSpeedReduction;
         public float multiplierAirCrouch;
@@ -80,6 +81,7 @@ namespace PlayerController
         public float jumpForceMultiplier;
         public float fallmultiplier;
         public float coyoteTime;
+        public float waterJumpReduction;
         [Header("__________________________ DASH __________________________")]
         public float dashForce;
         public float dashDuration;
@@ -810,7 +812,7 @@ namespace PlayerController
                 }
                 else
                 {
-                    rb.linearVelocity -= new Vector2(0, gravityVector.y * (fallmultiplier / 2) * Time.deltaTime);
+                    rb.linearVelocity -= new Vector2(0, gravityVector.y * (fallmultiplier / waterJumpReduction) * Time.deltaTime);
                 }
             }
         }
@@ -842,7 +844,7 @@ namespace PlayerController
                     }
                     else
                     {
-                        rb.AddForce(new Vector2(0, minJumpForce / 2));
+                        rb.AddForce(new Vector2(0, minJumpForce / waterJumpReduction));
                     }
 
                     if (unlockDoubleJump)
@@ -876,7 +878,7 @@ namespace PlayerController
                     }
                     else
                     {
-                        rb.linearVelocity += new Vector2(0, gravityVector.y * (finalJumpForce / 2) * Time.deltaTime); //Here finally add the force to the rigidbody, taking count the gravity force and the time.
+                        rb.linearVelocity += new Vector2(0, gravityVector.y * (finalJumpForce / waterJumpReduction) * Time.deltaTime); //Here finally add the force to the rigidbody, taking count the gravity force and the time.
                     }
                 }
             }
@@ -1392,7 +1394,7 @@ namespace PlayerController
             //EMERGENCY Stopper for Movement
             if (!moveStopper)
             {
-                if (Mathf.Abs(rb.linearVelocity.x) < (!isCrouch ? maxSpeedX : (maxSpeedX / crouchSpeedReduction)) && !isDashing && Mathf.Abs(rb.linearVelocity.x) < (!isInWater ? maxSpeedX : (maxSpeedX / 2))) //Chech for Max Speed not been overpassed (Also if is crouched maxSpeed is divided / crouchSpeedReduction), also if you are Dashing dont matter you maxSpeed because will be overpassed too, or if the player is on water reduce the maxSpeed
+                if (Mathf.Abs(rb.linearVelocity.x) < (!isCrouch ? maxSpeedX : (maxSpeedX / crouchSpeedReduction)) && !isDashing && Mathf.Abs(rb.linearVelocity.x) < (!isInWater ? maxSpeedX : (maxSpeedX / waterSpeedReduction))) //Chech for Max Speed not been overpassed (Also if is crouched maxSpeed is divided / crouchSpeedReduction), also if you are Dashing dont matter you maxSpeed because will be overpassed too, or if the player is on water reduce the maxSpeed
                 {
                     if (!isCrouch) //Check if player is not CROUCH
                     {
@@ -1405,7 +1407,7 @@ namespace PlayerController
                             }
                             else
                             {
-                                rb.linearVelocity += move * (speed / 2) * Time.deltaTime; //Movement in floor
+                                rb.linearVelocity += move * (speed / waterSpeedReduction) * Time.deltaTime; //Movement in floor
                             }
                         }
                         else

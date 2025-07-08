@@ -20,7 +20,6 @@ public class Pathfollowing : MonoBehaviour
     [SerializeField] private float m_JumpWait = 1.0f;
     [SerializeField] private float m_MaxCliffHeight = 10.0f;
 
-
     // TODO: REWORK USING COMPONENTS
     public bool isJumping = false;
     private bool m_JumpCoroutineExecution = false;
@@ -254,6 +253,11 @@ public class Pathfollowing : MonoBehaviour
         return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
     }
 
+    /// <summary>
+    /// Check if there is enough height to jump.
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    /// <returns></returns>
     private bool CheckHeight(Vector3 targetPosition)
     {
         LayerMask groundMask = LayerMask.GetMask("Ground");
@@ -391,6 +395,13 @@ public class Pathfollowing : MonoBehaviour
         return m_PathIndex == -1 || m_Path.IsEmpty;
     }
 
+    /// <summary>
+    /// If the path is not valid, try to find the nearest node to the original target.
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <param name="maxRadius"></param>
+    /// <param name="maxDistanceFromTarget"></param>
+    /// <returns></returns>
     public int2 FindNearestWalkableTile(int2 origin, int maxRadius = 5, int maxDistanceFromTarget = 5)
     {
         Grid<GridNode> grid = GridManager.Instance.grid;

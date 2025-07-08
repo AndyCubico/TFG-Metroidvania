@@ -3,8 +3,6 @@ using System.Collections;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.UI.Image;
 
 public class Pathfollowing : MonoBehaviour
 {

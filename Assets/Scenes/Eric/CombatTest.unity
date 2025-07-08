@@ -558,8 +558,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 649a07fe2c170c24d8cabaf54a50bda9, type: 2}
     - target: {fileID: 8532889388005524021, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: isJumping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532889388005524021, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_JumpForce
       value: 6.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532889388005524021, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_MaxCliffHeight
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9121471400776390823, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: patrolEnd.x

@@ -3,6 +3,8 @@ using System.Collections;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
+using static UnityEngine.UI.Image;
 
 public class Pathfollowing : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class Pathfollowing : MonoBehaviour
     [Header("Jump management")]
     private Vector3 m_PreviousPosition; // Required for the step back performed before jumping.
     [SerializeField] private float m_JumpWait = 1.0f;
+    [SerializeField] private float m_MaxCliffHeight = 10.0f;
+
 
     // TODO: REWORK USING COMPONENTS
     public bool isJumping = false;
@@ -112,6 +116,7 @@ public class Pathfollowing : MonoBehaviour
                 }
                 // Check if it should jump if the next node is a cliff.
                 else if (m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
+                    !CheckHeight(m_TargetPosition) &&
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
                     !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
                 {
@@ -249,6 +254,17 @@ public class Pathfollowing : MonoBehaviour
     private bool CheckIsGrounded(Transform check, float radius)
     {
         return Physics2D.OverlapCircle(check.position, radius, m_GroundLayer);
+    }
+
+    private bool CheckHeight(Vector3 targetPosition)
+    {
+        LayerMask groundMask = LayerMask.GetMask("Ground");
+
+        RaycastHit2D hit = Physics2D.Raycast(targetPosition, Vector2.down, m_MaxCliffHeight, groundMask);
+
+        Debug.DrawRay(targetPosition, Vector2.down * m_MaxCliffHeight, Color.red);
+
+        return hit.collider != null;
     }
 
     /// <summary>

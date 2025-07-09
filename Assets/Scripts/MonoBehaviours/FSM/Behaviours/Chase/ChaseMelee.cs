@@ -8,10 +8,12 @@ public class ChaseMelee : ChaseSOBase
 
     [SerializeField] private float m_PathCooldown = 0.5f;
     [SerializeField] private float m_LostOfSightTime = 5f;
+    [SerializeField] private float m_DistanceLimitToPlayer = 10f;
 
     private float m_SightTimer = 0f;
     private float m_PathTimer = 0f;
     private Vector3 m_LastTargetPos;
+    private bool playerInSight = false;
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
@@ -42,8 +44,32 @@ public class ChaseMelee : ChaseSOBase
     {
         base.DoUpdate();
 
-        // TODO: Messy, do better
-        if (!enemy.isInSensor)
+        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+        Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+
+        playerInSight = false;
+
+        if (distanceToPlayer <= m_DistanceLimitToPlayer)
+        {
+            // Only raycast if within the sight range
+            LayerMask visionMask = LayerMask.GetMask("Player", "Ground");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, visionMask);
+
+            Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
+
+            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            {
+                playerInSight = true;
+            }
+        }
+        else
+        {
+            // Debug ray if beyond range
+            Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.red);
+        }
+
+        // If player is not in sight OR too far, start the countdown
+        if (!playerInSight || distanceToPlayer > m_DistanceLimitToPlayer)
         {
             m_SightTimer += Time.deltaTime;
 
@@ -54,11 +80,13 @@ public class ChaseMelee : ChaseSOBase
                 Debug.Log("CHASE --> IDLE");
             }
         }
-        else if(m_SightTimer > 0f)
+        else
         {
-            m_SightTimer = 0;
+            // Player is visible and close enough, reset timer
+            m_SightTimer = 0f;
         }
     }
+
 
     public override void DoFixedUpdate()
     {

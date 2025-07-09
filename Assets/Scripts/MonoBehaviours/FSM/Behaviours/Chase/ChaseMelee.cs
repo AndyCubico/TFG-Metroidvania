@@ -27,6 +27,9 @@ public class ChaseMelee : ChaseSOBase
     {
         base.DoEnter();
 
+        m_SightTimer = 0f;
+        m_PathTimer = 0f;
+
         int2 currentPos = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
         int2 targetPos = new int2(Mathf.FloorToInt(playerTransform.position.x), Mathf.FloorToInt(playerTransform.position.y));
 

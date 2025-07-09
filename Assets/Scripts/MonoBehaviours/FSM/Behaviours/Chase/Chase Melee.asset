@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Chase Melee
   m_EditorClassIdentifier: 
   m_PathCooldown: 1
-  m_PredictionTime: 0.4
+  m_LostOfSightTime: 2.5
+  m_DistanceLimitToPlayer: 10

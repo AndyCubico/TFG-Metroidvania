@@ -166,6 +166,9 @@ public class Pathfollowing : MonoBehaviour
                 if (m_PathIndex == -1)
                 {
                     m_rb.linearVelocityX = 0;
+
+                    // Fix path recalculation in chase state.
+                    isJumping = false;
                 }
             }
         }
@@ -194,7 +197,7 @@ public class Pathfollowing : MonoBehaviour
 
         // Make sure the path is valid. If there is no path or
         // the final position is a cliff, invalid.
-        if (path.Length != 0 && !GridManager.Instance.grid.GetValue(Mathf.FloorToInt(path[0].x), path[0].y).IsCliff())
+        if (path.Length != 0 /*&& !GridManager.Instance.grid.GetValue(Mathf.FloorToInt(path[0].x), path[0].y).IsCliff()*/)
         {
             for (int i = 0; i < path.Length; i++)
             {

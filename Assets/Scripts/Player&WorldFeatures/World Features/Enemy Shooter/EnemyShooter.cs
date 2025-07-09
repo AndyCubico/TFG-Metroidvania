@@ -27,7 +27,7 @@ public class EnemyShooter : MonoBehaviour
     [Header("Life time of attacks")]
     public float enemiesLifeTime;
 
-    [Header("`Speed of attacks")]
+    [Header("Speed of attacks")]
     public float enemiesSpeed;
 
     [Header("Spawn Rate of attacks")]
@@ -69,7 +69,7 @@ public class EnemyShooter : MonoBehaviour
                 e.rb.gravityScale = 0;
             }
 
-            e.rb.AddForce(new Vector2(enemiesSpeed * dir, 0), ForceMode2D.Force);
+            e.rb.linearVelocity = new Vector2(enemiesSpeed * dir, 0);
 
             enemies.Add(e);
 

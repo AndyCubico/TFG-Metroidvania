@@ -300,6 +300,9 @@ public class PlayerCombatV2 : MonoBehaviour
                 break;
         }
 
+        CameraEvents.eCameraShake?.Invoke(0.05f, 0.08f);
+        SlowMotionEffect.eSlowMotion?.Invoke(0.15f, 0.02f);
+
         Debug.Log("Enemy Hit with: " + damage);
 
         for (int i = 0; i < enemyHealth.Count; i++)

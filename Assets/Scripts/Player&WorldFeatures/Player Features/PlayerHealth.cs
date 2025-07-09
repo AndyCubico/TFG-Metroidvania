@@ -122,7 +122,9 @@ public class PlayerHealth : MonoBehaviour
             isHealing = false;
         }
 
-        if(playerHealth > 0)
+        SlowMotionEffect.eSlowMotion?.Invoke(1f, 0.05f);
+
+        if (playerHealth > 0)
         {
             Debug.Log("Player Has been hit with: " + damage);
 

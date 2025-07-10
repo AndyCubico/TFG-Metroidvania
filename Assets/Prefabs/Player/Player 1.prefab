@@ -1749,7 +1749,11 @@ MonoBehaviour:
   midDamage: 15
   hardDamage: 20
   airTime: 0.4
+  returnToAttackAfterFinishComboTime: 0.5
+  inputBufferTime: 0.2
   animator: {fileID: 2918244791821584414}
+  skeleton: {fileID: 2230649128086465727}
+  actualSprite: 0
   attackDetector: {fileID: 7264983264602018229}
   impactHitDetector: {fileID: 6607145365086566559}
   BasicAttackAction: {fileID: 5674964187323301980, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -1757,6 +1761,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   characterController: {fileID: 1660634256912515273}
+  comboCounter: 0
   rb: {fileID: 4203002661369434470}
   isAttacking: 0
 --- !u!1 &6529614741478981922

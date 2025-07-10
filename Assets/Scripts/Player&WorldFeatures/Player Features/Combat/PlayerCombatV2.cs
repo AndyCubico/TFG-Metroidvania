@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using PlayerController;
+using Spine.Unity;
 
 [System.Flags]
 public enum AttackFlagType
@@ -53,10 +54,18 @@ public class PlayerCombatV2 : MonoBehaviour
 
     [Header("________________________ VARIABLES ________________________")]
     public float airTime;
+    public float returnToAttackAfterFinishComboTime;
+    public float inputBufferTime;
+    private float m_inputBufferCounter;
 
     [Header("________________________ ANIMATOR ________________________")]
     //Animator
     public Animator animator;
+
+    [Header("________________________ SPRITE RENDERER ________________________")]
+    //Animator
+    public SkeletonMecanim skeleton;
+    public bool actualSprite;
 
     [Header("________________________ ATTACK DETECTORS ________________________")]
     //Animator
@@ -82,14 +91,15 @@ public class PlayerCombatV2 : MonoBehaviour
     List<IHittableObject> enemyHealth = new List<IHittableObject>();
 
     //Checkers
-    bool basicAttack;
-    bool downAttack;
+    bool m_basicAttack;
+    bool m_downAttack;
 
     //Combo
-    int comboCounter;
-    float comboTimer;
-    bool isOnCombo;
-    bool canHitCombo;
+    [HideInInspector]public int comboCounter;
+    float m_comboTimer;
+    float m_finishComboTimer;
+    bool m_isOnCombo;
+    bool m_canHitCombo;
 
     //Rigidbody
     public Rigidbody2D rb;
@@ -118,7 +128,9 @@ public class PlayerCombatV2 : MonoBehaviour
     {
         //basicAttackCooldownLocal = 0;
         //cooldown = false;
-        canHitCombo = true;
+        m_finishComboTimer = 0;
+
+        m_canHitCombo = true;
         isDamaging = false;
         isAttacking = false;
 
@@ -128,24 +140,49 @@ public class PlayerCombatV2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BasicAttackAction.action.WasPressedThisFrame())
+        if (skeleton.Skeleton.FlipX != actualSprite)
         {
-            basicAttackDown = true;
+            ResetCombo();
+        }
+
+        if(m_finishComboTimer > 0)
+        {
+            m_finishComboTimer -= Time.deltaTime;
         }
         else
         {
+            m_finishComboTimer = 0;
+        }
+
+        if (BasicAttackAction.action.WasPressedThisFrame())
+        {
+            basicAttackDown = true;
+            m_inputBufferCounter = inputBufferTime;
+        }
+        //else
+        //{
+        //    basicAttackDown = false;
+        //}
+
+        if(m_inputBufferCounter <= 0)
+        {
             basicAttackDown = false;
+        }
+        else
+        {
+            m_inputBufferCounter -= Time.deltaTime;
         }
 
         //_Basic Attack + Combo
         if (basicAttackDown && !isAttacking && !characterController.isInWater)
         {
-            if (canHitCombo)
+            if (m_canHitCombo && m_finishComboTimer == 0)
             {
                 if (ComboAttack())
                 {
-                    canHitCombo = false;
+                    m_canHitCombo = false;
                     isAttacking = true;
+                    actualSprite = skeleton.Skeleton.FlipX;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
                     AnimationSelector((ATTACK_TYPE)comboCounter);
                 }
@@ -166,14 +203,14 @@ public class PlayerCombatV2 : MonoBehaviour
         //    }
         //}
 
-        if (isOnCombo) //Here the combo counter counts
+        if (m_isOnCombo) //Here the combo counter counts
         {
-            if (canHitCombo)
+            if (m_canHitCombo)
             {
-                comboTimer += Time.deltaTime;
+                m_comboTimer += Time.deltaTime;
             }
 
-            if (comboTimer > comboResetTime) //Auto Reset if passes certain time
+            if (m_comboTimer > comboResetTime) //Auto Reset if passes certain time
             {
                 ResetCombo();
             }
@@ -198,9 +235,9 @@ public class PlayerCombatV2 : MonoBehaviour
     void BasicAttack(ATTACK_TYPE attackType)
     {
         //Check if is there is something at Basic Attack
-        basicAttack = Physics2D.OverlapAreaAll(attackCollider.bounds.min, attackCollider.bounds.max, enemyMask).Length > 0;
+        m_basicAttack = Physics2D.OverlapAreaAll(attackCollider.bounds.min, attackCollider.bounds.max, enemyMask).Length > 0;
 
-        if (basicAttack)
+        if (m_basicAttack)
         {
             if (!characterController.isGrounded && !characterController.moveStopper)
             {
@@ -243,12 +280,12 @@ public class PlayerCombatV2 : MonoBehaviour
     bool ComboAttack()
     {
         comboCounter++;
-        isOnCombo = true;
+        m_isOnCombo = true;
 
         if (comboCounter > 0 && comboCounter <= 3) //Combo counter
         {
             //Debug.Log("Attack " + comboCounter);
-            comboTimer = 0f; //Resets the combo
+            m_comboTimer = 0f; //Resets the combo
             return true;
         }
         else
@@ -261,18 +298,36 @@ public class PlayerCombatV2 : MonoBehaviour
     void ResetCombo() //This function restarts the timer
     {
         comboCounter = 0;
-        comboTimer = 0;
-        isOnCombo = false;
-        canHitCombo = true;
+        m_comboTimer = 0;
+        m_isOnCombo = false;
+        m_canHitCombo = true;
+
+        isDamaging = false;
+        isAttacking = false;
+        characterController.blockFlip = false;
+        nextEnemyHealth.Clear();
+        enemyHealth.Clear();
+
+        animator.SetFloat("Combo", comboCounter);
+
+        animator.SetBool("Attack_Sides1_Left", false);
+        animator.SetBool("Attack_Sides2_Left", false);
+        animator.SetBool("Attack_Sides3_Left", false);
+
+        animator.SetBool("Attack_Sides1_Right", false);
+        animator.SetBool("Attack_Sides2_Right", false);
+        animator.SetBool("Attack_Sides3_Right", false);
+
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     public void ImpactHit()
     {
         //Check if is there is something at LeftAttack
-        downAttack = Physics2D.OverlapAreaAll(downHit.bounds.min, downHit.bounds.max, enemyMask).Length > 0;
+        m_downAttack = Physics2D.OverlapAreaAll(downHit.bounds.min, downHit.bounds.max, enemyMask).Length > 0;
         isAttacking = false;
 
-        if (downAttack)
+        if (m_downAttack)
         {
             enemyHealth = impactHitDetector.SendEnemyCollision();
 
@@ -323,14 +378,20 @@ public class PlayerCombatV2 : MonoBehaviour
 
     public void AnimationHasFinished()
     {
-        canHitCombo = true;
+        m_canHitCombo = true;
         isDamaging = false;
         isAttacking = false;
         characterController.blockFlip = false;
         nextEnemyHealth.Clear();
         enemyHealth.Clear();
 
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        if(comboCounter == 3)
+        {
+            ResetCombo();
+            m_finishComboTimer = returnToAttackAfterFinishComboTime;
+        }
+
+        //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     public IEnumerator AirAttack()
@@ -340,7 +401,7 @@ public class PlayerCombatV2 : MonoBehaviour
         characterController.activateFallMultiplier = false;
         characterController.moveStopper = true;
 
-        yield return new WaitUntil(() => canHitCombo);
+        yield return new WaitUntil(() => m_canHitCombo);
 
         yield return new WaitForSeconds(airTime);
 
@@ -356,31 +417,31 @@ public class PlayerCombatV2 : MonoBehaviour
             case ATTACK_TYPE.SOFT_ATTACK:
                 if (characterController.flipAnimation) //Se what direction is facing the player
                 {
-                    animator.SetTrigger("Attack_Sides_Left"); //Say the animator to do the side attack
+                    animator.SetBool("Attack_Sides1_Left", true); //Say the animator to do the side attack
                 }
                 else
                 {
-                    animator.SetTrigger("Attack_Sides_Right"); //Say the animator to do the side attack
+                    animator.SetBool("Attack_Sides1_Right", true); //Say the animator to do the side attack
                 }
                 break;
             case ATTACK_TYPE.MID_ATTACK:
                 if (characterController.flipAnimation) //Se what direction is facing the player
                 {
-                    animator.SetTrigger("Attack_Sides_Left"); //Say the animator to do the side attack
+                    animator.SetBool("Attack_Sides2_Left", true); //Say the animator to do the side attack
                 }
                 else
                 {
-                    animator.SetTrigger("Attack_Sides_Right"); //Say the animator to do the side attack
+                    animator.SetBool("Attack_Sides2_Right", true); //Say the animator to do the side attack
                 }
                 break;
             case ATTACK_TYPE.HARD_ATTACK:
                 if (characterController.flipAnimation) //Se what direction is facing the player
                 {
-                    animator.SetTrigger("Attack_Sides_Left"); //Say the animator to do the side attack
+                    animator.SetBool("Attack_Sides3_Left", true); //Say the animator to do the side attack
                 }
                 else
                 {
-                    animator.SetTrigger("Attack_Sides_Right"); //Say the animator to do the side attack
+                    animator.SetBool("Attack_Sides3_Right", true); //Say the animator to do the side attack
                 }
                 break;
         }

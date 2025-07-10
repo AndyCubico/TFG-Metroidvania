@@ -48311,6 +48311,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6264634318666345079, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: returnToAttackAfterFinishComboTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8539484079726585391, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 55.8

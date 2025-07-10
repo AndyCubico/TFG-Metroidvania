@@ -129,6 +129,7 @@ public class PlayerCombatV2 : MonoBehaviour
         //basicAttackCooldownLocal = 0;
         //cooldown = false;
         m_finishComboTimer = 0;
+        actualSprite = skeleton.Skeleton.FlipX;
 
         m_canHitCombo = true;
         isDamaging = false;
@@ -140,7 +141,7 @@ public class PlayerCombatV2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (skeleton.Skeleton.FlipX != actualSprite)
+        if (skeleton.Skeleton.FlipX != actualSprite && m_isOnCombo)
         {
             ResetCombo();
         }
@@ -180,6 +181,8 @@ public class PlayerCombatV2 : MonoBehaviour
             {
                 if (ComboAttack())
                 {
+                    characterController.blockFlip = true;
+
                     m_canHitCombo = false;
                     isAttacking = true;
                     actualSprite = skeleton.Skeleton.FlipX;
@@ -305,6 +308,7 @@ public class PlayerCombatV2 : MonoBehaviour
         isDamaging = false;
         isAttacking = false;
         characterController.blockFlip = false;
+
         nextEnemyHealth.Clear();
         enemyHealth.Clear();
 
@@ -370,8 +374,6 @@ public class PlayerCombatV2 : MonoBehaviour
     {
         if(!isDamaging)
         {
-            characterController.blockFlip = true;
-
             isDamaging = true;
         }
     }
@@ -381,7 +383,8 @@ public class PlayerCombatV2 : MonoBehaviour
         m_canHitCombo = true;
         isDamaging = false;
         isAttacking = false;
-        characterController.blockFlip = false;
+        //characterController.blockFlip = false;
+        //Debug.Log("UnBlockFlip");
         nextEnemyHealth.Clear();
         enemyHealth.Clear();
 

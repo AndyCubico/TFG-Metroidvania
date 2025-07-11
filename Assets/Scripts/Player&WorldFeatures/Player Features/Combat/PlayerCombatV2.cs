@@ -143,6 +143,7 @@ public class PlayerCombatV2 : MonoBehaviour
     {
         if (skeleton.Skeleton.FlipX != actualSprite && m_isOnCombo)
         {
+            m_finishComboTimer = 0;
             ResetCombo();
         }
 
@@ -418,7 +419,7 @@ public class PlayerCombatV2 : MonoBehaviour
         switch (attackType)
         {
             case ATTACK_TYPE.SOFT_ATTACK:
-                if (characterController.flipAnimation) //Se what direction is facing the player
+                if (skeleton.Skeleton.FlipX) //Se what direction is facing the player
                 {
                     animator.SetBool("Attack_Sides1_Left", true); //Say the animator to do the side attack
                 }
@@ -428,7 +429,7 @@ public class PlayerCombatV2 : MonoBehaviour
                 }
                 break;
             case ATTACK_TYPE.MID_ATTACK:
-                if (characterController.flipAnimation) //Se what direction is facing the player
+                if (skeleton.Skeleton.FlipX) //Se what direction is facing the player
                 {
                     animator.SetBool("Attack_Sides2_Left", true); //Say the animator to do the side attack
                 }
@@ -438,7 +439,7 @@ public class PlayerCombatV2 : MonoBehaviour
                 }
                 break;
             case ATTACK_TYPE.HARD_ATTACK:
-                if (characterController.flipAnimation) //Se what direction is facing the player
+                if (skeleton.Skeleton.FlipX) //Se what direction is facing the player
                 {
                     animator.SetBool("Attack_Sides3_Left", true); //Say the animator to do the side attack
                 }

@@ -963,7 +963,7 @@ namespace PlayerController
         //Make the action of dashing
         private void Dash()
         {
-            if (canDash && !isRoof && !isCrouch && playerState != PLAYER_STATUS.WALL)
+            if (canDash && !isRoof && !isCrouch && playerState != PLAYER_STATUS.WALL && !combatScript.attackWithComboHasEnded)
             {
                 if (dashDown && !isImpactHitting && !impactHitDown && playerFaceDir != PLAYER_FACE_DIRECTION.DOWN) //Check if the Left Shift is pressed, is in ground and is not sliding
                 {

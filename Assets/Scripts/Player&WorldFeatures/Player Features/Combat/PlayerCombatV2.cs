@@ -109,6 +109,7 @@ public class PlayerCombatV2 : MonoBehaviour
     //bool comboReset;
     bool isDamaging;
     [HideInInspector]public bool isAttacking;
+    [HideInInspector]public bool attackWithComboHasEnded;
 
     //Values
     float gravityScale;
@@ -134,6 +135,7 @@ public class PlayerCombatV2 : MonoBehaviour
         m_canHitCombo = true;
         isDamaging = false;
         isAttacking = false;
+        attackWithComboHasEnded = false;
 
         gravityScale = rb.gravityScale;
     }
@@ -176,7 +178,7 @@ public class PlayerCombatV2 : MonoBehaviour
         }
 
         //_Basic Attack + Combo
-        if (basicAttackDown && !isAttacking && !characterController.isInWater)
+        if (basicAttackDown && !isAttacking && !characterController.isInWater && characterController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && characterController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
         {
             if (m_canHitCombo && m_finishComboTimer == 0)
             {
@@ -186,6 +188,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
                     m_canHitCombo = false;
                     isAttacking = true;
+                    attackWithComboHasEnded = true;
                     actualSprite = skeleton.Skeleton.FlipX;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
                     AnimationSelector((ATTACK_TYPE)comboCounter);
@@ -308,6 +311,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
         isDamaging = false;
         isAttacking = false;
+        attackWithComboHasEnded = false;
         characterController.blockFlip = false;
 
         nextEnemyHealth.Clear();

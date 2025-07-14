@@ -317,8 +317,6 @@ public class PlayerCombatV2 : MonoBehaviour
         nextEnemyHealth.Clear();
         enemyHealth.Clear();
 
-        animator.SetFloat("Combo", comboCounter);
-
         animator.SetBool("Attack_Sides1_Left", false);
         animator.SetBool("Attack_Sides2_Left", false);
         animator.SetBool("Attack_Sides3_Left", false);

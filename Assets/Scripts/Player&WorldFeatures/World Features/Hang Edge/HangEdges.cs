@@ -12,7 +12,7 @@ public class HangEdges : MonoBehaviour
     public float speedTransform;
 
     bool playerCollision;
-    bool finishClimb;
+    [HideInInspector]public bool finishClimb;
     CharacterPlayerController characterPlayerController;
 
     //Indicate which edge is goind to be

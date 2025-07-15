@@ -51,6 +51,18 @@ public class AnimationManager : MonoBehaviour
     //Animates de player for movement
     void AnimatePlayer()
     {
+        //Put fall animation
+        if (characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < 0 && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
+        {
+            animator.SetBool("Fall", true);
+        }
+
+        if(characterPlayerController.dropDown || characterPlayerController.downControllerSensitivity < -0.8f && characterPlayerController.playerState == PLAYER_STATUS.HANGED) //If the player decides to drop from a hanged edge
+        {
+            animator.SetBool("Fall", true);
+            animator.SetBool("Edge", false);
+        }
+
         if (characterPlayerController.flipAnimation && !characterPlayerController.blockFlip) //Flip the animation if it is necesary
         {
             //characterPlayerController.playerSprite.flipX = true;
@@ -154,6 +166,12 @@ public class AnimationManager : MonoBehaviour
                 }
             }
 
+            //Hang edges
+            if (characterPlayerController.playerState == PLAYER_STATUS.AIR)
+            {
+                animator.SetBool("Edge", false);
+            }
+
             if (characterPlayerController.playerState == PLAYER_STATUS.HANGED)
             {
                 animator.SetBool("Idle", false);
@@ -161,6 +179,7 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("Run", false);
                 animator.SetBool("Wall", false);
                 animator.SetBool("Dash", false);
+                animator.SetBool("Fall", false);
                 animator.SetBool("BlockParry", false);
                 animator.SetBool("Heal", false);
                 animator.SetBool("ImpactHit", false);
@@ -194,12 +213,6 @@ public class AnimationManager : MonoBehaviour
             else
             {
                 animator.SetBool("Dash", false);
-            }
-
-            //Put fall animation
-            if(characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < 0 && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
-            {
-                animator.SetBool("Fall", true);
             }
 
             //Impact hit animation

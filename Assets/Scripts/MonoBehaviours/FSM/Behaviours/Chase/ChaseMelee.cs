@@ -60,7 +60,7 @@ public class ChaseMelee : ChaseSOBase
 
             Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
 
-            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            if (hit.collider != null && hit.collider.transform.root.CompareTag("Player"))
             {
                 playerInSight = true;
             }

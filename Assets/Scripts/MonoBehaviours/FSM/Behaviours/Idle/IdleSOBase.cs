@@ -32,7 +32,7 @@ public class IdleSOBase : ScriptableObject
             // Debug ray
             Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.red);
 
-            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            if (hit.collider != null && hit.collider.transform.root.CompareTag("Player"))
             {
                 enemy.stateMachine.Transition(enemy.chaseState);
                 enemy.SetTransitionAnimation("Chase");

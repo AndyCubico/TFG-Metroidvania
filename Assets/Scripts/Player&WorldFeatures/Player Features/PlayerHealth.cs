@@ -33,6 +33,9 @@ public class PlayerHealth : MonoBehaviour
     public InputActionReference HealPotionAction;
     bool healPotionInput;
 
+    [Header("Particle System")]
+    public ParticleSystem healingParticles;
+
     [HideInInspector]public bool isHealing;
 
     private Coroutine healthCoroutine;
@@ -150,6 +153,7 @@ public class PlayerHealth : MonoBehaviour
 
     public IEnumerator Heal(float quantity)
     {
+        healingParticles.Play();
         blockPlayer.BlockMovement();
         blockPlayer.BlockCombat();
         isHealing = true;
@@ -172,6 +176,7 @@ public class PlayerHealth : MonoBehaviour
         healPotions--;
         healPotionText.text = healPotions.ToString();
 
+        healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
         isHealing = false;
     }
 

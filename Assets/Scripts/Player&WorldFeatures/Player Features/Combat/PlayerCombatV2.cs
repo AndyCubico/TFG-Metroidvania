@@ -149,7 +149,7 @@ public class PlayerCombatV2 : MonoBehaviour
             ResetCombo();
         }
 
-        if(m_finishComboTimer > 0)
+        if(m_finishComboTimer > 0) //Wait before start another combo
         {
             m_finishComboTimer -= Time.deltaTime;
         }
@@ -178,6 +178,19 @@ public class PlayerCombatV2 : MonoBehaviour
         }
 
         //_Basic Attack + Combo
+        if (m_isOnCombo) //Here the combo counter counts
+        {
+            if (m_canHitCombo)
+            {
+                m_comboTimer += Time.deltaTime;
+            }
+
+            if (m_comboTimer >= comboResetTime) //Auto Reset if passes certain time
+            {
+                ResetCombo();
+            }
+        }
+
         if (basicAttackDown && !isAttacking && !characterController.isInWater && characterController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && characterController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
         {
             if (m_canHitCombo && m_finishComboTimer == 0)
@@ -197,6 +210,7 @@ public class PlayerCombatV2 : MonoBehaviour
                 //cooldown = true;
             }
         }
+        //Basic Attack + Combo_
 
         //if(cooldown) // Here the cooldown of attack is starting to sum up
         //{
@@ -209,20 +223,6 @@ public class PlayerCombatV2 : MonoBehaviour
         //        cooldown = false;
         //    }
         //}
-
-        if (m_isOnCombo) //Here the combo counter counts
-        {
-            if (m_canHitCombo)
-            {
-                m_comboTimer += Time.deltaTime;
-            }
-
-            if (m_comboTimer > comboResetTime) //Auto Reset if passes certain time
-            {
-                ResetCombo();
-            }
-        }
-        //Basic Attack + Combo_
 
         if (characterController.isDashing || characterController.isImpactHitting)
         {
@@ -304,6 +304,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
     void ResetCombo() //This function restarts the timer
     {
+        m_finishComboTimer = returnToAttackAfterFinishComboTime;
         comboCounter = 0;
         m_comboTimer = 0;
         m_isOnCombo = false;
@@ -394,7 +395,6 @@ public class PlayerCombatV2 : MonoBehaviour
         if(comboCounter == 3)
         {
             ResetCombo();
-            m_finishComboTimer = returnToAttackAfterFinishComboTime;
         }
 
         //rb.constraints = RigidbodyConstraints2D.FreezeRotation;

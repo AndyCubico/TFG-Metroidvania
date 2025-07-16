@@ -83,6 +83,10 @@ public class PlayerCombatV2 : MonoBehaviour
     //Layers
     public LayerMask enemyMask;
 
+    [Header("Particle Systems")]
+    [Space(5)]
+    public ParticleSystem groundHitParticles;
+
     //Character Controller
     public CharacterPlayerController characterController;
 
@@ -334,6 +338,7 @@ public class PlayerCombatV2 : MonoBehaviour
         //Check if is there is something at LeftAttack
         m_downAttack = Physics2D.OverlapAreaAll(downHit.bounds.min, downHit.bounds.max, enemyMask).Length > 0;
         isAttacking = false;
+        groundHitParticles.Play();
 
         if (m_downAttack)
         {
@@ -341,7 +346,15 @@ public class PlayerCombatV2 : MonoBehaviour
 
             attackFlagType = AttackFlagType.ImpactHit;
             HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth, attackFlagType);
+
+            StartCoroutine(StopParticles());
         }
+    }
+
+    public IEnumerator StopParticles()
+    {
+        yield return new WaitForSeconds(1f);
+        groundHitParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
     }
 
     void HitEnemy(ATTACK_TYPE attackType, List<IHittableObject> enemyHealth, AttackFlagType flag)

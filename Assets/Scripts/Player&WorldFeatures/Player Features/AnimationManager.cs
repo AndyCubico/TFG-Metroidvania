@@ -52,7 +52,7 @@ public class AnimationManager : MonoBehaviour
     void AnimatePlayer()
     {
         //Put fall animation
-        if (characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < 0 && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
+        if (!animator.GetBool("Idle") && characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < -0.1f && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
         {
             animator.SetBool("Fall", true);
         }
@@ -108,7 +108,7 @@ public class AnimationManager : MonoBehaviour
             //Idle is to return from jumping and wait to touch ground
             if (!animator.GetBool("Jump") && !animator.GetBool("Run"))
             {
-                if ((characterPlayerController.playerState == PLAYER_STATUS.GROUND || characterPlayerController.playerState == PLAYER_STATUS.JUMP) && !animator.GetBool("Idle"))
+                if ((characterPlayerController.playerState == PLAYER_STATUS.GROUND || characterPlayerController.playerState == PLAYER_STATUS.JUMP))
                 {
                     animator.SetBool("Idle", true);
                     animator.SetBool("Fall", false);
@@ -121,6 +121,7 @@ public class AnimationManager : MonoBehaviour
             if (animator.GetBool("Jump") && characterPlayerController.playerState == PLAYER_STATUS.GROUND)
             {
                 animator.SetBool("Idle", true);
+                animator.SetBool("Fall", false);
                 animator.SetBool("Edge", false);
                 animator.SetBool("Jump", false);
             }

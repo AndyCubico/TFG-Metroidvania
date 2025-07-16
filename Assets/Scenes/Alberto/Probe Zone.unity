@@ -21086,6 +21086,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!198 &1145074770 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1854647790602834237, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+  m_PrefabInstance: {fileID: 4962310827785291463}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1154699052
 GameObject:
   m_ObjectHideFlags: 0
@@ -48439,6 +48444,10 @@ PrefabInstance:
       propertyPath: earingMask.m_Bits
       value: 384
       objectReference: {fileID: 0}
+    - target: {fileID: 1854647790602834237, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2198752808576420358, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -48487,6 +48496,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4f07d71b3648ae74ba87fec8d39a7eaa, type: 2}
+    - target: {fileID: 6264634318666345079, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: groundHitParticles
+      value: 
+      objectReference: {fileID: 1145074770}
     - target: {fileID: 6264634318666345079, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: returnToAttackAfterFinishComboTime
       value: 0.5

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ public class Attack_Detectors : MonoBehaviour
 
     public List<IHittableObject> SendEnemyCollision()
     {
-        if(enemyObj != null)
+        if (enemyObj != null)
         {
             return enemyObj;
         }

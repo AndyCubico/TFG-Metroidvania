@@ -642,8 +642,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b175a926bc97a4d49b8482fc14ecff7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 0.5
-  pushForce: 600
+  m_RaycastDistance: 0.5
+  m_PushForce: 600
+  m_PushCooldown: 1
 --- !u!1001 &282347148
 PrefabInstance:
   m_ObjectHideFlags: 0

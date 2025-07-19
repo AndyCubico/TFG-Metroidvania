@@ -2,43 +2,56 @@ using UnityEngine;
 
 public class PlayerGroundCheck : MonoBehaviour
 {
-    [SerializeField] private float raycastDistance = 0.1f;
-    [SerializeField] private float pushForce = 200f;
+    [SerializeField] private float m_RaycastDistance;
+    [SerializeField] private float m_PushForce;
+    [SerializeField] private float m_PushCooldown;
 
-    private Collider2D col;
-    private Enemy enemy;
+    private Collider2D m_Collider;
+    private Enemy m_EnemyCS;
+    private float m_PushCooldownTimer;
 
     private void Awake()
     {
-        col = GetComponent<Collider2D>();
-        enemy = GetComponent<Enemy>();
+        m_Collider = GetComponent<Collider2D>();
+        m_EnemyCS = GetComponent<Enemy>();
 
-        if (enemy == null)
-            Debug.LogError("PlayerGroundCheck: Enemy component not found on this GameObject.");
+        m_PushCooldownTimer = 0f;
+
+        if (m_EnemyCS == null)
+            Debug.LogError("PlayerGroundCheck: Enemy component not found.");
     }
 
     private void FixedUpdate()
     {
-        PushPlayerIfUnderneath();
+        if (m_PushCooldownTimer > 0f)
+        {
+            m_PushCooldownTimer -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            PushPlayerIfUnderneath();
+        }
     }
 
     private void PushPlayerIfUnderneath()
     {
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - col.bounds.extents.y - 0.01f);
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - m_Collider.bounds.extents.y - 0.01f);
 
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, raycastDistance);
-        Debug.DrawRay(origin, Vector2.down * raycastDistance, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, m_RaycastDistance);
+        Debug.DrawRay(origin, Vector2.down * m_RaycastDistance, Color.red);
 
         if (hit.collider != null && hit.collider.transform.root.CompareTag("Player"))
         {
             Rigidbody2D playerRb = hit.collider.attachedRigidbody;
 
-            if (playerRb != null && enemy != null)
+            if (playerRb != null && m_EnemyCS != null)
             {
                 // Push the player in the opposite direction the enemy is facing
-                float pushDirection = enemy.isFacingRight ? -1f : 1f;
-                Vector2 force = new Vector2(pushDirection * pushForce, 0f);
+                float pushDirection = m_EnemyCS.isFacingRight ? -1f : 1f;
+                Vector2 force = new Vector2(pushDirection * m_PushForce, 0f);
                 playerRb.AddForce(force, ForceMode2D.Force);
+
+                m_PushCooldownTimer = m_PushCooldown;
             }
         }
     }

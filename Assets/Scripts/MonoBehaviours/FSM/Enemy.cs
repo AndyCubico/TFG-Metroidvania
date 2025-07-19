@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger, ITransition
+public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITrigger, ITransition
 {
     #region Damagable variables
 
@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour, IDamagable, IMovement, ITrigger, ITransition
 
     #region Basic functions
 
-    public void Damage(float damage)
+    public void ReceiveDamage(float damage, AttackFlagType attackType)
     {
         currentHealth -= damage;
 

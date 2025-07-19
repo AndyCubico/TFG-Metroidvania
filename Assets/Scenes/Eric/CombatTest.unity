@@ -2291,6 +2291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melee Enemy Test
       objectReference: {fileID: 0}
+    - target: {fileID: 225823497990754339, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1169639423995994962, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: patrolEnd.x
       value: 65
@@ -2311,9 +2315,29 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1392898469343964799, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761712178264566238, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 3158197134719873139, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_JumpForce
       value: 62
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588989349210139277, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966400668138377113, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296901986599196469, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6569824218082497591, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2354,6 +2378,14 @@ PrefabInstance:
     - target: {fileID: 6569824218082497591, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307352404405107151, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954764993721150303, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

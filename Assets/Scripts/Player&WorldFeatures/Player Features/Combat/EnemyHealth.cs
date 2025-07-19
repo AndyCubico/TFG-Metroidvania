@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IHittableObject
@@ -13,7 +11,7 @@ public class EnemyHealth : MonoBehaviour, IHittableObject
 
         if (life <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

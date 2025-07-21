@@ -2,6 +2,9 @@ using PlayerController;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using System.Collections.Generic;
+using System.Collections;
+using Spine;
 
 public static class HealthEvents
 {
@@ -62,6 +65,13 @@ public class PlayerBlockAndParry : MonoBehaviour
     // Heavy Attack
     public HeavyAttack heavyAttack;
 
+    // Recovery
+    [HideInInspector] public bool isRecovering;
+    public float parryRecovery;
+    public float blockRecovery;
+    public float hittedRecovery;
+    public Animator animator;
+
     // Controls Action Input Delegates
     private void OnEnable()
     {
@@ -79,7 +89,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             if (blockCooldownCounter <= 0f) // Timer to be able to block again
             {
-                if (context.performed)
+                if (context.performed && !isRecovering)
                 {
                     isBlocking = true;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -99,6 +109,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         isBlocking = false;
         canAttackBeParried = false;
+        isRecovering = false;
         parryCounter = 0f;
         blockCounter = 0f;
         invincibilityCounter = 0f;
@@ -124,6 +135,7 @@ public class PlayerBlockAndParry : MonoBehaviour
             }
             else
             {
+                StartCoroutine(Recovery(parryRecovery));
                 ResetBlock(); // Reset the block when ends the process
             }
         }
@@ -180,17 +192,15 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     private void ResetBlock()
     {
-        isBlocking = false;
         blockCounter = 0;
         parryCounter = 0;
         blockCooldownCounter = blockCooldownTime;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     // Execute a parry
     void ReciveAttackParryWindow()
     {
-        enemyIsAttacking = false;
         heavyAttack.AddCharges(1);
 
         //Send that the parry has been done correcltly
@@ -200,13 +210,13 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             enemyTest.color = Color.green;
         }
+
+        StartCoroutine(Recovery(parryRecovery));
     }
 
     // Execute a Block
     void ReciveAttackBlockWindow()
     {
-        enemyIsAttacking = false;
-
         // The attack has been blocked
         Debug.Log(damageBlock);
 
@@ -214,13 +224,13 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             enemyTest.color = Color.blue;
         }
+
+        StartCoroutine(Recovery(blockRecovery));
     }
 
     // Execute damage to the player
     void PlayerHasBeenHitted()
     {
-        enemyIsAttacking = false;
-
         // Damage player
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
@@ -233,6 +243,8 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             enemyTest.color = Color.black;
         }
+
+        StartCoroutine(Recovery(hittedRecovery));
     }
 
     // Enables invincibility
@@ -240,6 +252,35 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         isInvencible = true;
         invincibilityCounter = invincibilityTime;
+    }
+
+    public IEnumerator Recovery(float recoveryTime) // Recivery after reciving an attack
+    {
+        float aniamtionLenght = GetAnimationLength("BlockParry");
+
+        yield return new WaitForSeconds(aniamtionLenght);
+
+        isRecovering = true;
+        isBlocking = false;
+
+        yield return new WaitForSeconds(recoveryTime);
+
+        isRecovering = false;
+        enemyIsAttacking = false;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    float GetAnimationLength(string clipName) // Function to know when an animation clip ends
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+        foreach (var clip in ac.animationClips)
+        {
+            if (clip.name == clipName)
+            {
+                return clip.length;
+            }
+        }
+        return 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

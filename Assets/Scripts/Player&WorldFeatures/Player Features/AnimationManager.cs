@@ -241,6 +241,17 @@ public class AnimationManager : MonoBehaviour
             {
                 animator.SetBool("BlockParry", false);
             }
+
+            //Recovery animation from BlockpParry
+            if(playerBP.isRecovering)
+            {
+                animator.SetBool("BlockParry", false);
+                animator.SetBool("Recovery", true);
+            }
+            else
+            {
+                animator.SetBool("Recovery", false);
+            }
         }
         else
         {

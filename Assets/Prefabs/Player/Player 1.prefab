@@ -502,6 +502,11 @@ MonoBehaviour:
   rb: {fileID: 4203002661369434470}
   characterPlayerController: {fileID: 1660634256912515273}
   heavyAttack: {fileID: 436239141109916112}
+  isRecovering: 0
+  parryRecovery: 0.2
+  blockRecovery: 0.5
+  hittedRecovery: 0.7
+  animator: {fileID: 2918244791821584414}
 --- !u!1 &4174517290885009280
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,9 +7,4 @@ public class EnemyHit : MonoBehaviour
     public bool hasHittedPlayer;
 
     public Enemy enemy;
-
-    private void Start()
-    {
-        enemy = GetComponent<Enemy>();
-    }
 }

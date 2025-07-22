@@ -645,6 +645,17 @@ MonoBehaviour:
   m_RaycastDistance: 0.5
   m_PushForce: 600
   m_PushCooldown: 1
+--- !u!114 &254210024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5292185145122867756, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+  m_PrefabInstance: {fileID: 1199420672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254210007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5160c0730ec984649b1ee19699225e61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &282347148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2111,6 +2122,7 @@ MonoBehaviour:
   damage: 10
   canBeParried: 1
   hasHittedPlayer: 0
+  enemy: {fileID: 254210024}
 --- !u!4 &1020174391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5467404702289265213, guid: 337c027b770162146bb42516b82aeb94, type: 3}

@@ -48455,7 +48455,7 @@ PrefabInstance:
     - target: {fileID: 2230649128086465727, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: skeletonDataAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 323df196a93984449a09539287734b5a, type: 2}
+      objectReference: {fileID: 11400000, guid: 23193099a327d9e4880a89c4ae4d61f6, type: 2}
     - target: {fileID: 2612857057666361663, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -48480,6 +48480,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 6c5866e46d3d3964da1771d28c9286cb, type: 2}
+    - target: {fileID: 2918244791821584414, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3512433084231368273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -48499,7 +48503,11 @@ PrefabInstance:
     - target: {fileID: 5498128672305890525, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4f07d71b3648ae74ba87fec8d39a7eaa, type: 2}
+      objectReference: {fileID: 2100000, guid: 9a36faa0413385b42a525bcf77b5a648, type: 2}
+    - target: {fileID: 6264634318666345079, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: inputBufferTime
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6264634318666345079, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: groundHitParticles
       value: 
@@ -48555,6 +48563,10 @@ PrefabInstance:
     - target: {fileID: 8539484079726585391, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658158645012150041, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3366
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

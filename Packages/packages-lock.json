@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.esotericsoftware.spine.timeline": {
+      "version": "file:C:/Users/Mi Pc/Downloads/com.esotericsoftware.spine.timeline-3.8-2019-08-05/com.esotericsoftware.spine.timeline-3.8",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.timeline": "1.0.0"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,

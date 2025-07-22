@@ -19,7 +19,7 @@ public class AttackSOBase : ScriptableObject
 
     public virtual void DoEnter() { }
     public virtual void DoExit() { ResetValues(); }
-    public virtual void DoUpdate() 
+    public virtual void DoUpdate()
     {
         // TODO: Make smoother
         if (!enemy.isWithinAttackRange)
@@ -32,4 +32,5 @@ public class AttackSOBase : ScriptableObject
     public virtual void DoFixedUpdate() { }
     public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }
     public virtual void ResetValues() { }
+    public virtual void OnParried() { }
 }

@@ -1,5 +1,4 @@
 using PlayerController;
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -15,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
 
     //[Header("UI Elements")]
     Image healthBar;
-    TextMeshProUGUI healthText; 
+    TextMeshProUGUI healthText;
     TextMeshProUGUI maxHealthText;
 
     TextMeshProUGUI healPotionText;
@@ -36,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Particle System")]
     public ParticleSystem healingParticles;
 
-    [HideInInspector]public bool isHealing;
+    [HideInInspector] public bool isHealing;
 
     private Coroutine healthCoroutine;
 
@@ -113,7 +112,7 @@ public class PlayerHealth : MonoBehaviour
     {
         playerHealth -= damage;
 
-        if(healthCoroutine != null)
+        if (healthCoroutine != null)
         {
             StopCoroutine(healthCoroutine);
 
@@ -162,7 +161,7 @@ public class PlayerHealth : MonoBehaviour
 
         playerHealth += quantity;
 
-        if(playerHealth > 100)
+        if (playerHealth > 100)
         {
             playerHealth = 100;
         }

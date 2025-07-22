@@ -72,6 +72,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     public float hittedRecovery;
     public Animator animator;
 
+    // Enemy management
+    private Enemy m_CurrentEnemyHit;
+
     // Controls Action Input Delegates
     private void OnEnable()
     {
@@ -211,6 +214,12 @@ public class PlayerBlockAndParry : MonoBehaviour
             enemyTest.color = Color.green;
         }
 
+        // Manage enemy being parried
+        if (m_CurrentEnemyHit != null)
+        {
+            m_CurrentEnemyHit.attackSOBaseInstance.OnParried(); // Notify enemy about parry
+        }
+
         StartCoroutine(Recovery(parryRecovery));
     }
 
@@ -268,6 +277,9 @@ public class PlayerBlockAndParry : MonoBehaviour
         isRecovering = false;
         enemyIsAttacking = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Clear enemy reference
+        m_CurrentEnemyHit = null; 
     }
 
     float GetAnimationLength(string clipName) // Function to know when an animation clip ends
@@ -324,6 +336,9 @@ public class PlayerBlockAndParry : MonoBehaviour
                         {
                             enemyTest = collision.gameObject.GetComponent<SpriteRenderer>();
                         }
+
+                        // Get enemy reference to manage the parry
+                        m_CurrentEnemyHit = enemyHit.enemy;
                     }
                     else
                     {

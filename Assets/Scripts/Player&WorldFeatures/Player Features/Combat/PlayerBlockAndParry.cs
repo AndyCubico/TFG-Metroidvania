@@ -1,10 +1,8 @@
 using PlayerController;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using Spine;
 
 public static class HealthEvents
 {
@@ -91,7 +89,7 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     public void BlockAndParryEvent(InputAction.CallbackContext context)
     {
-        if(characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND || characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.AIR)
+        if (characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.GROUND || characterPlayerController.playerState == CharacterPlayerController.PLAYER_STATUS.AIR)
         {
             if (blockCooldownCounter <= 0f) // Timer to be able to block again
             {
@@ -103,9 +101,9 @@ public class PlayerBlockAndParry : MonoBehaviour
 
                 if (context.canceled)
                 {
-                //    isBlocking = false;
-                //    blockTimer = blockCooldown; // When the block is quit the timer is applied
-                //    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    //    isBlocking = false;
+                    //    blockTimer = blockCooldown; // When the block is quit the timer is applied
+                    //    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 }
             }
         }
@@ -139,11 +137,11 @@ public class PlayerBlockAndParry : MonoBehaviour
             {
                 parryCounter += Time.deltaTime;
             }
-            else if(blockCounter <= blockTime) // Check if the parry apperture has passed and the block time stills open
+            else if (blockCounter <= blockTime) // Check if the parry apperture has passed and the block time stills open
             {
                 blockCounter += Time.deltaTime;
             }
-            else if(!enemyIsAttacking) 
+            else if (!enemyIsAttacking)
             {
                 StartCoroutine(Recovery(parryRecovery));
                 ResetBlock(); // Reset the block when ends the process
@@ -172,7 +170,7 @@ public class PlayerBlockAndParry : MonoBehaviour
                     }
                     else
                     {
-                        if(blockCounter > 0f && blockCounter <= blockTime)
+                        if (blockCounter > 0f && blockCounter <= blockTime)
                         {
                             ReciveAttackBlockWindow(); // Call the function of block
                             ResetBlock();
@@ -194,9 +192,12 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             invincibilityCounter -= Time.deltaTime; // Invincibility timer starts reducing
 
-            if(invincibilityCounter <= 0)
+            if (invincibilityCounter <= 0)
             {
                 isInvencible = false;
+
+                // TODO: See if it is better to have EnemyHit in main enemy go or not.
+                m_CurrentEnemyHit.GetComponentInChildren<EnemyHit>().hasHittedPlayer = false;
             }
         }
     }
@@ -277,7 +278,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         invincibilityCounter = invincibilityTime;
     }
 
-    public IEnumerator Recovery(float recoveryTime) // Recivery after reciving an attack
+    public IEnumerator Recovery(float recoveryTime) // Recovery after reciving an attack
     {
         startRecovering = true;
 
@@ -297,7 +298,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         // Clear enemy reference
-        m_CurrentEnemyHit = null; 
+        m_CurrentEnemyHit = null;
     }
 
     float GetAnimationLength(string clipName) // Function to know when an animation clip ends
@@ -339,7 +340,7 @@ public class PlayerBlockAndParry : MonoBehaviour
                 EnemyHit enemyHit;
 
                 // Recieve here the damage that the hit is going to make
-                if(collision.TryGetComponent(out enemyHit))
+                if (collision.TryGetComponent(out enemyHit))
                 {
                     if (!enemyHit.hasHittedPlayer) // If the attack already does not hit the player
                     {

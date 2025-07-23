@@ -2123,6 +2123,33 @@ MonoBehaviour:
   canBeParried: 1
   hasHittedPlayer: 0
   enemy: {fileID: 254210024}
+--- !u!50 &1016617508
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016617502}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &1020174391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5467404702289265213, guid: 337c027b770162146bb42516b82aeb94, type: 3}
@@ -2396,11 +2423,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1392898469343964799, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2761712178264566238, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3158197134719873139, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_JumpForce
@@ -2408,15 +2435,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4588989349210139277, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4966400668138377113, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5296901986599196469, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5296901986599196469, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_TagString
@@ -2464,11 +2491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7307352404405107151, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7954764993721150303, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2483,6 +2510,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5296901986599196469, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1016617505}
+    - targetCorrespondingSourceObject: {fileID: 5296901986599196469, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1016617508}
   m_SourcePrefab: {fileID: 100100000, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
 --- !u!1 &1230814565
 GameObject:

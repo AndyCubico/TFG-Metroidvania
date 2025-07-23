@@ -2259,7 +2259,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 30483527015940619}
-  - component: {fileID: 5529651018014062884}
   - component: {fileID: 6264634318666345079}
   m_Layer: 6
   m_Name: Combat
@@ -2288,37 +2287,6 @@ Transform:
   - {fileID: 8527785911894737713}
   m_Father: {fileID: 8539484079726585391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5529651018014062884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5761950144740443029}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c992b50d298bd942bcb5fbaa6fdad9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LeftHit: {fileID: 0}
-  RightHit: {fileID: 0}
-  DownHit: {fileID: 8271823833749701405}
-  basicAttackCooldown: 0.3
-  comboResetTime: 0.5
-  softDamage: 10
-  midDamage: 15
-  hardDamage: 20
-  airTime: 0.4
-  animator: {fileID: 0}
-  leftDetector: {fileID: 0}
-  rightDetector: {fileID: 0}
-  impactHitDetector: {fileID: 6607145365086566559}
-  BasicAttackAction: {fileID: 5674964187323301980, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 2048
-  characterController: {fileID: 0}
-  rb: {fileID: 0}
 --- !u!114 &6264634318666345079
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -549,7 +549,10 @@ namespace PlayerController
         void FixedUpdate()
         {
             //_JUMP
-            Jumping();
+            if (!combatScript.isAttacking)
+            {
+                Jumping();
+            }
             //JUMP_
 
             //_GROUND_HIT
@@ -1043,7 +1046,10 @@ namespace PlayerController
                     }
                     else
                     {
-                        rb.gravityScale = gravityEffect;
+                        if (activateFallMultiplier)
+                        {
+                            rb.gravityScale = gravityEffect;
+                        }
                     }
                 }
             }

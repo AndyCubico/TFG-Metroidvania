@@ -25,9 +25,11 @@ public class PlayerBlockAndParry : MonoBehaviour
     public float maxParryTime;
     float parryCounter;
 
+    float m_timeFromBlock;
+
     public float invincibilityTime;
     float invincibilityCounter;
-    bool isInvencible;
+    public bool isInvencible;
     bool isDashing;
 
     [Header("Receive Damages")]
@@ -66,6 +68,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     public HeavyAttack heavyAttack;
 
     // Recovery
+    [HideInInspector] public bool startRecovering;
     [HideInInspector] public bool isRecovering;
     public float parryRecovery;
     public float blockRecovery;
@@ -92,7 +95,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             if (blockCooldownCounter <= 0f) // Timer to be able to block again
             {
-                if (context.performed && !isRecovering)
+                if (context.performed && !isRecovering && !startRecovering && !enemyIsAttacking)
                 {
                     isBlocking = true;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -112,23 +115,27 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         isBlocking = false;
         canAttackBeParried = false;
+        startRecovering = false;
         isRecovering = false;
         parryCounter = 0f;
         blockCounter = 0f;
+        m_timeFromBlock = 0f;
         invincibilityCounter = 0f;
         attackDirection = 0;
     }
 
     void Update()
     {
-        if (blockCooldownCounter > 0f) // In case of have block, the cooldown will happen
+        if (blockCooldownCounter > 0f && !isRecovering && !startRecovering) // In case of have block, the cooldown will happen
         {
             blockCooldownCounter -= Time.deltaTime;
         }
 
         if (isBlocking) // The parry starts counting from the moment the player has blocked
         {
-            if(parryCounter <= maxParryTime && canAttackBeParried) // Check if the time for parry is still open and the attack can be parried
+            m_timeFromBlock += Time.deltaTime;
+
+            if (parryCounter <= maxParryTime) // Check if the time for parry is still open and the attack can be parried
             {
                 parryCounter += Time.deltaTime;
             }
@@ -136,7 +143,7 @@ public class PlayerBlockAndParry : MonoBehaviour
             {
                 blockCounter += Time.deltaTime;
             }
-            else
+            else if(!enemyIsAttacking) 
             {
                 StartCoroutine(Recovery(parryRecovery));
                 ResetBlock(); // Reset the block when ends the process
@@ -172,6 +179,7 @@ public class PlayerBlockAndParry : MonoBehaviour
                         }
                         else
                         {
+                            StartCoroutine(Recovery(parryRecovery));
                             ResetBlock();
                         }
                     }
@@ -195,6 +203,9 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     private void ResetBlock()
     {
+        isBlocking = false;
+        enemyIsAttacking = false;
+
         blockCounter = 0;
         parryCounter = 0;
         blockCooldownCounter = blockCooldownTime;
@@ -228,6 +239,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         // The attack has been blocked
         Debug.Log(damageBlock);
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
 
         if (enemyTesting) // Enemy color testing
         {
@@ -265,17 +279,21 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     public IEnumerator Recovery(float recoveryTime) // Recivery after reciving an attack
     {
-        float aniamtionLenght = GetAnimationLength("BlockParry");
+        startRecovering = true;
 
-        yield return new WaitForSeconds(aniamtionLenght);
+        float animationLenght = GetAnimationLength("BlockParry");
+
+        animationLenght -= m_timeFromBlock;
+        m_timeFromBlock = 0;
+
+        yield return new WaitForSeconds(animationLenght);
 
         isRecovering = true;
-        isBlocking = false;
+        startRecovering = false;
 
         yield return new WaitForSeconds(recoveryTime);
 
         isRecovering = false;
-        enemyIsAttacking = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         // Clear enemy reference

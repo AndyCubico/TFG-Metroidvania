@@ -109,6 +109,9 @@ public class Pathfollowing : MonoBehaviour
                 // Check if it should jump if the target node is on higher ground.
                 if (CheckJump(m_TargetPosition))
                 {
+                    isJumping = true;
+                    m_JumpCoroutineExecution = true;
+
                     StartCoroutine(Jump(m_JumpWait));
                 }
                 // Check if it should jump if the next node is a cliff.
@@ -117,6 +120,9 @@ public class Pathfollowing : MonoBehaviour
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
                     !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
                 {
+                    isJumping = true;
+                    m_JumpCoroutineExecution = true;
+
                     StartCoroutine(Jump(m_JumpWait, 0.5f)); // 0.5f in the forceX parameter to jump more horizontally.
                 }
                 // Move if it is not jumping.
@@ -292,9 +298,6 @@ public class Pathfollowing : MonoBehaviour
 
             CheckFacing(m_rb.linearVelocityX);
         }
-
-        isJumping = true;
-        m_JumpCoroutineExecution = true;
 
         // First wait, very short.
         yield return new WaitForSeconds(waitTime / 2);

@@ -55,6 +55,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     // think of cleaner ways to do it.
     public Dictionary<string, object> stateContext { get; private set; } = new Dictionary<string, object>();
 
+    public AttackFlagType flagMask;
+
     protected virtual void Awake()
     {
         idleSOBaseInstance = Instantiate(m_IdleSOBase);
@@ -100,9 +102,12 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public void ReceiveDamage(float damage, AttackFlagType attackType)
     {
-        currentHealth -= damage;
+        if ((attackType & flagMask) != 0)
+        {
+            currentHealth -= damage;
 
-        if (currentHealth <= 0) Die();
+            if (currentHealth <= 0) Die();
+        }
     }
 
     public void Die()

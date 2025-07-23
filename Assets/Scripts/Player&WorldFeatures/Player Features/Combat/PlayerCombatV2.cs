@@ -94,6 +94,10 @@ public class PlayerCombatV2 : MonoBehaviour
     List<IHittableObject> nextEnemyHealth = new List<IHittableObject>();
     List<IHittableObject> enemyHealth = new List<IHittableObject>();
 
+    //Enemy list impactHit
+    List<IHittableObject> impactHitNextEnemyHealth = new List<IHittableObject>();
+    List<IHittableObject> impactHitEnemyHealth = new List<IHittableObject>();
+
     //Checkers
     bool m_basicAttack;
     bool m_downAttack;
@@ -228,7 +232,7 @@ public class PlayerCombatV2 : MonoBehaviour
         //    }
         //}
 
-        if (characterController.isDashing || characterController.isImpactHitting)
+        if (characterController.isDashing)
         {
             Physics2D.IgnoreLayerCollision(6, 11, true);
         }
@@ -240,6 +244,14 @@ public class PlayerCombatV2 : MonoBehaviour
         if (isDamaging)
         {
             BasicAttack((ATTACK_TYPE)comboCounter); //Exectue the attack
+        }
+
+        if (characterController.isImpactHitting)
+        {
+            if(characterController.playerState != CharacterPlayerController.PLAYER_STATUS.GROUND)
+            {
+                ImpactHitMidAir();
+            }
         }
     }
 
@@ -284,6 +296,8 @@ public class PlayerCombatV2 : MonoBehaviour
             {
                 attackFlagType = AttackFlagType.BasicAttack;
                 HitEnemy(attackType, newEnemiesList, attackFlagType);
+
+                SlowMotionEffect.eSlowMotion?.Invoke(0.15f, 0.02f);
             }
         }
     }
@@ -345,9 +359,50 @@ public class PlayerCombatV2 : MonoBehaviour
             enemyHealth = impactHitDetector.SendEnemyCollision();
 
             attackFlagType = AttackFlagType.ImpactHit;
-            HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth, attackFlagType);
 
-            StartCoroutine(StopParticles());
+            if(enemyHealth != null)
+            {
+                HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth, attackFlagType);
+            }
+        }
+
+        StartCoroutine(StopParticles());
+
+        impactHitNextEnemyHealth.Clear();
+    }
+
+    public void ImpactHitMidAir()
+    {
+        isAttacking = true;
+        m_downAttack = Physics2D.OverlapAreaAll(downHit.bounds.min, downHit.bounds.max, enemyMask).Length > 0;
+
+        if (m_downAttack)
+        {
+            List<IHittableObject> newEnemiesList = new List<IHittableObject>(impactHitDetector.SendEnemyCollision());
+            List<IHittableObject> finalListEnemies = new List<IHittableObject>();
+
+            for (int j = 0; j < newEnemiesList.Count; j++)
+            {
+                if (!impactHitNextEnemyHealth.Contains(newEnemiesList[j]))
+                {
+                    finalListEnemies.Add(newEnemiesList[j]);
+                }
+            }
+
+            if(impactHitNextEnemyHealth.Count == 0)
+            {
+                impactHitNextEnemyHealth = newEnemiesList;
+            }
+            else
+            {
+                impactHitNextEnemyHealth = finalListEnemies;
+            }
+
+            if (impactHitNextEnemyHealth.Count > 0 && impactHitNextEnemyHealth != null)
+            {
+                attackFlagType = AttackFlagType.ImpactHit;
+                HitEnemy(ATTACK_TYPE.MID_ATTACK, impactHitNextEnemyHealth, attackFlagType);
+            }
         }
     }
 
@@ -377,7 +432,6 @@ public class PlayerCombatV2 : MonoBehaviour
         }
 
         CameraEvents.eCameraShake?.Invoke(0.05f, 0.08f);
-        SlowMotionEffect.eSlowMotion?.Invoke(0.15f, 0.02f);
 
         Debug.Log("Enemy Hit with: " + damage);
 

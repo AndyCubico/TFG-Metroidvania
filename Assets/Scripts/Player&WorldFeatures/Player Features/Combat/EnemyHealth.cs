@@ -5,13 +5,18 @@ public class EnemyHealth : MonoBehaviour, IHittableObject
     [Header("Life Variables")]
     public float life;
 
+    public AttackFlagType flagMask;
+
     public void ReceiveDamage(float damage, AttackFlagType flag)
     {
-        life -= damage;
-
-        if (life <= 0)
+        if((flag & flagMask) != 0)
         {
-            Destroy(gameObject);
+            life -= damage;
+
+            if (life <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

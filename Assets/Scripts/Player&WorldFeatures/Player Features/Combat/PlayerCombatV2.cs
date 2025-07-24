@@ -13,7 +13,8 @@ public enum AttackFlagType
     BasicAttack = 1 << 0,   // 1
     ImpactHit = 1 << 1,    // 2
     HeavyAttack = 1 << 2,  // 4
-    SnowAttack = 1 << 3     // 8
+    SnowAttack = 1 << 3,    // 8
+    Wall = 1 << 4     // 8
 }
 
 public class PlayerCombatV2 : MonoBehaviour
@@ -268,7 +269,10 @@ public class PlayerCombatV2 : MonoBehaviour
                 StartCoroutine(AirAttack());
             }
 
-            nextEnemyHealth = new List<IHittableObject>(attackDetector.SendEnemyCollision());
+            (List<IHittableObject> enemyList, List<GameObject> enemyObjects) = attackDetector.SendEnemyCollision();
+
+            nextEnemyHealth = new List<IHittableObject>(enemyList); ;
+
             List<IHittableObject> newEnemiesList = new List<IHittableObject>();
 
             for (int j = 0; j < nextEnemyHealth.Count; j++)
@@ -356,7 +360,8 @@ public class PlayerCombatV2 : MonoBehaviour
 
         if (m_downAttack)
         {
-            enemyHealth = impactHitDetector.SendEnemyCollision();
+            (List<IHittableObject> enemyList, List<GameObject> enemyObjects) = impactHitDetector.SendEnemyCollision();
+            enemyHealth = new List<IHittableObject>(enemyList);
 
             attackFlagType = AttackFlagType.ImpactHit;
 
@@ -378,7 +383,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
         if (m_downAttack)
         {
-            List<IHittableObject> newEnemiesList = new List<IHittableObject>(impactHitDetector.SendEnemyCollision());
+            (List<IHittableObject> newEnemiesList, List<GameObject> enemyObjects) = impactHitDetector.SendEnemyCollision();
             List<IHittableObject> finalListEnemies = new List<IHittableObject>();
 
             for (int j = 0; j < newEnemiesList.Count; j++)
@@ -402,6 +407,8 @@ public class PlayerCombatV2 : MonoBehaviour
             {
                 attackFlagType = AttackFlagType.ImpactHit;
                 HitEnemy(ATTACK_TYPE.MID_ATTACK, impactHitNextEnemyHealth, attackFlagType);
+
+                impactHitNextEnemyHealth.Clear();
             }
         }
     }
@@ -437,7 +444,15 @@ public class PlayerCombatV2 : MonoBehaviour
 
         for (int i = 0; i < enemyHealth.Count; i++)
         {
-            enemyHealth[i].ReceiveDamage(damage, flag);
+            if (enemyHealth[i] != null)
+            {
+                if (flag == AttackFlagType.ImpactHit)
+                {
+                    enemyHealth[i].PushEnemy(this.transform.root.gameObject);
+                }
+
+                enemyHealth[i].ReceiveDamage(damage, flag);
+            }
         }
     }
 

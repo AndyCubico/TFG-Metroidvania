@@ -160,7 +160,9 @@ public class HeavyAttack : MonoBehaviour
                 StartCoroutine(playerCombat.AirAttack());
             }
 
-            nextEnemyHealth = new List<IHittableObject>(attackDetector.SendEnemyCollision());
+            (List<IHittableObject> enemyList, List<GameObject> enemyObjects) = attackDetector.SendEnemyCollision();
+            nextEnemyHealth = new List<IHittableObject>(enemyList);
+
             List<IHittableObject> newEnemiesList = new List<IHittableObject>();
 
             for (int j = 0; j < nextEnemyHealth.Count; j++)

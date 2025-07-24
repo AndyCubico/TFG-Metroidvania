@@ -196,7 +196,8 @@ public class SpecialAbilities : MonoBehaviour
             sizeSnowExpansion += Time.deltaTime * snowExpansionSpeed;
             snowCollider.size = new Vector2(sizeSnowExpansion, snowCollider.size.y);
 
-            enemiesHealth = snowCollider.gameObject.GetComponent<Attack_Detectors>().SendEnemyCollision(); // Take the enemies life
+            (List<IHittableObject> enemyList, List<GameObject> enemyObjects) = snowCollider.gameObject.GetComponent<Attack_Detectors>().SendEnemyCollision(); // Take the enemies life
+            enemiesHealth = new List<IHittableObject>(enemyList);
 
             if (snowCollider.size.x >= snowExpansionMaxSize) // If collider arrives to max size
             {

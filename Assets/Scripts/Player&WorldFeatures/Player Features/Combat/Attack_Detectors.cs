@@ -3,28 +3,31 @@ using UnityEngine;
 
 public class Attack_Detectors : MonoBehaviour
 {
-    List<IHittableObject> enemyObj;
+    List<IHittableObject> enemyHit;
+    List<GameObject> enemyObj;
 
     private void Start()
     {
-        enemyObj = new List<IHittableObject>();
+        enemyObj = new List<GameObject>();
+        enemyHit = new List<IHittableObject>();
     }
 
-    public List<IHittableObject> SendEnemyCollision()
+    public (List<IHittableObject>, List<GameObject>) SendEnemyCollision()
     {
-        if (enemyObj != null)
+        if (enemyObj != null && enemyHit != null)
         {
-            return enemyObj;
+            return (enemyHit, enemyObj);
         }
 
-        return null;
+        return (null, null);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 11)
         {
-            enemyObj.Add(collision.GetComponent<IHittableObject>());
+            enemyHit.Add(collision.GetComponent<IHittableObject>());
+            enemyObj.Add(collision.gameObject);
         }
     }
 
@@ -32,7 +35,8 @@ public class Attack_Detectors : MonoBehaviour
     {
         if (collision.gameObject.layer == 11)
         {
-            enemyObj.Remove(collision.GetComponent<IHittableObject>());
+            enemyHit.Remove(collision.GetComponent<IHittableObject>());
+            enemyObj.Remove(collision.gameObject);
         }
     }
 }

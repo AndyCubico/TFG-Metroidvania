@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 6171648305667439200}
   - component: {fileID: 2722697336460229663}
   - component: {fileID: 4005171502135306026}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SnowAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 2154709730677108430}
   - component: {fileID: 436239141109916112}
   - component: {fileID: 2859987128309943621}
-  m_Layer: 6
+  m_Layer: 13
   m_Name: HeavyAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 1761301048765282537}
   - component: {fileID: 6496394796676793572}
   - component: {fileID: 7156256825443874585}
-  m_Layer: 6
+  m_Layer: 13
   m_Name: Block_Parry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,6 +551,7 @@ MonoBehaviour:
   blockTime: 0.5
   maxParryTime: 0.2
   invincibilityTime: 0.4
+  isInvencible: 0
   damageBlockPercentage: 40
   hittedForce: 10
   BlockAndParryAction: {fileID: 5344755155262996938, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -558,6 +559,7 @@ MonoBehaviour:
   rb: {fileID: 4203002661369434470}
   characterPlayerController: {fileID: 1660634256912515273}
   heavyAttack: {fileID: 436239141109916112}
+  startRecovering: 0
   isRecovering: 0
   parryRecovery: 0.2
   blockRecovery: 0.5
@@ -652,7 +654,7 @@ GameObject:
   - component: {fileID: 2347390850338367828}
   - component: {fileID: 8271823833749701405}
   - component: {fileID: 6607145365086566559}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: DownAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

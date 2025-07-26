@@ -9,6 +9,7 @@ public class PassScene : MonoBehaviour
 
     public bool m_preLoadScene;
     public bool m_loadScene;
+    public int spawnNumber;
 
     private bool m_onlyOnce = false;
 
@@ -79,6 +80,6 @@ public class PassScene : MonoBehaviour
         yield return new WaitForSeconds(0.03f);
 
         LoadSceneManager.eLoadScene?.Invoke(m_sceneToLoad);
-        GameManagerEvents.eStartPlayerPosition?.Invoke();
+        GameManagerEvents.eStartPlayerPosition?.Invoke(spawnNumber);
     }
 }

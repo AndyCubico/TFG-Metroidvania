@@ -3,13 +3,15 @@ using System.Collections;
 using UnityEngine;
 public static class GameManagerEvents
 {
-    public static Action eStartPlayerPosition;
+    public static Action<int> eStartPlayerPosition;
 }
 
 public class GameManager : MonoBehaviour
 {
     private GameObject m_player;
-    GameObject startPlayerPositionObj = null;
+    private GameObject m_startPlayerPositionObj = null;
+
+    [HideInInspector] public int spawnNumber = 1;
 
     private void OnEnable()
     {
@@ -24,7 +26,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         m_player = GameObject.Find("Player").gameObject;
-        StartCoroutine(StartPlayerPosition());
+        StartCoroutine(StartPlayerPosition(spawnNumber));
     }
 
     void Update()
@@ -32,26 +34,39 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void StartPlayerPositionRequest()
+    private void StartPlayerPositionRequest(int spawnNumber)
     {
-        StartCoroutine(StartPlayerPosition());
+        StartCoroutine(StartPlayerPosition(spawnNumber));
     }
 
-    public IEnumerator StartPlayerPosition()
+    public IEnumerator StartPlayerPosition(int spawnNumber)
     {
-        if(startPlayerPositionObj != null)
+        float timeToDiscard = 0f;
+
+        if(m_startPlayerPositionObj != null)
         {
-            Destroy(startPlayerPositionObj);
-            startPlayerPositionObj = null;
+            Destroy(m_startPlayerPositionObj);
+            m_startPlayerPositionObj = null;
         }
 
-        while (startPlayerPositionObj == null)
+        while (m_startPlayerPositionObj == null)
         {
-            startPlayerPositionObj = GameObject.Find("PlayerStart").gameObject;
+            timeToDiscard += Time.deltaTime;
+
+            m_startPlayerPositionObj = GameObject.Find("PlayerStart_" + spawnNumber)?.gameObject;
+
+            if(timeToDiscard >= 3f)
+            {
+                Debug.LogWarning("Time Out to search new spawn number, is posible that the number introduced or the pivot name is incorrect, pivot number is: " + spawnNumber);
+                break;
+            }
 
             yield return null;
         }
 
-        m_player.gameObject.transform.position = startPlayerPositionObj.transform.position;
+        if(m_startPlayerPositionObj != null)
+        {
+            m_player.gameObject.transform.position = m_startPlayerPositionObj.transform.position;
+        }
     }
 }

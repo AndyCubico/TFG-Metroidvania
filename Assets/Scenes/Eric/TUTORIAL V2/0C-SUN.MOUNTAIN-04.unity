@@ -3509,7 +3509,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ObjectToShow: {fileID: 1387194739}
-  isHide: 1
+  m_IsHide: 1
+  m_IsShowOnce: 0
   collisionTag:
   - Player
   timeForShow: 0

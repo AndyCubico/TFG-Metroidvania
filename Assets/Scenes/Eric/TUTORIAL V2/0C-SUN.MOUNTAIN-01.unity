@@ -247,7 +247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345647424978807250, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
       propertyPath: m_Size.y
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5935384462131805716, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -903,8 +903,16 @@ PrefabInstance:
       value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: isHide
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
       propertyPath: timeForShow
-      value: 1.3
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: m_IsShowOnce
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

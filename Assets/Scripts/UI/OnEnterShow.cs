@@ -5,7 +5,9 @@ using UnityEngine;
 public class OnEnterShow : MonoBehaviour
 {
     [SerializeField] GameObject m_ObjectToShow;
-    [SerializeField] bool isHide;
+    [SerializeField] bool m_IsHide;
+    [SerializeField] bool m_IsShowOnce;
+    bool m_Show = true; // External condition to permanently hide the object if false
     [TagDropdown] public string[] collisionTag = new string[] { };
 
     public float timeForShow = 0.0f; // Time the gameObject must stay inside to make hidden object visible.
@@ -13,7 +15,7 @@ public class OnEnterShow : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collisionTag.Contains(collision.gameObject.tag) && triggeringObject == null || triggeringObject == collision.gameObject)
+        if (m_Show && collisionTag.Contains(collision.gameObject.tag) && triggeringObject == null || triggeringObject == collision.gameObject)
         {
             triggeringObject = collision.gameObject;
             if (timeForShow > 0)
@@ -24,18 +26,18 @@ public class OnEnterShow : MonoBehaviour
             }
             else
             {
-                m_ObjectToShow.SetActive(!isHide);
+                m_ObjectToShow.SetActive(!m_IsHide);
             }
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (triggeringObject == collision.gameObject) // Only when the og go moves out, it stops showwing
         {
-            m_ObjectToShow.SetActive(isHide);
+            m_ObjectToShow.SetActive(m_IsHide);
             triggeringObject = null;
+            if(m_IsShowOnce) { m_Show = false; }
         }
     }
 }

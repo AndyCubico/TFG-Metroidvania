@@ -14,8 +14,8 @@ public class Template_Save_Load : MonoBehaviour
         if (saveLoad != null)
         {
             //Save&Load subsciptions
-            saveLoad.SaveAction += Save;
-            saveLoad.LoadAction += Load;
+            SaveAndLoadEvents.eSaveAction += Save;
+            SaveAndLoadEvents.eLoadAction += Load;
         }
     }
 
@@ -24,8 +24,8 @@ public class Template_Save_Load : MonoBehaviour
         if (saveLoad != null)
         {
             //Save&Load desubsciptions
-            saveLoad.SaveAction -= Save;
-            saveLoad.LoadAction -= Load;
+            SaveAndLoadEvents.eSaveAction -= Save;
+            SaveAndLoadEvents.eLoadAction -= Load;
         }
     }
 

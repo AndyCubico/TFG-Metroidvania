@@ -146,7 +146,8 @@ public class PlayerHealth : MonoBehaviour
             healthBar.fillAmount = playerHealth / maxPlayerHealth;
             healthText.text = playerHealth.ToString();
 
-            CheckpointEvents.FastCheckpointEvent?.Invoke();
+            FadeToBlackEvents.eFadeToBlackAction?.Invoke(0.02f, 0.2f);
+            SaveAndLoadEvents.eLoadAction?.Invoke();
         }
     }
 

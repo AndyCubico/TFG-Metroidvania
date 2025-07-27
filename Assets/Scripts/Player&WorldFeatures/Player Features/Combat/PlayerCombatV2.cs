@@ -119,19 +119,12 @@ public class PlayerCombatV2 : MonoBehaviour
     bool isDamaging;
     [HideInInspector]public bool isAttacking;
     [HideInInspector]public bool attackWithComboHasEnded;
+    [HideInInspector] public bool isInCheckpoint;
 
     //Values
     float gravityScale;
 
     AttackFlagType attackFlagType = AttackFlagType.None;
-
-    private void OnEnable()
-    {
-    }
-
-    private void OnDisable()
-    {
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -145,6 +138,7 @@ public class PlayerCombatV2 : MonoBehaviour
         isDamaging = false;
         isAttacking = false;
         attackWithComboHasEnded = false;
+        isInCheckpoint = false;
 
         gravityScale = rb.gravityScale;
     }
@@ -167,7 +161,7 @@ public class PlayerCombatV2 : MonoBehaviour
             m_finishComboTimer = 0;
         }
 
-        if (BasicAttackAction.action.WasPressedThisFrame())
+        if (BasicAttackAction.action.WasPressedThisFrame() && !isInCheckpoint)
         {
             basicAttackDown = true;
             m_inputBufferCounter = inputBufferTime;

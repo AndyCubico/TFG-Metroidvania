@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 
 public class SpecialAbilities : MonoBehaviour
 {
+    [Header("Unlocks")]
+    [Space(5)]
+    public bool snowAbilityUnlocked;
+
     [Header("Character Player Controller")]
     [Space(5)]
     public CharacterPlayerController characterPlayerController;
@@ -96,7 +100,7 @@ public class SpecialAbilities : MonoBehaviour
 
     public void SnowHabilityEvent(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && snowAbilityUnlocked) //Has Snow ability unlocked
         {
             snowHability = true;
         }

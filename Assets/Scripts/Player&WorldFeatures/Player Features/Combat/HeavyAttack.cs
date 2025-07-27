@@ -59,7 +59,7 @@ public class HeavyAttack : MonoBehaviour
     //Charges list
     List<Image> chargesUI = new List<Image>();
 
-    int heavyCharges;
+    [HideInInspector] public int heavyCharges;
 
     AttackFlagType attackFlagType = AttackFlagType.None;
 
@@ -221,7 +221,7 @@ public class HeavyAttack : MonoBehaviour
         }
     }
 
-    void UpdateCharges()
+    public void UpdateCharges()
     {
         for(int i = 0; i < chargesUI.Count; i++)
         {

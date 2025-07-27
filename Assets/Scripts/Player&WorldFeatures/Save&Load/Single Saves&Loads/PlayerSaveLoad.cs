@@ -1,6 +1,7 @@
 using UnityEngine;
 using PlayerController;
 using UnityEngine.Splines.ExtrusionShapes;
+using Unity.VisualScripting;
 
 public class PlayerSaveLoad : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class PlayerSaveLoad : MonoBehaviour
         if (saveLoad != null)
         {
             //Save&Load
-            saveLoad.SaveAction += Save;
-            saveLoad.LoadAction += Load;
+            SaveAndLoadEvents.eSaveAction += Save;
+            SaveAndLoadEvents.eLoadAction += Load;
         }
     }
 
@@ -24,8 +25,8 @@ public class PlayerSaveLoad : MonoBehaviour
         if (saveLoad != null)
         {
             //Save&Load
-            saveLoad.SaveAction -= Save;
-            saveLoad.LoadAction -= Load;
+            SaveAndLoadEvents.eSaveAction -= Save;
+            SaveAndLoadEvents.eLoadAction -= Load;
         }
     }
 
@@ -41,7 +42,9 @@ public class PlayerSaveLoad : MonoBehaviour
         {
             player_SL saveObject = new player_SL
             {
-                playerPosition = this.gameObject.transform.position
+                playerPosition = this.gameObject.transform.position,
+                charges = GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().heavyCharges,
+                snowAbilityUnlock = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>().snowAbilityUnlocked
             };
 
             string json = JsonUtility.ToJson(saveObject);
@@ -57,6 +60,14 @@ public class PlayerSaveLoad : MonoBehaviour
             player_SL saveObject = JsonUtility.FromJson<player_SL>(saveLoad.Load("PlayerSave"));
 
             this.transform.position = saveObject.playerPosition;
+
+            GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().heavyCharges = saveObject.charges;
+            GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().UpdateCharges();
+
+            GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>().snowAbilityUnlocked = saveObject.snowAbilityUnlock;
+
+            this.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            this.gameObject.GetComponent<CharacterPlayerController>().enabled = true;
         }
     }
 }

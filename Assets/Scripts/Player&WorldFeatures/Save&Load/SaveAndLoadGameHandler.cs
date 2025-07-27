@@ -5,17 +5,21 @@ using UnityEngine;
 public class player_SL //SL -> Save&Load
 {
     public Vector3 playerPosition;
+    public int charges;
+    public bool snowAbilityUnlock;
+}
+public static class SaveAndLoadEvents
+{
+    //The events to subscribe
+    public static Action eSaveAction;
+    public static Action eLoadAction;
 }
 
-public class SaveAndLoadGameHandler : MonoBehaviour
+    public class SaveAndLoadGameHandler : MonoBehaviour
 {
     //Here the different bools for which data will be stored
     [Header("Selected Savings")]
     public bool savePlayer;
-
-    //The events to subscribe
-    public event Action SaveAction;
-    public event Action LoadAction;
 
     void Start()
     {
@@ -28,12 +32,12 @@ public class SaveAndLoadGameHandler : MonoBehaviour
         //Input keys to save or load (debuging purposes)
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl))
         {
-            SaveAction?.Invoke();
+            SaveAndLoadEvents.eSaveAction?.Invoke();
         }
 
         if (Input.GetKey(KeyCode.L) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl))
         {
-            LoadAction?.Invoke();
+            SaveAndLoadEvents.eLoadAction?.Invoke();
         }
     }
 

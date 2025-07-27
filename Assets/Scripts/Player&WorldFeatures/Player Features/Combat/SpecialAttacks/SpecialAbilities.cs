@@ -5,6 +5,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum SpecialAbility
+{
+    SNOW,
+    SUN,
+    NONE
+}
+
 public class SpecialAbilities : MonoBehaviour
 {
     [Header("Unlocks")]

@@ -24,7 +24,7 @@ public class FallPit : MonoBehaviour
                 StartCoroutine(TpFastCheckpoint());
             }
 
-            HealthEvents.TakingDamage(damage);
+            HealthEvents.eTakingDamage(damage);
         }
     }
 

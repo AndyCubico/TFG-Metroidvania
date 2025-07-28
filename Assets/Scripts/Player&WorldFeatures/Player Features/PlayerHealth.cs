@@ -1,9 +1,17 @@
 using PlayerController;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
+public static class HealthEvents
+{
+    public static Action<float> eTakingDamage;
+    public static Action eRestorePotions;
+    public static Action eRestoreHealth;
+}
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -51,12 +59,16 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        HealthEvents.TakingDamage += ReceiveAnAttack;
+        HealthEvents.eTakingDamage += ReceiveAnAttack;
+        HealthEvents.eRestorePotions += RestoreHealthPotions;
+        HealthEvents.eRestoreHealth += RestoreHealth;
     }
 
     private void OnDisable()
     {
-        HealthEvents.TakingDamage -= ReceiveAnAttack;
+        HealthEvents.eTakingDamage -= ReceiveAnAttack;
+        HealthEvents.eRestorePotions -= RestoreHealthPotions;
+        HealthEvents.eRestoreHealth -= RestoreHealth;
     }
 
     void Start()
@@ -183,10 +195,20 @@ public class PlayerHealth : MonoBehaviour
     public void RestoreHealthPotions()
     {
         healPotions = maxHealPotions;
+        healPotionText.text = healPotions.ToString();
     }
 
     public void AddPotions(int potions)
     {
         healPotions += potions;
+        healPotionText.text = healPotions.ToString();
+    }
+
+    public void RestoreHealth()
+    {
+        playerHealth = 100;
+
+        healthBar.fillAmount = playerHealth / maxPlayerHealth;
+        healthText.text = playerHealth.ToString();
     }
 }

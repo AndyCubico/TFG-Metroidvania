@@ -4,11 +4,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public static class HealthEvents
-{
-    public static Action<float> TakingDamage;
-}
-
 public class PlayerBlockAndParry : MonoBehaviour
 {
     [Header("Times")]
@@ -65,6 +60,9 @@ public class PlayerBlockAndParry : MonoBehaviour
     // Heavy Attack
     public HeavyAttack heavyAttack;
 
+    // Player Checkpoint
+    public bool isInCheckpoint;
+
     // Recovery
     [HideInInspector] public bool startRecovering;
     [HideInInspector] public bool isRecovering;
@@ -93,7 +91,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             if (blockCooldownCounter <= 0f) // Timer to be able to block again
             {
-                if (context.performed && !isRecovering && !startRecovering && !enemyIsAttacking)
+                if (context.performed && !isRecovering && !startRecovering && !enemyIsAttacking && !isInCheckpoint)
                 {
                     isBlocking = true;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -115,6 +113,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         canAttackBeParried = false;
         startRecovering = false;
         isRecovering = false;
+        isInCheckpoint = false;
         parryCounter = 0f;
         blockCounter = 0f;
         m_timeFromBlock = 0f;
@@ -258,7 +257,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         // Damage player
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
-        HealthEvents.TakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
+        HealthEvents.eTakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
         Debug.Log(damageNoBlock);
 
         ActiveInvincibility(); // Active the invincibility

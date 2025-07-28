@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f66968a040ad2d449ccdbdbb3b5e4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snowAbilityUnlocked: 0
   characterPlayerController: {fileID: 1660634256912515273}
   rb: {fileID: 4203002661369434470}
   snowPrefab: {fileID: 1496845641106681066, guid: 36ba0c3ec2cae6e4e8a37bbec07c8eae, type: 3}
@@ -443,6 +444,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   isDamaging: 0
+  heavyCharges: 0
 --- !u!114 &2859987128309943621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +561,7 @@ MonoBehaviour:
   rb: {fileID: 4203002661369434470}
   characterPlayerController: {fileID: 1660634256912515273}
   heavyAttack: {fileID: 436239141109916112}
+  isInCheckpoint: 0
   startRecovering: 0
   isRecovering: 0
   parryRecovery: 0.2
@@ -2326,6 +2329,7 @@ MonoBehaviour:
   rb: {fileID: 4203002661369434470}
   isAttacking: 0
   attackWithComboHasEnded: 0
+  isInCheckpoint: 0
 --- !u!1 &6302716411851139419
 GameObject:
   m_ObjectHideFlags: 0

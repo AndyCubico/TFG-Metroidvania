@@ -83,14 +83,14 @@ public class SpecialAbilities : MonoBehaviour
     {
         SpecialHabilitiesTrigger.action.started += SpecialHabilitiesEvent;
         SnowHability.action.started += SnowHabilityEvent;
-        HealthEvents.TakingDamage += ReceiveAnAttack;
+        HealthEvents.eTakingDamage += ReceiveAnAttack;
     }
 
     private void OnDisable()
     {
         SpecialHabilitiesTrigger.action.started -= SpecialHabilitiesEvent;
         SnowHability.action.started -= SnowHabilityEvent;
-        HealthEvents.TakingDamage -= ReceiveAnAttack;
+        HealthEvents.eTakingDamage -= ReceiveAnAttack;
     }
 
     public void SpecialHabilitiesEvent(InputAction.CallbackContext context)

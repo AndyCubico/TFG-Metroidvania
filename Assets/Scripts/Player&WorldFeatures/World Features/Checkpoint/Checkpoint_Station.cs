@@ -6,23 +6,23 @@ public class Checkpoint_Station : MonoBehaviour
     private GameObject m_PressEObj;
 
     [Header("Input Actions")]
+    [Space(5)]
     public InputActionReference InteractionKeyAction;
     bool InteractionInput;
+
+    bool m_IsInside;
 
     void Start()
     {
         m_PressEObj = this.gameObject.transform.GetChild(0).gameObject;
+        m_IsInside = false;
     }
 
     void Update()
     {
-        if (InteractionKeyAction.action.WasPressedThisFrame())
+        if (InteractionKeyAction.action.WasPressedThisFrame() && m_IsInside)
         {
             InteractionInput = true;
-        }
-        else
-        {
-            InteractionInput = false;
         }
     }
 
@@ -31,6 +31,8 @@ public class Checkpoint_Station : MonoBehaviour
     {
         if (collision.CompareTag("Player") && collision.gameObject.layer != 12)
         {
+            m_IsInside = true;
+
             if (m_PressEObj != null)
             {
                 if (!m_PressEObj.active)
@@ -44,14 +46,19 @@ public class Checkpoint_Station : MonoBehaviour
             }
 
             PlayerCombatV2 playerCombat = collision.transform.FindChild("Combat").GetComponent<PlayerCombatV2>();
+            PlayerBlockAndParry playerBlockParry = collision.transform.FindChild("Combat").FindChild("Block_Parry").GetComponent<PlayerBlockAndParry>();
 
             if (playerCombat != null)
             {
                 playerCombat.isInCheckpoint = true;
+                playerBlockParry.isInCheckpoint = true;
 
-                if(InteractionInput)
+                if (InteractionInput)
                 {
+                    HealthEvents.eRestoreHealth?.Invoke();
+                    HealthEvents.eRestorePotions?.Invoke();
                     SaveAndLoadEvents.eSaveAction?.Invoke();
+                    InteractionInput = false;
                     Debug.Log("Saved!");
                 }
             }
@@ -63,6 +70,8 @@ public class Checkpoint_Station : MonoBehaviour
     {
         if (collision.CompareTag("Player") && collision.gameObject.layer != 12)
         {
+            m_IsInside = false;
+
             if (m_PressEObj != null)
             {
                 if (m_PressEObj.active)
@@ -76,10 +85,12 @@ public class Checkpoint_Station : MonoBehaviour
             }
 
             PlayerCombatV2 playerCombat = collision.transform.FindChild("Combat").GetComponent<PlayerCombatV2>();
+            PlayerBlockAndParry playerBlockParry = collision.transform.FindChild("Combat").FindChild("Block_Parry").GetComponent<PlayerBlockAndParry>();
 
             if (playerCombat != null)
             {
                 playerCombat.isInCheckpoint = false;
+                playerBlockParry.isInCheckpoint = false;
             }
         }
     }

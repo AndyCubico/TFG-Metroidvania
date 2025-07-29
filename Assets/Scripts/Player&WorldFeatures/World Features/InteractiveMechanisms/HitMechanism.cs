@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Rendering;
-//using static UnityEditor.Experimental.GraphView.GraphView;
 
 [Serializable]
 public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
@@ -38,10 +36,10 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
                     m_CurrentWaitUntilCountdown = waitUntilCountdown;
                     m_IsCountDown = false;
                 }
-                if (currentCharges < m_MaxCharges)
+                if (targetCharges < m_MaxCharges)
                 {
-                    currentCharges++;
-                    currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+                    targetCharges++;
+                    targetCharges = Mathf.Min(m_MaxCharges, targetCharges);
                 }
             }
         }
@@ -49,10 +47,10 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
         {
             m_IsFrozen = true;
             this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-            if (currentCharges < m_MaxCharges)
+            if (targetCharges < m_MaxCharges)
             {
-                currentCharges+= 0.5f;
-                currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+                targetCharges += 0.5f;
+                targetCharges = Mathf.Min(m_MaxCharges, targetCharges);
             }
 
             // Hit with the snow spell resets the descend of the mechanism
@@ -66,10 +64,11 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
 
     private void Update()
     {
-        if(currentCharges > 0 && m_IsCountDown) 
+        if(targetCharges > 0 && m_IsCountDown) 
         {
-            currentCharges -= Time.deltaTime*(m_MaxCharges/m_timeFromFullToZero)*(m_IsFrozen?0.5f:1.0f);
-            currentCharges = Mathf.Max(0, currentCharges);
+            targetCharges -= Time.deltaTime*(m_MaxCharges/m_timeFromFullToZero)*(m_IsFrozen?0.5f:1.0f);
+            targetCharges = Mathf.Max(0, targetCharges);
+            currentCharges = Mathf.Min(targetCharges,currentCharges);
         }
         else if (m_HasTimeResetOnHit)
         {
@@ -78,6 +77,13 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
             {
                 m_IsCountDown = true;
             }
+        }
+
+        if(targetCharges>currentCharges)
+        {
+            currentCharges += Time.deltaTime * (Mathf.Max(1,targetCharges-currentCharges)/(waitUntilCountdown));
+            Debug.Log("Multiplier" + (Mathf.Max(1, targetCharges - currentCharges) / (waitUntilCountdown)));
+            currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
         }
     }
 

@@ -1,11 +1,11 @@
 //using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class MoveWithLerp : MonoBehaviour
+public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
 {
     public Transform initialPosition;
     public Transform finalPosition;
-    public MonoBehaviour lerpSource; // We cannot use an Interface as a parameter, so we must use a Mono
+    public MonoBehaviour lerpSource; // We cannot use an Interface as a parameter, so we must use a Monobehaviour
 
     private ILerpValueReturn m_LerpReturner;
 
@@ -16,12 +16,20 @@ public class MoveWithLerp : MonoBehaviour
     {
         m_LerpReturner = lerpSource as ILerpValueReturn;
         if (m_LerpReturner == null) {Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
-            
     }
     // Update is called once per frame
     void Update()
     {
         float t = m_LerpReturner.GetCurrentValue();
         transform.position = Vector3.Lerp(initialPosition.position, finalPosition.position, t);
+    }
+
+    public float ChangeLerpSource(MonoBehaviour newLerp)
+    {
+        float t = m_LerpReturner.GetCurrentValue();
+        lerpSource = newLerp;
+        m_LerpReturner = lerpSource as ILerpValueReturn;
+        if (m_LerpReturner == null) { Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
+        return t;
     }
 }

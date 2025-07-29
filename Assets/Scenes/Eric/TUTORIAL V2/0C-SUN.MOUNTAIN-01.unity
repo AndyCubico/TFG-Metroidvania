@@ -1057,9 +1057,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1058278092}
     m_Modifications:
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_PreLoadScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_SceneToLoad.m_SceneName
+      value: 0C-SUN.MOUNTAIN-02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
       value: 0C-SUN.MOUNTAIN-02 A
       objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_SceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 0159aaf50a6c07049ad92ab80cbe9e2c, type: 3}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneAsset
       value: 

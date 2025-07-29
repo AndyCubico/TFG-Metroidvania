@@ -5,27 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class PassScene : MonoBehaviour
 {
-    public string m_sceneToLoad;
+    public SceneField m_SceneToLoad;
 
-    public bool m_preLoadScene;
-    public bool m_loadScene;
+    public bool preLoadScene;
+    public bool loadScene;
     public int spawnNumber;
 
     private bool m_onlyOnce = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (SceneExists(m_sceneToLoad))
+        if (SceneExists(m_SceneToLoad.SceneName))
         {
             if (collision.CompareTag("Player") && !m_onlyOnce)
             {
                 m_onlyOnce = true;
 
-                if (m_preLoadScene)
+                if (preLoadScene)
                 {
-                    LoadSceneManager.ePreLoadScene?.Invoke(m_sceneToLoad);
+                    LoadSceneManager.ePreLoadScene?.Invoke(m_SceneToLoad.SceneName);
                 }
-                else if (m_loadScene)
+                else if (loadScene)
                 {
                     StartCoroutine(LoadNewScene());
                 }
@@ -33,27 +33,27 @@ public class PassScene : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("The scene to load called: " + m_sceneToLoad + " does not exist in the build settings");
+            Debug.LogWarning("The scene to load called: " + m_SceneToLoad.SceneName + " does not exist in the build settings");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (SceneExists(m_sceneToLoad))
+        if (SceneExists(m_SceneToLoad.SceneName))
         {
             if (collision.CompareTag("Player") && m_onlyOnce)
             {
                 m_onlyOnce = false;
 
-                if (m_preLoadScene)
+                if (preLoadScene)
                 {
-                    LoadSceneManager.eUnLoadScene?.Invoke(m_sceneToLoad);
+                    LoadSceneManager.eUnLoadScene?.Invoke(m_SceneToLoad.SceneName);
                 }
             }
         }
         else
         {
-            Debug.LogWarning("The scene to unload called: " + m_sceneToLoad + " does not exist in the build settings");
+            Debug.LogWarning("The scene to unload called: " + m_SceneToLoad.SceneName + " does not exist in the build settings");
         }
     }
 
@@ -79,7 +79,7 @@ public class PassScene : MonoBehaviour
 
         yield return new WaitForSeconds(0.03f);
 
-        LoadSceneManager.eLoadScene?.Invoke(m_sceneToLoad);
+        LoadSceneManager.eLoadScene?.Invoke(m_SceneToLoad.SceneName);
         GameManagerEvents.eStartPlayerPosition?.Invoke(spawnNumber);
     }
 }

@@ -21,8 +21,6 @@ public class OnEnterShow : MonoBehaviour
             if (timeForShow > 0)
             {
                 timeForShow -= Time.deltaTime;
-                print("WaitTime: " + timeForShow);
-
             }
             else
             {

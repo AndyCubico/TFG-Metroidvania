@@ -132,7 +132,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             m_timeFromBlock += Time.deltaTime;
 
-            if (parryCounter <= maxParryTime) // Check if the time for parry is still open and the attack can be parried
+            if (parryCounter <= maxParryTime && canAttackBeParried) // Check if the time for parry is still open and the attack can be parried
             {
                 parryCounter += Time.deltaTime;
             }
@@ -315,7 +315,7 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (invincibilityCounter <= 0f) //No new attacks entry if player is invencible
+        if (invincibilityCounter <= 0f && !isDashing) //No new attacks entry if player is invencible
         {
             if (collision.CompareTag("EnemyAttack")) // If the type of collision is "EnemyAttack"
             {

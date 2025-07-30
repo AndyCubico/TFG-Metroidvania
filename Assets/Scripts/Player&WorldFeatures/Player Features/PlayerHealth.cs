@@ -158,8 +158,11 @@ public class PlayerHealth : MonoBehaviour
             healthBar.fillAmount = playerHealth / maxPlayerHealth;
             healthText.text = playerHealth.ToString();
 
+            healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+
             FadeToBlackEvents.eFadeToBlackAction?.Invoke(0.02f, 0.2f);
             SaveAndLoadEvents.eLoadAction?.Invoke();
+            HealthEvents.eRestorePotions?.Invoke();
         }
     }
 

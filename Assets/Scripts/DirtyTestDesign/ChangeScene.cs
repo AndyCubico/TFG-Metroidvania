@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class ChangeScene : MonoBehaviour
 {
     [Header("Spawn To")]
-    public SceneField m_sceneToLoad;
+    public SceneField sceneToLoad;
+    public int pivotNumber;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,10 +25,20 @@ public class ChangeScene : MonoBehaviour
         Debug.Log("Collision Detected");
         if (collision.gameObject.CompareTag("Player"))
         {
-            if(m_sceneToLoad != null)
+            if(sceneToLoad != null)
             {
-                SceneManager.LoadScene(m_sceneToLoad.SceneName);
+                StartCoroutine(LoadNewScene());
             }
         }
+    }
+
+    private IEnumerator LoadNewScene()
+    {
+        FadeToBlackEvents.eFadeToBlackAction?.Invoke(0.001f, 1.5f);
+
+        yield return new WaitForSeconds(0.03f);
+
+        SceneManager.LoadScene(sceneToLoad.SceneName);
+        GameManagerEvents.eSearchStartPlayerPosition?.Invoke(pivotNumber, sceneToLoad.SceneName);
     }
 }

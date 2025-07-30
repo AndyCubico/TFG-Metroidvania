@@ -50020,8 +50020,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4443877251140874723, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
+      propertyPath: preLoadScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443877251140874723, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
       propertyPath: m_sceneToLoad
       value: 0C-SUN.MOUNTAIN-01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443877251140874723, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
+      propertyPath: m_SceneToLoad.m_SceneName
+      value: 0C-SUN.MOUNTAIN-01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443877251140874723, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
+      propertyPath: m_SceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: ef51749b41d599d40ba45d877fb79f86, type: 3}
+    - target: {fileID: 7211452511491105901, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
+      propertyPath: loadScene
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7211452511491105901, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
       propertyPath: spawnNumber
@@ -50031,6 +50047,14 @@ PrefabInstance:
       propertyPath: m_sceneToLoad
       value: 0C-SUN.MOUNTAIN-01
       objectReference: {fileID: 0}
+    - target: {fileID: 7211452511491105901, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
+      propertyPath: m_SceneToLoad.m_SceneName
+      value: 0C-SUN.MOUNTAIN-01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7211452511491105901, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
+      propertyPath: m_SceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: ef51749b41d599d40ba45d877fb79f86, type: 3}
     - target: {fileID: 8391598862835821250, guid: 4c7311ade914c364999602fbc902b61a, type: 3}
       propertyPath: m_Offset.x
       value: -7

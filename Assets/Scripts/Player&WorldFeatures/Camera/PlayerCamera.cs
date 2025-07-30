@@ -58,6 +58,9 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If player isn't assigned yet try to get it
+        m_Target = m_Target == null ? GameObject.FindGameObjectWithTag("Player") : m_Target;
+
         // After a certain amount of time, check if position has changed
         m_TimeForUpdate += Time.deltaTime;
 

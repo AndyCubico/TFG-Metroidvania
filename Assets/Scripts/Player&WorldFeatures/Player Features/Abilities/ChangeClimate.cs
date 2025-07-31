@@ -28,6 +28,8 @@ public class ChangeClimate : MonoBehaviour
     //Objects
     List<WaterBehaviour> waters;
 
+    SpecialAbilities specialAbilitiesScript;
+
     void Start()
     {
         waters = new List<WaterBehaviour>();
@@ -41,29 +43,34 @@ public class ChangeClimate : MonoBehaviour
                 waters.Add(waterContainer.transform.GetChild(i).GetComponent<WaterBehaviour>());
             }
         }
+
+        specialAbilitiesScript = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>();
     }
     
     void Update()
     {
-        //Snow Inputs
-        if (snowAction.action.WasPressedThisFrame())
+        if(specialAbilitiesScript.snowAbilityUnlocked) //If is unlocked the snow special attack
         {
-            if (climate == CLIMATES.SNOW)
+            //Snow Inputs
+            if (snowAction.action.WasPressedThisFrame())
             {
-                climate = CLIMATES.NEUTRAL;
+                if (climate == CLIMATES.SNOW)
+                {
+                    climate = CLIMATES.NEUTRAL;
+                }
+                else
+                {
+                    climate = CLIMATES.SNOW;
+                }
+
+                ChangeClimateTo(climate);
+
+                snowKey = true;
             }
             else
             {
-                climate = CLIMATES.SNOW;
+                snowKey = false;
             }
-
-            ChangeClimateTo(climate);
-
-            snowKey = true;
-        }
-        else
-        {
-            snowKey = false;
         }
     }
 

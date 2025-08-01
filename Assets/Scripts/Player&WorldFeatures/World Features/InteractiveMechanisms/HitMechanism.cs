@@ -13,9 +13,9 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
     [SerializeField] float m_MaxCharges;
 
     [Header("Countdown")]
-    [SerializeField] float m_timeFromFullToZero;
+    [SerializeField] float m_TimeFromFullToZero;
     [SerializeField] bool m_HasTimeResetOnHit;
-    [ShowIf("m_HasTimeResetOnHit", true)] public float waitUntilCountdown;
+    [ShowIf("m_HasTimeWaitOnCycle", true)] public float waitUntilCountdown;
     private float m_CurrentWaitUntilCountdown;
     private bool m_IsCountDown = true;
     private bool m_IsFrozen; // Frozen mechanism moves at half speed
@@ -66,7 +66,7 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
     {
         if(targetCharges > 0 && m_IsCountDown) 
         {
-            targetCharges -= Time.deltaTime*(m_MaxCharges/m_timeFromFullToZero)*(m_IsFrozen?0.5f:1.0f);
+            targetCharges -= Time.deltaTime*(m_MaxCharges/m_TimeFromFullToZero)*(m_IsFrozen?0.5f:1.0f);
             targetCharges = Mathf.Max(0, targetCharges);
             currentCharges = Mathf.Min(targetCharges,currentCharges);
         }

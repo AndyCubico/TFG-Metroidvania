@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public enum CLIMATES
@@ -30,6 +31,8 @@ public class ChangeClimate : MonoBehaviour
 
     SpecialAbilities specialAbilitiesScript;
 
+    UnityEvent<CLIMATES> ChangeWWeather;
+
     void Start()
     {
         waters = new List<WaterBehaviour>();
@@ -49,7 +52,7 @@ public class ChangeClimate : MonoBehaviour
     
     void Update()
     {
-        if(specialAbilitiesScript.snowAbilityUnlocked) //If is unlocked the snow special attack
+        if(specialAbilitiesScript.snowAbilityUnlocked) // If is unlocked the snow special attack
         {
             //Snow Inputs
             if (snowAction.action.WasPressedThisFrame())
@@ -76,6 +79,8 @@ public class ChangeClimate : MonoBehaviour
 
     public void ChangeClimateTo(CLIMATES newClima)
     {
+        ChangeWWeather.Invoke(newClima);
+
         switch (newClima)
         {
             case CLIMATES.NEUTRAL:

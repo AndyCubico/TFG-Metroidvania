@@ -9,7 +9,7 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
 
     [Header("Accumulated hit amount")]
     public float currentCharges;
-    public float targetCharges; // ERIC: TODO, sligth rework the system to make the currentCharges value move slowwly, not in big jumps.
+    public float targetCharges; // Makes the object move smothly no in big jumps
     [SerializeField] float m_MaxCharges;
 
     [Header("Countdown")]
@@ -43,6 +43,7 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
                 }
             }
         }
+
         if ((snowMask & flag) != 0)
         {
             m_IsFrozen = true;

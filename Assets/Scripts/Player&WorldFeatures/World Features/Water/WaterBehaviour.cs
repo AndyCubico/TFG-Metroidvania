@@ -1,20 +1,57 @@
 using PlayerController;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class WaterBehaviour : MonoBehaviour
 {
-    bool isFreezed = false;
+    bool m_IsFrozen = false;
     bool playerIsInsde = false;
     CharacterPlayerController playerController;
+
+    // Sun and Rain mechanics
+    public float waterChange = 0.0f;
+    Vector3 originalScale;
+    [SerializeField] GameObject m_SwimingCollider;
 
     private void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
+
+        originalScale = transform.localScale;
+    }
+
+    private void OnEnable()
+    {
+        ChangeClimate.ChangeWeather += UpdateWater;
+    }
+
+    private void OnDisable()
+    {
+        ChangeClimate.ChangeWeather -= UpdateWater;
+    }
+
+    public void UpdateWater(CLIMATES c) 
+    {
+        switch (c)
+        {
+            case CLIMATES.NEUTRAL:
+                break;
+            case CLIMATES.SUN:
+
+                UnFreezeWater();
+                ChangeWaterLevel(1/waterChange);
+
+                break;
+            case CLIMATES.SNOW:
+                break;
+            case CLIMATES.NONE:
+                break;
+        }
     }
 
     public void FreezeWater()
     {
-        isFreezed = true;
+        m_IsFrozen = true;
         playerController.isInWater = false;
 
         if (playerIsInsde && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
@@ -30,14 +67,22 @@ public class WaterBehaviour : MonoBehaviour
 
     public void UnFreezeWater()
     {
-        isFreezed = false;
+        m_IsFrozen = false;
         this.GetComponent<BoxCollider2D>().isTrigger = true;
         gameObject.layer = 0;
     }
 
+    public void ChangeWaterLevel(float value) 
+    {
+        Vector3 nScale = transform.localScale;
+        nScale.y = value;
+        gameObject.transform.localScale = nScale;
+        gameObject.transform.position -= new Vector3 (0, (originalScale.y-nScale.y), 0);
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !isFreezed && !playerController.isInWater && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
+        if (collision.CompareTag("Player") && !m_IsFrozen && !playerController.isInWater && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
         {
             playerController.isInWater = true;
             playerIsInsde = true;
@@ -46,7 +91,7 @@ public class WaterBehaviour : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !isFreezed)
+        if (collision.CompareTag("Player") && !m_IsFrozen)
         {
             playerController.isInWater = false;
             playerIsInsde = false;

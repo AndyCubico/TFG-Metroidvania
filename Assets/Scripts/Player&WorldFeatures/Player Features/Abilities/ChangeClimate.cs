@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class ChangeClimate : MonoBehaviour
 
     SpecialAbilities specialAbilitiesScript;
 
-    UnityEvent<CLIMATES> ChangeWWeather;
+    public static Action<CLIMATES> ChangeWeather;
 
     void Start()
     {
@@ -75,11 +76,17 @@ public class ChangeClimate : MonoBehaviour
                 snowKey = false;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha9) && climate != CLIMATES.SUN) // Testing
+        {
+            climate = CLIMATES.SUN;
+            ChangeClimateTo(climate);
+        }
     }
 
     public void ChangeClimateTo(CLIMATES newClima)
     {
-        ChangeWWeather.Invoke(newClima);
+        ChangeWeather.Invoke(newClima);
 
         switch (newClima)
         {

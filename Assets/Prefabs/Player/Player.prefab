@@ -920,7 +920,7 @@ MonoBehaviour:
   maxSpeedY: 28
   airSpeedReduction: 1.2
   icedFloorEffect: 1
-  waterSpeedReduction: 2
+  waterSpeedReduction: 1.5
   crouchSpeedReduction: 2
   multiplierAirCrouch: 1.2
   minJumpForce: 50
@@ -928,7 +928,7 @@ MonoBehaviour:
   jumpForceMultiplier: 14
   fallmultiplier: 4.2
   coyoteTime: 0.07
-  waterJumpReduction: 2
+  waterJumpReduction: 1.3
   dashForce: 500
   dashDuration: 0.25
   dashCooldown: 0.4
@@ -943,7 +943,7 @@ MonoBehaviour:
   impactHitMinDistance: 1
   impactHitLayerMask:
     serializedVersion: 2
-    m_Bits: 2432
+    m_Bits: 384
   playerSprite: {fileID: 0}
   move: {x: 0, y: 0}
   rb: {fileID: 0}

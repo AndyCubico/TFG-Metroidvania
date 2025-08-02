@@ -112,7 +112,10 @@ namespace PlayerController
 
         [Header("_________________________ COMBAT _________________________")]
         //Hit variables
-        public float impactHit;
+        public float impactHitForce;
+        public float impactHitMinDistance;
+        public LayerMask impactHitLayerMask;
+        private float m_ImpactHitMaxDistance;
 
         [HideInInspector]public SpriteRenderer playerSprite;
 
@@ -522,6 +525,7 @@ namespace PlayerController
 
             maxAirJumps = 0;
             actualEarringFloor = 0;
+            m_ImpactHitMaxDistance = impactHitMinDistance + 200f;
             //maxSpeedX = 8; //Set the max X speed
             //maxSpeedY = 5; //Set the max Y speed
 
@@ -928,16 +932,21 @@ namespace PlayerController
                     {
                         if (hasImpactHit)
                         {
-                            if (!isCrouch)
+                            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, impactHitLayerMask);
+
+                            if(hit.distance >= impactHitMinDistance)
                             {
-                                if (rb.linearVelocity.y < 0)
+                                if (!isCrouch)
                                 {
-                                    if(!combatScript.isAttacking)
+                                    if (rb.linearVelocity.y < 0)
                                     {
-                                        combatScript.isAttacking = true;
-                                        hasImpactHit = false;
-                                        isImpactHitting = true;
-                                        rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
+                                        if (!combatScript.isAttacking)
+                                        {
+                                            combatScript.isAttacking = true;
+                                            hasImpactHit = false;
+                                            isImpactHitting = true;
+                                            rb.AddForce(new Vector2(0, -impactHitForce)); //Force to go down when you are in AIR
+                                        }
                                     }
                                 }
                             }
@@ -1196,7 +1205,7 @@ namespace PlayerController
                 //Check if is Slide and has ImpactHit
                 if (isImpactHitting && Mathf.Abs(newEarringFloor) > minAngleSlide)
                 {
-                    rb.AddForce(new Vector2(0, -impactHit / 2));
+                    rb.AddForce(new Vector2(0, -impactHitForce / 2));
                 }
                 else if (Mathf.Abs(newEarringFloor) > minAngleSlide)
                 {

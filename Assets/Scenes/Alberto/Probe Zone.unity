@@ -50087,8 +50087,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 2067609900}
     m_Modifications:
     - target: {fileID: 622373455006848179, guid: 52e5724155299404793b98e19e4adedb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.362696
+      objectReference: {fileID: 0}
+    - target: {fileID: 622373455006848179, guid: 52e5724155299404793b98e19e4adedb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.8957
+      value: 5.888
       objectReference: {fileID: 0}
     - target: {fileID: 622373455006848179, guid: 52e5724155299404793b98e19e4adedb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -50488,12 +50492,28 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: impactHitForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: slideMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: earingMask.m_Bits
       value: 384
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: impactHitDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: impactHitMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: impactHitLayerMask.m_Bits
+      value: 2432
       objectReference: {fileID: 0}
     - target: {fileID: 1854647790602834237, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: InitialModule.startLifetime.scalar

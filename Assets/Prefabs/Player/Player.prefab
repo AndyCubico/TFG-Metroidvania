@@ -939,7 +939,11 @@ MonoBehaviour:
   slidingForce: 50
   maxTimeInputBuffer: 0.1
   downControllerSensitivity: 0
-  impactHit: 1000
+  impactHitForce: 500
+  impactHitMinDistance: 1
+  impactHitLayerMask:
+    serializedVersion: 2
+    m_Bits: 2432
   playerSprite: {fileID: 0}
   move: {x: 0, y: 0}
   rb: {fileID: 0}

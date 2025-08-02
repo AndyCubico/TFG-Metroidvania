@@ -8153,8 +8153,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6765359660187935949, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+      propertyPath: isJumping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765359660187935949, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
       propertyPath: m_GroundLayer.m_Bits
-      value: 5760
+      value: 16512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

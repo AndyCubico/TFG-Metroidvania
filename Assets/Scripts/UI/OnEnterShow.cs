@@ -7,6 +7,7 @@ public class OnEnterShow : MonoBehaviour
     [SerializeField] GameObject m_ObjectToShow;
     [SerializeField] bool m_IsHide;
     [SerializeField] bool m_IsShowOnce;
+    [SerializeField] bool m_IsHideOnce;
     bool m_Show = true; // External condition to permanently hide the object if false
     [TagDropdown] public string[] collisionTag = new string[] { };
 
@@ -33,7 +34,10 @@ public class OnEnterShow : MonoBehaviour
     {
         if (triggeringObject == collision.gameObject) // Only when the og go moves out, it stops showwing
         {
-            m_ObjectToShow.SetActive(m_IsHide);
+            if (!m_IsHideOnce)
+            {
+                m_ObjectToShow.SetActive(m_IsHide);
+            }
             triggeringObject = null;
             if(m_IsShowOnce) { m_Show = false; }
         }

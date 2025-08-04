@@ -32,20 +32,23 @@ public class WaterBehaviour : MonoBehaviour
 
     public void UpdateWater(CLIMATES c) 
     {
-        switch (c)
+        if (ChangeClimate.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
         {
-            case CLIMATES.NEUTRAL:
-                break;
-            case CLIMATES.SUN:
+            switch (c)
+            {
+                case CLIMATES.NEUTRAL:
+                    break;
+                case CLIMATES.SUN:
 
-                UnFreezeWater();
-                ChangeWaterLevel(1/waterChange);
+                    UnFreezeWater();
+                    ChangeWaterLevel(1 / waterChange);
 
-                break;
-            case CLIMATES.SNOW:
-                break;
-            case CLIMATES.NONE:
-                break;
+                    break;
+                case CLIMATES.SNOW:
+                    break;
+                case CLIMATES.NONE:
+                    break;
+            }
         }
     }
 

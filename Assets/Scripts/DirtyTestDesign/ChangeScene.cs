@@ -12,6 +12,7 @@ public class ChangeScene : MonoBehaviour
 
     private float m_MinTimeToEnableCollision = 1f;
     private float m_timeToEnableCounter = 0f;
+    [SerializeField] bool m_IsExterior;
 
     private void Update()
     {
@@ -29,6 +30,7 @@ public class ChangeScene : MonoBehaviour
         {
             if(sceneToLoad != null && !onlyChargeOnce && m_timeToEnableCounter >= m_MinTimeToEnableCollision)
             {
+                ChangeClimate.Instance.SetExteriorState(m_IsExterior);
                 StartCoroutine(LoadNewScene());
                 onlyChargeOnce = true;
             }

@@ -1827,6 +1827,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_IsExterior
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: sceneToLoad.m_SceneName
       value: 0C-SUN.MOUNTAIN-05
       objectReference: {fileID: 0}
@@ -3475,6 +3479,7 @@ MonoBehaviour:
   m_ObjectToShow: {fileID: 1387194739}
   m_IsHide: 1
   m_IsShowOnce: 0
+  m_IsHideOnce: 0
   collisionTag:
   - Player
   timeForShow: 0

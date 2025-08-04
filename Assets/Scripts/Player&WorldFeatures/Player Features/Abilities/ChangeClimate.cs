@@ -1,9 +1,6 @@
-using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public enum CLIMATES
@@ -14,12 +11,18 @@ public enum CLIMATES
     NONE
 }
 
+
+
 public class ChangeClimate : MonoBehaviour
 {
+    public static ChangeClimate Instance { get; private set; } // Make this code a singelton
+
     [Header("Input Actions")]
     [Space(5)]
     public InputActionReference snowAction;
     [Space(10)]
+
+    [SerializeField] bool m_IsExterior;
 
     //Bool keys
     bool snowKey;
@@ -33,6 +36,18 @@ public class ChangeClimate : MonoBehaviour
     SpecialAbilities specialAbilitiesScript;
 
     public static Action<CLIMATES> ChangeWeather;
+
+    private void Awake()
+    {
+        // This makes sure that there is only one instance of the singlenton
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     void Start()
     {
@@ -116,5 +131,15 @@ public class ChangeClimate : MonoBehaviour
         {
             waters[i].UnFreezeWater();
         }
+    }
+
+    public bool GetExteriorState() 
+    {
+        return m_IsExterior;
+    }
+
+    public void  SetExteriorState(bool isExterior) 
+    {
+        m_IsExterior = true;
     }
 }

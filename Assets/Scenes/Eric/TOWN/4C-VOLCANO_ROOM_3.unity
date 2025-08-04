@@ -1102,7 +1102,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2566839140346201829, guid: 538c433029aa84f4696b1f337b9920d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 44.459362
+      value: 44.5
       objectReference: {fileID: 0}
     - target: {fileID: 2566839140346201829, guid: 538c433029aa84f4696b1f337b9920d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   currentCharges: 0
   targetCharges: 0
   m_MaxCharges: 3
-  m_timeFromFullToZero: 3
+  m_TimeFromFullToZero: 3.3
   m_HasTimeResetOnHit: 1
   waitUntilCountdown: 0.8
 --- !u!1 &697743736

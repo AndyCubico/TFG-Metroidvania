@@ -117,7 +117,7 @@ namespace PlayerController
         public LayerMask impactHitLayerMask;
         private float m_ImpactHitMaxDistance;
 
-        [HideInInspector]public SpriteRenderer playerSprite;
+        [HideInInspector] public SpriteRenderer playerSprite;
 
         //[Header("Movement Direction Input")]
 
@@ -934,7 +934,7 @@ namespace PlayerController
                         {
                             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, impactHitLayerMask);
 
-                            if(hit.distance >= impactHitMinDistance)
+                            if (hit.distance >= impactHitMinDistance)
                             {
                                 if (!isCrouch)
                                 {

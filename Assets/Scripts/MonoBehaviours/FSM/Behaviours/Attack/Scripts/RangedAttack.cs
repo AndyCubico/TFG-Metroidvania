@@ -65,7 +65,7 @@ public class RangedAttack : AttackSOBase
         if (distanceToPlayer <= m_DistanceLimitToPlayer)
         {
             // Only raycast if within the sight range
-            LayerMask visionMask = LayerMask.GetMask("Player", "Ground");
+            LayerMask visionMask = LayerMask.GetMask("Player", "Ground", "NormalFloor");
             RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, visionMask);
 
             Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);

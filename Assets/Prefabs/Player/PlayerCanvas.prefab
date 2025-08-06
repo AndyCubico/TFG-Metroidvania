@@ -339,6 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2207078310592174855}
+  - component: {fileID: 546328202866226440}
   m_Layer: 5
   m_Name: Weather
   m_TagString: Untagged
@@ -366,6 +367,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &546328202866226440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543356636728674874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eadbbe0fc5c4a648b01f13ea8c0757c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 1971440024010812641}
+  m_ExteriorOpacity: 1
+  m_InteriorOpacity: 0.3
+  m_WeatherIcons:
+  - {fileID: 8032864294026385052, guid: 5f2e2dc2126e9fa46aad04dd521993c2, type: 3}
+  - {fileID: 347038099703364064, guid: 24af8d779e99b5b428d0fdac485e1242, type: 3}
+  - {fileID: -74631122572612816, guid: 10c2f6c71ec192a45884a19309fc2d36, type: 3}
+  - {fileID: 0}
+  m_CurrentWeatherIcon: {fileID: 1773553844750117955}
 --- !u!1 &2795987280393513424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,6 +1073,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1578942459085850333}
+  - component: {fileID: 1971440024010812641}
   m_Layer: 5
   m_Name: Opacity
   m_TagString: Untagged
@@ -1078,6 +1101,18 @@ RectTransform:
   m_AnchoredPosition: {x: 841.5, y: 432.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1971440024010812641
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344654520009430403}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7720035080524603844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,18 +1138,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7720035080524603844}
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710707, w: 0.70710653}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3991964288915785572}
   m_Father: {fileID: 1578942459085850333}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -47.49, y: -59.4}
+  m_SizeDelta: {x: 370.5, y: 370.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1269605527050305398
 CanvasRenderer:
@@ -1324,8 +1359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7197107890594600082
 CanvasRenderer:
@@ -1348,14 +1383,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.93093467, b: 0.023584902, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 8032864294026385052, guid: 5f2e2dc2126e9fa46aad04dd521993c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

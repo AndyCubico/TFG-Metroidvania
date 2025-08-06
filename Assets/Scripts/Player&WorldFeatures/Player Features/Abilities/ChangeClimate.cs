@@ -36,6 +36,7 @@ public class ChangeClimate : MonoBehaviour
     SpecialAbilities specialAbilitiesScript;
 
     public static Action<CLIMATES> ChangeWeather;
+    public static Action NotifyExteriorChange;
 
     private void Awake()
     {
@@ -140,6 +141,6 @@ public class ChangeClimate : MonoBehaviour
 
     public void  SetExteriorState(bool isExterior) 
     {
-        m_IsExterior = true;
+        m_IsExterior = isExterior;
     }
 }

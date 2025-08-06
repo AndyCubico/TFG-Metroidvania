@@ -12,7 +12,7 @@ public class ChangeScene : MonoBehaviour
 
     private float m_MinTimeToEnableCollision = 1f;
     private float m_timeToEnableCounter = 0f;
-    [SerializeField] bool m_IsExterior;
+    [SerializeField] bool m_IsExterior; // For the weather system.
 
     private void Update()
     {
@@ -30,7 +30,12 @@ public class ChangeScene : MonoBehaviour
         {
             if(sceneToLoad != null && !onlyChargeOnce && m_timeToEnableCounter >= m_MinTimeToEnableCollision)
             {
-                ChangeClimate.Instance.SetExteriorState(m_IsExterior);
+                if(ChangeClimate.Instance.GetExteriorState() != m_IsExterior) // If  current exterior state is diferent to the next room, update value
+                {
+                    ChangeClimate.Instance.SetExteriorState(m_IsExterior);
+                    ChangeClimate.NotifyExteriorChange.Invoke();
+                }
+                
                 StartCoroutine(LoadNewScene());
                 onlyChargeOnce = true;
             }

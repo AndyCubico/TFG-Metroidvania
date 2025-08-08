@@ -15,6 +15,8 @@ public class ChaseMelee : ChaseSOBase
     private Vector3 m_LastTargetPos;
     private bool m_playerInSight = false;
 
+    [SerializeField] private LayerMask m_VisionMask;
+
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
@@ -55,8 +57,7 @@ public class ChaseMelee : ChaseSOBase
         if (distanceToPlayer <= m_DistanceLimitToPlayer)
         {
             // Only raycast if within the sight range
-            LayerMask visionMask = LayerMask.GetMask("Player", "Ground");
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, visionMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, m_VisionMask);
 
             Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
 

@@ -72,7 +72,8 @@ public class PlayerBlockAndParry : MonoBehaviour
     public Animator animator;
 
     // Enemy management
-    private Enemy m_CurrentEnemyHit;
+    private Enemy m_CurrentEnemyRef; // Reference to the Enemy Script that is attacking the player
+    private EnemyHit m_CurrentEnemyHitRef; // Reference to the EnemyHit Script that is attacking the player, different to the Enemy since this one is attached to whatever is hitting the player, sword, projectile...
 
     // Controls Action Input Delegates
     private void OnEnable()
@@ -195,8 +196,9 @@ public class PlayerBlockAndParry : MonoBehaviour
             {
                 isInvencible = false;
 
-                // TODO: See if it is better to have EnemyHit in main enemy go or not.
-                m_CurrentEnemyHit.GetComponentInChildren<EnemyHit>().hasHittedPlayer = false;
+                // Restart the hasHittedPlayer flag for the enemy hit reference
+                if (m_CurrentEnemyHitRef != null)
+                    m_CurrentEnemyHitRef.hasHittedPlayer = false;
             }
         }
     }
@@ -226,9 +228,9 @@ public class PlayerBlockAndParry : MonoBehaviour
         }
 
         // Manage enemy being parried
-        if (m_CurrentEnemyHit != null)
+        if (m_CurrentEnemyRef != null)
         {
-            m_CurrentEnemyHit.attackSOBaseInstance.OnParried(); // Notify enemy about parry
+            m_CurrentEnemyRef.attackSOBaseInstance.OnParried(); // Notify enemy about parry
         }
 
         StartCoroutine(Recovery(parryRecovery));
@@ -297,7 +299,8 @@ public class PlayerBlockAndParry : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         // Clear enemy reference
-        m_CurrentEnemyHit = null;
+        m_CurrentEnemyRef = null;
+        m_CurrentEnemyHitRef = null;
     }
 
     float GetAnimationLength(string clipName) // Function to know when an animation clip ends
@@ -356,7 +359,7 @@ public class PlayerBlockAndParry : MonoBehaviour
                         }
 
                         // Get enemy reference to manage the parry
-                        m_CurrentEnemyHit = enemyHit.enemy;
+                        m_CurrentEnemyRef = enemyHit.enemy;
                     }
                     else
                     {

@@ -14,6 +14,8 @@ public class RangedAttack : AttackSOBase
     private bool m_playerInSight = false;
     private float m_SightTimer = 0f;
 
+    [SerializeField] private LayerMask m_VisionMask;
+
     public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
     {
         base.DoAnimationTrigger(triggerType);
@@ -51,6 +53,7 @@ public class RangedAttack : AttackSOBase
                 Vector2 direction = (playerTransform.position - transform.position).normalized;
                 GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
+                projectile.GetComponent<EnemyHit>().enemy = enemy;
             }
         }
     }
@@ -65,8 +68,7 @@ public class RangedAttack : AttackSOBase
         if (distanceToPlayer <= m_DistanceLimitToPlayer)
         {
             // Only raycast if within the sight range
-            LayerMask visionMask = LayerMask.GetMask("Player", "Ground", "NormalFloor");
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, visionMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, m_VisionMask);
 
             Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
 

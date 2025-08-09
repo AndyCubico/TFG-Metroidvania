@@ -33,4 +33,9 @@ public class AttackSOBase : ScriptableObject
     public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }
     public virtual void ResetValues() { }
     public virtual void OnParried() { }
+
+    public virtual void PerformAttack()
+    {
+        Debug.LogWarning("PerformAttack not implemented in base Enemy.");
+    }
 }

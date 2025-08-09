@@ -118,6 +118,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     public virtual void PerformAttack()
     {
         Debug.LogWarning("PerformAttack not implemented in base Enemy.");
+        attackSOBaseInstance.PerformAttack();
     }
 
     #endregion

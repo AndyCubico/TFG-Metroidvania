@@ -50,10 +50,12 @@ public class RangedAttack : AttackSOBase
             {
                 m_attackTimer = 0;
 
-                Vector2 direction = (playerTransform.position - transform.position).normalized;
-                GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-                projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
-                projectile.GetComponent<EnemyHit>().enemy = enemy;
+                enemy.SetTransitionAnimation("Attack");
+
+                //Vector2 direction = (playerTransform.position - transform.position).normalized;
+                //GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+                //projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
+                //projectile.GetComponent<EnemyHit>().enemy = enemy;
             }
         }
     }
@@ -118,5 +120,14 @@ public class RangedAttack : AttackSOBase
     {
         base.ResetValues();
         m_attackTimer = 0;
+    }
+
+    // Method called in the animator to shoot the projectile.
+    public override void PerformAttack()
+    {
+        Vector2 direction = (playerTransform.position - transform.position).normalized;
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
+        projectile.GetComponent<EnemyHit>().enemy = enemy;
     }
 }

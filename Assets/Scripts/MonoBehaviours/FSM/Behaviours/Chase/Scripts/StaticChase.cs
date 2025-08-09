@@ -30,6 +30,7 @@ public class StaticChase : ChaseSOBase
         if (!enemy.isInSensor)
         {
             enemy.stateMachine.Transition(enemy.idleState);
+            enemy.SetTransitionAnimation("Idle");
             Debug.Log("CHASE --> IDLE");
         }
     }

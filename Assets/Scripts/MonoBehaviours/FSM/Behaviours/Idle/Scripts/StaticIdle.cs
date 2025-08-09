@@ -26,6 +26,13 @@ public class StaticIdle : IdleSOBase
     public override void DoUpdate()
     {
         base.DoUpdate();
+
+        // Fix in case the animator gets stuck with the shooting animation.
+        // Not adding transition from shooting to idle so that the animation is not suddenly cut.
+        if (!enemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            enemy.SetTransitionAnimation("Idle");
+        }
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

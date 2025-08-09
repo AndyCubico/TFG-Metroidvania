@@ -7623,11 +7623,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8031847816278675101, guid: 49dd54e49016a5348963ab1575bfc2c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.298988
+      value: 27.66
       objectReference: {fileID: 0}
     - target: {fileID: 8031847816278675101, guid: 49dd54e49016a5348963ab1575bfc2c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.524679
+      value: 10.51
       objectReference: {fileID: 0}
     - target: {fileID: 8031847816278675101, guid: 49dd54e49016a5348963ab1575bfc2c1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8213,6 +8213,10 @@ PrefabInstance:
     - target: {fileID: 7177520524332920643, guid: f9662e093c6646942aed67c625b6e801, type: 3}
       propertyPath: flagMask
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7177520524332920643, guid: f9662e093c6646942aed67c625b6e801, type: 3}
+      propertyPath: <m_MaxHealth>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
       propertyPath: m_Name

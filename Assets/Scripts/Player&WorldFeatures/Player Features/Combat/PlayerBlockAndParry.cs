@@ -301,6 +301,10 @@ public class PlayerBlockAndParry : MonoBehaviour
         // Clear enemy reference
         m_CurrentEnemyRef = null;
         m_CurrentEnemyHitRef = null;
+
+        // Destroy the bullet.
+        Destroy(enemyTest.gameObject);
+        enemyTest = null;
     }
 
     float GetAnimationLength(string clipName) // Function to know when an animation clip ends

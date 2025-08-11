@@ -86,24 +86,24 @@ public class RangedAttack : AttackSOBase
         }
 
         // If player is not in sight OR too far, start the countdown
-        if (!m_playerInSight || distanceToPlayer > m_DistanceLimitToPlayer)
-        {
-            m_SightTimer += Time.deltaTime;
+        //if (!m_playerInSight || distanceToPlayer > m_DistanceLimitToPlayer)
+        //{
+        //    m_SightTimer += Time.deltaTime;
 
-            m_attackTimer = 0;
+        //    m_attackTimer = 0;
 
-            if (m_SightTimer >= m_LostOfSightTime)
-            {
-                enemy.stateMachine.Transition(enemy.idleState);
-                enemy.SetTransitionAnimation("Idle");
-                Debug.Log("CHASE --> IDLE");
-            }
-        }
-        else
-        {
-            // Player is visible and close enough, reset timer
-            m_SightTimer = 0f;
-        }
+        //    if (m_SightTimer >= m_LostOfSightTime)
+        //    {
+        //        enemy.stateMachine.Transition(enemy.idleState);
+        //        enemy.SetTransitionAnimation("Idle");
+        //        Debug.Log("CHASE --> IDLE");
+        //    }
+        //}
+        //else
+        //{
+        //    // Player is visible and close enough, reset timer
+        //    m_SightTimer = 0f;
+        //}
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

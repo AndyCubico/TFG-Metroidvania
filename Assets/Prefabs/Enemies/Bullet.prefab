@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1685575873356285419}
   - component: {fileID: 3015375139265808289}
   - component: {fileID: 6249239476577561468}
+  - component: {fileID: -3499451713622575434}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: EnemyAttack
@@ -169,3 +170,19 @@ MonoBehaviour:
   canBeParried: 1
   hasHittedPlayer: 0
   enemy: {fileID: 0}
+--- !u!114 &-3499451713622575434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2880129877658565680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf61c48149b43043b8f5ad4aa86b22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 5
+  m_CollisionMask:
+    serializedVersion: 2
+    m_Bits: 16384

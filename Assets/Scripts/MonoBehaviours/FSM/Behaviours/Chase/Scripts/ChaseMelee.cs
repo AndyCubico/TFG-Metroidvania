@@ -12,7 +12,6 @@ public class ChaseMelee : ChaseSOBase
 
     private float m_SightTimer = 0f;
     private float m_PathTimer = 0f;
-    private Vector3 m_LastTargetPos;
     private bool m_playerInSight = false;
 
     [SerializeField] private LayerMask m_VisionMask;
@@ -28,6 +27,9 @@ public class ChaseMelee : ChaseSOBase
     public override void DoEnter()
     {
         base.DoEnter();
+
+        // In ChaseSOBase breaks ranged behaviour.
+        enemy.SetTransitionAnimation("Attack");
 
         m_SightTimer = 0f;
         m_PathTimer = 0f;

@@ -69,8 +69,8 @@ public class ChangeClimate : MonoBehaviour
     
     void Update()
     {
-        if(specialAbilitiesScript.snowAbilityUnlocked) // If is unlocked the snow special attack
-        {
+        //if(specialAbilitiesScript.snowAbilityUnlocked) // If is unlocked the snow special attack
+        //{
             //Snow Inputs
             if (snowAction.action.WasPressedThisFrame())
             {
@@ -91,7 +91,7 @@ public class ChangeClimate : MonoBehaviour
             {
                 snowKey = false;
             }
-        }
+        //}
 
         if (Input.GetKeyDown(KeyCode.Alpha9) && climate != CLIMATES.SUN) // Testing
         {

@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public enum CLIMATES
-{
-    NEUTRAL,
-    SUN,
-    SNOW,
-    NONE
-}
+    {
+        NEUTRAL,
+        SUN,
+        SNOW,
+        NONE
+    }
 
 public class WeatherManager : MonoBehaviour
 {

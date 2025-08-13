@@ -373,6 +373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4272582974853665966, guid: a4838b586a358d94bb23f306a88807a2, type: 3}
+      propertyPath: m_IsExterior
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7054668953606399055, guid: a4838b586a358d94bb23f306a88807a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -612,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2268887544687660659, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: waterChange
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4087698554715261297, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: m_Name
@@ -2546,9 +2550,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1744672776}
     m_Modifications:
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: pivotNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_IsExterior
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: sceneToLoad.m_SceneName
+      value: 0C-SUNDERED_MOUNTAIN-ROOM_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: sceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 5f38e752fc5e70646a20e01002eae6e6, type: 3}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
       value: 3C-MEADOW-ROOM_1
@@ -2563,7 +2579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 63.5
+      value: 64.5
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2797,6 +2813,10 @@ PrefabInstance:
     - target: {fileID: 2033821770776988096, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268887544687660659, guid: ec75800e506fe334598cea7a13259379, type: 3}
+      propertyPath: waterChange
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4087698554715261297, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: m_Name

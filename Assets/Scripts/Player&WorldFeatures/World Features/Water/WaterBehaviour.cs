@@ -9,7 +9,7 @@ public class WaterBehaviour : MonoBehaviour
     CharacterPlayerController playerController;
 
     // Sun and Rain mechanics
-    public float waterChange = 0.0f;
+    public float waterChange = 1.0f;
     Vector3 originalScale;
     [SerializeField] GameObject m_SwimingCollider;
 
@@ -37,6 +37,10 @@ public class WaterBehaviour : MonoBehaviour
             switch (c)
             {
                 case CLIMATES.NEUTRAL:
+
+                    UnFreezeWater();
+                    ResetWaterLevel();
+
                     break;
                 case CLIMATES.SUN:
 
@@ -45,6 +49,8 @@ public class WaterBehaviour : MonoBehaviour
 
                     break;
                 case CLIMATES.SNOW:
+
+                    FreezeWater();
                     break;
                 case CLIMATES.NONE:
                     break;
@@ -81,6 +87,13 @@ public class WaterBehaviour : MonoBehaviour
         nScale.y = value;
         gameObject.transform.localScale = nScale;
         gameObject.transform.position -= new Vector3 (0, (originalScale.y-nScale.y), 0);
+    }
+
+    public void ResetWaterLevel() 
+    {
+        Vector3 nScale = transform.localScale;
+        gameObject.transform.localScale = originalScale;
+        gameObject.transform.position -= new Vector3(0, (originalScale.y - nScale.y), 0);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

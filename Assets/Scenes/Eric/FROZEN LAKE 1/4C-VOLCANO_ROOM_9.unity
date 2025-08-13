@@ -193,10 +193,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
-      propertyPath: waterJumpReduction
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2198752808576420358, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -916,6 +912,10 @@ PrefabInstance:
     - target: {fileID: 2033821770776988096, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268887544687660659, guid: ec75800e506fe334598cea7a13259379, type: 3}
+      propertyPath: waterChange
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4087698554715261297, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: m_Name

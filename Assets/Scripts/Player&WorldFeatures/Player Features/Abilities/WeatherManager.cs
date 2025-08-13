@@ -122,35 +122,35 @@ public class WeatherManager : MonoBehaviour
     {
         ChangeWeather.Invoke(newClima);
 
-        switch (newClima)
-        {
-            case CLIMATES.NEUTRAL:
-                ChangeClimateToNeutral();
-                break;
-            case CLIMATES.SUN:
-                break;
-            case CLIMATES.SNOW:
-                ChangeClimateToSnow();
-                break;
-        }
+        //switch (newClima)
+        //{
+        //    case CLIMATES.NEUTRAL:
+        //        ChangeClimateToNeutral();
+        //        break;
+        //    case CLIMATES.SUN:
+        //        break;
+        //    case CLIMATES.SNOW:
+        //        ChangeClimateToSnow();
+        //        break;
+        //}
     }
 
-    void ChangeClimateToSnow()
-    {
-        for (int i = 0; i < waters.Count; i++)
-        {
-            waters[i].FreezeWater();
-        }
-    }
+    //void ChangeClimateToSnow()
+    //{
+    //    for (int i = 0; i < waters.Count; i++)
+    //    {
+    //        waters[i].FreezeWater();
+    //    }
+    //}
 
-    void ChangeClimateToNeutral()
-    {
-        //Snow
-        for (int i = 0; i < waters.Count; i++)
-        {
-            waters[i].UnFreezeWater();
-        }
-    }
+    //void ChangeClimateToNeutral()
+    //{
+    //    //Snow
+    //    for (int i = 0; i < waters.Count; i++)
+    //    {
+    //        waters[i].UnFreezeWater();
+    //    }
+    //}
 
     public bool GetExteriorState() 
     {

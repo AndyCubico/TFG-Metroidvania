@@ -33,12 +33,6 @@ public class WeatherManagerUI : MonoBehaviour
         WeatherManager.ChangeWeather -= ChangeWeatherIcon;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void InteriorExteriorChangeLogic() 
     {
         WeatherManager.Instance.GetExteriorState();

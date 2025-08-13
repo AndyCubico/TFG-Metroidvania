@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 // Manage the Biome type and sets the current weather from the probabilities table
-public class WeatherManager : MonoBehaviour
+public class WeatherManagerOld : MonoBehaviour
 {
     List<BiomeData> biomeDataList;
 

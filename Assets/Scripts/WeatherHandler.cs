@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeatherHandler : MonoBehaviour
 {
-    [SerializeField] private WeatherManager weather_manager;
+    [SerializeField] private WeatherManagerOld weather_manager;
     public Weather weather;
 
     [SerializeField] private ParticleSystem mainParticles;

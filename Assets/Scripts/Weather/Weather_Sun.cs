@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weather_Sun : Weather
 {
     [Header("Sun")]
-    [SerializeField] private WeatherManager weather_manager;
+    [SerializeField] private WeatherManagerOld weather_manager;
 
     override public void Awake()
     {

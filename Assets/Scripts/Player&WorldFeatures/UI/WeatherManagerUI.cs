@@ -18,19 +18,19 @@ public class WeatherManagerUI : MonoBehaviour
     void Start()
     {
         InteriorExteriorChangeLogic();
-        ChangeWeatherIcon(ChangeClimate.Instance.climate);
+        ChangeWeatherIcon(WeatherManager.Instance.climate);
     }
 
     private void OnEnable()
     {
-        ChangeClimate.NotifyExteriorChange += InteriorExteriorChangeLogic;
-        ChangeClimate.ChangeWeather += ChangeWeatherIcon;
+        WeatherManager.NotifyExteriorChange += InteriorExteriorChangeLogic;
+        WeatherManager.ChangeWeather += ChangeWeatherIcon;
     }
 
     private void OnDisable()
     {
-        ChangeClimate.NotifyExteriorChange -= InteriorExteriorChangeLogic;
-        ChangeClimate.ChangeWeather -= ChangeWeatherIcon;
+        WeatherManager.NotifyExteriorChange -= InteriorExteriorChangeLogic;
+        WeatherManager.ChangeWeather -= ChangeWeatherIcon;
     }
 
     // Update is called once per frame
@@ -41,8 +41,8 @@ public class WeatherManagerUI : MonoBehaviour
 
     void InteriorExteriorChangeLogic() 
     {
-        ChangeClimate.Instance.GetExteriorState();
-        ChangeOpacity((ChangeClimate.Instance.GetExteriorState()) ? m_ExteriorOpacity : m_InteriorOpacity);
+        WeatherManager.Instance.GetExteriorState();
+        ChangeOpacity((WeatherManager.Instance.GetExteriorState()) ? m_ExteriorOpacity : m_InteriorOpacity);
     }
 
     void ChangeWeatherIcon(CLIMATES W) 

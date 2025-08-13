@@ -22,17 +22,17 @@ public class WaterBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
-        ChangeClimate.ChangeWeather += UpdateWater;
+        WeatherManager.ChangeWeather += UpdateWater;
     }
 
     private void OnDisable()
     {
-        ChangeClimate.ChangeWeather -= UpdateWater;
+        WeatherManager.ChangeWeather -= UpdateWater;
     }
 
     public void UpdateWater(CLIMATES c) 
     {
-        if (ChangeClimate.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
+        if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
         {
             switch (c)
             {

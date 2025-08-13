@@ -30,10 +30,10 @@ public class ChangeScene : MonoBehaviour
         {
             if(sceneToLoad != null && !onlyChargeOnce && m_timeToEnableCounter >= m_MinTimeToEnableCollision)
             {
-                if(ChangeClimate.Instance.GetExteriorState() != m_IsExterior) // If  current exterior state is diferent to the next room, update value
+                if(WeatherManager.Instance.GetExteriorState() != m_IsExterior) // If  current exterior state is diferent to the next room, update value
                 {
-                    ChangeClimate.Instance.SetExteriorState(m_IsExterior);
-                    ChangeClimate.NotifyExteriorChange.Invoke();
+                    WeatherManager.Instance.SetExteriorState(m_IsExterior);
+                    WeatherManager.NotifyExteriorChange.Invoke();
                 }
                 
                 StartCoroutine(LoadNewScene());

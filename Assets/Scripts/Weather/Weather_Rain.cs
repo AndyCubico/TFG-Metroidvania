@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weather_Rain : Weather
 {
     [Header ("Rain")]
-    [SerializeField] private WeatherManager weather_manager;
+    [SerializeField] private WeatherManagerOld weather_manager;
 
     [SerializeField] private ParticleSystem mainParticles;
     [SerializeField] private AudioSource lightAudio;

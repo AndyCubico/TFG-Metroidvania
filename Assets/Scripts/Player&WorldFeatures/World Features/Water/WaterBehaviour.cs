@@ -84,7 +84,7 @@ public class WaterBehaviour : MonoBehaviour
         }
         else 
         {
-            gameObject.layer = 7; // Ground layer
+            gameObject.layer = 7; // Ground
         }
             
     }

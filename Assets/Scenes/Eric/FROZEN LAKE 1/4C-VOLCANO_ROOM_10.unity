@@ -251,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
       propertyPath: cameraBounds.width
-      value: 64
+      value: 32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -469,6 +469,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
+--- !u!1 &172881122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 172881123}
+  m_Layer: 0
+  m_Name: PlayerStart_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &172881123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172881122}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &349596050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1918,6 +1949,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2268887544687660659, guid: ec75800e506fe334598cea7a13259379, type: 3}
+      propertyPath: m_IsWaterfall
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301962345959079420, guid: ec75800e506fe334598cea7a13259379, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4087698554715261297, guid: ec75800e506fe334598cea7a13259379, type: 3}
       propertyPath: m_Name
       value: Waters (2)
@@ -2010,6 +2049,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2599680394472947525, guid: 4d75eeb50e3ea8646804ce3b427f9099, type: 3}
   m_PrefabInstance: {fileID: 1230756743}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1634251682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634251683}
+  m_Layer: 0
+  m_Name: PlayerStart_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1634251683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634251682}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 30, y: 6.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1665547342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7556377602890262050, guid: 9f97bc7a7d0dd8a4b92cf4aea7d2bd35, type: 3}
@@ -2139,11 +2209,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7556377602890262050, guid: 9f97bc7a7d0dd8a4b92cf4aea7d2bd35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.494564
+      value: 26.5
       objectReference: {fileID: 0}
     - target: {fileID: 7556377602890262050, guid: 9f97bc7a7d0dd8a4b92cf4aea7d2bd35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.5179205
+      value: 15.5
       objectReference: {fileID: 0}
     - target: {fileID: 7556377602890262050, guid: 9f97bc7a7d0dd8a4b92cf4aea7d2bd35, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2420,17 +2490,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1744672776}
     m_Modifications:
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: pivotNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_IsExterior
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: sceneToLoad.m_SceneName
-      value: 4C-VOLCANO_ROOM_9
+      value: 4C-VOLCANO_ROOM_11
       objectReference: {fileID: 0}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: sceneToLoad.m_SceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: 4c1e5669cc7146445b241b9515221878, type: 3}
+      objectReference: {fileID: 102900000, guid: a8107ee682064c54cac28e5b0852b5bd, type: 3}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
       value: 3C-MEADOW-ROOM_1
@@ -2731,6 +2805,8 @@ SceneRoots:
   - {fileID: 2081294763}
   - {fileID: 727877710}
   - {fileID: 1744672776}
+  - {fileID: 172881123}
+  - {fileID: 1634251683}
   - {fileID: 386296291}
   - {fileID: 70401978}
   - {fileID: 403316745}

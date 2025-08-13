@@ -251,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
       propertyPath: cameraBounds.width
-      value: 64
+      value: 32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1150,6 +1150,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7913157064699955596, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
   m_PrefabInstance: {fileID: 669498975}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &680776763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 680776764}
+  m_Layer: 0
+  m_Name: PlayerStart_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &680776764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680776763}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 7.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1744672776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &721196724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1265,6 +1296,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5501130725761357442, guid: db20de703960176438669a341e49e3c7, type: 3}
   m_PrefabInstance: {fileID: 721196724}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &727137174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 727137175}
+  m_Layer: 0
+  m_Name: PlayerStart_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &727137175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727137174}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 30, y: 3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1744672776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &727877709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1455,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9196149782626056653, guid: d34a4953d02e34149b7257014f7836d6, type: 3}
   m_PrefabInstance: {fileID: 753382692}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &778286842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778286843}
+  m_Layer: 0
+  m_Name: PlayerStart_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &778286843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778286842}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 30.5, y: 9.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1744672776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &863464496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1762,12 +1855,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: sceneToLoad.m_SceneName
-      value: 4C-VOLCANO_ROOM_9
+      value: 4C-VOLCANO_ROOM_11
       objectReference: {fileID: 0}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: sceneToLoad.m_SceneAsset
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 102900000, guid: a8107ee682064c54cac28e5b0852b5bd, type: 3}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
       value: 3C-MEADOW-ROOM_1
@@ -2172,7 +2265,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1961032761}
+  - {fileID: 2071176986}
   - {fileID: 1349476940}
+  - {fileID: 680776764}
+  - {fileID: 778286843}
+  - {fileID: 727137175}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1850504669
@@ -2267,9 +2364,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1744672776}
     m_Modifications:
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: pivotNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_IsExterior
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: sceneToLoad.m_SceneName
+      value: 4C-VOLCANO_ROOM_11 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: sceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: e8ab300ae76481248a914221a0da2937, type: 3}
     - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_sceneToLoad.m_SceneName
       value: 3C-MEADOW-ROOM_1
@@ -2280,7 +2389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalScale.y
-      value: 12
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2288,7 +2397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2509,6 +2618,100 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7913157064699955596, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
   m_PrefabInstance: {fileID: 2044464770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2071176985
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1744672776}
+    m_Modifications:
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: pivotNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_IsExterior
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: sceneToLoad.m_SceneName
+      value: 4C-VOLCANO_ROOM_11 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: sceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: e8ab300ae76481248a914221a0da2937, type: 3}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_sceneToLoad.m_SceneName
+      value: 3C-MEADOW-ROOM_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724208443230508952, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_sceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465380850081956847, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_Name
+      value: ChangeScene (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869758356008225591, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+--- !u!4 &2071176986 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
+  m_PrefabInstance: {fileID: 2071176985}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2081294763
 PrefabInstance:

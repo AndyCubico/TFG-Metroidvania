@@ -8,6 +8,10 @@ public class WaterBehaviour : MonoBehaviour
     bool playerIsInsde = false;
     CharacterPlayerController playerController;
 
+    // Waterfall mechanics (default water is horizontal not vertical)
+    [SerializeField] bool m_IsWaterfall;
+    //[ShowIf("m_IsWaterfall",true)]
+
     // Sun and Rain mechanics
     public float waterChange = 1.0f;
     Vector3 originalScale;
@@ -18,6 +22,8 @@ public class WaterBehaviour : MonoBehaviour
         playerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
 
         originalScale = transform.localScale;
+
+        UpdateWater(WeatherManager.Instance.climate);
     }
 
     private void OnEnable()
@@ -71,7 +77,16 @@ public class WaterBehaviour : MonoBehaviour
         }
 
         this.GetComponent<BoxCollider2D>().isTrigger = false;
-        gameObject.layer = 7;
+
+        if (m_IsWaterfall) 
+        {
+            gameObject.layer = 9; // Wall layer
+        }
+        else 
+        {
+            gameObject.layer = 7; // Ground layer
+        }
+            
     }
 
     public void UnFreezeWater()

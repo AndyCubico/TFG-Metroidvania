@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SnowBehaviour : MonoBehaviour
 {
+    [SerializeField] private GameObject m_CheckIfDestroyed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,6 +18,15 @@ public class SnowBehaviour : MonoBehaviour
     private void OnDisable()
     {
         WeatherManager.ChangeWeather -= UpdateSnow;
+    }
+
+    private void Update()
+    {
+        if(m_CheckIfDestroyed != null)
+        {
+            gameObject.GetComponent<Renderer>().enabled = m_CheckIfDestroyed.activeInHierarchy;  
+
+        }
     }
 
     public void UpdateSnow(CLIMATES c)

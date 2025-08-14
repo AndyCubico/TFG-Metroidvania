@@ -136,6 +136,7 @@ namespace PlayerController
         private bool isCrouch;
         private bool isHangingWall;
         private bool isUnderground;
+        private bool isOnCoyoteTime;
         public bool isHangingEdge;
         public bool flipAnimation;
         public bool isTooMuchEarring;
@@ -301,16 +302,16 @@ namespace PlayerController
         {
             if (context.performed)
             {
-                jumpKeyHold = true;
+                //jumpKeyHold = true;
 
-                if (inputBufferSaver.ContainsKey(INPUT_BUFFER.JUMP))
-                {
-                    inputBufferSaver[INPUT_BUFFER.JUMP] = maxTimeInputBuffer;
-                }
-                else
-                {
-                    inputBufferSaver.Add(INPUT_BUFFER.JUMP, maxTimeInputBuffer);
-                }
+                //if (inputBufferSaver.ContainsKey(INPUT_BUFFER.JUMP))
+                //{
+                //    inputBufferSaver[INPUT_BUFFER.JUMP] = maxTimeInputBuffer;
+                //}
+                //else
+                //{
+                //    inputBufferSaver.Add(INPUT_BUFFER.JUMP, maxTimeInputBuffer);
+                //}
             }
             else
             {
@@ -540,6 +541,7 @@ namespace PlayerController
             canUnhang = false;
             playerOnEdgeUnfreeze = false;
             isInWater = false;
+            isOnCoyoteTime = false;
 
             activateFallMultiplier = true;
             blockFlip = false;
@@ -582,6 +584,21 @@ namespace PlayerController
 
         private void Update()
         {
+            if (jumpingHold.action.IsPressed())
+            {
+                jumpKeyHold = true;
+
+                if (inputBufferSaver.ContainsKey(INPUT_BUFFER.JUMP))
+                {
+                    inputBufferSaver[INPUT_BUFFER.JUMP] = maxTimeInputBuffer;
+                }
+                else
+                {
+                    inputBufferSaver.Add(INPUT_BUFFER.JUMP, maxTimeInputBuffer);
+                }
+            }
+
+
             //Input buffer update
             InputBufferUpdate();
 
@@ -838,21 +855,21 @@ namespace PlayerController
 
             if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof && !isHangingEdge) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player or the earring of the floor is able to jump
             {
-                //Check if you can Jump
-                if (canJump)
+                //Check if you can Jump and is onGround or onWall or onCoyoteTime, quit the ground for future double jump
+                if (canJump && (isGrounded || isHangingWall || isOnCoyoteTime))
                 {
                     maxAirJumps++;
                     playerState = PLAYER_STATUS.JUMP;
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
 
-                    if (!isInWater)
-                    {
-                        rb.AddForce(new Vector2(0, minJumpForce));
-                    }
-                    else
-                    {
-                        rb.AddForce(new Vector2(0, minJumpForce / waterJumpReduction));
-                    }
+                    //if (!isInWater)
+                    //{
+                    //    rb.AddForce(new Vector2(0, minJumpForce));
+                    //}
+                    //else
+                    //{
+                    //    rb.AddForce(new Vector2(0, minJumpForce / waterJumpReduction));
+                    //}
 
                     if (unlockDoubleJump)
                     {
@@ -908,14 +925,16 @@ namespace PlayerController
         //Produce the effect of coyote time
         private void CoyoteTime()
         {
-            if (isGrounded) //Check if is grounded after do Coyote Time
+            if (isGrounded && canJump) //Check if is grounded after do Coyote Time
             {
                 coyoteTimeCounter = coyoteTime; //Here the Coyote Time is set up and ready to start decreasing
+                isOnCoyoteTime = false;
             }
             else
             {
-                if (coyoteTimeCounter > 0f)
+                if (coyoteTimeCounter > 0f && canJump)
                 {
+                    isOnCoyoteTime = true;
                     coyoteTimeCounter -= Time.deltaTime; //When you are not in ground, the Coyote time will start reducing, until you don't have more time to jump
                 }
             }

@@ -2298,7 +2298,7 @@ MonoBehaviour:
   m_timeFromFullToZero: 1.5
   m_CanBeTurnedOff: 0
   m_ChangesLerpProvider: 1
-  lerpReciver: {fileID: 0}
+  lerpReciver: {fileID: 2440384781699020759}
 --- !u!212 &1506925389
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3172,7 +3172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8702121785360606294, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9006336752357331244, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3219,6 +3219,7 @@ PrefabInstance:
     - {fileID: 3751930898932995588, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2307568139344647542, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+    - {fileID: 4356549333327422209, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7919767620142812926, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       insertIndex: -1
@@ -3240,6 +3241,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 346119937415766527, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
   m_PrefabInstance: {fileID: 2440384781699020755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2440384781699020759 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8215315579986293791, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+  m_PrefabInstance: {fileID: 2440384781699020755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcfe458bdc485f4bbc50350d175c8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4133261522062156253
 PrefabInstance:
   m_ObjectHideFlags: 0

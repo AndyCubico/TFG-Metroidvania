@@ -8227,7 +8227,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9662e093c6646942aed67c625b6e801, type: 3}
---- !u!1001 &7384881392753558638
+--- !u!1001 &8324479685358112163
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8235,55 +8235,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5968885763997056647, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
-      propertyPath: m_Name
-      value: Melee Enemy Test
-      objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalPosition.x
       value: 37.87
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.155001
+      value: 10.57
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.044366818
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6333500489593054981, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+    - target: {fileID: 4359523898428175621, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516943321400573288, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
+      propertyPath: m_Name
+      value: Melee Enemy Test Animaion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3d2dd5fc51418dd4eba32b8d13f0361f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: f69e62edcfa5aeb49bd6bafa6ebe4c60, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -8295,6 +8295,6 @@ SceneRoots:
   - {fileID: 1617647909}
   - {fileID: 615907328}
   - {fileID: 1118641063}
-  - {fileID: 7384881392753558638}
+  - {fileID: 8324479685358112163}
   - {fileID: 7357783784166617930}
   - {fileID: 2079157848}

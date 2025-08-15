@@ -299,6 +299,9 @@ public class Pathfollowing : MonoBehaviour
             CheckFacing(m_rb.linearVelocityX);
         }
 
+        //isJumping = true;
+        //m_JumpCoroutineExecution = true;
+
         // First wait, very short.
         yield return new WaitForSeconds(waitTime / 2);
 

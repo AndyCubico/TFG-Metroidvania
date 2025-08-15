@@ -83,7 +83,6 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
         if(targetCharges>currentCharges)
         {
             currentCharges += Time.deltaTime * (Mathf.Max(1,targetCharges-currentCharges)/(waitUntilCountdown));
-            Debug.Log("Multiplier" + (Mathf.Max(1, targetCharges - currentCharges) / (waitUntilCountdown)));
             currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
         }
     }

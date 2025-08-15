@@ -1,10 +1,26 @@
 //using UnityEditor.ShaderGraph.Internal;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
 {
     public Transform initialPosition;
     public Transform finalPosition;
+
+    public List<Transform> positions = new List<Transform>();
+
+    private enum MovementBehaviour 
+    {
+        A_TO_B, // First transform in the list is orginal position (0) and last one is final position (1). Inbetween are points equitably
+        LOOP, // Each point from 0 to 1 travels one pair of the list, then moves from 1 to 0 to the next one.
+        STEPS // Each point from 0 to 1 travels one pair of the list, then 0 becomes the last point reached and 1 the next value. 
+    }
+    [SerializeField] MovementBehaviour behavviour;
+
+    int currentListValue = 0;
+
     public MonoBehaviour lerpSource; // We cannot use an Interface as a parameter, so we must use a Monobehaviour
 
     private ILerpValueReturn m_LerpReturner;
@@ -21,7 +37,25 @@ public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
     void Update()
     {
         float t = m_LerpReturner.GetCurrentValue();
-        transform.position = Vector3.Lerp(initialPosition.position, finalPosition.position, t);
+
+        switch (behavviour)
+        {
+            case MovementBehaviour.A_TO_B:
+                currentListValue = (int)((t * (positions.Count - 1)) - 0.0001F);       
+                transform.position = Vector3.Lerp(positions[currentListValue].position, positions[currentListValue+1].position, t);
+                break;
+            case MovementBehaviour.LOOP:
+
+                if(currentListValue % 2 == 0)
+                if (t == 1) 
+                {
+                
+                }
+                break;
+            case MovementBehaviour.STEPS:
+                break;
+        }
+        
     }
 
     public float ChangeLerpSource(MonoBehaviour newLerp)

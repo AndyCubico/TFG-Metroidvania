@@ -12,12 +12,6 @@ public class MovingPlatforms : MonoBehaviour
         m_ObjectOriginalParent = new Dictionary<GameObject, Transform> { };
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collisionTag.Contains(collision.gameObject.tag) && !m_ObjectOriginalParent.ContainsKey(collision.gameObject)) 

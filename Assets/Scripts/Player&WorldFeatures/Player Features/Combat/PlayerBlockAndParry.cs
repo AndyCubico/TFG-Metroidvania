@@ -303,7 +303,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         m_CurrentEnemyHitRef = null;
 
         // Destroy the bullet.
-        Destroy(enemyTest.gameObject);
+        // Destroy(enemyTest.gameObject);
         enemyTest = null;
     }
 

@@ -3138,6 +3138,10 @@ PrefabInstance:
       propertyPath: m_Icon
       value: 
       objectReference: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 4745096406689249779, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: m_Name
+      value: FinalPosition
+      objectReference: {fileID: 0}
     - target: {fileID: 7919767620142812926, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3150,6 +3154,18 @@ PrefabInstance:
       propertyPath: lerpSource
       value: 
       objectReference: {fileID: 610329446}
+    - target: {fileID: 8215315579986293791, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: positions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215315579986293791, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: 'positions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2440384781699020758}
+    - target: {fileID: 8215315579986293791, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: 'positions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2440384781699020757}
     - target: {fileID: 8702121785360606294, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3212,6 +3228,16 @@ PrefabInstance:
 --- !u!4 &2440384781699020756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7919767620142812926, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+  m_PrefabInstance: {fileID: 2440384781699020755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2440384781699020757 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8702121785360606294, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+  m_PrefabInstance: {fileID: 2440384781699020755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2440384781699020758 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 346119937415766527, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
   m_PrefabInstance: {fileID: 2440384781699020755}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4133261522062156253

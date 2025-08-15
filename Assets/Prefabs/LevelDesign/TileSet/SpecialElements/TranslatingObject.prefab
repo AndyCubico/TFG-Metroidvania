@@ -114,6 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPosition: {fileID: 346119937415766527}
   finalPosition: {fileID: 8702121785360606294}
+  positions: []
+  behavviour: 0
   lerpSource: {fileID: 0}
   m_TargetValue: 0
 --- !u!61 &6902404141012881496
@@ -187,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8702121785360606294}
   m_Layer: 0
-  m_Name: Final Position
+  m_Name: FinalPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,6 +320,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPosition: {fileID: 346119937415766527}
   finalPosition: {fileID: 8702121785360606294}
+  positions: []
+  behavviour: 0
   lerpSource: {fileID: 0}
   m_TargetValue: 0
 --- !u!1001 &1701644018063640456

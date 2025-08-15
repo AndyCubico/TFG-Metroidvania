@@ -2466,6 +2466,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1660634256912515273, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
+      propertyPath: impactHitMinDistance
+      value: 2.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2198752808576420358, guid: 8ce117df4e9dee049862c9f6d7e6481f, type: 3}
       propertyPath: m_Mesh
       value: 

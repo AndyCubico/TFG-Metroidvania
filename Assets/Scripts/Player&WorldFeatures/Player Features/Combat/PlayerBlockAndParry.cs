@@ -244,6 +244,8 @@ public class PlayerBlockAndParry : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
+        HealthEvents.eTakingDamage?.Invoke(damageBlock); // Call the delegate to recieve damage and cancell abilities
+        Debug.Log(damageBlock);
 
         if (enemyTesting) // Enemy color testing
         {

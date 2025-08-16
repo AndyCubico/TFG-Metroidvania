@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         m_player = GameObject.Find("Player").gameObject;
         StartCoroutine(StartPlayerPosition(spawnNumber));
+        SaveAndLoadEvents.eSaveAction?.Invoke();
     }
 
     void Update()

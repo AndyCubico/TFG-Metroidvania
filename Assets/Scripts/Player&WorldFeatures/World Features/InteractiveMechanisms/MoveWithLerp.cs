@@ -6,11 +6,7 @@ using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
 {
-    public Transform initialPosition;
-    public Transform finalPosition;
-
     public List<Transform> positions = new List<Transform>();
-
     private enum MovementBehaviour 
     {
         A_TO_B, // First transform in the list is orginal position (0) and last one is final position (1). Inbetween are points equitably
@@ -19,7 +15,7 @@ public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
     }
     [SerializeField] MovementBehaviour behavviour;
 
-    int currentListValue = 0;
+    [SerializeField ]int m_CurrentListValue = 0;
 
     public MonoBehaviour lerpSource; // We cannot use an Interface as a parameter, so we must use a Monobehaviour
 
@@ -41,32 +37,32 @@ public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
         switch (behavviour)
         {
             case MovementBehaviour.A_TO_B:
-                currentListValue = (int)((t * (positions.Count - 1)) - 0.0001F);
-                currentListValue = Mathf.Min(positions.Count-2, currentListValue);
-                transform.position = Vector3.Lerp(positions[currentListValue].position, positions[currentListValue+1].position, t);
+                m_CurrentListValue = (int)((t * (positions.Count - 1)) - 0.0001F);
+                m_CurrentListValue = Mathf.Min(positions.Count-2, m_CurrentListValue);
+                transform.position = Vector3.Lerp(positions[m_CurrentListValue].position, positions[m_CurrentListValue+1].position, t);
                 break;
             case MovementBehaviour.LOOP:
 
-                if(currentListValue % 2 == 0) 
+                if (m_CurrentListValue % 2 == 0) 
                 {
-                    transform.position = Vector3.Lerp(positions[currentListValue].position, positions[currentListValue + 1].position, t);
+                    transform.position = Vector3.Lerp(positions[m_CurrentListValue].position, positions[(m_CurrentListValue >= positions.Count - 1) ? 0 : m_CurrentListValue + 1].position, t);
                     if (t == 1) 
                     {
-                        currentListValue++;
+                        m_CurrentListValue++;
                     }
                 }
                 else 
                 {
-                    transform.position = Vector3.Lerp(positions[currentListValue+1].position, positions[currentListValue].position, t);
+                    transform.position = Vector3.Lerp(positions[(m_CurrentListValue >= positions.Count - 1) ? 0 : m_CurrentListValue +1].position, positions[m_CurrentListValue].position, t);
                     if (t == 0)
                     {
-                        currentListValue++;
+                        m_CurrentListValue++;
                     }
                 }
 
-                if (currentListValue >= positions.Count-1) 
+                if (m_CurrentListValue > positions.Count-1) 
                 {
-                    currentListValue = 0;
+                    m_CurrentListValue = 0;
                 }
                 
                 break;

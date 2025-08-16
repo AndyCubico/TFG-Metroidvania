@@ -39,7 +39,7 @@ public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
             case MovementBehaviour.A_TO_B:
                 m_CurrentListValue = (int)((t * (positions.Count - 1)) - 0.0001F);
                 m_CurrentListValue = Mathf.Min(positions.Count-2, m_CurrentListValue);
-                transform.position = Vector3.Lerp(positions[m_CurrentListValue].position, positions[m_CurrentListValue+1].position, t);
+                transform.position = Vector3.Lerp(positions[m_CurrentListValue].position, positions[m_CurrentListValue+1].position, (positions.Count -1) * t - m_CurrentListValue);
                 break;
             case MovementBehaviour.LOOP:
 

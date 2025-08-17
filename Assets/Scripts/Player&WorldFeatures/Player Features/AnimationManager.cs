@@ -52,7 +52,7 @@ public class AnimationManager : MonoBehaviour
     void AnimatePlayer()
     {
         //Put fall animation
-        if (!animator.GetBool("Idle") && characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < -0.1f && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
+        if (/*!animator.GetBool("Idle") &&*/ characterPlayerController.playerState == PLAYER_STATUS.AIR && characterPlayerController.rb.linearVelocityY < -0.1f && !characterPlayerController.isImpactHitting && !playerBP.isBlocking)
         {
             animator.SetBool("Fall", true);
         }
@@ -81,7 +81,7 @@ public class AnimationManager : MonoBehaviour
                 animator.enabled = true;
             }
 
-            if ((characterPlayerController.rb.linearVelocity.magnitude > 0.1f || characterPlayerController.move.x != 0) && characterPlayerController.move.y == 0 && characterPlayerController.playerState == PLAYER_STATUS.GROUND && characterPlayerController.playerState != PLAYER_STATUS.DASH)
+            if ((characterPlayerController.rb.linearVelocity.magnitude > 0.1f && characterPlayerController.move.x != 0) && characterPlayerController.move.y == 0 && characterPlayerController.playerState == PLAYER_STATUS.GROUND && characterPlayerController.playerState != PLAYER_STATUS.DASH)
             {
                 animator.SetBool("Idle", false);
                 animator.SetBool("Edge", false);

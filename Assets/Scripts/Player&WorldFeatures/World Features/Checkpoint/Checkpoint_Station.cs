@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Checkpoint_Station : MonoBehaviour
 {   
     private GameObject m_PressEObj;
+    private TextMeshProUGUI m_SavedUIText;
 
     [Header("Input Actions")]
     [Space(5)]
@@ -11,11 +13,14 @@ public class Checkpoint_Station : MonoBehaviour
     bool InteractionInput;
 
     bool m_IsInside;
+    bool m_hasSaved;
 
     void Start()
     {
         m_PressEObj = this.gameObject.transform.GetChild(0).gameObject;
+        m_SavedUIText = GameObject.Find("Saved!").GetComponent<TextMeshProUGUI>();
         m_IsInside = false;
+        m_hasSaved = false;
     }
 
     void Update()
@@ -23,6 +28,16 @@ public class Checkpoint_Station : MonoBehaviour
         if (InteractionKeyAction.action.WasPressedThisFrame() && m_IsInside)
         {
             InteractionInput = true;
+        }
+
+        if (m_SavedUIText.color.a > -0.1 && m_hasSaved)
+        {
+            m_SavedUIText.color = new Color(m_SavedUIText.color.r, m_SavedUIText.color.g, m_SavedUIText.color.b, m_SavedUIText.color.a - Time.deltaTime);
+
+            if (m_SavedUIText.color.a <= 0)
+            {
+                m_hasSaved = false;
+            }
         }
     }
 
@@ -58,7 +73,10 @@ public class Checkpoint_Station : MonoBehaviour
                     HealthEvents.eRestoreHealth?.Invoke();
                     HealthEvents.eRestorePotions?.Invoke();
                     SaveAndLoadEvents.eSaveAction?.Invoke();
+
+                    m_SavedUIText.color = new Color(m_SavedUIText.color.r, m_SavedUIText.color.g, m_SavedUIText.color.b, 1);
                     InteractionInput = false;
+                    m_hasSaved = true;
                     Debug.Log("Saved!");
                 }
             }

@@ -1301,6 +1301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb4ec0074ebe8f4c8f631b86ac5dba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Objects: []
   collisionTag:
   - Player
   - Enemy
@@ -1362,12 +1363,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcfe458bdc485f4bbc50350d175c8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPosition: {fileID: 392725027}
-  finalPosition: {fileID: 146480062}
   positions:
   - {fileID: 392725027}
   - {fileID: 146480062}
   behavviour: 0
+  m_CurrentListValue: 0
   lerpSource: {fileID: 1410541817}
   m_TargetValue: 0
 --- !u!1001 &1067334389
@@ -1927,7 +1927,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4006889515045065470, guid: 538c433029aa84f4696b1f337b9920d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1878193684}
   m_SourcePrefab: {fileID: 100100000, guid: 538c433029aa84f4696b1f337b9920d3, type: 3}
 --- !u!4 &1489239813 stripped
 Transform:
@@ -2090,12 +2093,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcfe458bdc485f4bbc50350d175c8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPosition: {fileID: 2057806281}
-  finalPosition: {fileID: 705769925}
   positions:
   - {fileID: 2057806281}
   - {fileID: 705769925}
   behavviour: 0
+  m_CurrentListValue: 0
   lerpSource: {fileID: 1410541817}
   m_TargetValue: 0
 --- !u!4 &1697933641 stripped
@@ -2293,6 +2295,38 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 337c027b770162146bb42516b82aeb94, type: 3}
+--- !u!1 &1878193683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4006889515045065470, guid: 538c433029aa84f4696b1f337b9920d3, type: 3}
+  m_PrefabInstance: {fileID: 1489239812}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &1878193684
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878193683}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &1889314221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2768,6 +2802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb4ec0074ebe8f4c8f631b86ac5dba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Objects: []
   collisionTag:
   - Player
   - Enemy

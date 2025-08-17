@@ -1268,6 +1268,14 @@ namespace PlayerController
             //Check if is Right Wall
             isRightWall = Physics2D.OverlapAreaAll(RightWallCheck.bounds.min, RightWallCheck.bounds.max, wallMask).Length > 0;
 
+            if (isHangingWall && !isLeftWall && !isRightWall && playerState == PLAYER_STATUS.WALL)
+            {
+                PlayerUnFreeze();
+                playerState = PLAYER_STATUS.AIR;
+                isHangingWall = false;
+                moveStopper = false;
+            }
+
             //If you are hanged and jump, unfreeze player to move again
             if (playerState == PLAYER_STATUS.JUMP && isHangingWall && !hasExitWall)
             {

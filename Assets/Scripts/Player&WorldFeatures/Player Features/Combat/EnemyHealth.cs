@@ -51,6 +51,7 @@ public class EnemyHealth : MonoBehaviour, IHittableObject
         if ((flag & flagMask) != 0)
         {
             life -= damage;
+            GameManagerEvents.eSpawnDamageText(new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + this.gameObject.transform.localScale.y / 2, transform.position.z), damage);
 
             if (life <= 0)
             {

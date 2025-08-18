@@ -856,7 +856,7 @@ namespace PlayerController
             if (jumpKeyHold && !jumpStopper && !isTooMuchEarring && !isRoof && !isHangingEdge) //jumpStopper is an emergency stop jumping and take in consideration the earring of the floor in order to be able to jump, also check if there is no roof up the player or the earring of the floor is able to jump
             {
                 //Check if you can Jump and is onGround or onWall or onCoyoteTime, quit the ground for future double jump
-                if (canJump && (isGrounded || isHangingWall || isOnCoyoteTime))
+                if (canJump/* && (isGrounded || isHangingWall || isOnCoyoteTime)*/)
                 {
                     maxAirJumps++;
                     playerState = PLAYER_STATUS.JUMP;

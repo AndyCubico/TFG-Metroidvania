@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public static class GameManagerEvents
 {
     public static Action<int> eStartPlayerPosition;
     public static Action<int, string> eSearchStartPlayerPosition;
+    public static Action<Vector3, float> eSpawnDamageText;
 }
 
 public class GameManager : MonoBehaviour
@@ -13,18 +15,22 @@ public class GameManager : MonoBehaviour
     private GameObject m_player;
     private GameObject m_startPlayerPositionObj = null;
 
+    public GameObject hitTextObj;
+
     [HideInInspector] public int spawnNumber = 1;
 
     private void OnEnable()
     {
         GameManagerEvents.eStartPlayerPosition += StartPlayerPositionRequest;
         GameManagerEvents.eSearchStartPlayerPosition += SearchStartPlayerPositionRequest;
+        GameManagerEvents.eSpawnDamageText += RequestHitSpawnText;
     }
 
     private void OnDisable()
     {
         GameManagerEvents.eStartPlayerPosition -= StartPlayerPositionRequest;
         GameManagerEvents.eSearchStartPlayerPosition -= SearchStartPlayerPositionRequest;
+        GameManagerEvents.eSpawnDamageText -= RequestHitSpawnText;
     }
 
     void Start()
@@ -106,6 +112,38 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Not found new spawn number, is posible that the number introduced or the pivot name is incorrect, pivot number is: " + spawnNumber);
+        }
+    }
+
+    void RequestHitSpawnText(Vector3 spawnPosition, float damage)
+    {
+        StartCoroutine(SpawnDamageText(spawnPosition, damage));
+    }
+
+    IEnumerator SpawnDamageText(Vector3 spawnPosition, float damage)
+    {
+        float speedY = 2f;
+        float disapearSpeed = 1.5f;
+
+        GameObject obj = Instantiate(hitTextObj, spawnPosition, Quaternion.identity);
+
+        TextMeshPro text = obj.GetComponent<TextMeshPro>();
+        text.text = damage.ToString();
+
+        while (true)
+        {
+            obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + (speedY * Time.deltaTime), obj.transform.position.z);
+
+            if (text.color.a > 0)
+            {
+                text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - disapearSpeed * Time.deltaTime);
+                yield return false;
+            }
+            else
+            {
+                Destroy(obj);
+                break;
+            }
         }
     }
 }

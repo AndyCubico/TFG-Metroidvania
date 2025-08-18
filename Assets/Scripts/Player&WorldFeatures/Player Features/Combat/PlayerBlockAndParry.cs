@@ -195,10 +195,6 @@ public class PlayerBlockAndParry : MonoBehaviour
             if (invincibilityCounter <= 0)
             {
                 isInvencible = false;
-
-                // Restart the hasHittedPlayer flag for the enemy hit reference
-                if (m_CurrentEnemyHitRef != null)
-                    m_CurrentEnemyHitRef.hasHittedPlayer = false;
             }
         }
     }
@@ -306,6 +302,10 @@ public class PlayerBlockAndParry : MonoBehaviour
             m_CurrentEnemyRef.attackSOBaseInstance.FinishParry();
         }
 
+        // Restart the hasHittedPlayer flag for the enemy hit reference
+        if (m_CurrentEnemyHitRef != null)
+            m_CurrentEnemyHitRef.hasHittedPlayer = false;
+
         // Clear enemy reference
         m_CurrentEnemyRef = null;
         m_CurrentEnemyHitRef = null;
@@ -372,6 +372,7 @@ public class PlayerBlockAndParry : MonoBehaviour
 
                         // Get enemy reference to manage the parry
                         m_CurrentEnemyRef = enemyHit.enemy;
+                        m_CurrentEnemyHitRef = enemyHit;
                     }
                     else
                     {

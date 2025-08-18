@@ -300,6 +300,12 @@ public class PlayerBlockAndParry : MonoBehaviour
         isRecovering = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
+        // Finish parry
+        if (m_CurrentEnemyRef.attackSOBaseInstance.isParried)
+        {
+            m_CurrentEnemyRef.attackSOBaseInstance.FinishParry();
+        }
+
         // Clear enemy reference
         m_CurrentEnemyRef = null;
         m_CurrentEnemyHitRef = null;

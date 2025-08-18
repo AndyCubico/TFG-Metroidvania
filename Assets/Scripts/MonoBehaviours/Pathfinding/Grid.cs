@@ -38,6 +38,8 @@ public class Grid<T>
 
         m_DebugTextArray = new TextMesh[width, height];
 
+        GameObject debugTextContainer = new GameObject("Grid Debug Text Container");
+
         for (int x = 0; x < m_GridArray.GetLength(0); x++)
         {
             for (int y = 0; y < m_GridArray.GetLength(1); y++)
@@ -45,7 +47,7 @@ public class Grid<T>
                 // Create and assign the grid object first
                 m_GridArray[x, y] = createGridObject(this, x, y);
 
-                m_DebugTextArray[x, y] = CreateDisplayText($"{x}, {y}", null, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f,
+                m_DebugTextArray[x, y] = CreateDisplayText($"{x}, {y}", debugTextContainer.transform, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f,
                                                             20, WalkableDebugColor(m_GridArray[x, y]));
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);

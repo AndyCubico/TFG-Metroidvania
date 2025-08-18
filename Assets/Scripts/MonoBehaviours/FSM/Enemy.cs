@@ -166,6 +166,9 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public void SetTransitionAnimation(string trigger)
     {
+        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Chase");
         animator.SetTrigger(trigger);
     }
 

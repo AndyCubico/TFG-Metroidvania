@@ -314,7 +314,7 @@ public class Pathfollowing : MonoBehaviour
 
         // TODO: This should be a while loop but it breaks the whole system.
         // If it is not close enough, go to the step back position.
-        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f)
+        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.1f) // 0.01 before
         {
             // Go to the opposite direction of the next node to do the step back.
             m_rb.linearVelocityX = m_Speed * MathF.Sign(-m_MoveDirection.x);

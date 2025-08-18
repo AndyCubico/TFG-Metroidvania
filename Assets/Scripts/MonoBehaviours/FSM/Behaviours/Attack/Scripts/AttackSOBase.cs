@@ -7,6 +7,7 @@ public class AttackSOBase : ScriptableObject
     protected GameObject gameObject;
 
     protected Transform playerTransform;
+    public bool isParried;
 
     public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
@@ -14,15 +15,21 @@ public class AttackSOBase : ScriptableObject
         transform = gameObject.transform;
         this.enemy = enemy;
 
+        isParried = false;
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    public virtual void DoEnter() { }
+    public virtual void DoEnter()
+    {
+        enemy.SetTransitionAnimation("Attack");
+    }
+
     public virtual void DoExit() { ResetValues(); }
     public virtual void DoUpdate()
     {
         // TODO: Make smoother
-        if (!enemy.isWithinAttackRange)
+        if (!enemy.isWithinAttackRange && !isParried)
         {
             enemy.stateMachine.Transition(enemy.chaseState);
             enemy.SetTransitionAnimation("Chase");
@@ -32,7 +39,15 @@ public class AttackSOBase : ScriptableObject
     public virtual void DoFixedUpdate() { }
     public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }
     public virtual void ResetValues() { }
-    public virtual void OnParried() { }
+    public virtual void OnParried()
+    {
+        Debug.LogWarning("Enemy " + gameObject.name + " has been parried.");
+    }
+
+    public virtual void FinishParry()
+    {
+        Debug.LogWarning("Parry on enemy " + gameObject.name + " has finished.");
+    }
 
     public virtual void PerformAttack()
     {

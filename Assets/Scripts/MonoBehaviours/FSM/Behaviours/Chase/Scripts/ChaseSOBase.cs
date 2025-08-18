@@ -21,10 +21,16 @@ public class ChaseSOBase : ScriptableObject
     public virtual void DoExit() { ResetValues(); }
     public virtual void DoUpdate()
     {
+        // Fix in case the animator gets stuck with the shooting animation.
+        // Not adding transition from shooting to idle so that the animation is not suddenly cut.
+        //if (!enemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
+        //{
+        //    enemy.SetTransitionAnimation("Chase");
+        //}
+
         if (enemy.isWithinAttackRange)
         {
             enemy.stateMachine.Transition(enemy.attackState);
-            //enemy.SetTransitionAnimation("Attack");
             Debug.Log("CHASE --> ATTACK");
         }
     }

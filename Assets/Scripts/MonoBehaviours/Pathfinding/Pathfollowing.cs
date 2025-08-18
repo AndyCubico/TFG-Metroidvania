@@ -53,6 +53,8 @@ public class Pathfollowing : MonoBehaviour
     public bool isFacingRight = true;
     public bool isPathValid = true;
 
+    // Store the jump coroutine reference
+    private Coroutine m_JumpCoroutine;
 
     private void Awake()
     {
@@ -112,7 +114,7 @@ public class Pathfollowing : MonoBehaviour
                     isJumping = true;
                     m_JumpCoroutineExecution = true;
 
-                    StartCoroutine(Jump(m_JumpWait));
+                    m_JumpCoroutine = StartCoroutine(Jump(m_JumpWait));
                 }
                 // Check if it should jump if the next node is a cliff.
                 else if (m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
@@ -123,7 +125,7 @@ public class Pathfollowing : MonoBehaviour
                     isJumping = true;
                     m_JumpCoroutineExecution = true;
 
-                    StartCoroutine(Jump(m_JumpWait, 0.5f)); // 0.5f in the forceX parameter to jump more horizontally.
+                    m_JumpCoroutine = StartCoroutine(Jump(m_JumpWait, 0.5f)); // 0.5f in the forceX parameter to jump more horizontally.
                 }
                 // Move if it is not jumping.
                 else if (!isJumping)
@@ -490,4 +492,23 @@ public class Pathfollowing : MonoBehaviour
             lineRenderer.positionCount = 0;
         }
     }
+
+    public void CancelJump()
+    {
+        if (m_JumpCoroutine != null)
+        {
+            StopCoroutine(m_JumpCoroutine);
+            m_JumpCoroutine = null;
+        }
+
+        isJumping = false;
+        m_JumpCoroutineExecution = false;
+        if (m_rb != null)
+        {
+            m_rb.linearVelocity = Vector2.zero;
+            m_rb.angularVelocity = 0f;
+        }
+    }
 }
+
+

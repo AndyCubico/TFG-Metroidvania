@@ -11,6 +11,9 @@ public class AttackSlashCombo : AttackSOBase
     public override void DoEnter()
     {
         base.DoEnter();
+
+        // Not in the base class because some enemies may not have a pathfollowing behaviour.
+        enemy.pathfollowing.CancelJump();
     }
 
     public override void DoExit()

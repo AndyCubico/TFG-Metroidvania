@@ -2,19 +2,25 @@ using UnityEngine;
 
 public class ChaseCheck : MonoBehaviour
 {
-    private Enemy m_Enemy;
+    private Enemy m_EnemyCS;
     private BoxCollider2D m_BoxCollider;
+    public bool isBack = false;
 
     private void Awake()
     {
-        m_Enemy = GetComponentInParent<Enemy>();
+        m_EnemyCS = GetComponentInParent<Enemy>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            m_Enemy.SetInSensor(true);
+            m_EnemyCS.SetInSensor(true);
+
+            if (isBack)
+            {
+                m_EnemyCS.Flip();
+            }
         }
     }
 
@@ -22,7 +28,7 @@ public class ChaseCheck : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            m_Enemy.SetInSensor(false);
+            m_EnemyCS.SetInSensor(false);
         }
     }
 

@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     #region Movement variables
 
     public Pathfollowing pathfollowing { get; set; }
-    public bool isFacingRight { get ; set; } = true; // Default sprite is facing right
+    //public bool isFacingRight { get ; set; } = true; // Default sprite is facing right
 
     #endregion
 
@@ -134,8 +134,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public void CheckFacing(Vector2 velocity)
     {
-        if (isFacingRight && velocity.x < 0f) Flip();
-        else if (!isFacingRight && velocity.x > 0f) Flip();
+        if (pathfollowing.isFacingRight && velocity.x < 0f) Flip();
+        else if (!pathfollowing.isFacingRight && velocity.x > 0f) Flip();
     }
 
     public void Flip()
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
-        isFacingRight = !isFacingRight;
+        pathfollowing.isFacingRight = !pathfollowing.isFacingRight;
     }
 
     #endregion

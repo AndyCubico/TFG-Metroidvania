@@ -47,7 +47,7 @@ public class PlayerGroundCheck : MonoBehaviour
             if (playerRb != null && m_EnemyCS != null)
             {
                 // Push the player in the opposite direction the enemy is facing
-                float pushDirection = m_EnemyCS.isFacingRight ? -1f : 1f;
+                float pushDirection = m_EnemyCS.pathfollowing.isFacingRight ? -1f : 1f;
                 Vector2 force = new Vector2(pushDirection * m_PushForce, 0f);
                 playerRb.AddForce(force, ForceMode2D.Force);
 

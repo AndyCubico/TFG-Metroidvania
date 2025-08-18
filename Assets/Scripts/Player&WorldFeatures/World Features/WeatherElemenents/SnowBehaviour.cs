@@ -22,7 +22,7 @@ public class SnowBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if(m_CheckIfDestroyed != null)
+        if(m_CheckIfDestroyed != null && (!WeatherManager.Instance.GetExteriorState() || WeatherManager.Instance.climate != CLIMATES.SUN)) // If exterior and sunny, stop checking
         {
             gameObject.GetComponent<Renderer>().enabled = m_CheckIfDestroyed.activeInHierarchy;  
 

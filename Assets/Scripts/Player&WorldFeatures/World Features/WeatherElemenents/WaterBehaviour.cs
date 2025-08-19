@@ -23,7 +23,10 @@ public class WaterBehaviour : MonoBehaviour
 
         originalScale = transform.localScale;
 
-        UpdateWater(WeatherManager.Instance.climate);
+        if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
+        {
+            UpdateWater(WeatherManager.Instance.climate);
+        }
     }
 
     private void OnEnable()
@@ -51,12 +54,17 @@ public class WaterBehaviour : MonoBehaviour
                 case CLIMATES.SUN:
 
                     UnFreezeWater();
-                    ChangeWaterLevel(1 / waterChange);
+                    if(originalScale == transform.localScale && !m_IsWaterfall) 
+                    {
+                        ChangeWaterLevel(1 / waterChange);
+                    }
+                    
 
                     break;
                 case CLIMATES.SNOW:
 
                     FreezeWater();
+
                     break;
                 case CLIMATES.NONE:
                     break;
@@ -99,16 +107,17 @@ public class WaterBehaviour : MonoBehaviour
     public void ChangeWaterLevel(float value) 
     {
         Vector3 nScale = transform.localScale;
-        nScale.y = value;
+        nScale.y = nScale.y *  value;
         gameObject.transform.localScale = nScale;
-        gameObject.transform.position -= new Vector3 (0, (originalScale.y-nScale.y), 0);
+        Debug.Log(originalScale.y - nScale.y);
+        gameObject.transform.position += new Vector3 (0, (nScale.y-originalScale.y), 0);
     }
 
     public void ResetWaterLevel() 
     {
         Vector3 nScale = transform.localScale;
         gameObject.transform.localScale = originalScale;
-        gameObject.transform.position -= new Vector3(0, (originalScale.y - nScale.y), 0);
+        gameObject.transform.position -= new Vector3(0, (nScale.y - originalScale.y), 0);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -121,6 +121,11 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         attackSOBaseInstance.PerformAttack();
     }
 
+    public virtual void FinishParry()
+    {
+        attackSOBaseInstance.FinishParry();
+    }
+
     #endregion
 
     // TODO: Remove this interface if not used, pathfinding is done in the FSM states.

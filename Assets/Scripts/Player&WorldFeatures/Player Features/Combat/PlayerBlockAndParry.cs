@@ -296,11 +296,11 @@ public class PlayerBlockAndParry : MonoBehaviour
         isRecovering = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        // Finish parry
-        if (m_CurrentEnemyRef.attackSOBaseInstance.isParried)
-        {
-            m_CurrentEnemyRef.attackSOBaseInstance.FinishParry();
-        }
+        // Finish parry, not needed managed by the animation.
+        //if (m_CurrentEnemyRef != null && m_CurrentEnemyRef.attackSOBaseInstance.isParried)
+        //{
+        //    m_CurrentEnemyRef.attackSOBaseInstance.FinishParry();
+        //}
 
         // Restart the hasHittedPlayer flag for the enemy hit reference
         if (m_CurrentEnemyHitRef != null)

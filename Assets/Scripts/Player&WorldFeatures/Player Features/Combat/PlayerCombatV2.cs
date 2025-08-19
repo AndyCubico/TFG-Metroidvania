@@ -109,6 +109,7 @@ public class PlayerCombatV2 : MonoBehaviour
     float m_finishComboTimer;
     bool m_isOnCombo;
     bool m_canHitCombo;
+    private bool m_isInAirAttack;
 
     //Rigidbody
     public Rigidbody2D rb;
@@ -247,6 +248,12 @@ public class PlayerCombatV2 : MonoBehaviour
             {
                 ImpactHitMidAir();
             }
+        }
+
+        if(m_isInAirAttack)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX;
         }
     }
 
@@ -478,6 +485,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
     public IEnumerator AirAttack()
     {
+        m_isInAirAttack = true;
         rb.linearVelocity = Vector2.zero;
         rb.gravityScale = 0f;
         characterController.activateFallMultiplier = false;
@@ -490,6 +498,8 @@ public class PlayerCombatV2 : MonoBehaviour
         rb.gravityScale = gravityScale;
         characterController.activateFallMultiplier = true;
         characterController.moveStopper = false;
+        m_isInAirAttack = false;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void AnimationSelector(ATTACK_TYPE attackType)

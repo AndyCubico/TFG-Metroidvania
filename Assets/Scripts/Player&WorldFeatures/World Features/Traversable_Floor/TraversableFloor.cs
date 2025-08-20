@@ -65,7 +65,7 @@ public class TraversableFloor : MonoBehaviour
                 ground.isTrigger = true;
             }
 
-            if((characterPlayerController.downControllerSensitivity < -0.8f || characterPlayerController.dropDown) && !isDropping)
+            if((characterPlayerController.downControllerSensitivity < -0.8f || characterPlayerController.dropDown) && !isDropping && isOnPlatform)
             {
                 ground.isTrigger = true;
                 isDropping = true;

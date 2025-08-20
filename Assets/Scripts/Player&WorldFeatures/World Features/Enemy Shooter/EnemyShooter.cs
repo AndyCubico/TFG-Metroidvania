@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyShooter : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class EnemyShooter : MonoBehaviour
     [Header("Spawn Rate of attacks")]
     public float spawnRate;
 
+    [Header("No parry objects spawn rate")]
+    public float spawnRateForNoParryObj;
+
     // Timer for spawn
     float spawnTimer;
 
@@ -57,7 +61,7 @@ public class EnemyShooter : MonoBehaviour
             e.timer = enemiesLifeTime;
             e.rb = e.obj.GetComponent<Rigidbody2D>();
 
-            e.obj.GetComponent<EnemyHit>().canBeParried = Random.value < 0.5f; // Generates a random true or false to indicate if it can be parried
+            e.obj.GetComponent<EnemyHit>().canBeParried = Random.value > (spawnRateForNoParryObj / 100f); // Generates a random true or false to indicate if it can be parried
 
             if (!e.obj.GetComponent<EnemyHit>().canBeParried)
             {

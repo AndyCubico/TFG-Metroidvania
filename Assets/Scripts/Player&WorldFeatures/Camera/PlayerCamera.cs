@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder;
 
@@ -58,101 +59,117 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If player isn't assigned yet try to get it
-        m_Target = m_Target == null ? GameObject.FindGameObjectWithTag("Player") : m_Target;
-
-        // After a certain amount of time, check if position has changed
-        m_TimeForUpdate += Time.deltaTime;
-
-        if (m_TimeForUpdate > m_TimeBetweenPositionUpdates)
+        if (!m_Target.IsDestroyed()) // Passig scenes causes errors sometimes due to this, just a security check.
         {
-            m_TimeForUpdate = 0.0f;
-            if (Mathf.Abs(m_LastPositionTarget.x - m_Target.transform.position.x) <= m_DistanceThreshold)
+            // If player isn't assigned yet try to get it
+            m_Target = (m_Target == null) ? GameObject.FindGameObjectWithTag("Player") : m_Target;
+
+            // After a certain amount of time, check if position has changed
+            m_TimeForUpdate += Time.deltaTime;
+
+            if (m_TimeForUpdate > m_TimeBetweenPositionUpdates)
             {
-                m_TargetMovementDirection = TargetDirection.STATIC;
-            }
-            else
-            {
-                if (m_LastPositionTarget.x < m_Target.transform.position.x)
+                m_TimeForUpdate = 0.0f;
+                if (Mathf.Abs(m_LastPositionTarget.x - m_Target.transform.position.x) <= m_DistanceThreshold)
                 {
-                    m_TargetMovementDirection = TargetDirection.MOVING_RIGTH;
+                    m_TargetMovementDirection = TargetDirection.STATIC;
                 }
                 else
                 {
-                    m_TargetMovementDirection = TargetDirection.MOVING_LEFT;
-                }
-            }
-
-            m_LastPositionTarget = m_Target.transform.position;
-        }
-        // Every frame update target focus due to the horizontal 
-        switch ((m_TargetMovementDirection)
-)
-        {
-            case TargetDirection.MOVING_LEFT:
-
-                m_CurrentDistanceTreshold += Time.deltaTime / m_TimeToReachThreshold;
-                m_CurrentDistanceTreshold = Mathf.Min(1, m_CurrentDistanceTreshold);
-
-                break;
-            case TargetDirection.STATIC:
-
-                if (m_CurrentDistanceTreshold != 0) // Once the camera is perfectly centered in the characther it must stop tring to center, otherwise, it shakes.
-                {
-                    m_CurrentDistanceTreshold -= Mathf.Sign(m_CurrentDistanceTreshold) * Time.deltaTime / (m_TimeToReachThreshold*m_TimeToReachCentreMul); //Return to centre when stopped is slower
-                    if (Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / (m_TimeToReachThreshold * m_TimeToReachCentreMul))) // If we are very near to 0, make the value 0. 
+                    if (m_LastPositionTarget.x < m_Target.transform.position.x)
                     {
-                        m_CurrentDistanceTreshold = 0;
+                        m_TargetMovementDirection = TargetDirection.MOVING_RIGTH;
+                    }
+                    else
+                    {
+                        m_TargetMovementDirection = TargetDirection.MOVING_LEFT;
                     }
                 }
 
-                break;
-            case TargetDirection.MOVING_RIGTH:
+                m_LastPositionTarget = m_Target.transform.position;
+            }
+            // Every frame update target focus due to the horizontal 
+            switch ((m_TargetMovementDirection)
+    )
+            {
+                case TargetDirection.MOVING_LEFT:
 
-                m_CurrentDistanceTreshold -= Time.deltaTime / m_TimeToReachThreshold;
-                m_CurrentDistanceTreshold = Mathf.Max(-1, m_CurrentDistanceTreshold);
-                break;
-            default:
-                break;
+                    m_CurrentDistanceTreshold += Time.deltaTime / m_TimeToReachThreshold;
+                    m_CurrentDistanceTreshold = Mathf.Min(1, m_CurrentDistanceTreshold);
+
+                    break;
+                case TargetDirection.STATIC:
+
+                    if (m_CurrentDistanceTreshold != 0) // Once the camera is perfectly centered in the characther it must stop tring to center, otherwise, it shakes.
+                    {
+                        m_CurrentDistanceTreshold -= Mathf.Sign(m_CurrentDistanceTreshold) * Time.deltaTime / (m_TimeToReachThreshold * m_TimeToReachCentreMul); //Return to centre when stopped is slower
+                        if (Mathf.Abs(m_CurrentDistanceTreshold) <= (Time.deltaTime / (m_TimeToReachThreshold * m_TimeToReachCentreMul))) // If we are very near to 0, make the value 0. 
+                        {
+                            m_CurrentDistanceTreshold = 0;
+                        }
+                    }
+
+                    break;
+                case TargetDirection.MOVING_RIGTH:
+
+                    m_CurrentDistanceTreshold -= Time.deltaTime / m_TimeToReachThreshold;
+                    m_CurrentDistanceTreshold = Mathf.Max(-1, m_CurrentDistanceTreshold);
+                    break;
+                default:
+                    break;
+            }
+
+            // Debug
+            if (m_IsDebugMode)
+            {
+                m_CenterCamera.transform.position = transform.position;
+                //m_HorizontalTarget.transform.position = new Vector3((transform.position.x * (1-m_CurrentDistanceTreshold) + m_CameraWidth*m_MaximunDistanceTreshold*m_CurrentDistanceTreshold),transform.position.y,transform.position.z);
+                m_HorizontalTargetLeft.transform.position = new Vector3(m_Target.transform.position.x - (-m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
+                m_HorizontalTargetRigth.transform.position = new Vector3(m_Target.transform.position.x - (m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
+            }
+
+            if (Input.GetKeyUp(KeyCode.F4))
+            {
+                // Inverse m_IsDebugMode and change active state all elements.
+                m_IsDebugMode = !m_IsDebugMode;
+                SetDebugStatus(m_IsDebugMode);
+            }
         }
+
         
-        // Debug
-        if (m_IsDebugMode)
-        {
-            m_CenterCamera.transform.position = transform.position;
-            //m_HorizontalTarget.transform.position = new Vector3((transform.position.x * (1-m_CurrentDistanceTreshold) + m_CameraWidth*m_MaximunDistanceTreshold*m_CurrentDistanceTreshold),transform.position.y,transform.position.z);
-            m_HorizontalTargetLeft.transform.position = new Vector3(m_Target.transform.position.x - (-m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
-            m_HorizontalTargetRigth.transform.position = new Vector3(m_Target.transform.position.x - (m_CameraWidth * m_MaximunDistanceTreshold), transform.position.y, transform.position.z);
-        }
-
-        if (Input.GetKeyUp(KeyCode.F4)) 
-        {
-            // Inverse m_IsDebugMode and change active state all elements.
-            m_IsDebugMode = !m_IsDebugMode;
-            SetDebugStatus(m_IsDebugMode);
-        }
     }
 
     private void LateUpdate()
     {
-        // Camera position
-        float targetPositionX = 0;
-        float targetPositionY = 0;
-        float targetPositionZ = gameObject.transform.position.z;
+        try
+        {
+            if (!m_Target.IsDestroyed()) // Passig scenes causes errors sometimes due to this, just a security check.
+            {
+                // Camera position
+                float targetPositionX = 0;
+                float targetPositionY = 0;
+                float targetPositionZ = gameObject.transform.position.z;
 
-        // Threshold triggered dual-foward-focus (X axis)
-        targetPositionX = m_Target.transform.position.x - (0 * (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold);
+                // Threshold triggered dual-foward-focus (X axis)
+                targetPositionX = m_Target.transform.position.x - (0 * (1 - m_CurrentDistanceTreshold) + m_CameraWidth * m_MaximunDistanceTreshold * m_CurrentDistanceTreshold);
 
-        // A (Y axis)
-        targetPositionY = m_Target.transform.position.y;
+                // A (Y axis)
+                targetPositionY = m_Target.transform.position.y;
 
-        // Edge snapping
-        targetPositionX = Mathf.Min(cameraBounds.width - m_CameraWidth, targetPositionX);
-        targetPositionX = Mathf.Max(cameraBounds.x + m_CameraWidth, (targetPositionX));
-        targetPositionY = Mathf.Min(cameraBounds.height - m_CameraHeight, targetPositionY);
-        targetPositionY = Mathf.Max(cameraBounds.y + m_CameraHeight, (targetPositionY));
+                // Edge snapping
+                targetPositionX = Mathf.Min(cameraBounds.width - m_CameraWidth, targetPositionX);
+                targetPositionX = Mathf.Max(cameraBounds.x + m_CameraWidth, (targetPositionX));
+                targetPositionY = Mathf.Min(cameraBounds.height - m_CameraHeight, targetPositionY);
+                targetPositionY = Mathf.Max(cameraBounds.y + m_CameraHeight, (targetPositionY));
 
-        gameObject.transform.position = new Vector3(targetPositionX, targetPositionY, targetPositionZ);
+                gameObject.transform.position = new Vector3(targetPositionX, targetPositionY, targetPositionZ);
+            }
+        }
+        catch 
+        {
+            Debug.LogWarning("Something didn't exist");
+        }
+        
     }
 
     public bool SetDebugStatus(bool active) 

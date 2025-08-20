@@ -12,7 +12,17 @@ public class OnProjetileHit : MonoBehaviour
 
     public LayerMask layer;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    Debug.Log("Collision with something");
+    //    if ((layer.value & (1 << collision.gameObject.layer)) > 0)
+    //    {
+    //        Debug.Log("Collision layer was:" + collision.gameObject.layer);
+    //        ManageCollision();
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Collision with something");
         if ((layer.value & (1 << collision.gameObject.layer)) > 0)

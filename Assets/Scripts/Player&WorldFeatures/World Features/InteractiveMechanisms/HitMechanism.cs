@@ -20,10 +20,28 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
     private bool m_IsCountDown = true;
     private bool m_IsFrozen; // Frozen mechanism moves at half speed
 
+    [SerializeField] bool m_ChangesLerpProvider;
+    [ShowIf("m_ChangesLerpProvider", true)] public MonoBehaviour lerpReciver; ILerpValueReciver m_LerpReciver;
+
+    void Awake()
+    {
+        if (m_ChangesLerpProvider)
+        {
+            m_LerpReciver = lerpReciver as ILerpValueReciver;
+            if (m_LerpReciver == null) { Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
+        }
+    }
+
     public void ReceiveDamage(float damage, AttackFlagType flag)
     {
         if ((flagMask & flag) != 0)
         {
+            if (m_ChangesLerpProvider)
+            {
+                currentCharges = m_LerpReciver.ChangeLerpSource(this) * m_MaxCharges;
+                targetCharges = currentCharges;
+            }
+
             if (m_IsFrozen)
             {
                 m_IsFrozen = false;
@@ -82,8 +100,16 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
 
         if(targetCharges>currentCharges)
         {
-            currentCharges += Time.deltaTime * (Mathf.Max(1,targetCharges-currentCharges)/(waitUntilCountdown));
-            currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+            currentCharges += Time.deltaTime * (Mathf.Max(1, (targetCharges - currentCharges) * m_TimeFromFullToZero / m_MaxCharges));
+            Debug.Log((Mathf.Max(1, (targetCharges - currentCharges) * m_TimeFromFullToZero / m_MaxCharges)));
+
+            if (currentCharges > m_MaxCharges) // If reaches target position the stop time reset to make it feel more that is stoped when reaching maximum 
+            {
+                m_CurrentWaitUntilCountdown = waitUntilCountdown;
+                m_IsCountDown = false;
+                currentCharges = Mathf.Min(m_MaxCharges, currentCharges);
+            }
+           
         }
     }
 

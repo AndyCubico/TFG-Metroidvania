@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public AttackFlagType flagMask;
 
-    protected virtual void Awake()
+    public virtual void Awake()
     {
         idleSOBaseInstance = Instantiate(m_IdleSOBase);
         chaseSOBaseInstance = Instantiate(m_ChaseSOBase);
@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     #region Basic functions
 
-    public void ReceiveDamage(float damage, AttackFlagType attackType)
+    public virtual void ReceiveDamage(float damage, AttackFlagType attackType)
     {
         if ((attackType & flagMask) != 0)
         {
@@ -188,6 +188,29 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         ENEMYDAMAGED,
         IDLE,
         WALK
+    }
+
+    #endregion
+
+    // TODO: Use these functions to transition between states in each type of enemy.
+    #region State Functions 
+
+    public void IdleTransition()
+    {
+        stateMachine.Transition(idleState);
+        SetTransitionAnimation("Idle");
+    }
+
+    public void ChaseTransition()
+    {
+        stateMachine.Transition(chaseState);
+        SetTransitionAnimation("Chase");
+    }
+
+    public void AttackTransition()
+    {
+        stateMachine.Transition(attackState);
+        SetTransitionAnimation("Attack");
     }
 
     #endregion

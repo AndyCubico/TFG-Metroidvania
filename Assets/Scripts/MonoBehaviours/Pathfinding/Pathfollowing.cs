@@ -293,8 +293,6 @@ public class Pathfollowing : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Jump(float waitTime, float forceX = 0.35f)
     {
-        Debug.Log("Jumping...");
-
         // If it is a cliff jump and the agent is not moving,
         // it needs to be just in the edge to perform the jump correctly,
         // so it will move forward a little bit.

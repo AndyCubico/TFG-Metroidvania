@@ -117,7 +117,9 @@ public class Pathfollowing : MonoBehaviour
                     m_JumpCoroutine = StartCoroutine(Jump(m_JumpWait));
                 }
                 // Check if it should jump if the next node is a cliff.
-                else if (m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
+                // TODO: Very bad if statment, should not need m_JumpCoroutineExecution, rework.
+                else if (!m_JumpCoroutineExecution 
+                    && m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
                     !CheckHeight(m_TargetPosition) &&
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
                     !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
@@ -291,6 +293,8 @@ public class Pathfollowing : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Jump(float waitTime, float forceX = 0.35f)
     {
+        Debug.Log("Jumping...");
+
         // If it is a cliff jump and the agent is not moving,
         // it needs to be just in the edge to perform the jump correctly,
         // so it will move forward a little bit.
@@ -316,7 +320,7 @@ public class Pathfollowing : MonoBehaviour
 
         // TODO: This should be a while loop but it breaks the whole system.
         // If it is not close enough, go to the step back position.
-        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.1f) // 0.01 before
+        if (Mathf.Abs(transform.position.x - m_PreviousPosition.x) > 0.01f) // 0.1 before
         {
             // Go to the opposite direction of the next node to do the step back.
             m_rb.linearVelocityX = m_Speed * MathF.Sign(-m_MoveDirection.x);
@@ -332,6 +336,9 @@ public class Pathfollowing : MonoBehaviour
 
         // Apply jump with an impulse, with the forceX multiplier if needed.
         m_rb.AddForce(new Vector2(Mathf.Sign(m_MoveDirection.x) * m_JumpForce * forceX, m_JumpForce), ForceMode2D.Impulse);
+
+        // Coroutine finished.
+        m_JumpCoroutine = null;
     }
 
     public void CheckFacing(float velocity)
@@ -353,7 +360,11 @@ public class Pathfollowing : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & m_GroundLayer) != 0 && m_JumpCoroutineExecution)
         {
-            m_JumpCoroutineExecution = false;
+            // Only reset if actually grounded
+            if (m_JumpCoroutine == null)
+            {
+                m_JumpCoroutineExecution = false;
+            }
         }
     }
 

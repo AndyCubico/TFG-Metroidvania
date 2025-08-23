@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class ShieldedEnemy : Enemy
@@ -53,6 +52,11 @@ public class ShieldedEnemy : Enemy
     public void DeactivateShield()
     {
         if (shieldObject != null)
+        {
+            // Allow HeavyAttack to affect this enemy after shield breaks, not optimal but works for now.
+            flagMask |= AttackFlagType.HeavyAttack;
+
             shieldObject.gameObject.SetActive(false);
+        }
     }
 }

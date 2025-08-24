@@ -1,4 +1,5 @@
 using PlayerController;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -16,6 +17,11 @@ public class WaterBehaviour : MonoBehaviour
     public float waterChange = 1.0f;
     Vector3 originalScale;
     [SerializeField] GameObject m_SwimingCollider;
+
+    private void Awake()
+    {
+        
+    }
 
     private void Start()
     {

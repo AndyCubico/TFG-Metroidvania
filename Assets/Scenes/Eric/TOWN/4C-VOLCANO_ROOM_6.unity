@@ -1806,6 +1806,8 @@ MonoBehaviour:
   m_TimeFromFullToZero: 14
   m_HasTimeResetOnHit: 1
   waitUntilCountdown: 1.3
+  m_ChangesLerpProvider: 0
+  lerpReciver: {fileID: 0}
 --- !u!58 &1410541818
 CircleCollider2D:
   m_ObjectHideFlags: 0

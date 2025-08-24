@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4272582974853665966}
   - component: {fileID: 3788070117626692463}
   - component: {fileID: 175915283822114089}
+  - component: {fileID: 1986195996007871972}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -77,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   savePlayer: 1
+  saveWorld: 1
 --- !u!114 &8917843948486557346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5942ac2012e0f944882d708af6990dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunAction: {fileID: 0}
+  sunAction: {fileID: -3103295532666798715, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   snowAction: {fileID: 2287229219543971701, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_IsExterior: 1
   climate: 0
@@ -133,5 +135,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29f7f277791746642abb5a750503f340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1986195996007871972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169640329568517343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c573bbe3fe27cf54f8d6a9f631ffc267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

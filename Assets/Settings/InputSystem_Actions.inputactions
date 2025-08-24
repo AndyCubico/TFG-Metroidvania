@@ -256,6 +256,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SunClimate",
+                    "type": "Button",
+                    "id": "385208a4-726c-4bc1-8244-7c7f89f8f7cb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1147,6 +1156,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ImpactHitDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26b90ca9-ff71-48ae-93b8-0a185e088533",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "SunClimate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97d377c5-e5fd-4a02-b126-05c07bdb99c7",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SunClimate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //Here is where the respective classes are created, put the necessary variables to be stores in each case
@@ -8,11 +10,30 @@ public class player_SL //SL -> Save&Load
     public int charges;
     public bool snowAbilityUnlock;
 }
+
+public class object_SL //SL -> Save&Load
+{
+    public string objectName;
+    public int objectID;
+}
+public class room_SL //SL -> Save&Load
+{
+    public string roomName;
+    public List<object_SL> listRooms = new List<object_SL>();
+}
+
+public class world_SL //SL -> Save&Load
+{
+    public List<room_SL> listRooms = new List<room_SL>();
+}
+
 public static class SaveAndLoadEvents
 {
     //The events to subscribe
     public static Action eSaveAction;
     public static Action eLoadAction;
+    public static Action eRoomSaveAction;
+    public static Action eRoomLoadAction;
 }
 
     public class SaveAndLoadGameHandler : MonoBehaviour
@@ -20,6 +41,7 @@ public static class SaveAndLoadEvents
     //Here the different bools for which data will be stored
     [Header("Selected Savings")]
     public bool savePlayer;
+    public bool saveWorld;
 
     void Start()
     {

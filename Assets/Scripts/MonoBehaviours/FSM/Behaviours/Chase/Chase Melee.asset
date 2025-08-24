@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87041bdc160279c4da49a135c6fc6ab5, type: 3}
   m_Name: Chase Melee
   m_EditorClassIdentifier: 
-  m_PathCooldown: 1
+  playerTransform: {fileID: 0}
+  m_PathCooldown: 0.5
   m_LostOfSightTime: 2.5
   m_DistanceLimitToPlayer: 10
   m_VisionMask:

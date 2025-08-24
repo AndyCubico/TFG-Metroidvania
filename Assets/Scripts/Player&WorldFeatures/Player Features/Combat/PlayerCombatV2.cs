@@ -1,20 +1,20 @@
+using PlayerController;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using PlayerController;
-using Spine.Unity;
 
 [System.Flags]
 public enum AttackFlagType
 {
-    None = 0,
-    BasicAttack = 1 << 0,   // 1
-    ImpactHit = 1 << 1,    // 2
-    HeavyAttack = 1 << 2,  // 4
-    SnowAttack = 1 << 3,    // 8
-    Wall = 1 << 4     // 8
+    NONE = 0,
+    BASIC_ATTACK = 1 << 0,   // 1
+    IMPACT_HIT = 1 << 1,     // 2
+    HEAVY_ATTACK = 1 << 2,   // 4
+    SNOW_ATTACK = 1 << 3,    // 8
+    WALL = 1 << 4,           // 16
+    ALL = BASIC_ATTACK | IMPACT_HIT | HEAVY_ATTACK | SNOW_ATTACK | WALL
 }
 
 public class PlayerCombatV2 : MonoBehaviour
@@ -104,7 +104,7 @@ public class PlayerCombatV2 : MonoBehaviour
     bool m_downAttack;
 
     //Combo
-    [HideInInspector]public int comboCounter;
+    [HideInInspector] public int comboCounter;
     float m_comboTimer;
     float m_finishComboTimer;
     bool m_isOnCombo;
@@ -118,14 +118,14 @@ public class PlayerCombatV2 : MonoBehaviour
     //bool cooldown;
     //bool comboReset;
     bool isDamaging;
-    [HideInInspector]public bool isAttacking;
-    [HideInInspector]public bool attackWithComboHasEnded;
+    [HideInInspector] public bool isAttacking;
+    [HideInInspector] public bool attackWithComboHasEnded;
     [HideInInspector] public bool isInCheckpoint;
 
     //Values
     float gravityScale;
 
-    AttackFlagType attackFlagType = AttackFlagType.None;
+    AttackFlagType attackFlagType = AttackFlagType.NONE;
 
     // Start is called before the first frame update
     void Start()
@@ -153,7 +153,7 @@ public class PlayerCombatV2 : MonoBehaviour
             ResetCombo();
         }
 
-        if(m_finishComboTimer > 0) //Wait before start another combo
+        if (m_finishComboTimer > 0) //Wait before start another combo
         {
             m_finishComboTimer -= Time.deltaTime;
         }
@@ -172,7 +172,7 @@ public class PlayerCombatV2 : MonoBehaviour
         //    basicAttackDown = false;
         //}
 
-        if(m_inputBufferCounter <= 0)
+        if (m_inputBufferCounter <= 0)
         {
             basicAttackDown = false;
         }
@@ -244,13 +244,13 @@ public class PlayerCombatV2 : MonoBehaviour
 
         if (characterController.isImpactHitting)
         {
-            if(characterController.playerState != CharacterPlayerController.PLAYER_STATUS.GROUND)
+            if (characterController.playerState != CharacterPlayerController.PLAYER_STATUS.GROUND)
             {
                 ImpactHitMidAir();
             }
         }
 
-        if(m_isInAirAttack)
+        if (m_isInAirAttack)
         {
             rb.linearVelocity = Vector2.zero;
             rb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -284,9 +284,9 @@ public class PlayerCombatV2 : MonoBehaviour
                 }
             }
 
-            if(nextEnemyHealth.Count > 0)
+            if (nextEnemyHealth.Count > 0)
             {
-                for(int i = 0; i < nextEnemyHealth.Count; i++)
+                for (int i = 0; i < nextEnemyHealth.Count; i++)
                 {
                     if (!newEnemiesList.Contains(nextEnemyHealth[i]) && enemyHealth.Count == 0)
                     {
@@ -299,7 +299,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
             if (newEnemiesList.Count > 0)
             {
-                attackFlagType = AttackFlagType.BasicAttack;
+                attackFlagType = AttackFlagType.BASIC_ATTACK;
                 HitEnemy(attackType, newEnemiesList, attackFlagType);
 
                 SlowMotionEffect.eSlowMotion?.Invoke(0.15f, 0.02f);
@@ -364,9 +364,9 @@ public class PlayerCombatV2 : MonoBehaviour
             (List<IHittableObject> enemyList, List<GameObject> enemyObjects) = impactHitDetector.SendEnemyCollision();
             enemyHealth = new List<IHittableObject>(enemyList);
 
-            attackFlagType = AttackFlagType.ImpactHit;
+            attackFlagType = AttackFlagType.IMPACT_HIT;
 
-            if(enemyHealth != null)
+            if (enemyHealth != null)
             {
                 HitEnemy(ATTACK_TYPE.MID_ATTACK, enemyHealth, attackFlagType);
             }
@@ -395,7 +395,7 @@ public class PlayerCombatV2 : MonoBehaviour
                 }
             }
 
-            if(impactHitNextEnemyHealth.Count == 0)
+            if (impactHitNextEnemyHealth.Count == 0)
             {
                 impactHitNextEnemyHealth = newEnemiesList;
             }
@@ -406,7 +406,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
             if (impactHitNextEnemyHealth.Count > 0 && impactHitNextEnemyHealth != null)
             {
-                attackFlagType = AttackFlagType.ImpactHit;
+                attackFlagType = AttackFlagType.IMPACT_HIT;
                 HitEnemy(ATTACK_TYPE.MID_ATTACK, impactHitNextEnemyHealth, attackFlagType);
 
                 impactHitNextEnemyHealth.Clear();
@@ -447,7 +447,7 @@ public class PlayerCombatV2 : MonoBehaviour
         {
             if (enemyHealth[i] != null)
             {
-                if (flag == AttackFlagType.ImpactHit)
+                if (flag == AttackFlagType.IMPACT_HIT)
                 {
                     enemyHealth[i].PushEnemy(this.transform.root.gameObject);
                 }
@@ -459,7 +459,7 @@ public class PlayerCombatV2 : MonoBehaviour
 
     public void StartAttacking()
     {
-        if(!isDamaging)
+        if (!isDamaging)
         {
             isDamaging = true;
         }
@@ -475,7 +475,7 @@ public class PlayerCombatV2 : MonoBehaviour
         nextEnemyHealth.Clear();
         enemyHealth.Clear();
 
-        if(comboCounter == 3)
+        if (comboCounter == 3)
         {
             ResetCombo();
         }

@@ -95,7 +95,7 @@ public class EnemyHealth : MonoBehaviour, IHittableObject
                 pushTransition = false;
                 displaceCounter = 0f;
 
-                ReceiveDamage(wallCollisionDamage, AttackFlagType.Wall);
+                ReceiveDamage(wallCollisionDamage, AttackFlagType.WALL);
             }
         }
     }

@@ -36,7 +36,7 @@ public class ShieldedEnemy : Enemy
             return;
         }
 
-        if ((attackType & AttackFlagType.HeavyAttack) == 0)
+        if ((attackType & AttackFlagType.HEAVY_ATTACK) == 0)
             return;
 
         BreakShield();
@@ -54,7 +54,7 @@ public class ShieldedEnemy : Enemy
         if (shieldObject != null)
         {
             // Allow all attacks to affect this enemy after shield breaks, not optimal but works for now.
-            flagMask = AttackFlagType.BasicAttack | AttackFlagType.ImpactHit | AttackFlagType.HeavyAttack | AttackFlagType.SnowAttack | AttackFlagType.Wall;
+            flagMask = AttackFlagType.ALL;
 
             shieldObject.gameObject.SetActive(false);
         }

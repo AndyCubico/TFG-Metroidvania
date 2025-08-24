@@ -77,7 +77,7 @@ public class SpecialAbilities : MonoBehaviour
     private PlayerHealth m_PlayerHealth;
     private PlayerCombatV2 m_PlayerCombat;
 
-    AttackFlagType attackFlagType = AttackFlagType.None;
+    AttackFlagType attackFlagType = AttackFlagType.NONE;
 
     private void OnEnable()
     {
@@ -212,7 +212,7 @@ public class SpecialAbilities : MonoBehaviour
 
             if (snowCollider.size.x >= snowExpansionMaxSize) // If collider arrives to max size
             {
-                attackFlagType = AttackFlagType.SnowAttack;
+                attackFlagType = AttackFlagType.SNOW_ATTACK;
                 HitEnemy(snowDamage, enemiesHealth, attackFlagType); // Send damage to enemies (TO CHANGE IN THE FUTURE, the enemies cant wait to be damage when the attack ends, have to do it while is happening)
                 snowCollider.size = new Vector2(0, snowCollider.size.y);  // Return collider to normal size
                 sizeSnowExpansion = 0;

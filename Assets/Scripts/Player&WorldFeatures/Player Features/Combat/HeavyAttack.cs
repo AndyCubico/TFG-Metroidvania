@@ -61,7 +61,7 @@ public class HeavyAttack : MonoBehaviour
 
     [HideInInspector] public int heavyCharges;
 
-    AttackFlagType attackFlagType = AttackFlagType.None;
+    AttackFlagType attackFlagType = AttackFlagType.NONE;
 
     void Start()
     {
@@ -216,7 +216,7 @@ public class HeavyAttack : MonoBehaviour
 
         for (int i = 0; i < enemyHealth.Count; i++)
         {
-            attackFlagType = AttackFlagType.HeavyAttack;
+            attackFlagType = AttackFlagType.HEAVY_ATTACK;
             enemyHealth[i].ReceiveDamage(damage, attackFlagType);
         }
     }

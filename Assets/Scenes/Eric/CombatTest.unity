@@ -8283,6 +8283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melee Enemy Shield Test
       objectReference: {fileID: 0}
+    - target: {fileID: 8818361107380346112, guid: f2c53e020c1b9d94f82cb4d69bfbbfc9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8299,6 +8303,10 @@ PrefabInstance:
     - target: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: m_Name
       value: Melee Enemy 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8839337389357864534, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: m_Speed

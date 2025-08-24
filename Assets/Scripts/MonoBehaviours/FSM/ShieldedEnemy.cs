@@ -53,8 +53,8 @@ public class ShieldedEnemy : Enemy
     {
         if (shieldObject != null)
         {
-            // Allow HeavyAttack to affect this enemy after shield breaks, not optimal but works for now.
-            flagMask |= AttackFlagType.HeavyAttack;
+            // Allow all attacks to affect this enemy after shield breaks, not optimal but works for now.
+            flagMask = AttackFlagType.BasicAttack | AttackFlagType.ImpactHit | AttackFlagType.HeavyAttack | AttackFlagType.SnowAttack | AttackFlagType.Wall;
 
             shieldObject.gameObject.SetActive(false);
         }

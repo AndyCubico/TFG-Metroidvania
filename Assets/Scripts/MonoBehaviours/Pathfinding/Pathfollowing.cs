@@ -362,6 +362,7 @@ public class Pathfollowing : MonoBehaviour
             if (m_JumpCoroutine == null)
             {
                 m_JumpCoroutineExecution = false;
+                isJumping = false;
             }
         }
     }

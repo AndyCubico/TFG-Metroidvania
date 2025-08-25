@@ -50,6 +50,7 @@ public class Pathfollowing : MonoBehaviour
     // Debug
     [SerializeField] private LineRenderer lineRenderer;
 
+    [Tooltip("Manage enemy facing, uncheck if i should be facing left in the beginning")]
     public bool isFacingRight = true;
     public bool isPathValid = true;
 
@@ -65,6 +66,13 @@ public class Pathfollowing : MonoBehaviour
         m_Comparer = new Helper.Int2Comparer();
 
         lineRenderer = GetComponent<LineRenderer>();
+
+        if (!isFacingRight)
+        {
+            Vector3 currentScale = gameObject.transform.localScale;
+            currentScale.x *= -1;
+            gameObject.transform.localScale = currentScale;
+        }
     }
 
     void Update()
@@ -118,7 +126,7 @@ public class Pathfollowing : MonoBehaviour
                 }
                 // Check if it should jump if the next node is a cliff.
                 // TODO: Very bad if statment, should not need m_JumpCoroutineExecution, rework.
-                else if (!m_JumpCoroutineExecution 
+                else if (!m_JumpCoroutineExecution
                     && m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
                     !CheckHeight(m_TargetPosition) &&
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||

@@ -67,7 +67,7 @@ public class HangEdges : MonoBehaviour
 
         if (isHanged) //Once the player is hanged
          {
-             if (characterPlayerController.canUnhang && characterPlayerController.climbEdges) //If the player has released the space button and the climb edge key is pressed move the player to the new position
+             if (characterPlayerController.canUnhang && /*characterPlayerController.climbEdges*/ characterPlayerController.downControllerSensitivity > 0.8f) //If the player has released the space button and the climb edge key is pressed move the player to the new position
              {
                  moveToNewPosition = true;
                  isHanged = false;

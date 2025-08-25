@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb4ec0074ebe8f4c8f631b86ac5dba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Objects: []
   collisionTag:
   - Player
   - Enemy
@@ -204,8 +205,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bcfe458bdc485f4bbc50350d175c8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positions: []
+  positions:
+  - {fileID: 346119937415766527}
+  - {fileID: 8702121785360606294}
   behavviour: 0
+  m_CurrentListValue: 0
   lerpSource: {fileID: 0}
   m_TargetValue: 0
 --- !u!1001 &1701644018063640456

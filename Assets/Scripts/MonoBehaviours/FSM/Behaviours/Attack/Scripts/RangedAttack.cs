@@ -67,22 +67,14 @@ public class RangedAttack : AttackSOBase
 
         m_playerInSight = false;
 
-        if (distanceToPlayer <= m_DistanceLimitToPlayer)
-        {
-            // Only raycast if within the sight range
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, m_VisionMask);
+        // Only raycast if within the sight range
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, m_VisionMask);
 
-            Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
+        Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
 
-            if (hit.collider != null && hit.collider.transform.root.CompareTag("Player"))
-            {
-                m_playerInSight = true;
-            }
-        }
-        else
+        if (hit.collider != null && hit.collider.transform.root.CompareTag("Player"))
         {
-            // Debug ray if beyond range
-            Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.red);
+            m_playerInSight = true;
         }
 
         // If player is not in sight OR too far, start the countdown

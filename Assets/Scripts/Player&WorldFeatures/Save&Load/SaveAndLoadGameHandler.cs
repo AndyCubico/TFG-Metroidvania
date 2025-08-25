@@ -15,11 +15,16 @@ public class object_SL //SL -> Save&Load
 {
     public string objectName;
     public int objectID;
+    public enum ObjectType 
+    {
+        HIT_LEVER,
+    }
+    public ObjectType objectType;
 }
 public class room_SL //SL -> Save&Load
 {
     public string roomName;
-    public List<object_SL> listRooms = new List<object_SL>();
+    public List<object_SL> listObjects = new List<object_SL>();
 }
 
 public class world_SL //SL -> Save&Load

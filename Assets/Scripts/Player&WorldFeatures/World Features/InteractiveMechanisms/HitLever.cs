@@ -16,7 +16,15 @@ public class HitLever : MonoBehaviour, IHittableObject, ILerpValueReturn
     [Header("Extra Properties")]
     [SerializeField] bool m_CanBeTurnedOff;
     [SerializeField] bool m_ChangesLerpProvider;
+    [SerializeField] bool m_IsSave;
     [ShowIf("m_ChangesLerpProvider", true)] public MonoBehaviour lerpReciver; ILerpValueReciver m_LerpReciver;
+
+    public class HitLever_SL : object_SL 
+    {
+        public bool isTriggered;
+        public float currentValue;
+    } 
+    HitLever_SL m_Save;
     void Awake()
     {
         if (m_ChangesLerpProvider)
@@ -25,6 +33,42 @@ public class HitLever : MonoBehaviour, IHittableObject, ILerpValueReturn
             if (m_LerpReciver == null) { Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
         }
     }
+
+    private void Start()
+    {
+        if (m_IsSave) 
+        {
+            World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
+
+            object_SL nameObj = new object_SL
+            {
+                // Generic objects attributes
+                objectName = this.gameObject.name,
+                objectID = this.gameObject.transform.GetSiblingIndex(),
+                objectType = object_SL.ObjectType.HIT_LEVER,
+            };
+
+            m_Save = (HitLever_SL)saveLoad.LoadObject(nameObj);
+
+            if(m_Save != null) 
+            {
+                m_IsTriggered = m_Save.isTriggered;
+                m_CurrentValue = m_Save.currentValue;
+
+                if (m_IsTriggered) // If lever was triggered, trigger again with its saved value.
+                {
+                    if (m_ChangesLerpProvider)
+                    {
+                        m_CurrentValue = m_LerpReciver.ChangeLerpSource(this);
+                    }
+
+                    StartCoroutine(MoveLerp());
+                }
+                
+            }
+        }
+    }
+
     public void ReceiveDamage(float damage, AttackFlagType flag)
     {
         if ((flagMask & flag) != 0)
@@ -39,6 +83,25 @@ public class HitLever : MonoBehaviour, IHittableObject, ILerpValueReturn
                 }
 
                 StartCoroutine(MoveLerp());
+
+                if (m_IsSave)
+                {
+                    World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
+
+                    m_Save = new HitLever_SL
+                    {
+                        // Generic objects attributes
+                        objectName = this.gameObject.name,
+                        objectID = this.gameObject.transform.GetSiblingIndex(),
+                        objectType = object_SL.ObjectType.HIT_LEVER,
+
+                        // Specific object atributes
+                        isTriggered = m_IsTriggered,
+                        currentValue = m_CurrentValue,
+
+                    };
+                    saveLoad.SaveObject(m_Save);
+                }
             }
         }
     }
@@ -71,7 +134,7 @@ public class HitLever : MonoBehaviour, IHittableObject, ILerpValueReturn
                 m_CurrentValue = m_UntriggeredValue;
             }
         }
-            
+
         
     }
 

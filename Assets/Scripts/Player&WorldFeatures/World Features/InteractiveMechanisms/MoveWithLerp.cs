@@ -80,4 +80,5 @@ public class MoveWithLerp : MonoBehaviour, ILerpValueReciver
         if (m_LerpReturner == null) { Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
         return t;
     }
+    public ILerpValueReturn GetLerpSource() { return m_LerpReturner; }
 }

@@ -50,7 +50,7 @@ public class Pathfollowing : MonoBehaviour
     // Debug
     [SerializeField] private LineRenderer lineRenderer;
 
-    [Tooltip("Manage enemy facing, uncheck if i should be facing left in the beginning")]
+    [Tooltip("Manage enemy facing, uncheck if it should be facing left at the beginning")]
     public bool isFacingRight = true;
     public bool isPathValid = true;
 

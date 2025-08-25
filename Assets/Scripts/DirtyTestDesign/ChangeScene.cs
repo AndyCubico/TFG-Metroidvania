@@ -10,7 +10,7 @@ public class ChangeScene : MonoBehaviour
 
     public bool onlyChargeOnce = false;
 
-    private float m_MinTimeToEnableCollision = 1f;
+    private float m_MinTimeToEnableCollision = 0.2f;
     private float m_timeToEnableCounter = 0f;
     [SerializeField] bool m_IsExterior; // For the weather system.
 

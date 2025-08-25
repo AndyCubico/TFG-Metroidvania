@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Splines.ExtrusionShapes;
+using static BreakableDoor;
 using static HitLever;
 
 public class World_Save_Load : MonoBehaviour
@@ -140,11 +141,13 @@ public class World_Save_Load : MonoBehaviour
                         switch (obj.objectType)
                         {
                             case object_SL.ObjectType.HIT_LEVER:
+                                HitLever_SL lever = (HitLever_SL)saveObject.listRooms[i].listObjects[j];
+                                return lever;
 
-
-                                HitLever_SL rObj = (HitLever_SL)saveObject.listRooms[i].listObjects[j];
-
-                                return rObj;
+                                break;
+                            case object_SL.ObjectType.BREAKABLE_OBJECT:
+                                Breakable_SL broken = (Breakable_SL)saveObject.listRooms[i].listObjects[j];
+                                return broken;
 
                                 break;
                             default:

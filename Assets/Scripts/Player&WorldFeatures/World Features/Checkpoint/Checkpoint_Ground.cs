@@ -84,13 +84,13 @@ public class Checkpoint_Ground : MonoBehaviour
                 {
                     RaycastHit2D hit = Physics2D.Raycast(this.gameObject.transform.position, Vector2.down, 1f, groundMask);
 
-                    if (hit.collider != null)
+                    if (hit.collider != null && checkpoint != null)
                     {
                         lastSecurePosition = checkpoint.transform;
 
                         checkpoint.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y - (this.transform.localScale.y / 2), this.gameObject.transform.position.z);
                     }
-                    else
+                    else if (checkpoint != null)
                     {
                         checkpoint.transform.position = lastSecurePosition.transform.position;
                     }

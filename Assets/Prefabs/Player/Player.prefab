@@ -776,7 +776,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4579048743930507744}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.88, y: -6.338, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0}
   m_ConstrainProportionsScale: 0
@@ -978,7 +978,7 @@ MonoBehaviour:
   Player_Down: {fileID: 21300000, guid: 282e9e5c9ef83244b8c60f6b06939a8e, type: 3}
   groundMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 98432
   slideMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1564,6 +1564,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f0cfff55-01d1-42f3-8a88-bda53dd66a1d
     m_ActionName: 'Player/SnowClimate[/Keyboard/5]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 385208a4-726c-4bc1-8244-7c7f89f8f7cb
+    m_ActionName: 'Player/SunClimate[/DualShock4GamepadHID/dpad/right,/Keyboard/6]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

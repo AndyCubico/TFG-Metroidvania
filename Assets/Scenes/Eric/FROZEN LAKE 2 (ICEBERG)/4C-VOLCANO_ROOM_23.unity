@@ -2491,6 +2491,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 6818919698737578621, guid: e1a94fcc4d1deae4f9674728ae8b2aa5, type: 3}
+      propertyPath: m_IsSave
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14371,6 +14375,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8080803498178830434, guid: 95c79980063de544099d0d37fb1b0843, type: 3}
+      propertyPath: m_IsSave
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -18947,6 +18955,7 @@ MonoBehaviour:
   m_timeFromFullToZero: 3
   m_CanBeTurnedOff: 0
   m_ChangesLerpProvider: 0
+  m_IsSave: 1
   lerpReciver: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

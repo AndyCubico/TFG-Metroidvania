@@ -54,6 +54,6 @@ public class AttackSlashCombo : AttackSOBase
         base.FinishParry();
 
         isParried = false;
-        enemy.SetTransitionAnimation("Attack");
+        //enemy.SetTransitionAnimation("Attack");
     }
 }

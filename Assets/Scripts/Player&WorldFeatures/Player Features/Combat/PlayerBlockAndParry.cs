@@ -268,7 +268,7 @@ public class PlayerBlockAndParry : MonoBehaviour
 
         ActiveInvincibility(); // Active the invincibility
 
-        if (enemyTesting) // Enemy color testing
+        if (enemyTest != null && enemyTesting) // Enemy color testing
         {
             enemyTest.color = Color.black;
         }

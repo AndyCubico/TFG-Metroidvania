@@ -12,9 +12,9 @@ public class RangedAttack : AttackSOBase
     [SerializeField] private float m_LostOfSightTime = 2f;
     [SerializeField] private float m_DistanceLimitToPlayer = 15f;
     private bool m_playerInSight = false;
-    private float m_SightTimer = 0f;
 
     [SerializeField] private LayerMask m_VisionMask;
+    private Vector2 m_Direction;
 
     public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
     {
@@ -52,6 +52,9 @@ public class RangedAttack : AttackSOBase
 
                 enemy.SetTransitionAnimation("Attack");
 
+                // Target lock, not used for now, too easy to dodge.
+                //m_Direction = (playerTransform.position - transform.position).normalized;
+
                 //Vector2 direction = (playerTransform.position - transform.position).normalized;
                 //GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 //projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
@@ -65,37 +68,18 @@ public class RangedAttack : AttackSOBase
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
 
-        m_playerInSight = false;
-
-        // Only raycast if within the sight range
         RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, m_VisionMask);
-
-        Debug.DrawRay(transform.position, directionToPlayer * distanceToPlayer, Color.green);
 
         if (hit.collider != null && hit.collider.transform.root.CompareTag("Player"))
         {
+            Debug.DrawLine(transform.position, playerTransform.position, Color.green);
             m_playerInSight = true;
         }
-
-        // If player is not in sight OR too far, start the countdown
-        //if (!m_playerInSight || distanceToPlayer > m_DistanceLimitToPlayer)
-        //{
-        //    m_SightTimer += Time.deltaTime;
-
-        //    m_attackTimer = 0;
-
-        //    if (m_SightTimer >= m_LostOfSightTime)
-        //    {
-        //        enemy.stateMachine.Transition(enemy.idleState);
-        //        enemy.SetTransitionAnimation("Idle");
-        //        Debug.Log("CHASE --> IDLE");
-        //    }
-        //}
-        //else
-        //{
-        //    // Player is visible and close enough, reset timer
-        //    m_SightTimer = 0f;
-        //}
+        else
+        {
+            Debug.DrawLine(transform.position, playerTransform.position, Color.red);
+            m_playerInSight = false;
+        }
     }
 
     public override void Initialize(GameObject gameObject, Enemy enemy)

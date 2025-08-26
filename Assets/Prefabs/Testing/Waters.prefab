@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6754690432152562166}
   - component: {fileID: 4764862555257501468}
   - component: {fileID: 2268887544687660659}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.504717, g: 0.6510426, b: 1, a: 1}
+  m_Color: {r: 0.058823533, g: 0.4666667, b: 0.6862745, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -148,8 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11e734f4e31673449250734f737ac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterColors:
+  - {r: 0.058823533, g: 0.4666667, b: 0.6862745, a: 0.9411765}
+  - {r: 0.45817015, g: 0.8236744, b: 0.9811321, a: 0.8627451}
+  m_IsWaterfall: 0
   waterChange: 1
   m_SwimingCollider: {fileID: 3134755518020118515}
+  freezeMask: 8
 --- !u!1 &3134755518020118515
 GameObject:
   m_ObjectHideFlags: 0

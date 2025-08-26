@@ -1,12 +1,15 @@
 using PlayerController;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class WaterBehaviour : MonoBehaviour
+public class WaterBehaviour : MonoBehaviour, IHittableObject
 {
     bool m_IsFrozen = false;
+    float m_frozenTime = 4.0f;
     bool playerIsInsde = false;
+    public Color[] waterColors = new Color[2];
     CharacterPlayerController playerController;
 
     // Waterfall mechanics (default water is horizontal not vertical)
@@ -18,10 +21,7 @@ public class WaterBehaviour : MonoBehaviour
     Vector3 originalScale;
     [SerializeField] GameObject m_SwimingCollider;
 
-    private void Awake()
-    {
-        
-    }
+    public AttackFlagType freezeMask;
 
     private void Start()
     {
@@ -80,6 +80,7 @@ public class WaterBehaviour : MonoBehaviour
 
     public void FreezeWater()
     {
+        this.gameObject.GetComponent<SpriteRenderer>().color = waterColors[1];
         m_IsFrozen = true;
         playerController.isInWater = false;
 
@@ -105,9 +106,10 @@ public class WaterBehaviour : MonoBehaviour
 
     public void UnFreezeWater()
     {
+        this.gameObject.GetComponent<SpriteRenderer>().color = waterColors[0];
         m_IsFrozen = false;
         this.GetComponent<BoxCollider2D>().isTrigger = true;
-        gameObject.layer = 0;
+        gameObject.layer = 11; // Enemy layer
     }
 
     public void ChangeWaterLevel(float value) 
@@ -141,6 +143,28 @@ public class WaterBehaviour : MonoBehaviour
         {
             playerController.isInWater = false;
             playerIsInsde = false;
+        }
+    }
+
+    public void ReceiveDamage(float damage, AttackFlagType flag)
+    {
+        if ((freezeMask & flag) != 0) 
+        {
+            if (!m_IsFrozen) 
+            {
+                StartCoroutine(FreezeWaterTemporaly());
+            }
+        }
+    }
+
+    IEnumerator FreezeWaterTemporaly() 
+    {
+        FreezeWater();
+        yield return new WaitForSeconds(m_frozenTime); // Unfreze water after 4 seconds passed, coldown of ice spell / ice special attack is 4.5 seconds,.
+
+        if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
+        {
+            UpdateWater(WeatherManager.Instance.climate);
         }
     }
 }

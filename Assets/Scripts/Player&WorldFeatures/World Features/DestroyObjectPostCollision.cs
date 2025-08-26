@@ -14,14 +14,6 @@ public class DestroyObjectPostCollision : MonoBehaviour
     [Header("Timing")]
     [ShowIf("m_isRespawnOverTime",true)] public float timeToRespawn;
     public float timeToDestroy;
-    
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

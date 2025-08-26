@@ -24,7 +24,7 @@ public class FallPit : MonoBehaviour
                 StartCoroutine(TpFastCheckpoint());
             }
 
-            HealthEvents.eTakingDamage(damage);
+            //HealthEvents.eTakingDamage(damage); //Make damage with fall pits
         }
     }
 

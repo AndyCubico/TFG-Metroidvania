@@ -761,6 +761,7 @@ GameObject:
   - component: {fileID: 8919406945543996540}
   - component: {fileID: 1211392195622455336}
   - component: {fileID: 2663914870413000242}
+  - component: {fileID: 6655792835045201551}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1592,7 +1593,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   FadeIn: 0.01
-  FadeOut: 1.5
+  FadeOut: 2
 --- !u!114 &1211392195622455336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1630,6 +1631,23 @@ MonoBehaviour:
   - {fileID: 436239141109916112}
   healthDamageScripts:
   - {fileID: 7350815718521869925}
+--- !u!114 &6655792835045201551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4579048743930507744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a330712bf7d9940b537b55bd6728ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  speed: 40
+  maxSpeedX: 8
+  maxSpeedY: 8
+  speedReduction: 1
 --- !u!1 &5279084360005982870
 GameObject:
   m_ObjectHideFlags: 0

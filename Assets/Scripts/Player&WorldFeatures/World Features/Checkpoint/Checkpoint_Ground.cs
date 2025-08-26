@@ -42,6 +42,8 @@ public class Checkpoint_Ground : MonoBehaviour
     public float FadeIn;
     public float FadeOut;
 
+    private float m_SecondsAfterMoving = 0.4f;
+
     private void OnEnable()
     {
         CheckpointEvents.FastCheckpointEvent += FastCheckpoint;
@@ -105,13 +107,7 @@ public class Checkpoint_Ground : MonoBehaviour
 
             if(this.transform.position == new Vector3(checkpoint.transform.position.x, checkpoint.transform.position.y + this.transform.localScale.y / 2, checkpoint.transform.position.z))
             {
-                characterController.enabled = true;
-                rb.gravityScale = gravityScale;
-
-                boxCollider.isTrigger = false;
-                circleCollider.isTrigger = false;
-
-                isTransitioning = false;
+                StartCoroutine(WaitSecondsAfterMoving());
             }
         }
 
@@ -132,5 +128,18 @@ public class Checkpoint_Ground : MonoBehaviour
 
         FadeToBlackEvents.eFadeToBlackAction?.Invoke(FadeIn, FadeOut);
         isTransitioning = true;
+    }
+
+    IEnumerator WaitSecondsAfterMoving()
+    {
+        yield return new WaitForSeconds(m_SecondsAfterMoving);
+
+        characterController.enabled = true;
+        rb.gravityScale = gravityScale;
+
+        boxCollider.isTrigger = false;
+        circleCollider.isTrigger = false;
+
+        isTransitioning = false;
     }
 }

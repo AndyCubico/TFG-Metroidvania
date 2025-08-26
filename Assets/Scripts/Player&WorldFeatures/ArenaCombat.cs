@@ -87,7 +87,7 @@ public class ArenaCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_CurrentWave != null) 
+        if (m_CurrentWave != null && m_CurrentWaveIndex < listWaves.Count) 
         {
             if (listWaves[m_CurrentWaveIndex].waveFinished) 
             {

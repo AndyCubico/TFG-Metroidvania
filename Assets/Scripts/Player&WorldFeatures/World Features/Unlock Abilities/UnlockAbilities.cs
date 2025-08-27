@@ -82,6 +82,7 @@ public class UnlockAbilities : MonoBehaviour
                         specialAbilities.snowAbilityUnlocked = true;
                         hasBeenUnlocked = true;
                         InteractionInput = false;
+                        this.gameObject.SetActive(false);
 
                         Debug.Log("Snow ability unlocked!");
                     }

@@ -7438,8 +7438,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
+      propertyPath: cameraBounds.x
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
+      propertyPath: cameraBounds.y
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
       propertyPath: cameraBounds.width
-      value: 64
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
       propertyPath: cameraBounds.height
@@ -7448,8 +7456,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2208207909450974934, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 658678048}
   m_SourcePrefab: {fileID: 100100000, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
+--- !u!1 &658678046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2208207909450974934, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
+  m_PrefabInstance: {fileID: 658678045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &658678047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8450970686493695912, guid: a35d8b47e9642b047bebfec96d6fa34e, type: 3}
+  m_PrefabInstance: {fileID: 658678045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7a5a3fac8528a449040200c77bd202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &658678048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658678046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30b7e6e481c5bc458d1837106ad0b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraRef: {fileID: 658678047}
+  m_newCameraBounds:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 64
+    height: 72
+  m_oldCameraBounds:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 64
+    height: 72
+  modes: 1
+  timeForChange: 2.1
 --- !u!1001 &679543936
 PrefabInstance:
   m_ObjectHideFlags: 0

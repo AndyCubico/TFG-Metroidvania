@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -26,6 +27,7 @@ public class ChangeCameraBounds : MonoBehaviour
     [SerializeField] CameraChangesMode modes;
     [SerializeField] float m_timeForChange = 0;
     float timePassed = 0;
+    [TagDropdown] public string[] collisionTag = new string[] { };
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,22 +54,29 @@ public class ChangeCameraBounds : MonoBehaviour
     {
         if ((modes & (CameraChangesMode.ON_COLLISION_ONCE | CameraChangesMode.ON_COLLISION_STAY)) != 0) 
         {
-            StopAllCoroutines();
-            StartCoroutine(ChangeBounds(m_timeForChange));
-
-            if ((modes & (CameraChangesMode.ON_COLLISION_ONCE)) != 0) // If on collision once, makes sure doesn't repeat
+            if (collisionTag.Contains(collision.gameObject.tag))
             {
-                modes = CameraChangesMode.NONE;
+                StopAllCoroutines();
+                StartCoroutine(ChangeBounds(m_timeForChange));
+
+                if ((modes & (CameraChangesMode.ON_COLLISION_ONCE)) != 0) // If on collision once, makes sure doesn't repeat
+                {
+                    modes = CameraChangesMode.NONE;
+                }
             }
+            
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if((modes & (CameraChangesMode.ON_COLLISION_STAY)) != 0)
+        if ((modes & (CameraChangesMode.ON_COLLISION_STAY)) != 0)
         {
-            StopAllCoroutines();
-            StartCoroutine(ChangeBounds(m_timeForChange,true));
+             if (collisionTag.Contains(collision.gameObject.tag))
+            {
+                StopAllCoroutines();
+                StartCoroutine(ChangeBounds(m_timeForChange, true));
+            }
         }
     }
 

@@ -34,7 +34,7 @@ public class World_Save_Load : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         saveObject = new world_SL() { }; 
         saveObject.listRooms = new List<room_SL>();
@@ -129,36 +129,40 @@ public class World_Save_Load : MonoBehaviour
 
     public object_SL LoadObject(object_SL obj) 
     {
-        for (int i = 0; i < saveObject.listRooms.Count; i++) //Search for the scene in the save object 
+        if(saveObject != null) 
         {
-            if (saveObject.listRooms[i].roomName == SceneManager.GetActiveScene().name)
+            for (int i = 0; i < saveObject.listRooms.Count; i++) //Search for the scene in the save object 
             {
-                
-                for (int j = 0; j < saveObject.listRooms[i].listObjects.Count; j++)
+                if (saveObject.listRooms[i].roomName == SceneManager.GetActiveScene().name)
                 {
-                    if (saveObject.listRooms[i].listObjects[j].objectName == obj.objectName && saveObject.listRooms[i].listObjects[j].objectID == obj.objectID)
+                
+                    for (int j = 0; j < saveObject.listRooms[i].listObjects.Count; j++)
                     {
-                        switch (obj.objectType)
+                        if (saveObject.listRooms[i].listObjects[j].objectName == obj.objectName && saveObject.listRooms[i].listObjects[j].objectID == obj.objectID)
                         {
-                            case object_SL.ObjectType.HIT_LEVER:
-                                HitLever_SL lever = (HitLever_SL)saveObject.listRooms[i].listObjects[j];
-                                return lever;
+                            switch (obj.objectType)
+                            {
+                                case object_SL.ObjectType.HIT_LEVER:
+                                    HitLever_SL lever = (HitLever_SL)saveObject.listRooms[i].listObjects[j];
+                                    return lever;
 
-                                break;
-                            case object_SL.ObjectType.BREAKABLE_OBJECT:
-                                Breakable_SL broken = (Breakable_SL)saveObject.listRooms[i].listObjects[j];
-                                return broken;
+                                    break;
+                                case object_SL.ObjectType.BREAKABLE_OBJECT:
+                                    Breakable_SL broken = (Breakable_SL)saveObject.listRooms[i].listObjects[j];
+                                    return broken;
 
-                                break;
-                            default:
-                                break;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
                         }
-                        break;
                     }
+                    break;
                 }
-                break;
             }
+     
         }
-        return null;
+           return null;
     }
 }

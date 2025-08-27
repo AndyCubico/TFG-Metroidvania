@@ -1,9 +1,7 @@
 using UnityEngine;
-using static HitLever;
 
 public class BreakableDoor : MonoBehaviour, IHittableObject
 {
-    [Header("Life Variables")]
 
     public AttackFlagType flagMask;
     [SerializeField] bool m_IsSave;
@@ -35,7 +33,7 @@ public class BreakableDoor : MonoBehaviour, IHittableObject
                 if (m_Save.isBroken)
                 {
                     Destroy(gameObject);
-                }         
+                }
             }
         }
     }
@@ -63,7 +61,7 @@ public class BreakableDoor : MonoBehaviour, IHittableObject
                 };
                 saveLoad.SaveObject(m_Save);
             }
-            
+
             Destroy(gameObject);
         }
     }

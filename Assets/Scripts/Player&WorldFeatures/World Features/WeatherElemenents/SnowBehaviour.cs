@@ -7,7 +7,10 @@ public class SnowBehaviour : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
+        {
+            UpdateSnow(WeatherManager.Instance.climate);
+        }
     }
 
     private void OnEnable()

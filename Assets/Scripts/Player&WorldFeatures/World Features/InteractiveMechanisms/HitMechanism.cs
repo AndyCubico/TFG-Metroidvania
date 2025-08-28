@@ -18,7 +18,8 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
     [ShowIf("m_HasTimeWaitOnCycle", true)] public float waitUntilCountdown;
     private float m_CurrentWaitUntilCountdown;
     private bool m_IsCountDown = true;
-    private bool m_IsFrozen; // Frozen mechanism moves at half speed
+    [SerializeField] bool m_IsFrozen; // Frozen mechanism moves at half speed
+    Color m_color;
 
     [SerializeField] bool m_ChangesLerpProvider;
     [ShowIf("m_ChangesLerpProvider", true)] public MonoBehaviour lerpReciver; ILerpValueReciver m_LerpReciver;
@@ -30,6 +31,10 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
             m_LerpReciver = lerpReciver as ILerpValueReciver;
             if (m_LerpReciver == null) { Debug.LogError("Assigned object does not implement ILerpValueReturn"); }
         }
+
+        m_color = gameObject.GetComponent<SpriteRenderer>().color;
+
+        if (m_IsFrozen) { this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue; }
     }
 
     public void ReceiveDamage(float damage, AttackFlagType flag)
@@ -45,7 +50,7 @@ public class HitMechanism : MonoBehaviour, IHittableObject, ILerpValueReturn
             if (m_IsFrozen)
             {
                 m_IsFrozen = false;
-                this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                this.gameObject.GetComponent<SpriteRenderer>().color = m_color;
             }
             else
             {

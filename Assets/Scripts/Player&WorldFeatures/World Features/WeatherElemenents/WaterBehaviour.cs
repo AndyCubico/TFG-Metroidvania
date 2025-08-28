@@ -107,7 +107,7 @@ public class WaterBehaviour : MonoBehaviour, IHittableObject
         }
         else 
         {
-            gameObject.layer = 7; // Ground
+            gameObject.layer = 16; // Ground
         }
             
     }
@@ -127,10 +127,24 @@ public class WaterBehaviour : MonoBehaviour, IHittableObject
         gameObject.transform.localScale = nScale;
         Debug.Log(originalScale.y - nScale.y);
         gameObject.transform.position += new Vector3 (0, (nScale.y-originalScale.y), 0);
+
+        if (playerIsInsde && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
+        {
+            playerController.transform.position = new Vector3(playerController.transform.position.x, playerController.transform.position.y + (this.transform.localScale.y / 2), playerController.transform.position.z);
+
+            //playerIsInsde = false;
+        }
     }
 
     public void ResetWaterLevel() 
     {
+        if (playerIsInsde && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.WALL && playerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
+        {
+            playerController.transform.position = new Vector3(playerController.transform.position.x, playerController.transform.position.y + (this.transform.localScale.y / 2) * waterChange, playerController.transform.position.z);
+
+            //playerIsInsde = false;
+        }
+
         Vector3 nScale = transform.localScale;
         gameObject.transform.localScale = originalScale;
         gameObject.transform.position -= new Vector3(0, (nScale.y - originalScale.y), 0);

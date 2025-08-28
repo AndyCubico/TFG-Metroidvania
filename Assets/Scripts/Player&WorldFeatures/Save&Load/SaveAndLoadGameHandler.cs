@@ -9,6 +9,7 @@ public class player_SL //SL -> Save&Load
     public Vector3 playerPosition;
     public int charges;
     public bool snowAbilityUnlock;
+    public string lastSavedScene;
 }
 
 public class object_SL //SL -> Save&Load

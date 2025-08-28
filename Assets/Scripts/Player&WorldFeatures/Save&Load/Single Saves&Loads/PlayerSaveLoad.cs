@@ -1,7 +1,6 @@
-using UnityEngine;
 using PlayerController;
-using UnityEngine.Splines.ExtrusionShapes;
-using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSaveLoad : MonoBehaviour
 {
@@ -44,7 +43,8 @@ public class PlayerSaveLoad : MonoBehaviour
             {
                 playerPosition = this.gameObject.transform.position,
                 charges = GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().heavyCharges,
-                snowAbilityUnlock = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>().snowAbilityUnlocked
+                snowAbilityUnlock = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>().snowAbilityUnlocked,
+                lastSavedScene = SceneManager.GetActiveScene().name,
             };
 
             string json = JsonUtility.ToJson(saveObject);

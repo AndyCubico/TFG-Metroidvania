@@ -40,7 +40,7 @@ public class BreakableDoor : MonoBehaviour, IHittableObject
 
     public void ReceiveDamage(float damage, AttackFlagType flag)
     {
-        if ((flag & flagMask) != 0)
+        if ((flag & flagMask) != 0) // If attack flag (type of attack) matches, take the hit.
         {
             GameManagerEvents.eSpawnDamageText(new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + this.gameObject.transform.localScale.y / 2, transform.position.z), damage);
 

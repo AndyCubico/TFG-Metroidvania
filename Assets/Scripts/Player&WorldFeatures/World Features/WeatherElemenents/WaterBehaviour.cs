@@ -25,7 +25,15 @@ public class WaterBehaviour : MonoBehaviour, IHittableObject
 
     private void Start()
     {
-        playerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
+        try 
+        {
+            playerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
+        }
+        catch 
+        {
+            Debug.Log("Player not existing yet");
+        }
+        
 
         originalScale = transform.localScale;
 

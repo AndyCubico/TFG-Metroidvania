@@ -599,7 +599,7 @@ namespace PlayerController
             }
 
 
-            //Input buffer update
+            // Input buffer update
             InputBufferUpdate();
 
             //_MOVEMENT
@@ -610,7 +610,7 @@ namespace PlayerController
             //_CheckDownControllerInput
             downControllerSensitivity = DownControllerAction.action.ReadValue<Vector2>().y;
 
-            //Add the basic movement force to the player
+            // Add the basic movement force to the player
             AddMovementSpeed();
 
             //_COYOTE_TIME
@@ -625,38 +625,29 @@ namespace PlayerController
             //CrouchingGroundAndAir();
             //CROUCH_
 
-            //Check angle between player and ground in order to be able to Jump
+            // Check angle between player and ground in order to be able to Jump
             CheckEarringFloor();
 
-            //Check Look Direction
+            // Check Look Direction
             CheckPlayerFaceDirection();
 
-            //Here we add an extra false gravity when falling
+            // Here we add an extra false gravity when falling
             if (activateFallMultiplier)
             {
                 FallDownGravity();
             }
 
-            //Cheater hability Unlocker, send a hability to this function to unlock it
+            // Cheater hability Unlocker, send a hability to this function to unlock it
             UnlockHabilities(habilityUnlocker);
 
+            // Manages when the player inputs down to stop being hanged from walls or edges
             if ((dropDown || downControllerSensitivity < -0.8f) && (playerState == PLAYER_STATUS.WALL || playerState == PLAYER_STATUS.HANGED)) //Player can detach walls or edges if press S or Down joystick
             {
-                PlayerUnFreeze();
-                canJump = false;
-
-                if (isHangingEdge) //In case player is on an Edge
-                {
-                    canUnhang = false;
-                    playerOnEdgeUnfreeze = false;
-                    DownCrouchCollider.isTrigger = false;
-                    isHangingEdge = false;
-                }
-
-                playerState = PLAYER_STATUS.AIR;
+                UnhangPlayer();
             }
 
-            if (hasExitWall) //When the player has exit the wall hanging, from a brief of time is going to be block
+
+            if (hasExitWall) // When the player has exit the wall hanging, from a brief of time is going to be block
             {
                 exitWallTimer += Time.deltaTime;
 
@@ -668,7 +659,7 @@ namespace PlayerController
                 }
             }
 
-            //Rotate Player depending earring floor
+            // Rotate Player depending earring floor
             if (playerState == PLAYER_STATUS.GROUND || isSlide) //Check if player is on GROUND or Sliding to till it or not
             {
                 actualEarringFloor = this.transform.rotation.eulerAngles.z;
@@ -690,7 +681,7 @@ namespace PlayerController
                 this.transform.rotation = new Quaternion(0, 0, 0, 1); //Return player to Original rotation
             }
 
-            //Deactivates emergency jumping stop, if is on ground, or if it was activated in hanging
+            // Deactivates emergency jumping stop, if is on ground, or if it was activated in hanging
             //if ((jumpKeyUp && isHangingWall || isGrounded) && !isCrouch)
             //{
             //    jumpStopper = false;
@@ -699,14 +690,30 @@ namespace PlayerController
             //Update player status for the inspector
             playerStateMessage = playerState.ToString() + ", " + playerFaceDir.ToString();
 
-            if (Input.GetKeyDown(KeyCode.Period)) //Alternate cheat mode
+            if (Input.GetKeyDown(KeyCode.Period)) // Alternate cheat mode
             {
                 cheatMode = !cheatMode;
                 Debug.Log("Cheats: " + cheatMode);
             }
         }
 
-        //Here the inputs are check for turn off if they are active
+        public void UnhangPlayer()
+        {
+            PlayerUnFreeze();
+            canJump = false;
+
+            if (isHangingEdge) //In case player is on an Edge
+            {
+                canUnhang = false;
+                playerOnEdgeUnfreeze = false;
+                DownCrouchCollider.isTrigger = false;
+                isHangingEdge = false;
+            }
+
+            playerState = PLAYER_STATUS.AIR;
+        }
+
+        // Here the inputs are check for turn off if they are active
         private void InputBufferUpdate()
         {
             for (int i = 0; i < (int)INPUT_BUFFER.NONE; i++) //Pass for all INPUT_BUFFER

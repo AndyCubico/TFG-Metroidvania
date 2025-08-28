@@ -11,6 +11,8 @@ public class ArenaCombat : MonoBehaviour
     {
         public GameObject enemyPrefab;
         public Vector3 positition;
+        public bool isExtraSpawn;
+
         public GameObject SpawnEnemy()
         {
             return Instantiate(enemyPrefab,positition,Quaternion.identity);
@@ -36,6 +38,11 @@ public class ArenaCombat : MonoBehaviour
                 // Spawn enemies if the cap isn't reached
                 if (m_activeEnemies.Count < maxEnemiesOnce && m_deadEnemies + m_activeEnemies.Count < enemies.Count)
                 {
+                    if (enemies[m_activeEnemies.Count + m_deadEnemies].isExtraSpawn) // Extra enemies don't need to be killed to progress the wave
+                    {
+                        enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
+                        m_deadEnemies++;
+                    }
                     yield return new WaitForSeconds(spawnDelay);
                     m_activeEnemies.Add(enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy());
                 }

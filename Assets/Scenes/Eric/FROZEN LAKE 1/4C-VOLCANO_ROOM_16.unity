@@ -1793,20 +1793,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 302982540493071277, guid: db20de703960176438669a341e49e3c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 537874202}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1153414698}
   m_SourcePrefab: {fileID: 100100000, guid: db20de703960176438669a341e49e3c7, type: 3}
 --- !u!4 &1153414696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5501130725761357442, guid: db20de703960176438669a341e49e3c7, type: 3}
   m_PrefabInstance: {fileID: 1153414695}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1153414697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 1153414695}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1153414698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153414697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72a44846f25be345bb8ffd1dcd60014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToDestroy: {fileID: 1042011183}
+  collisionTag:
+  - Player
+  m_isRespawnOverTime: 0
+  timeToRespawn: 0
+  timeToDestroy: 0.16
+  iceColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  freezeMask: 8
 --- !u!4 &1153597413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2599680394472947525, guid: 4d75eeb50e3ea8646804ce3b427f9099, type: 3}

@@ -24,7 +24,7 @@ public class WeatherManager : MonoBehaviour
     [SerializeField] bool m_IsExterior;
 
     //Bool keys
-    bool snowKey;
+    //bool snowKey;
 
     //Controllers
     public CLIMATES climate = CLIMATES.NEUTRAL;
@@ -69,25 +69,25 @@ public class WeatherManager : MonoBehaviour
     void Update()
     {
         //// Sun Inputs
-        //if (sunAction.action.WasPressedThisFrame())
-        //{
-        //    if (climate == CLIMATES.SUN)
-        //    {
-        //        climate = CLIMATES.NEUTRAL;
-        //    }
-        //    else
-        //    {
-        //        climate = CLIMATES.SUN;
-        //    }
+        if (sunAction.action.WasPressedThisFrame())
+        {
+            if (climate == CLIMATES.SUN)
+            {
+                climate = CLIMATES.NEUTRAL;
+            }
+            else
+            {
+                climate = CLIMATES.SUN;
+            }
 
-        //    ChangeClimateTo(climate);
+            ChangeClimateTo(climate);
 
-        //    snowKey = true;
-        //}
-        //else
-        //{
-        //    snowKey = false;
-        //}
+            //snowKey = true;
+        }
+        else
+        {
+            //snowKey = false;
+        }
 
         //Snow Inputs
         if (snowAction.action.WasPressedThisFrame())
@@ -103,54 +103,18 @@ public class WeatherManager : MonoBehaviour
 
             ChangeClimateTo(climate);
 
-            snowKey = true;
+            //snowKey = true;
         }
         else
         {
-            snowKey = false;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Alpha9) && climate != CLIMATES.SUN) // Testing
-        {
-            climate = CLIMATES.SUN;
-            ChangeClimateTo(climate);
+            //snowKey = false;
         }
     }
 
     public void ChangeClimateTo(CLIMATES newClima)
     {
         ChangeWeather.Invoke(newClima);
-
-        //switch (newClima)
-        //{
-        //    case CLIMATES.NEUTRAL:
-        //        ChangeClimateToNeutral();
-        //        break;
-        //    case CLIMATES.SUN:
-        //        break;
-        //    case CLIMATES.SNOW:
-        //        ChangeClimateToSnow();
-        //        break;
-        //}
     }
-
-    //void ChangeClimateToSnow()
-    //{
-    //    for (int i = 0; i < waters.Count; i++)
-    //    {
-    //        waters[i].FreezeWater();
-    //    }
-    //}
-
-    //void ChangeClimateToNeutral()
-    //{
-    //    //Snow
-    //    for (int i = 0; i < waters.Count; i++)
-    //    {
-    //        waters[i].UnFreezeWater();
-    //    }
-    //}
 
     public bool GetExteriorState() 
     {

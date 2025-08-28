@@ -8,7 +8,7 @@ using UnityEngine;
 public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 {
     // On collision destroy parameters
-    [SerializeField] private GameObject m_objectToDestroy;
+    [SerializeField] private GameObject m_objectToDestroy; bool m_isDestroyDueCollision = false;
     [TagDropdown] public string[] collisionTag = new string[] { };
 
 
@@ -19,10 +19,10 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     public float timeToDestroy;
 
     // Weather system elements
-    public Color[] waterColors = new Color[2];
+    public Color[] iceColors = new Color[2];
     float m_frozenTime = 4;
-
-    public AttackFlagType freezeMask;
+    bool m_isFrozen;
+    public AttackFlagType freezeMask = AttackFlagType.SNOW_ATTACK;
 
     private void Start()
     {
@@ -48,21 +48,28 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
         {
             switch (c)
             {
-                case CLIMATES.NEUTRAL:
+                case CLIMATES.NEUTRAL: // If object was destroy due to sun, 
 
-                    // m_objectToDestroy.enabled = true;
+                    if (m_isRespawnOverTime && !m_isDestroyDueCollision)
+                    {
+                        m_objectToDestroy.SetActive(true);
+                    }
 
                     break;
-                case CLIMATES.SUN:
+                case CLIMATES.SUN: // If object not frozen destroy it
 
-                    // m_destroy.enabled = false;
-                    m_objectToDestroy.SetActive(false);
-
+                    if (!m_isFrozen) 
+                    {
+                        m_objectToDestroy.SetActive(false);
+                    }
 
                     break;
                 case CLIMATES.SNOW:
 
-
+                    if (m_isRespawnOverTime && !m_isDestroyDueCollision)
+                    {
+                        m_objectToDestroy.SetActive(true);
+                    }
 
                     break;
                 case CLIMATES.NONE:
@@ -77,16 +84,20 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     {
         if ((freezeMask & flag) != 0)
         {
-            if (/*!m_IsFrozen*/ true)
+            if (!m_isFrozen && m_objectToDestroy.activeInHierarchy)
             {
-                StartCoroutine(FreezeWaterTemporaly());
+                StartCoroutine(TemporalyReinforceIce());
             }
         }
     }
 
-    IEnumerator FreezeWaterTemporaly()
+    IEnumerator TemporalyReinforceIce()
     {
-        yield return new WaitForSeconds(m_frozenTime); // Unfreze water after 4 seconds passed, coldown of ice spell / ice special attack is 4.5 seconds,.
+        m_isFrozen = true;
+
+        yield return new WaitForSeconds(m_frozenTime); // Make frail again after 4 seconds passed, coldown of ice spell / ice special attack is 4.5 seconds,.
+
+        m_isFrozen = false;
 
         if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
         {
@@ -98,12 +109,16 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision detected");
         if (collisionTag.Contains(collision.gameObject.tag))
         {
             Debug.Log("Collision with: " + collision.gameObject.tag);
             // Collision detected with corresponding tag
-            StartCoroutine(DeactivateGameObject(m_objectToDestroy));
+
+            if (!WeatherManager.Instance.GetExteriorState() || (WeatherManager.Instance.climate != CLIMATES.SUN)) 
+            {
+                StartCoroutine(DeactivateGameObject(m_objectToDestroy));
+            }
+            
 
         }
     }
@@ -116,6 +131,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 
         // Deactivate GameObject
         go.SetActive(true);
+        m_isDestroyDueCollision = true;
     }
 
     private IEnumerator DeactivateGameObject(GameObject go)
@@ -126,6 +142,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 
         // Deactivate GameObject
         go.SetActive(false);
+        m_isDestroyDueCollision = false;
 
         if (m_isRespawnOverTime)
         {

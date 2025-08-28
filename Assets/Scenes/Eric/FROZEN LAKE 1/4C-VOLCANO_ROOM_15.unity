@@ -1515,7 +1515,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatform (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     - {fileID: 1662801649054433318, guid: db20de703960176438669a341e49e3c7, type: 3}
@@ -1523,8 +1524,16 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 302982540493071277, guid: db20de703960176438669a341e49e3c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1390833525}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1830825589}
   m_SourcePrefab: {fileID: 100100000, guid: db20de703960176438669a341e49e3c7, type: 3}
+--- !u!1 &498286580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 498286579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &539537915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2540,7 +2549,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatform (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     - {fileID: 1662801649054433318, guid: db20de703960176438669a341e49e3c7, type: 3}
@@ -2548,8 +2558,38 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 302982540493071277, guid: db20de703960176438669a341e49e3c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2334603}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1025607301}
   m_SourcePrefab: {fileID: 100100000, guid: db20de703960176438669a341e49e3c7, type: 3}
+--- !u!1 &1025607300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 1025607299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1025607301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025607300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72a44846f25be345bb8ffd1dcd60014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToDestroy: {fileID: 471099270}
+  collisionTag:
+  - Player
+  m_isRespawnOverTime: 1
+  timeToRespawn: 1.2
+  timeToDestroy: 0.85
+  iceColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  freezeMask: 8
 --- !u!1 &1048014791
 GameObject:
   m_ObjectHideFlags: 0
@@ -4613,7 +4653,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     - {fileID: 1662801649054433318, guid: db20de703960176438669a341e49e3c7, type: 3}
@@ -4621,13 +4662,43 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 302982540493071277, guid: db20de703960176438669a341e49e3c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2146923025}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1606977954}
   m_SourcePrefab: {fileID: 100100000, guid: db20de703960176438669a341e49e3c7, type: 3}
 --- !u!4 &1606977952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 302982540493071277, guid: db20de703960176438669a341e49e3c7, type: 3}
   m_PrefabInstance: {fileID: 1606977951}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1606977953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 1606977951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1606977954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606977953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72a44846f25be345bb8ffd1dcd60014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToDestroy: {fileID: 1283270672}
+  collisionTag:
+  - Player
+  m_isRespawnOverTime: 1
+  timeToRespawn: 1.2
+  timeToDestroy: 0.85
+  iceColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  freezeMask: 8
 --- !u!4 &1615511592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5467404702289265213, guid: 337c027b770162146bb42516b82aeb94, type: 3}
@@ -4847,6 +4918,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5501130725761357442, guid: db20de703960176438669a341e49e3c7, type: 3}
   m_PrefabInstance: {fileID: 498286579}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1830825589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498286580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72a44846f25be345bb8ffd1dcd60014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToDestroy: {fileID: 860207159}
+  collisionTag:
+  - Player
+  m_isRespawnOverTime: 1
+  timeToRespawn: 1.2
+  timeToDestroy: 0.85
+  iceColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  freezeMask: 8
 --- !u!1001 &1837757426
 PrefabInstance:
   m_ObjectHideFlags: 0

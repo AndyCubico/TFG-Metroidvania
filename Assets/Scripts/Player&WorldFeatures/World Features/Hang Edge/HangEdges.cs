@@ -57,7 +57,18 @@ public class HangEdges : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnDisable() // If gameObject is destroy unhang the player
+    {
+        if (isHanged) 
+        {
+            finishClimb = false;
+            hangCooldown = 0.3f;
+            characterPlayerController.UnhangPlayer();
+        }
+        
+    }
+
+    private void Update() // ERIC: Unhanging from edges (or walls) is managed by the player, if any one needs to use it.
     {
         if (climbCooldown > 0f)
         {
@@ -66,14 +77,14 @@ public class HangEdges : MonoBehaviour
         }
 
         if (isHanged) //Once the player is hanged
-         {
-             if (characterPlayerController.canUnhang && /*characterPlayerController.climbEdges*/ characterPlayerController.downControllerSensitivity > 0.8f) //If the player has released the space button and the climb edge key is pressed move the player to the new position
-             {
-                 moveToNewPosition = true;
-                 isHanged = false;
-                 climbCooldown = 0.2f;
-             }
-         }
+        {
+            if (characterPlayerController.canUnhang && /*characterPlayerController.climbEdges*/ characterPlayerController.downControllerSensitivity > 0.8f) //If the player has released the space button and the climb edge key is pressed move the player to the new position (climb to the platform)
+            {
+                moveToNewPosition = true;
+                isHanged = false;
+                climbCooldown = 0.2f;
+            }
+        }
 
         if (moveToNewPosition) //Here is where the player will be moved to the exit position
         {
@@ -106,6 +117,7 @@ public class HangEdges : MonoBehaviour
             }
         }
 
+        // Here is the "OnCollisionCheck" if the player hitted the hang edge
         if (isLeftEdge)
         {
             playerCollision = Physics2D.OverlapAreaAll(leftEdgeCollider.bounds.min, leftEdgeCollider.bounds.max, playerEdgeMask).Length > 0;
@@ -116,7 +128,7 @@ public class HangEdges : MonoBehaviour
             playerCollision = Physics2D.OverlapAreaAll(rightEdgeCollider.bounds.min, rightEdgeCollider.bounds.max, playerEdgeMask).Length > 0;
         }
 
-        if(playerCollision && !isHanged && !finishClimb)
+        if(playerCollision && !isHanged && !finishClimb) // Hang the player
         {
             characterPlayerController = GameObject.Find("Player").GetComponent<CharacterPlayerController>();
 

@@ -662,7 +662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888f2a653c17e0b44a8ec2b4f3dc19f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <m_MaxHealth>k__BackingField: 45
+  <m_MaxHealth>k__BackingField: 90
   m_IdleSOBase: {fileID: 11400000, guid: 649a07fe2c170c24d8cabaf54a50bda9, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 4afd77789eb276f448467a2c0ed58c24, type: 2}
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Speed: 2
   m_JumpForce: 62
   m_JumpWait: 1
-  m_MaxCliffHeight: 5
+  m_MaxCliffHeight: 1
   isJumping: 0
   m_GroundLayer:
     serializedVersion: 2

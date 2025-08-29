@@ -818,7 +818,8 @@ MonoBehaviour:
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 6fbea4701b30d104fb562785ed050736, type: 2}
   flagMask: 0
-  m_EnemyHit: {fileID: 7590273077874328174}
+  enemyHit: {fileID: 7590273077874328174}
+  animatorController: {fileID: 0}
   shieldActive: 1
   shieldObject: {fileID: 8457687012178578847}
 --- !u!114 &7462474372311357843
@@ -865,7 +866,7 @@ MonoBehaviour:
   m_Speed: 2
   m_JumpForce: 62
   m_JumpWait: 1
-  m_MaxCliffHeight: 5
+  m_MaxCliffHeight: 1
   isJumping: 0
   m_GroundLayer:
     serializedVersion: 2

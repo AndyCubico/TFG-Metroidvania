@@ -8044,6 +8044,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 285375665846219371, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
+      propertyPath: m_GroundLayer.m_Bits
+      value: 114816
+      objectReference: {fileID: 0}
     - target: {fileID: 1330791095726890098, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 36.82
@@ -8088,6 +8092,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elite enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7363680550216263789, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8101,6 +8109,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4799499449654920114, guid: b248796ec30b68e48b56ca5c015c9d1e, type: 3}
+      propertyPath: width
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 6577554492314937967, guid: b248796ec30b68e48b56ca5c015c9d1e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.193146

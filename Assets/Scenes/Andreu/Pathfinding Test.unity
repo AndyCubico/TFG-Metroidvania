@@ -1525,6 +1525,10 @@ PrefabInstance:
       value: Melee Enemy Test
       objectReference: {fileID: 0}
     - target: {fileID: 3158197134719873139, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
+      propertyPath: m_MaxCliffHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3158197134719873139, guid: 8cedd8f10e459da43b75be72241e067b, type: 3}
       propertyPath: m_GroundLayer.m_Bits
       value: 17536
       objectReference: {fileID: 0}

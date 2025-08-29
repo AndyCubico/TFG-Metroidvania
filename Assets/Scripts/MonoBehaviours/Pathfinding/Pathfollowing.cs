@@ -128,7 +128,7 @@ public class Pathfollowing : MonoBehaviour
                 // TODO: Very bad if statment, should not need m_JumpCoroutineExecution, rework.
                 else if (!m_JumpCoroutineExecution
                     && m_IsCliff && CheckIsGrounded(m_GroundCheck, m_GroundCheckRadius) &&
-                    /*!CheckHeight(m_TargetPosition) &&*/
+                    !CheckHeight(m_TargetPosition) &&
                     (!CheckIsGrounded(m_RightCliffCheck, m_RightCliffCheckRadius) ||
                     !CheckIsGrounded(m_LeftCliffCheck, m_LeftCliffCheckRadius)))
                 {

@@ -231,7 +231,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7f3086218391a914ba866a95ef8f93b2, type: 2}
+  m_Motion: {fileID: 7400000, guid: 47e4407f433508d44aaf403d4b0af20a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -278,6 +278,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: ShieldBreak
     m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Blend
+    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -426,7 +432,7 @@ AnimatorStateMachine:
     m_Position: {x: 300, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7105022714749720767}
-    m_Position: {x: 560, y: 360, z: 0}
+    m_Position: {x: 530, y: 360, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 1404118436443889556}
@@ -583,7 +589,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8e3d52a18bfe8714281e707c71090a71, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3a7c8299179918d43ae38c7752512597, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

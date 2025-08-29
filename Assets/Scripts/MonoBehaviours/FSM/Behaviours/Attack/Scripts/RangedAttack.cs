@@ -23,7 +23,7 @@ public class RangedAttack : AttackSOBase
 
     public override void DoEnter()
     {
-        base.DoEnter();
+        //base.DoEnter(); // Not needed for the ranged enemy.
     }
 
     public override void DoExit()

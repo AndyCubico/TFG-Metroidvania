@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 3062558072434023844}
   - component: {fileID: 6020886925009889116}
   m_Layer: 11
-  m_Name: Melee Enemy Shield Test
+  m_Name: Melee Enemy Shield
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -818,6 +818,7 @@ MonoBehaviour:
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 6fbea4701b30d104fb562785ed050736, type: 2}
   flagMask: 0
+  m_EnemyHit: {fileID: 7590273077874328174}
   shieldActive: 1
   shieldObject: {fileID: 8457687012178578847}
 --- !u!114 &7462474372311357843

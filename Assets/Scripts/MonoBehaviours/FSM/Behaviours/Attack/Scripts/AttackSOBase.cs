@@ -9,6 +9,8 @@ public class AttackSOBase : ScriptableObject
     protected Transform playerTransform;
     public bool isParried;
 
+    public AnimationClip attackClip;
+
     public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
         this.gameObject = gameObject;

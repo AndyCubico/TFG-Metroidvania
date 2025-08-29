@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITrigger, ITransition
@@ -57,6 +58,10 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public AttackFlagType flagMask;
 
+    public EnemyHit enemyHit; // Assign in inspector
+
+    public AnimatorController animatorController;
+
     public virtual void Awake()
     {
         idleSOBaseInstance = Instantiate(m_IdleSOBase);
@@ -72,6 +77,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
         pathfollowing = GetComponent<Pathfollowing>();
         animator = GetComponent<Animator>();    
+        animatorController = (AnimatorController)animator.runtimeAnimatorController;   
     }
 
     protected virtual void Start()

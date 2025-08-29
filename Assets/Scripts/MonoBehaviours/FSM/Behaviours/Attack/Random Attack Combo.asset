@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b5516fb7d92bc4891168be9553bc9b, type: 3}
-  m_Name: Attack Slash Combo
+  m_Script: {fileID: 11500000, guid: a78f8ead77f4b3340a7a75b59a21f02f, type: 3}
+  m_Name: Random Attack Combo
   m_EditorClassIdentifier: 
   isParried: 0
-  attackClip: {fileID: 7400000, guid: ef030ea7ff6db3540accb1af2c4f7e79, type: 2}
+  attackClip: {fileID: 0}
+  attackOptions:
+  - {fileID: 11400000, guid: 734fc39c2548e954088d1be4ca5db0cb, type: 2}
+  - {fileID: 11400000, guid: 8dcbef248aa47944bb72b217e1b4f7ec, type: 2}

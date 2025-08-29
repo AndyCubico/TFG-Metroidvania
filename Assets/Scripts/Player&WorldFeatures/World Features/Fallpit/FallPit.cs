@@ -7,7 +7,7 @@ public class FallPit : MonoBehaviour
     public float timeToCheckpoint;
     private PlayerHealth health;
 
-    [SerializeField] float damage = 20f;
+    private float damage = 20f;
     //public float upForce;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +24,7 @@ public class FallPit : MonoBehaviour
                 StartCoroutine(TpFastCheckpoint());
             }
 
-            HealthEvents.eTakingDamage(damage); //Make damage with fall pits
+            //HealthEvents.eTakingDamage(damage); //Make damage with fall pits
         }
     }
 

@@ -7,11 +7,28 @@ using UnityEngine;
 public class ArenaCombat : MonoBehaviour
 {
     [System.Serializable]
+    public class ComplexEnemyParameters 
+    {
+        public bool isRigth;
+        public Vector4 visionSensor;
+
+        public BoxCollider2D SetVisionCollider(Vector4? visionSensor) 
+        {
+            BoxCollider2D boxCollider2D = new BoxCollider2D();
+            //boxCollider2D.bounds.max= visionSensor.max;
+            return boxCollider2D;
+        }
+    }
+
+    [System.Serializable]
     public class EnemyToSpawn 
     {
         public GameObject enemyPrefab;
         public Vector3 positition;
         public bool isExtraSpawn;
+
+        public bool hasComplexParameters;
+        [ShowIf("hasComplexParameters", true)] public ComplexEnemyParameters? extraParameters;
 
         public GameObject SpawnEnemy()
         {
@@ -40,11 +57,21 @@ public class ArenaCombat : MonoBehaviour
                 {
                     if (enemies[m_activeEnemies.Count + m_deadEnemies].isExtraSpawn) // Extra enemies don't need to be killed to progress the wave
                     {
-                        enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
+                        GameObject enemy = enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
                         m_deadEnemies++;
+
+                        if (enemies[m_activeEnemies.Count + m_deadEnemies].hasComplexParameters) 
+                        {
+                            // Set rigth or left
+
+
+                            // Set vision collider
+                        }
                     }
                     yield return new WaitForSeconds(spawnDelay);
-                    m_activeEnemies.Add(enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy());
+
+                    GameObject enemy2 = enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
+                    m_activeEnemies.Add(enemy2);
                 }
 
                 // Check active enemies

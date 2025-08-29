@@ -59,6 +59,11 @@ public class PlayerSaveLoad : MonoBehaviour
         {
             player_SL saveObject = JsonUtility.FromJson<player_SL>(saveLoad.Load("PlayerSave"));
 
+            if (SceneManager.GetActiveScene().name != saveObject.lastSavedScene)
+            {
+                SceneManager.LoadScene(saveObject.lastSavedScene);
+            }
+
             this.transform.position = saveObject.playerPosition;
 
             GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().heavyCharges = saveObject.charges;

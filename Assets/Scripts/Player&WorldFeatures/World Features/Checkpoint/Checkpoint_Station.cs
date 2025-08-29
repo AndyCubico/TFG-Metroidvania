@@ -14,6 +14,7 @@ public class Checkpoint_Station : MonoBehaviour
 
     bool m_IsInside;
     bool m_hasSaved;
+    private float speedDissapearText = 2f;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class Checkpoint_Station : MonoBehaviour
 
         if (m_SavedUIText.color.a > -0.1 && m_hasSaved)
         {
-            m_SavedUIText.color = new Color(m_SavedUIText.color.r, m_SavedUIText.color.g, m_SavedUIText.color.b, m_SavedUIText.color.a - Time.deltaTime);
+            m_SavedUIText.color = new Color(m_SavedUIText.color.r, m_SavedUIText.color.g, m_SavedUIText.color.b, m_SavedUIText.color.a - Time.deltaTime * speedDissapearText);
 
             if (m_SavedUIText.color.a <= 0)
             {

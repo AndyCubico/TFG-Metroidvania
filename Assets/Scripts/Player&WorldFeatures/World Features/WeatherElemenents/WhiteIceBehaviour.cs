@@ -26,6 +26,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 
     private void Start()
     {
+        iceColors = new Color[] { new Color(0.8235294f, 0.9411765f, 1, 0.9411765f), new Color(0.6367924f, 0.8887472f, 1, 0.7843137f) };
         if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
         {
             UpdateIce(WeatherManager.Instance.climate);
@@ -96,9 +97,29 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     {
         m_isFrozen = true;
 
+        for (int i = 0; i < m_objectToDestroy.transform.childCount; ++i) 
+        {
+            Transform t = m_objectToDestroy.transform.GetChild(i); 
+
+            if (t.childCount > 0 && t.GetChild(0).name == "Pivot") // If gameObject is a platform
+            {
+                t.GetChild(0).GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().color = iceColors[1]; //Change Visuals sprite renderer
+            }  
+        }
+
         yield return new WaitForSeconds(m_frozenTime); // Make frail again after 4 seconds passed, coldown of ice spell / ice special attack is 4.5 seconds,.
 
         m_isFrozen = false;
+
+        for (int i = 0; i < m_objectToDestroy.transform.childCount; ++i)
+        {
+            Transform t = m_objectToDestroy.transform.GetChild(i);
+
+            if (t.childCount > 0 && t.GetChild(0).name == "Pivot") // If gameObject is a platform
+            {
+                t.GetChild(0).GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().color = iceColors[0]; //Change Visuals sprite renderer
+            }
+        }
 
         if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
         {

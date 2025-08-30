@@ -236,4 +236,10 @@ public class PlayerHealth : MonoBehaviour
         // Update UI
         healPotionText.text = healPotions.ToString();
     }
+
+    public float IncreasePotionHealing(int valueIncrease) 
+    {
+        // Modify values
+        healthQuantity += valueIncrease;
+    }
 }

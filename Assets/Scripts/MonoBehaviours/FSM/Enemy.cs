@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITrigger, ITransition
@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public EnemyHit enemyHit; // Assign in inspector
 
-    public AnimatorController animatorController;
+    public RuntimeAnimatorController animatorController;
 
     [SerializeField] private ParticleSystem m_DangerParticles; // Assign in inspector
 
@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
         pathfollowing = GetComponent<Pathfollowing>();
         animator = GetComponent<Animator>();    
-        animatorController = (AnimatorController)animator.runtimeAnimatorController;   
+        animatorController = (RuntimeAnimatorController)animator.runtimeAnimatorController;   
     }
 
     protected virtual void Start()

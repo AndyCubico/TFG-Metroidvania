@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [Header("Player Health")]
     public float playerHealth;
-    [SerializedField] float maxPlayerHealth;
+    [SerializeField] float maxPlayerHealth;
     [Space(10)]
 
     //[Header("UI Elements")]
@@ -218,28 +218,31 @@ public class PlayerHealth : MonoBehaviour
     public float IncreaseMaxHealth(float valueIncrease)
     {
         // Modify values
-        maxPlayerHealth += valueIncrese;
-        playerHealth += valueIncrese;
+        maxPlayerHealth += valueIncrease;
+        playerHealth += valueIncrease;
 
         // Update UI
         healthBar.fillAmount = playerHealth / maxPlayerHealth;
         healthText.text = playerHealth.ToString();
         maxHealthText.text = maxPlayerHealth.ToString();
+        return maxPlayerHealth;
     }
 
     public int IncreaseMaxPotions( int valueIncrese)
     {
         // Modify values
         maxHealPotions += valueIncrese;
-        healPotion += valueIncrese;
+        healPotions += valueIncrese;
 
         // Update UI
         healPotionText.text = healPotions.ToString();
+        return maxHealPotions;
     }
 
-    public float IncreasePotionHealing(int valueIncrease) 
+    public float IncreasePotionHealing(float valueIncrease) 
     {
         // Modify values
         healthQuantity += valueIncrease;
+        return healthQuantity;
     }
 }

@@ -34,6 +34,12 @@ public class EnemyShooter : MonoBehaviour
     [Header("Spawn Rate of attacks")]
     public float spawnRate;
 
+    [Header("Damage of attacks")]
+    public float enemiesDamage;
+
+    [Header("Scale of attacks")]
+    [Range(0.1f, 2.0f)] public float projectileSizeModifier = 1.0f;
+
     [Header("No parry objects spawn rate")]
     public float spawnRateForNoParryObj;
 
@@ -62,6 +68,8 @@ public class EnemyShooter : MonoBehaviour
             e.rb = e.obj.GetComponent<Rigidbody2D>();
 
             e.obj.GetComponent<EnemyHit>().canBeParried = Random.value > (spawnRateForNoParryObj / 100f); // Generates a random true or false to indicate if it can be parried
+            e.obj.GetComponent<EnemyHit>().damage = enemiesDamage; // Generates a random true or false to indicate if it can be parried
+            e.obj.transform.localScale *= projectileSizeModifier;
 
             if (!e.obj.GetComponent<EnemyHit>().canBeParried)
             {

@@ -10,6 +10,11 @@ public class player_SL //SL -> Save&Load
     public int charges;
     public bool snowAbilityUnlock;
     public string lastSavedScene;
+
+    // PlayerUpgrades
+    public float maxHP;
+    public int numberPotions;
+    public float healingPotion;
 }
 
 public class object_SL //SL -> Save&Load

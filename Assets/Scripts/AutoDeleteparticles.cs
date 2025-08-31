@@ -19,7 +19,7 @@ public class AutoDeleteparticles : MonoBehaviour
 
         if (timing > 3f) 
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -93,7 +94,7 @@ public class EnemyShooter : MonoBehaviour
             enemy e = enemies[i];
             GameObject objToDelete;
 
-            if(enemies[i].obj == null)
+            if(enemies[i].obj == null && enemies[i].obj.IsDestroyed())
             {
                 Destroy(enemies[i].obj);
                 enemies.RemoveAt(i);

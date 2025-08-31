@@ -132,13 +132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa8f7142e446494ba422d5369ca6881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6190227721229430214, guid: df6dba22a491f554b95e9b76232aa37f, type: 3}
+  enemyPrefab: {fileID: 6190227721229430214, guid: fcfd096e353181d408cdd8b29989b313, type: 3}
   flipDirection: 0
   enemiesGravity: 0
   enemiesLifeTime: 1
   enemiesSpeed: 7
   spawnRate: 1.5
   enemiesDamage: 15
+  projectileSizeModifier: 0.1
   spawnRateForNoParryObj: 0
 --- !u!1 &3339497661988551849
 GameObject:

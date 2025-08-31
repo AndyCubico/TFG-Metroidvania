@@ -45,6 +45,11 @@ public class PlayerSaveLoad : MonoBehaviour
                 charges = GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().heavyCharges,
                 snowAbilityUnlock = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>().snowAbilityUnlocked,
                 lastSavedScene = SceneManager.GetActiveScene().name,
+
+                maxHP = gameObject.GetComponent<PlayerHealth>().maxPlayerHealth,
+                numberPotions = gameObject.GetComponent<PlayerHealth>().maxHealPotions,
+                healingPotion = gameObject.GetComponent<PlayerHealth>().healthQuantity,
+
             };
 
             string json = JsonUtility.ToJson(saveObject);
@@ -70,6 +75,15 @@ public class PlayerSaveLoad : MonoBehaviour
             GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().UpdateCharges();
 
             GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>().snowAbilityUnlocked = saveObject.snowAbilityUnlock;
+
+            gameObject.GetComponent<PlayerHealth>().maxHealPotions = saveObject.numberPotions;
+            gameObject.GetComponent<PlayerHealth>().maxPlayerHealth = saveObject.maxHP;
+            gameObject.GetComponent<PlayerHealth>().healthQuantity = saveObject.healingPotion;
+
+            // Update UI
+            gameObject.GetComponent<PlayerHealth>().IncreaseMaxHealth(0);
+            gameObject.GetComponent<PlayerHealth>().IncreaseMaxPotions(0);
+            gameObject.GetComponent<PlayerHealth>().IncreasePotionHealing(0);
 
             this.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             this.gameObject.GetComponent<CharacterPlayerController>().enabled = true;

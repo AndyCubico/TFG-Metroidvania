@@ -139,16 +139,16 @@ public class DirtyCamera : MonoBehaviour
             case HorizonralMovement.FreeCenterDirectionPull:
                 if (cameraState == 0) 
                 {
-                    xTarget = this.transform.position.x;
+                    xTarget = transform.position.x;
 
-                    if (Mathf.Abs(target.transform.position.x - this.transform.position.x) > camWidth * cameraDistance)
+                    if (Mathf.Abs(target.transform.position.x - transform.position.x) > camWidth * cameraDistance)
                     {
-                        Debug.Log(Mathf.Abs(target.transform.position.x - this.transform.position.x));
-                        if (target.transform.position.x - this.transform.position.x > 0)
+                        Debug.Log(Mathf.Abs(target.transform.position.x - transform.position.x));
+                        if (target.transform.position.x - transform.position.x > 0)
                         {
                             cameraState = 1; //Player moving rigth
                         }
-                        else if (target.transform.position.x - this.transform.position.x < 0)
+                        else if (target.transform.position.x - transform.position.x < 0)
                         {
                             cameraState = -1; //Player moving left
                         }
@@ -156,15 +156,15 @@ public class DirtyCamera : MonoBehaviour
                 }
                 else if (cameraState == 1) 
                 {
-                    if(target.transform.position.x - this.transform.position.x >= this.transform.position.x + camWidth * cameraDistance) 
+                    if(target.transform.position.x - transform.position.x >= transform.position.x + camWidth * cameraDistance) 
                     {
-                        //xTarget = this.transform.position.x + camWidth * cameraDistance;
+                        //xTarget = transform.position.x + camWidth * cameraDistance;
                         xTarget = target.transform.position.x + camWidth * cameraDistance;
                         //smoothModifier = 0f;
 
 
                     }
-                    else if(target.transform.position.x - this.transform.position.x < camWidth * cameraDistance * 0.5f)
+                    else if(target.transform.position.x - transform.position.x < camWidth * cameraDistance * 0.5f)
                     {
                         cameraState = 0;
                     }
@@ -172,13 +172,13 @@ public class DirtyCamera : MonoBehaviour
                 }
                 else if (cameraState == -1)
                 {
-                    if (target.transform.position.x - this.transform.position.x <= this.transform.position.x - camWidth * cameraDistance)
+                    if (target.transform.position.x - transform.position.x <= transform.position.x - camWidth * cameraDistance)
                     {
-                        //xTarget = this.transform.position.x - camWidth * cameraDistance;
+                        //xTarget = transform.position.x - camWidth * cameraDistance;
                         xTarget = target.transform.position.x  - camWidth * cameraDistance;
                         //smoothModifier = 0f;
                     }
-                    else if (target.transform.position.x - this.transform.position.x > camWidth * cameraDistance * 0.5f)
+                    else if (target.transform.position.x - transform.position.x > camWidth * cameraDistance * 0.5f)
                     {
                         cameraState = 0;
                     }

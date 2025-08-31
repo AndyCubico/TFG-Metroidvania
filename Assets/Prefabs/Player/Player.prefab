@@ -1057,12 +1057,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 100
+  maxPlayerHealth: 0
   maxHealPotions: 3
   healthQuantity: 40
   timeToHeal: 1
   HealPotionAction: {fileID: 2758354821599714866, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   healingParticles: {fileID: 187198919573954926}
   isHealing: 0
+  m_PlayerCombat: {fileID: 6264634318666345079}
 --- !u!50 &4203002661369434470
 Rigidbody2D:
   serializedVersion: 5

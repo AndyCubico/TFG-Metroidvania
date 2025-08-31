@@ -62,6 +62,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public AnimatorController animatorController;
 
+    [SerializeField] private ParticleSystem m_DangerParticles; // Assign in inspector
+
     public virtual void Awake()
     {
         idleSOBaseInstance = Instantiate(m_IdleSOBase);
@@ -219,5 +221,17 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         SetTransitionAnimation("Attack");
     }
 
+    #endregion
+
+    #region Particles
+    private void PlayDangerParticles()
+    {
+        m_DangerParticles.Play();
+    }
+
+    private void StopDangerParticles()
+    {
+        m_DangerParticles.Stop();
+    }
     #endregion
 }

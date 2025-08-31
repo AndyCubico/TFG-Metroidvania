@@ -224,12 +224,12 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     #endregion
 
     #region Particles
-    private void PlayDangerParticles()
+    public void PlayDangerParticles()
     {
         m_DangerParticles.Play();
     }
 
-    private void StopDangerParticles()
+    public void StopDangerParticles()
     {
         m_DangerParticles.Stop();
     }

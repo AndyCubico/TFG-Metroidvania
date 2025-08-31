@@ -42,6 +42,8 @@ public class RandomAttackCombo : AttackSOBase
 
     private void ChooseAttack()
     {
+        enemy.StopDangerParticles();
+
         // Pick a random attack
         chosenAttack = attackOptions[Random.Range(0, attackOptions.Length)];
 

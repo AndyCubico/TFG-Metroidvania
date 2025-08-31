@@ -2574,11 +2574,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345647424978807250, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
       propertyPath: m_Size.x
-      value: 8
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345647424978807250, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: m_Offset.x
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
       propertyPath: timeForShow
-      value: 8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
       propertyPath: m_IsHideOnce

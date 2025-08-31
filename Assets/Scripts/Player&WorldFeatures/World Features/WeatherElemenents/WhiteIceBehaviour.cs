@@ -131,7 +131,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collisionTag.Contains(collision.gameObject.tag) && !m_isFrozen)
+        if (collisionTag.Contains(collision.gameObject.tag) && !m_isFrozen && m_objectToDestroy.activeInHierarchy)
         {
             Debug.Log("Collision with: " + collision.gameObject.tag);
             // Collision detected with corresponding tag

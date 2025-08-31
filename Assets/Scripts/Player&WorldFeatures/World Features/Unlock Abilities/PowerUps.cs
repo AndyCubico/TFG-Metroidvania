@@ -13,16 +13,27 @@ public class PowerUps : MonoBehaviour
 
     PlayerHealth referenceHealthScript;
     public float numValue;
-    Transform originalPosition;
+    Vector3 m_originalPosition;
+    bool m_increaseValue;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         referenceHealthScript = GameObject.Find("Player").GetComponent<PlayerHealth>();
+        m_originalPosition = transform.position;
     }
 
     private void Update()
     {
-        
+        if (m_increaseValue) 
+        {
+            transform.position += new Vector3(0,0.02f,0);
+            m_increaseValue = (transform.position.y > (m_originalPosition.y + 1.0f));
+        }
+        else 
+        {
+            transform.position -= new Vector3(0, 0.02f, 0);
+            m_increaseValue = (transform.position.y < (m_originalPosition.y - 1.0f));
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

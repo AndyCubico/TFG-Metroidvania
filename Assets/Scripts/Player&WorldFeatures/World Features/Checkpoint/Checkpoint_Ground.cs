@@ -43,6 +43,8 @@ public class Checkpoint_Ground : MonoBehaviour
     public float FadeOut;
 
     private float m_SecondsAfterMoving = 0.4f;
+    private float m_SecondsToStopTransitioning = 0.8f;
+    private float m_TimerToStopTransitioning = 0f;
 
     private void OnEnable()
     {
@@ -104,10 +106,18 @@ public class Checkpoint_Ground : MonoBehaviour
         else
         {
             this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(checkpoint.transform.position.x, checkpoint.transform.position.y + this.transform.localScale.y / 2, checkpoint.transform.position.z), speedTranistion);
+            m_TimerToStopTransitioning += Time.deltaTime;
 
-            if(this.transform.position == new Vector3(checkpoint.transform.position.x, checkpoint.transform.position.y + this.transform.localScale.y / 2, checkpoint.transform.position.z))
+            if(m_TimerToStopTransitioning >= m_SecondsAfterMoving)
             {
                 StartCoroutine(WaitSecondsAfterMoving());
+                m_TimerToStopTransitioning = 0f;
+            }
+
+            if (this.transform.position == new Vector3(checkpoint.transform.position.x, checkpoint.transform.position.y + this.transform.localScale.y / 2, checkpoint.transform.position.z))
+            {
+                StartCoroutine(WaitSecondsAfterMoving());
+                m_TimerToStopTransitioning = 0f;
             }
         }
 

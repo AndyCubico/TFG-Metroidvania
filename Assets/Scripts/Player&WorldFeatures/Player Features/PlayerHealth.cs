@@ -128,6 +128,7 @@ public class PlayerHealth : MonoBehaviour
     void ReceiveAnAttack(float damage)
     {
         playerHealth -= damage;
+        healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         if (healthCoroutine != null)
         {

@@ -554,6 +554,7 @@ MonoBehaviour:
   flagMask: 2
   enemyHit: {fileID: 0}
   animatorController: {fileID: 0}
+  m_DangerParticles: {fileID: 0}
 --- !u!114 &2562382804335134552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,7 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a546e850fe24d842a000d1b9f91db5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 2
+  m_Speed: 0
   m_JumpForce: 62
   m_JumpWait: 1
   m_MaxCliffHeight: 1

@@ -232,6 +232,7 @@ public class PlayerHealth : MonoBehaviour
         healthBar.rectTransform.sizeDelta += new Vector2( valueIncrease * 5, 0);
         healthBar.rectTransform.position += new Vector3 (valueIncrease * 2.5f,0,0);
         healthText.rectTransform.position += new Vector3(valueIncrease * 2.5f, 0, 0);
+        maxHealthText.rectTransform.position += new Vector3(valueIncrease * 2.5f, 0, 0);
         healthText.text = playerHealth.ToString();
         maxHealthText.text = maxPlayerHealth.ToString();
         return maxPlayerHealth;

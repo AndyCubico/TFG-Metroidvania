@@ -16,6 +16,8 @@ public class RangedAttack : AttackSOBase
     [SerializeField] private LayerMask m_VisionMask;
     private Vector2 m_Direction;
 
+    [SerializeField] private bool m_CanBeParried = false;
+
     public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
     {
         base.DoAnimationTrigger(triggerType);
@@ -103,6 +105,7 @@ public class RangedAttack : AttackSOBase
     {
         Vector2 direction = (playerTransform.position - transform.position).normalized;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        projectile.GetComponent<EnemyHit>().canBeParried = m_CanBeParried;
         projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
         projectile.GetComponent<EnemyHit>().enemy = enemy;
     }

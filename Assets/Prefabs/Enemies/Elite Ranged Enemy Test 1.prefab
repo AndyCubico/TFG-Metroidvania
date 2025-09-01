@@ -550,10 +550,11 @@ MonoBehaviour:
   <m_MaxHealth>k__BackingField: 1
   m_IdleSOBase: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: 0a2dfd9bd93832344bacc3b718134a96, type: 2}
-  m_AttackSOBase: {fileID: 11400000, guid: 9d1fa5a51a411af4b86d9bbb4c770683, type: 2}
+  m_AttackSOBase: {fileID: 11400000, guid: 14e0f7f0553776a48b52bb9216391c65, type: 2}
   flagMask: 2
   enemyHit: {fileID: 0}
   animatorController: {fileID: 0}
+  m_DangerParticles: {fileID: 0}
 --- !u!114 &2562382804335134552
 MonoBehaviour:
   m_ObjectHideFlags: 0

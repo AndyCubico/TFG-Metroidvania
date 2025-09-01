@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ab1fdf53bd643145b4bf9ec49653ef6, type: 3}
-  m_Name: Ranged attack
+  m_Name: Ranged attack elite
   m_EditorClassIdentifier: 
   isParried: 0
   attackClip: {fileID: 0}
@@ -22,4 +22,4 @@ MonoBehaviour:
   m_VisionMask:
     serializedVersion: 2
     m_Bits: 16576
-  m_CanBeParried: 1
+  m_CanBeParried: 0

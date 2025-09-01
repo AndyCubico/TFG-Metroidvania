@@ -11,11 +11,15 @@ public class AttackSOBase : ScriptableObject
 
     public AnimationClip attackClip;
 
+    public float damage = 10f;
+
     public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
         this.gameObject = gameObject;
         transform = gameObject.transform;
+
         this.enemy = enemy;
+        this.enemy.enemyHit.damage = damage;
 
         isParried = false;
 

@@ -105,8 +105,12 @@ public class RangedAttack : AttackSOBase
     {
         Vector2 direction = (playerTransform.position - transform.position).normalized;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        projectile.GetComponent<EnemyHit>().canBeParried = m_CanBeParried;
+        
+        EnemyHit hitEnemy = projectile.GetComponent<EnemyHit>();
+        hitEnemy.enemy = enemy;
+        hitEnemy.canBeParried = m_CanBeParried;
+        hitEnemy.damage = damage;
+
         projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
-        projectile.GetComponent<EnemyHit>().enemy = enemy;
     }
 }

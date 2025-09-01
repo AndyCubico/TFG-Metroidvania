@@ -14,7 +14,7 @@ public class IdleSOBase : ScriptableObject
         transform = gameObject.transform;
         this.enemy = enemy;
 
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = GameObject.Find("HangEdgeCheck").transform;
     }
 
     public virtual void DoEnter() { }

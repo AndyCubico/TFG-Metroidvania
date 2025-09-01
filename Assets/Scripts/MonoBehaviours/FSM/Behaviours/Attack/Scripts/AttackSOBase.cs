@@ -19,7 +19,7 @@ public class AttackSOBase : ScriptableObject
 
         isParried = false;
 
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = GameObject.Find("HangEdgeCheck").transform;
     }
 
     public virtual void DoEnter()

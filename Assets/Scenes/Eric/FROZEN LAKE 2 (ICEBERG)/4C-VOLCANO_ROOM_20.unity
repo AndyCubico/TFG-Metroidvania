@@ -1576,6 +1576,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShowText
       objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: m_IsHide
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: timeForShow
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: m_IsHideOnce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: m_IsShowOnce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642950979069701100, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
+      propertyPath: m_ObjectToShow
+      value: 
+      objectReference: {fileID: 1109367840}
     m_RemovedComponents:
     - {fileID: 1805755555790030263, guid: df3cd1f531303f7489109c292e7749a1, type: 3}
     m_RemovedGameObjects:

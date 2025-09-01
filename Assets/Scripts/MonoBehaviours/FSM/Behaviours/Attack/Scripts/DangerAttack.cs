@@ -15,8 +15,6 @@ public class DangerAttack : AttackSOBase
         // Not in the base class because some enemies may not have a pathfollowing behaviour.
         enemy.pathfollowing.CancelJump();
         enemy.enemyHit.canBeParried = false;
-
-        enemy.PlayDangerParticles();
     }
 
     public override void DoExit()

@@ -231,7 +231,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public void StopDangerParticles()
     {
-        m_DangerParticles.Stop();
+        m_DangerParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
+
     #endregion
 }

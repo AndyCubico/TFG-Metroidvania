@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 6727020904002086331}
   - component: {fileID: 796689791694034245}
   - component: {fileID: 8839337389357864534}
-  - component: {fileID: 3368132781843601924}
+  - component: {fileID: 2014619270351793228}
   - component: {fileID: 2718766041908346376}
   - component: {fileID: 2711310821409328793}
   - component: {fileID: 4896643599494798881}
@@ -641,6 +641,7 @@ MonoBehaviour:
   flagMask: -1
   enemyHit: {fileID: 5022359369205855707}
   animatorController: {fileID: 0}
+  m_DangerParticles: {fileID: 0}
 --- !u!114 &6727020904002086331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,8 +701,8 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   isFacingRight: 1
   isPathValid: 1
---- !u!61 &3368132781843601924
-BoxCollider2D:
+--- !u!70 &2014619270351793228
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -734,18 +735,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.092196465}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.7272727, y: 2.7272727}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.3767757}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.003822282, y: 0.0927052}
+  m_Size: {x: 1.0069865, y: 1.4034606}
+  m_Direction: 0
 --- !u!50 &2718766041908346376
 Rigidbody2D:
   serializedVersion: 5
@@ -760,7 +752,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 10
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

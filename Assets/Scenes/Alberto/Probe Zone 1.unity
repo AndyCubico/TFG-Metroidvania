@@ -16479,6 +16479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToCheckpoint: 0
+  damage: 20
 --- !u!61 &463992256
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45349,6 +45350,8 @@ MonoBehaviour:
   enemiesLifeTime: 5
   enemiesSpeed: 5
   spawnRate: 2
+  enemiesDamage: 20
+  projectileSizeModifier: 1
   spawnRateForNoParryObj: 20
 --- !u!1001 &1454013041
 PrefabInstance:
@@ -48300,6 +48303,8 @@ MonoBehaviour:
   enemiesLifeTime: 1.5
   enemiesSpeed: 5
   spawnRate: 2
+  enemiesDamage: 20
+  projectileSizeModifier: 1
   spawnRateForNoParryObj: 20
 --- !u!1001 &1543438457
 PrefabInstance:

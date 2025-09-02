@@ -24,7 +24,8 @@ public class object_SL //SL -> Save&Load
     public enum ObjectType 
     {
         HIT_LEVER,
-        BREAKABLE_OBJECT, // Both breakable doors and floors by an attack
+        BREAKABLE_OBJECT, // Both breakable doors and floors by an attack and powerUps and ...
+        COMBAT_ARENA,
     }
     public ObjectType objectType;
 }

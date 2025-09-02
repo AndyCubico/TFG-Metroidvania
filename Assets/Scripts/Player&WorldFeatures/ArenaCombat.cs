@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static BreakableDoor;
 
 public class ArenaCombat : MonoBehaviour
 {
@@ -89,11 +90,14 @@ public class ArenaCombat : MonoBehaviour
 
             // After wave ends
             yield return new WaitForSeconds(waveChangeDelay);
-
-            foreach (GameObject go in objectsToDestroy) {Destroy(go); } // Destoy floors, door or any obstacle needed to be destroyed when wave ends
-                
-
+            DestroyEnviroment();// Destoy floors, door or any obstacle needed to be destroyed when wave ends
+            
             waveFinished = true;
+        }
+
+        public void DestroyEnviroment() 
+        {
+            foreach (GameObject go in objectsToDestroy) { Destroy(go); } 
         }
     }
 
@@ -107,14 +111,48 @@ public class ArenaCombat : MonoBehaviour
     int m_CurrentWaveIndex = 0;
     Coroutine m_CurrentWave;
 
-    
+    // Saving
+    public class Arena_SL : object_SL
+    {
+        public int lastWave;
+    }
+    Arena_SL m_Save;
+
+    [SerializeField] bool m_IsSave;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!m_IsStartOnCollision) // If not start on collision it starts when the player enters 
+        if (m_IsSave)
         {
-            StartCombat();
+            World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
+
+            object_SL nameObj = new object_SL
+            {
+                // Generic objects attributes
+                objectName = this.gameObject.name,
+                objectID = this.gameObject.transform.GetSiblingIndex(),
+                objectType = object_SL.ObjectType.COMBAT_ARENA,
+            };
+
+            m_Save = (Arena_SL)saveLoad.LoadObject(nameObj);
+
+            if (m_Save != null)
+            {
+                m_CurrentWaveIndex = m_Save.lastWave;
+                for (int i = 0; i < m_CurrentWaveIndex; i++)
+                {
+                    listWaves[i].DestroyEnviroment();
+                }
+
+            }
+
+            if (!m_IsStartOnCollision) // If not start on collision it starts when the player enters 
+            {
+                StartCombat();
+            }
+
+
         }
     }
 
@@ -128,15 +166,33 @@ public class ArenaCombat : MonoBehaviour
                 //StopCoroutine(m_CurrentWave);
                 m_CurrentWaveIndex++;
                 if (listWaves.Count > m_CurrentWaveIndex) {StartCombat(); }
-                
-
             }
+        }
+        else if(m_CurrentWaveIndex < listWaves.Count && m_IsSave) 
+        {
+            World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
+
+            m_Save = new Arena_SL
+            {
+                // Generic objects attributes
+                objectName = this.gameObject.name,
+                objectID = this.gameObject.transform.GetSiblingIndex(),
+                objectType = object_SL.ObjectType.COMBAT_ARENA,
+
+                // Specific object atributes
+                lastWave = m_CurrentWaveIndex,
+
+            };
+            saveLoad.SaveObject(m_Save);
         }
     }
 
     void StartCombat()
     {
-        m_CurrentWave = StartCoroutine(listWaves[m_CurrentWaveIndex].ManageWave());
+        if (m_CurrentWaveIndex < listWaves.Count)
+        {
+            m_CurrentWave = StartCoroutine(listWaves[m_CurrentWaveIndex].ManageWave());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

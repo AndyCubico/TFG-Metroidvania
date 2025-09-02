@@ -112,9 +112,11 @@ public class UnlockAbilities : MonoBehaviour
                 }
 
                 PlayerBlockAndParry playerBlockParry = collision.transform.Find("Combat").Find("Block_Parry").GetComponent<PlayerBlockAndParry>();
+                PlayerCombatV2 playerCombat = collision.transform.Find("Combat").GetComponent<PlayerCombatV2>();
 
-                if (playerBlockParry != null)
+                if (playerBlockParry != null && playerCombat != null)
                 {
+                    playerCombat.isInCheckpoint = false;
                     playerBlockParry.isInCheckpoint = false;
                 }
             }

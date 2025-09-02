@@ -701,6 +701,7 @@ namespace PlayerController
         {
             PlayerUnFreeze();
             canJump = false;
+            combatScript.isAttacking = false;
 
             if (isHangingEdge) //In case player is on an Edge
             {
@@ -964,7 +965,7 @@ namespace PlayerController
                             {
                                 if (!isCrouch)
                                 {
-                                    if (rb.linearVelocity.y < 0)
+                                    if (rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
                                     {
                                         if (!combatScript.isAttacking)
                                         {
@@ -979,23 +980,7 @@ namespace PlayerController
                         }
                     }
                 }
-
-                //if (jumpKeyHold && impactHitHold && hasImpactHit && !isCrouch && rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
-                //{
-                //    hasImpactHit = false;
-                //    isImpactHitting = true;
-                //    rb.AddForce(new Vector2(0, -impactHit)); //Force to go down when you are in AIR
-                //}
             }
-
-            //if(!isImpactHitting && !hasImpactHit) //Return ImpactHit
-            //{
-            //    if(jumpKeyUp) //This is to cancel multi doing Impact Hit if you don't key up Space or S
-            //    {
-            //        hasImpactHit = true;
-            //        isImpactHitting = false;
-            //    }
-            //}
         }
 
         //Make the action of dashing
@@ -1041,8 +1026,6 @@ namespace PlayerController
                 if (dashFacing != playerFaceDir && isDashing) // If you change face direction cancell dash
                 {
                     DashCancelled();
-                    //rb.velocity -= rb.velocity * 2 * Time.deltaTime;
-                    //rb.velocity -= rb.velocity * 2 * Time.deltaTime;
                 }
 
                 if (cooldownDashTime >= dashCooldown && !isDashing) //Wait for cooldown to do another dash
@@ -1544,30 +1527,13 @@ namespace PlayerController
 
         //Here we check if the player angle between the floor is too much or correct in order to jump or do things
         void CheckEarringFloor()
-        {
-            //RaycastHit2D hitDownEarringGround = Physics2D.Raycast(transform.position, Vector2.down, (transform.localScale.y / 2) + 1f, groundMask); //Debug ray to check the ground
-            //RaycastHit2D hitDownEarringSlide = Physics2D.Raycast(transform.position, Vector2.down, (transform.localScale.y / 2) + 1f, slideMask); //Debug ray to check the slide floor
-            //RaycastHit2D hitDownEarringGround = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Vector2.down, 0.4f, groundMask); //Debug ray to check the ground
-            RaycastHit2D hitDownEarringSlide = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Vector2.down, 1f, earingMask); //Debug ray to check the slide floor
+        { RaycastHit2D hitDownEarringSlide = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Vector2.down, 1f, earingMask); //Debug ray to check the slide floor
 
             //Debugs ray's
             //Debug.DrawRay(transform.position, Vector2.down * ((transform.localScale.y / 2) + 1f), Color.red);
             //Debug.DrawRay(hitDownEarringSlide.point, new Vector2(1, 0), Color.blue);
             //Debug.DrawRay(hitDownEarringSlide.point, hitDownEarringSlide.normal, Color.green);
 
-
-            //Here we check if the angle is more than the maxAngleFloor
-            //if (hitDownEarringGround && isGrounded)
-            //{
-            //    //Calculate the angle between the floor on earringFloor
-            //    newEarringFloor = Vector2.Angle(hitDownEarringGround.normal, Vector2.up); //Here we take the raw angle without sign of the earrings
-            //    newEarringFloor = newEarringFloor * Mathf.Sign(hitDownEarringGround.transform.rotation.z); //Here we put the sign
-
-            //    if (newEarringFloor != 0 && Mathf.Abs(newEarringFloor) >= maxAngleFloor)
-            //    {
-            //        isTooMuchEarring = true;
-            //    }
-            //}
             if (hitDownEarringSlide && (isSlide || isGrounded))
             {
                 //Calculate the angle between the floor on earringFloor

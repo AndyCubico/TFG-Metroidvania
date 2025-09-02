@@ -145,13 +145,9 @@ public class World_Save_Load : MonoBehaviour
                                 case object_SL.ObjectType.HIT_LEVER:
                                     HitLever_SL lever = (HitLever_SL)saveObject.listRooms[i].listObjects[j];
                                     return lever;
-
-                                    break;
                                 case object_SL.ObjectType.BREAKABLE_OBJECT:
                                     Breakable_SL broken = (Breakable_SL)saveObject.listRooms[i].listObjects[j];
                                     return broken;
-
-                                    break;
                                 default:
                                     break;
                             }

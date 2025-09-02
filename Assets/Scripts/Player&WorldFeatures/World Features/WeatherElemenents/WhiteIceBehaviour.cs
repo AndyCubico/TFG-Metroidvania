@@ -159,12 +159,14 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     private IEnumerator DeactivateGameObject(GameObject go)
     {
         // Trigger animation if any
+        gameObject.GetComponent<AudioSource>().Play();
 
         yield return new WaitForSeconds(timeToDestroy);
 
         // Deactivate GameObject
         go.SetActive(false);
         m_isDestroyDueCollision = false;
+        gameObject.GetComponent<AudioSource>().Stop();
 
         if (m_isRespawnOverTime)
         {

@@ -19,7 +19,11 @@ public class AttackSOBase : ScriptableObject
         transform = gameObject.transform;
 
         this.enemy = enemy;
-        this.enemy.enemyHit.damage = damage;
+
+        if (this.enemy.enemyHit != null)
+        {
+            this.enemy.enemyHit.damage = damage;
+        }
 
         isParried = false;
 

@@ -692,6 +692,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 727877710}
     m_Modifications:
+    - target: {fileID: 2790752571524842091, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7913157064699955596, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.5000005
@@ -4769,6 +4773,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 727877710}
     m_Modifications:
+    - target: {fileID: 5073071116539822082, guid: 49dd54e49016a5348963ab1575bfc2c1, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7360915114696429860, guid: 49dd54e49016a5348963ab1575bfc2c1, type: 3}
       propertyPath: m_Color.a
       value: 0.78431374

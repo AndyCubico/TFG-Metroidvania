@@ -51,4 +51,10 @@ public class ChangeScene : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad.SceneName);
         GameManagerEvents.eSearchStartPlayerPosition?.Invoke(pivotNumber, sceneToLoad.SceneName);
     }
+
+    public void ChangeSceneButton() 
+    {
+        StartCoroutine(LoadNewScene());
+        onlyChargeOnce = true;
+    }
 }

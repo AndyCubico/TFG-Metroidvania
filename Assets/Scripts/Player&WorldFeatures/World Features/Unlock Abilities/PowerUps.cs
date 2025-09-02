@@ -1,4 +1,5 @@
 using UnityEngine;
+using static BreakableDoor;
 
 public class PowerUps : MonoBehaviour
 {
@@ -15,9 +16,31 @@ public class PowerUps : MonoBehaviour
     public float numValue;
     Vector3 m_originalPosition;
     bool m_increaseValue;
+
+    Breakable_SL m_Save;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
+
+        object_SL nameObj = new object_SL
+        {
+            // Generic objects attributes
+            objectName = this.gameObject.name,
+            objectID = this.gameObject.transform.GetSiblingIndex(),
+            objectType = object_SL.ObjectType.BREAKABLE_OBJECT,
+        };
+
+        m_Save = (Breakable_SL)saveLoad.LoadObject(nameObj);
+
+        if (m_Save != null)
+        {
+            if (m_Save.isBroken)
+            {
+                Destroy(gameObject);
+            }
+        }
+
         m_originalPosition = transform.position;
         referenceHealthScript = GameObject.Find("Player").GetComponent<PlayerHealth>();
         
@@ -59,6 +82,22 @@ public class PowerUps : MonoBehaviour
                 default:
                     break;
             }
+
+            World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
+
+            m_Save = new Breakable_SL
+            {
+                // Generic objects attributes
+                objectName = this.gameObject.name,
+                objectID = this.gameObject.transform.GetSiblingIndex(),
+                objectType = object_SL.ObjectType.BREAKABLE_OBJECT,
+
+                // Specific object atributes
+                isBroken = true
+
+            };
+            saveLoad.SaveObject(m_Save);
+
             // Destroy this
             Destroy(this.gameObject);
         }

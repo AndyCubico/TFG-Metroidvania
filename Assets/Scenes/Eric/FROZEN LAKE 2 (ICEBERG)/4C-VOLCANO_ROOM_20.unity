@@ -978,7 +978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2010922996070203161, guid: cba5dc2c2cd37de48a6c12aca9c81501, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2287,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4136220894273864767, guid: 8378485a2a4eac4418c822e399ead558, type: 3}
       propertyPath: layer.m_Bits
-      value: 16576
+      value: 16512
       objectReference: {fileID: 0}
     - target: {fileID: 5870683851787775631, guid: 8378485a2a4eac4418c822e399ead558, type: 3}
       propertyPath: m_Color.a
@@ -2327,6 +2327,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 727877710}
     m_Modifications:
+    - target: {fileID: 4047681707919205520, guid: a782eac00691fcc4da879a1df09f5133, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6321528762281263905, guid: a782eac00691fcc4da879a1df09f5133, type: 3}
       propertyPath: m_Name
       value: Slope2x2_L

@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     // think of cleaner ways to do it.
     public Dictionary<string, object> stateContext { get; private set; } = new Dictionary<string, object>();
 
-    public AttackFlagType flagMask;
+    public AttackFlagType attackFlagMask;
 
     public EnemyHit enemyHit; 
 
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public virtual void ReceiveDamage(float damage, AttackFlagType attackType)
     {
-        if ((attackType & flagMask) != 0)
+        if ((attackType & attackFlagMask) != 0)
         {
             currentHealth -= damage;
 

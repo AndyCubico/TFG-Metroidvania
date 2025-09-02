@@ -42,7 +42,7 @@ public class ShieldedEnemy : Enemy
         if (shieldObject != null)
         {
             // Allow all attacks to affect this enemy after shield breaks, not optimal but works for now.
-            flagMask = AttackFlagType.ALL;
+            attackFlagMask = AttackFlagType.ALL;
 
             shieldObject.gameObject.SetActive(false);
         }

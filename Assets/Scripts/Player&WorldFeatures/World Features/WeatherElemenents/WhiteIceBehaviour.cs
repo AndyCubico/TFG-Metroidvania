@@ -8,7 +8,9 @@ using UnityEngine;
 public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 {
     // On collision destroy parameters
-    [SerializeField] private GameObject m_objectToDestroy; bool m_isDestroyDueCollision = false;
+    [SerializeField] private GameObject m_objectToDestroy; 
+    bool m_isDestroyDueCollision = false;
+    bool m_hasCollided;
     [TagDropdown] public string[] collisionTag = new string[] { };
 
 
@@ -136,8 +138,9 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
             Debug.Log("Collision with: " + collision.gameObject.tag);
             // Collision detected with corresponding tag
 
-            if (!WeatherManager.Instance.GetExteriorState() || (WeatherManager.Instance.climate != CLIMATES.SUN)) 
+            if (!WeatherManager.Instance.GetExteriorState() || (WeatherManager.Instance.climate != CLIMATES.SUN) && !m_hasCollided) 
             {
+                m_hasCollided = true;
                 StartCoroutine(DeactivateGameObject(m_objectToDestroy));
             }
             
@@ -154,6 +157,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
         // Deactivate GameObject
         go.SetActive(true);
         m_isDestroyDueCollision = true;
+        m_hasCollided = false;
     }
 
     private IEnumerator DeactivateGameObject(GameObject go)

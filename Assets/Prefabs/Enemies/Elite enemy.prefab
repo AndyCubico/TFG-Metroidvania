@@ -671,6 +671,9 @@ MonoBehaviour:
   enemyHit: {fileID: 2128409636836249786}
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 3940122087117759706}
+  m_DeathLayerMask:
+    serializedVersion: 2
+    m_Bits: 16
   shieldActive: 1
   shieldObject: {fileID: 922386706824624320}
 --- !u!114 &4382165172331730134

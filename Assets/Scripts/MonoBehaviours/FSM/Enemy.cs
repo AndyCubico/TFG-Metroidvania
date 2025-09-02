@@ -58,11 +58,13 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public AttackFlagType flagMask;
 
-    public EnemyHit enemyHit; // Assign in inspector
+    public EnemyHit enemyHit; 
 
     public RuntimeAnimatorController animatorController;
 
-    [SerializeField] private ParticleSystem m_DangerParticles; // Assign in inspector
+    [SerializeField] private ParticleSystem m_DangerParticles; 
+
+    [SerializeField] private LayerMask m_DeathLayerMask;
 
     public virtual void Awake()
     {
@@ -246,4 +248,13 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     }
 
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if collided object's layer is in m_DeathLayerMask
+        if ((m_DeathLayerMask.value & (1 << collision.gameObject.layer)) != 0)
+        {
+            Die();
+        }
+    }
 }

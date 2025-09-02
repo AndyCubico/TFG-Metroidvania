@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Empty Idle", menuName = "Enemy Logic/Idle/Empty Idle")]
+[CreateAssetMenu(fileName = "Idle Empty", menuName = "Enemy Logic/Idle/Idle Empty")]
 public class IdleEmpty : IdleSOBase
 {
     public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)

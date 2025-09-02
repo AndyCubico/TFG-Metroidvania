@@ -15,18 +15,6 @@ public class ShieldedEnemy : Enemy
         }
     }
 
-    //public override void ReceiveDamage(float damage, AttackFlagType attackType)
-    //{
-    //    // This is called when the main enemy body is hit
-    //    if (shieldActive)
-    //    {
-    //        // If shield is active, ignore all hits to the body
-    //        return;
-    //    }
-
-    //    base.ReceiveDamage(damage, attackType);
-    //}
-
     public void ReceiveShieldHit(float damage, AttackFlagType attackType)
     {
         // This is called when the shield collider is hit

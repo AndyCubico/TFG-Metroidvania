@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Static Chase", menuName = "Enemy Logic/Chase/Static Chase")]
-public class StaticChase : ChaseSOBase
+[CreateAssetMenu(fileName = "Chase Static", menuName = "Enemy Logic/Chase/Chase Static")]
+public class ChaseStatic : ChaseSOBase
 {
     public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
     {

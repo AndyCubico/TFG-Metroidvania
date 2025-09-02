@@ -1,8 +1,8 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Static Idle", menuName = "Enemy Logic/Idle/Static Idle")]
-public class StaticIdle : IdleSOBase
+[CreateAssetMenu(fileName = "Idle Static", menuName = "Enemy Logic/Idle/Idle Static")]
+public class IdleStatic : IdleSOBase
 {
     [SerializeField]
     private float m_CheckInterval = 5f; // Interval in seconds, settable in inspector

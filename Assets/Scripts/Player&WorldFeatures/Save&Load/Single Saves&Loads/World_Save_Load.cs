@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Splines.ExtrusionShapes;
+using static ArenaCombat;
 using static BreakableDoor;
 using static HitLever;
 
@@ -148,6 +149,9 @@ public class World_Save_Load : MonoBehaviour
                                 case object_SL.ObjectType.BREAKABLE_OBJECT:
                                     Breakable_SL broken = (Breakable_SL)saveObject.listRooms[i].listObjects[j];
                                     return broken;
+                                case object_SL.ObjectType.COMBAT_ARENA:
+                                    Arena_SL arena = (Arena_SL)saveObject.listRooms[i].listObjects[j];
+                                    return arena;
                                 default:
                                     break;
                             }
@@ -157,8 +161,8 @@ public class World_Save_Load : MonoBehaviour
                     break;
                 }
             }
-     
+
         }
-           return null;
+        return null;
     }
 }

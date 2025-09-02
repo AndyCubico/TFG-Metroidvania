@@ -2624,6 +2624,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Position1
       objectReference: {fileID: 0}
+    - target: {fileID: 3273960476794690908, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: m_ExcludedLayerMask.m_Bits
+      value: 12288
+      objectReference: {fileID: 0}
     - target: {fileID: 3656232733535308061, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_Name
       value: TranslatingObject
@@ -6576,6 +6580,9 @@ MonoBehaviour:
   collisionTag:
   - Player
   - Enemy
+  m_ExcludedLayerMask:
+    serializedVersion: 2
+    m_Bits: 12288
 --- !u!1001 &1012405428
 PrefabInstance:
   m_ObjectHideFlags: 0

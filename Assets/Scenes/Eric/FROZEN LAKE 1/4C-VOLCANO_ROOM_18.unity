@@ -206,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7913157064699955596, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.55502987
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7913157064699955596, guid: 64f6e2e088a17ea4f8a2fe558b575a42, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5456,13 +5456,6 @@ MonoBehaviour:
         visionSensor: {x: 0, y: 0, z: 0, w: 0}
     - enemyPrefab: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       positition: {x: 54.5, y: 12.5, z: 0}
-      isExtraSpawn: 0
-      hasComplexParameters: 0
-      extraParameters:
-        isRigth: 0
-        visionSensor: {x: 0, y: 0, z: 0, w: 0}
-    - enemyPrefab: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
-      positition: {x: 29.5, y: 12.5, z: 0}
       isExtraSpawn: 0
       hasComplexParameters: 0
       extraParameters:

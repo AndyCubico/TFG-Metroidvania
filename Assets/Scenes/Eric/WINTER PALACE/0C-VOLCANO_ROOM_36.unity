@@ -1841,6 +1841,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1720717557}
     m_Modifications:
+    - target: {fileID: 3273960476794690908, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: m_ExcludedLayerMask.m_Bits
+      value: 12288
+      objectReference: {fileID: 0}
     - target: {fileID: 3656232733535308061, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_Name
       value: TranslatingObject
@@ -3014,6 +3018,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1720717557}
     m_Modifications:
+    - target: {fileID: 3273960476794690908, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+      propertyPath: m_ExcludedLayerMask.m_Bits
+      value: 12288
+      objectReference: {fileID: 0}
     - target: {fileID: 3656232733535308061, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
       propertyPath: m_Name
       value: TranslatingObject (2)

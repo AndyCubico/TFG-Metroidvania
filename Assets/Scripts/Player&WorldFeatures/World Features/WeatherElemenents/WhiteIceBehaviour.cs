@@ -9,7 +9,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
 {
     // On collision destroy parameters
     [SerializeField] private GameObject m_objectToDestroy; 
-    bool m_isDestroyDueCollision = false;
+    bool m_isDestroyDueCollision = true;
     bool m_hasCollided;
     [TagDropdown] public string[] collisionTag = new string[] { };
 
@@ -53,7 +53,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
             {
                 case CLIMATES.NEUTRAL: // If object was destroy due to sun, 
 
-                    if (m_isRespawnOverTime && !m_isDestroyDueCollision)
+                    if (m_isRespawnOverTime && m_isDestroyDueCollision)
                     {
                         m_objectToDestroy.SetActive(true);
                     }
@@ -69,7 +69,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
                     break;
                 case CLIMATES.SNOW:
 
-                    if (m_isRespawnOverTime && !m_isDestroyDueCollision)
+                    if (m_isRespawnOverTime && m_isDestroyDueCollision)
                     {
                         m_objectToDestroy.SetActive(true);
                     }
@@ -154,7 +154,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
         gameObject.transform.position += new Vector3(0, 0.25f, 0);
         yield return new WaitForSeconds(timeToRespawn);
 
-        // Deactivate GameObject
+        // Activate GameObject
         go.SetActive(true);
         m_isDestroyDueCollision = true;
         m_hasCollided = false;

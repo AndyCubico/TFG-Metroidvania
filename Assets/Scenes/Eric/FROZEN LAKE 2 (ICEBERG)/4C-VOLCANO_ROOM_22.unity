@@ -2263,6 +2263,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1988501013}
     m_Modifications:
+    - target: {fileID: 3369904791468458149, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_Size.y
+      value: 10.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 3369904791468458149, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.57
+      objectReference: {fileID: 0}
     - target: {fileID: 6727020904002086331, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: patrolEnd.x
       value: 28
@@ -2275,6 +2283,10 @@ PrefabInstance:
       propertyPath: patrolStart.x
       value: 35
       objectReference: {fileID: 0}
+    - target: {fileID: 6873873080797052124, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_IdleSOBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 649a07fe2c170c24d8cabaf54a50bda9, type: 2}
     - target: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: m_Name
       value: Melee Enemy 1
@@ -3682,6 +3694,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1988501013}
     m_Modifications:
+    - target: {fileID: 3369904791468458149, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_Size.y
+      value: 10.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 3369904791468458149, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.57
+      objectReference: {fileID: 0}
     - target: {fileID: 6727020904002086331, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: patrolEnd.x
       value: 25
@@ -3694,6 +3714,10 @@ PrefabInstance:
       propertyPath: patrolStart.x
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 6873873080797052124, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
+      propertyPath: m_IdleSOBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 649a07fe2c170c24d8cabaf54a50bda9, type: 2}
     - target: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: m_Name
       value: Melee Enemy 1 (1)

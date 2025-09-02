@@ -2163,7 +2163,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_AddedGameObjects: []
@@ -2190,14 +2191,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_objectToDestroy: {fileID: 876694154}
-  collisionTag: []
+  collisionTag:
+  - Player
   m_isRespawnOverTime: 1
   timeToRespawn: 1.6
   timeToDestroy: 0.65
   iceColors:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
-  freezeMask: 0
+  freezeMask: 8
 --- !u!1001 &1182215784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2753,7 +2755,7 @@ MonoBehaviour:
   iceColors:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
-  freezeMask: 0
+  freezeMask: 8
 --- !u!1001 &1337458180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2885,7 +2887,7 @@ MonoBehaviour:
   iceColors:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
-  freezeMask: 0
+  freezeMask: 8
 --- !u!1001 &1430406206
 PrefabInstance:
   m_ObjectHideFlags: 0

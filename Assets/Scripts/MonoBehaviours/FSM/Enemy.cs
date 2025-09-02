@@ -249,7 +249,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     #endregion
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if collided object's layer is in m_DeathLayerMask
         if ((m_DeathLayerMask.value & (1 << collision.gameObject.layer)) != 0)

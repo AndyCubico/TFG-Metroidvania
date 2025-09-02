@@ -8,6 +8,7 @@ public class AttackSOBase : ScriptableObject
 
     protected Transform playerTransform;
     public bool isParried;
+    public bool isAttacking;
 
     public AnimationClip attackClip;
 
@@ -26,6 +27,7 @@ public class AttackSOBase : ScriptableObject
         }
 
         isParried = false;
+        isAttacking = false;
 
         playerTransform = GameObject.Find("HangEdgeCheck").transform;
     }
@@ -39,7 +41,8 @@ public class AttackSOBase : ScriptableObject
     public virtual void DoUpdate()
     {
         // TODO: Make smoother
-        if (!enemy.isWithinAttackRange && !isParried)
+        if (!enemy.isWithinAttackRange && 
+            !isParried && !enemy.attackSOBaseInstance.isAttacking)
         {
             enemy.stateMachine.Transition(enemy.chaseState);
             enemy.SetTransitionAnimation("Chase");

@@ -79,6 +79,7 @@ public class RandomAttackCombo : AttackSOBase
         previousClip = chosenAttack.attackClip;
 
         Debug.Log($"Chosen attack: {chosenAttack.name}");
+
         // Trigger the attack logic
         enemy.enemyHit.damage = chosenAttack.damage;
         chosenAttack.DoEnter();

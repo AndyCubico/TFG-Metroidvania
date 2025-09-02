@@ -447,12 +447,12 @@ GameObject:
   - component: {fileID: 2562382804335134552}
   - component: {fileID: 2320863238511179235}
   - component: {fileID: 9197374360791852587}
-  - component: {fileID: 2513098334486535646}
+  - component: {fileID: 4125189822792506386}
   - component: {fileID: 5998520806334434134}
   - component: {fileID: 1244630843920561401}
   - component: {fileID: 3153093923410883618}
   m_Layer: 11
-  m_Name: Elite Ranged Enemy Test 1
+  m_Name: Ranged Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,7 +550,7 @@ MonoBehaviour:
   <m_MaxHealth>k__BackingField: 1
   m_IdleSOBase: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: 0a2dfd9bd93832344bacc3b718134a96, type: 2}
-  m_AttackSOBase: {fileID: 11400000, guid: 14e0f7f0553776a48b52bb9216391c65, type: 2}
+  m_AttackSOBase: {fileID: 11400000, guid: 9d1fa5a51a411af4b86d9bbb4c770683, type: 2}
   flagMask: 2
   enemyHit: {fileID: 0}
   animatorController: {fileID: 0}
@@ -614,7 +614,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   isFacingRight: 1
   isPathValid: 1
---- !u!70 &2513098334486535646
+--- !u!70 &4125189822792506386
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

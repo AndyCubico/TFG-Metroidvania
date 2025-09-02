@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public bool isInSensor { get; set; }
     public bool isWithinAttackRange { get; set; }
-    
+
     #endregion
 
     #region State Machine variables
@@ -78,8 +78,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         attackState = new AttackState(this, stateMachine);
 
         pathfollowing = GetComponent<Pathfollowing>();
-        animator = GetComponent<Animator>();    
-        animatorController = (RuntimeAnimatorController)animator.runtimeAnimatorController;   
+        animator = GetComponent<Animator>();
+        animatorController = (RuntimeAnimatorController)animator.runtimeAnimatorController;
     }
 
     protected virtual void Start()
@@ -182,6 +182,17 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         animator.ResetTrigger("Attack");
         animator.ResetTrigger("Idle");
         animator.ResetTrigger("Chase");
+        animator.ResetTrigger("WaitAttack");
+
+        if (trigger == "Attack")
+        {
+            attackSOBaseInstance.isAttacking = true;
+        }
+        else if (attackSOBaseInstance.isAttacking)
+        {
+            attackSOBaseInstance.isAttacking = false;
+        }
+
         animator.SetTrigger(trigger);
     }
 

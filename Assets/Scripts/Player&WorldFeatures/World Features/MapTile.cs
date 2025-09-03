@@ -14,6 +14,6 @@ public class MapTile : MonoBehaviour
 
     private void OnValidate()
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x * 64, size.y * 36);
+        // gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(size.x * 64, size.y * 36);
     }
 }

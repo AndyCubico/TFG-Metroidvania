@@ -68,7 +68,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.5475013, y: 7.268491}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -78,7 +78,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 15.769554, y: 17.442636}
+  m_Size: {x: 30, y: 40}
   m_EdgeRadius: 0
 --- !u!114 &861282327734104057
 MonoBehaviour:
@@ -468,7 +468,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 23.77, y: 10.525, z: 0.044366818}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4453344497506238086}
@@ -570,8 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a783acd6277189c4bb0be9dd58c13efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolStart: {x: 40, y: 10}
-  patrolEnd: {x: 65, y: 10}
+  patrolStart: {x: 0, y: 0}
+  patrolEnd: {x: 0, y: 0}
 --- !u!114 &2320863238511179235
 MonoBehaviour:
   m_ObjectHideFlags: 0

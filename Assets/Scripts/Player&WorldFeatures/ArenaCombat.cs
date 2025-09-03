@@ -58,8 +58,8 @@ public class ArenaCombat : MonoBehaviour
                 {
                     if (enemies[m_activeEnemies.Count + m_deadEnemies].isExtraSpawn) // Extra enemies don't need to be killed to progress the wave
                     {
-                        GameObject enemy = enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
-                        m_deadEnemies++;
+                        /*GameObject enemy = */enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
+                        
 
                         if (enemies[m_activeEnemies.Count + m_deadEnemies].hasComplexParameters) 
                         {
@@ -68,6 +68,8 @@ public class ArenaCombat : MonoBehaviour
 
                             // Set vision collider
                         }
+                        
+                        m_deadEnemies++;
                     }
                     yield return new WaitForSeconds(spawnDelay);
 
@@ -91,7 +93,8 @@ public class ArenaCombat : MonoBehaviour
             // After wave ends
             yield return new WaitForSeconds(waveChangeDelay);
             DestroyEnviroment();// Destoy floors, door or any obstacle needed to be destroyed when wave ends
-            
+            m_activeEnemies.Clear();
+            m_activeEnemies = null;
             waveFinished = true;
         }
 

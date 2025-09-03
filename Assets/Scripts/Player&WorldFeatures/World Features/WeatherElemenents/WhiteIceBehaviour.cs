@@ -151,10 +151,12 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     private IEnumerator ActivateGameObject(GameObject go)
     {
         // Trigger animation if any 
+        gameObject.GetComponent<Collider2D>().enabled = false;
         gameObject.transform.position += new Vector3(0, 0.25f, 0);
         yield return new WaitForSeconds(timeToRespawn);
 
         // Activate GameObject
+        gameObject.GetComponent<Collider2D>().enabled = true; // Active and deactivate the colider to reset the OnTriggerEnter without the need of using an OnTriggerStay
         go.SetActive(true);
         m_isDestroyDueCollision = true;
         m_hasCollided = false;

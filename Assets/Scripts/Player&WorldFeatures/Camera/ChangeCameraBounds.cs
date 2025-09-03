@@ -97,7 +97,7 @@ public class ChangeCameraBounds : MonoBehaviour
             cameraRef.cameraBounds.height = m_oldCameraBounds.height * (1 - (timePassed / m_timeForChange)) + m_newCameraBounds.height * (timePassed / m_timeForChange);
             timePassed += Time.deltaTime;
 
-            Debug.Log(cameraRef.cameraBounds);
+            //Debug.Log(cameraRef.cameraBounds);
 
             // Yield here
             yield return null;

@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     #region Damagable variables
 
     [field: SerializeField] public float m_MaxHealth { get; set; } = 100f;
-    public float currentHealth { get; set; }
+    [field: SerializeField] public float currentHealth { get; set; }
 
     #endregion
 

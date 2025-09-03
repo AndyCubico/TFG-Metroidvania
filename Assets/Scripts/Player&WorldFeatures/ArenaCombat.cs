@@ -123,11 +123,11 @@ public class ArenaCombat : MonoBehaviour
     [SerializeField] bool m_IsSave;
     bool m_hasSaved = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
         if (m_IsSave)
         {
+            m_hasSaved = false;
             World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
 
             object_SL nameObj = new object_SL
@@ -147,16 +147,20 @@ public class ArenaCombat : MonoBehaviour
                 {
                     listWaves[i].DestroyEnviroment();
                 }
+                m_hasSaved = true;
 
             }
+        }
+    }
 
-            if (!m_IsStartOnCollision) // If not start on collision it starts when the player enters 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+        if (!m_IsStartOnCollision) // If not start on collision it starts when the player enters 
             {
                 StartCombat();
             }
-
-
-        }
     }
 
     // Update is called once per frame
@@ -171,7 +175,7 @@ public class ArenaCombat : MonoBehaviour
                 if (listWaves.Count > m_CurrentWaveIndex) {StartCombat(); }
             }
         }
-        if(m_CurrentWaveIndex <= listWaves.Count && m_IsSave && !m_hasSaved) 
+        if(m_CurrentWaveIndex >= listWaves.Count && m_IsSave && !m_hasSaved) 
         {
             World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
 

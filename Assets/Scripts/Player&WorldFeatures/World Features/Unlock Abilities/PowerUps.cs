@@ -14,6 +14,7 @@ public class PowerUps : MonoBehaviour
     public TypeUpgrade typeUpgrade;
 
     PlayerHealth referenceHealthScript;
+    HeavyAttack referenceHeavyAttackScript;
     public float numValue;
     Vector3 m_originalPosition;
     bool m_increaseValue;
@@ -44,7 +45,9 @@ public class PowerUps : MonoBehaviour
 
         m_originalPosition = transform.position;
         referenceHealthScript = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        
+        referenceHeavyAttackScript = GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>();
+
+
     }
 
     private void Update()
@@ -69,7 +72,7 @@ public class PowerUps : MonoBehaviour
         if (collision.tag == "Player" && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             // Aply upgrade
-            switch (typeUpgrade) 
+            switch (typeUpgrade)
             {
                 case TypeUpgrade.HEALTH_UPGRADE:
                     float ret = referenceHealthScript.IncreaseMaxHealth(numValue);
@@ -79,6 +82,10 @@ public class PowerUps : MonoBehaviour
                     break;
                 case TypeUpgrade.HEALING_POTIONS:
                     referenceHealthScript.IncreasePotionHealing(numValue);
+                    break;
+                case TypeUpgrade.HEAVY_ATTACK:
+                    referenceHeavyAttackScript.UnlockedCharges += (int)numValue;
+                    referenceHeavyAttackScript.AddCharges((int)numValue);
                     break;
                 default:
                     break;

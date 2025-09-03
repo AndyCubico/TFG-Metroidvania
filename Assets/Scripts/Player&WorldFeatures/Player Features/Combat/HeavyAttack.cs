@@ -148,7 +148,7 @@ public class HeavyAttack : MonoBehaviour
     {
         //ATTACK_TYPE attackType = (ATTACK_TYPE)heavyCharges;
         ATTACK_TYPE attackType = ATTACK_TYPE.SOFT_ATTACK;
-        heavyCharges = 0;
+        
 
         UpdateCharges();
 
@@ -252,6 +252,10 @@ public class HeavyAttack : MonoBehaviour
         if (!isDamaging)
         {
             characterPlayerController.blockFlip = true;
+
+            // Charge consumption called here to avoid using more than one 
+            heavyCharges--;
+            heavyCharges = Mathf.Max(0, heavyCharges); // Just in case because value sometimes goes to -52
 
             isDamaging = true;
         }

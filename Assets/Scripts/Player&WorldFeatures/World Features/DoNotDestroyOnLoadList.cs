@@ -28,7 +28,7 @@ public class DoNotDestroyOnLoadList : MonoBehaviour
 
     public IEnumerator RequestDontDestroyOnLoad()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < objectsToNotDestroy.Count; i++)
         {

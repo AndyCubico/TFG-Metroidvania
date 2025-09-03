@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using static BreakableDoor;
 
 public class ArenaCombat : MonoBehaviour
 {
@@ -122,6 +121,7 @@ public class ArenaCombat : MonoBehaviour
     Arena_SL m_Save;
 
     [SerializeField] bool m_IsSave;
+    bool m_hasSaved = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -171,7 +171,7 @@ public class ArenaCombat : MonoBehaviour
                 if (listWaves.Count > m_CurrentWaveIndex) {StartCombat(); }
             }
         }
-        if(m_CurrentWaveIndex <= listWaves.Count && m_IsSave) 
+        if(m_CurrentWaveIndex <= listWaves.Count && m_IsSave && !m_hasSaved) 
         {
             World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
 
@@ -188,7 +188,7 @@ public class ArenaCombat : MonoBehaviour
             };
             saveLoad.SaveObject(m_Save);
 
-            m_IsSave = false;
+            m_hasSaved = true;
         }
     }
 

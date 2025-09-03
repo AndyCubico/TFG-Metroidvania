@@ -1,6 +1,5 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -54,12 +53,16 @@ public class PlayerCamera : MonoBehaviour
         {
             m_LastPositionTarget = m_Target.transform.position;
         }
+        else 
+        {
+            m_LastPositionTarget = Vector3.zero;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!m_Target.IsDestroyed()) // Passig scenes causes errors sometimes due to this, just a security check.
+        if (!m_Target.IsDestroyed() ) // Passig scenes causes errors sometimes due to this, just a security check.
         {
             // If player isn't assigned yet try to get it
             m_Target = (m_Target == null) ? GameObject.FindGameObjectWithTag("Player") : m_Target;
@@ -67,7 +70,7 @@ public class PlayerCamera : MonoBehaviour
             // After a certain amount of time, check if position has changed
             m_TimeForUpdate += Time.deltaTime;
 
-            if (m_TimeForUpdate > m_TimeBetweenPositionUpdates)
+            if (m_TimeForUpdate > m_TimeBetweenPositionUpdates && m_Target != null)
             {
                 m_TimeForUpdate = 0.0f;
                 if (Mathf.Abs(m_LastPositionTarget.x - m_Target.transform.position.x) <= m_DistanceThreshold)

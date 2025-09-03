@@ -23,9 +23,11 @@ public class ShieldedEnemy : Enemy
             base.ReceiveDamage(damage, attackType);
             return;
         }
-
-        if ((attackType & AttackFlagType.HEAVY_ATTACK) == 0)
-            return;
+        else
+        {
+            if ((attackType & AttackFlagType.HEAVY_ATTACK) == 0)
+                return;
+        }
 
         BreakShield();
     }
@@ -34,7 +36,7 @@ public class ShieldedEnemy : Enemy
     {
         shieldActive = false;
 
-        SetTransitionAnimation("ShieldBreak");
+        SetTransitionAnimation("Stagger");
     }
 
     public void DeactivateShield()

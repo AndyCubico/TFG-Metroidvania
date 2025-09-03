@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
         pathfollowing = GetComponent<Pathfollowing>();
         animator = GetComponent<Animator>();
-        animatorController = (RuntimeAnimatorController)animator.runtimeAnimatorController;
+        animatorController = animator.runtimeAnimatorController;
     }
 
     protected virtual void Start()

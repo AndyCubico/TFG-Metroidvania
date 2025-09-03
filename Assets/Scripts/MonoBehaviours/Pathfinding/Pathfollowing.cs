@@ -281,9 +281,7 @@ public class Pathfollowing : MonoBehaviour
     /// <returns></returns>
     private bool CheckHeight(Vector3 targetPosition)
     {
-        LayerMask groundMask = LayerMask.GetMask("Ground");
-
-        RaycastHit2D hit = Physics2D.Raycast(targetPosition, Vector2.down, m_MaxCliffHeight, groundMask);
+        RaycastHit2D hit = Physics2D.Raycast(targetPosition, Vector2.down, m_MaxCliffHeight, m_GroundLayer);
 
         Debug.DrawRay(targetPosition, Vector2.down * m_MaxCliffHeight, Color.red);
 

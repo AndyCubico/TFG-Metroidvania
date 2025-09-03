@@ -8,6 +8,7 @@ public class BreakableDoor : MonoBehaviour, IHittableObject
 
     public class Breakable_SL : object_SL
     {
+        public Breakable_SL() { isBroken = false; }
         public bool isBroken;
     }
     Breakable_SL m_Save;

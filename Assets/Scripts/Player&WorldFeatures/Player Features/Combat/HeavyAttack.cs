@@ -1,4 +1,5 @@
 using PlayerController;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -58,6 +59,7 @@ public class HeavyAttack : MonoBehaviour
 
     //Charges list
     List<Image> chargesUI = new List<Image>();
+    [NonSerialized ]public int UnlockedCharges = 1; // Eric: Be able to unlock more charges slots
 
     [HideInInspector] public int heavyCharges;
 
@@ -238,8 +240,9 @@ public class HeavyAttack : MonoBehaviour
 
     public void AddCharges(int charges)
     {
-        //heavyCharges += charges;
-        heavyCharges = 1;
+        heavyCharges += charges;
+        heavyCharges = Mathf.Min(heavyCharges, UnlockedCharges);
+        //heavyCharges = 1;
 
         UpdateCharges();
     }

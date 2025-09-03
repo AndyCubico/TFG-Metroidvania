@@ -8,6 +8,7 @@ public class PowerUps : MonoBehaviour
         HEALTH_UPGRADE,
         NUMBER_POTIONS,
         HEALING_POTIONS,
+        HEAVY_ATTACK,
     }
 
     public TypeUpgrade typeUpgrade;
@@ -108,7 +109,7 @@ public class PowerUps : MonoBehaviour
         switch (typeUpgrade)
         {
             case TypeUpgrade.HEALTH_UPGRADE:
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 0.504717F, 0.504717F,1.0F);
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 0.504717F, 0.504717F, 1.0F);
                 break;
             case TypeUpgrade.NUMBER_POTIONS:
                 this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.953f, 0.922f, 0.545f, 1.0f);
@@ -116,9 +117,12 @@ public class PowerUps : MonoBehaviour
             case TypeUpgrade.HEALING_POTIONS:
                 this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
                 break;
+            case TypeUpgrade.HEAVY_ATTACK:
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.7122642F, 0.8954492F, 1.0F, 1.0f);
+                break;
             default:
                 break;
         }
-        
+
     }
 }

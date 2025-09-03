@@ -171,7 +171,7 @@ public class ArenaCombat : MonoBehaviour
                 if (listWaves.Count > m_CurrentWaveIndex) {StartCombat(); }
             }
         }
-        else if(m_CurrentWaveIndex < listWaves.Count && m_IsSave) 
+        if(m_CurrentWaveIndex <= listWaves.Count && m_IsSave) 
         {
             World_Save_Load saveLoad = GameObject.Find("GameManager")?.GetComponent<World_Save_Load>();
 
@@ -187,6 +187,8 @@ public class ArenaCombat : MonoBehaviour
 
             };
             saveLoad.SaveObject(m_Save);
+
+            m_IsSave = false;
         }
     }
 

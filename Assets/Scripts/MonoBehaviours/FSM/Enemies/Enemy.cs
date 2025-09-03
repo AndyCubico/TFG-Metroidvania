@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 //using UnityEditor.Animations;
 using UnityEngine;
@@ -66,6 +67,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     [SerializeField] private LayerMask m_DeathLayerMask;
 
+    private bool canFlip { get; set; } = true; // Flag to control if the enemy can flip or not.
+
     public virtual void Awake()
     {
         idleSOBaseInstance = Instantiate(m_IdleSOBase);
@@ -82,6 +85,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         pathfollowing = GetComponent<Pathfollowing>();
         animator = GetComponent<Animator>();
         animatorController = animator.runtimeAnimatorController;
+
+        canFlip = true;
     }
 
     protected virtual void Start()
@@ -97,7 +102,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         stateMachine.Initialize(idleState);
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         stateMachine.CurrentState.Update();
     }
@@ -155,10 +160,13 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public void Flip()
     {
-        Vector3 currentScale = gameObject.transform.localScale;
-        currentScale.x *= -1;
-        gameObject.transform.localScale = currentScale;
-        pathfollowing.isFacingRight = !pathfollowing.isFacingRight;
+        if (canFlip)
+        {
+            Vector3 currentScale = gameObject.transform.localScale;
+            currentScale.x *= -1;
+            gameObject.transform.localScale = currentScale;
+            pathfollowing.isFacingRight = !pathfollowing.isFacingRight;
+        }
     }
 
     #endregion
@@ -196,6 +204,11 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         }
 
         animator.SetTrigger(trigger);
+    }
+
+    public void SetCanFlip(int isAttacking)
+    {
+        canFlip = Convert.ToBoolean(isAttacking);
     }
 
     private void AnimationTrigger(ANIMATION_TRIGGER triggerType)

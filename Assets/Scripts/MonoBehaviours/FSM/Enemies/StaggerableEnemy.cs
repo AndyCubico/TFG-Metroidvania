@@ -28,8 +28,9 @@ public class StaggerableEnemy : Enemy
             if (!isInWaitAttack)
                 isInWaitAttack = true;
 
-            // Move backwards (opposite to local right)
-            transform.position -= transform.right * backstepSpeed * Time.deltaTime;
+            // Move away from the player
+            Vector3 directionAway = (transform.position - chaseSOBaseInstance.playerTransform.position).normalized;
+            transform.position += directionAway * backstepSpeed * Time.deltaTime;
         }
         else if (isInWaitAttack)
         {

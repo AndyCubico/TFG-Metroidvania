@@ -24,6 +24,17 @@ public class ChaseCheck : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            if (isBack && m_EnemyCS.isInSensor)
+            {
+                m_EnemyCS.Flip();
+            }
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")

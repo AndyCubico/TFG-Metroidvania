@@ -7,7 +7,7 @@ using PlayerController;
 public class DashEffect : MonoBehaviour
 {
     public CharacterPlayerController player;
-    List<GameObject> clones;
+    public List<GameObject> clones;
     public float separationTime;
     public float timeFading;
     [SerializeField] public GameObject cloneSpirte;
@@ -55,6 +55,10 @@ public class DashEffect : MonoBehaviour
                         clones[0] = null;
                         clones.RemoveAt(0);
                     }
+                }
+                else
+                {
+                    clones.RemoveAt(0);
                 }
             }
 

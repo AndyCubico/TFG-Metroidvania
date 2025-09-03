@@ -43,8 +43,34 @@ public class RandomAttackCombo : AttackSOBase
     {
         enemy.StopDangerParticles();
 
-        // Pick a random attack
-        chosenAttack = attackOptions[Random.Range(0, attackOptions.Length)];
+        // Pick a random attack that is not the same as the previous one
+        int previousIndex = -1;
+        if (chosenAttack != null)
+        {
+            for (int i = 0; i < attackOptions.Length; i++)
+            {
+                if (attackOptions[i] == chosenAttack)
+                {
+                    previousIndex = i;
+                    break;
+                }
+            }
+        }
+
+        int newIndex;
+        if (attackOptions.Length <= 1)
+        {
+            newIndex = 0;
+        }
+        else
+        {
+            do
+            {
+                newIndex = Random.Range(0, attackOptions.Length);
+            } while (newIndex == previousIndex);
+        }
+
+        chosenAttack = attackOptions[newIndex];
 
         // Ensure we have an override controller
         if (overrideController == null)
@@ -57,16 +83,10 @@ public class RandomAttackCombo : AttackSOBase
         var overrides = new List<KeyValuePair<AnimationClip, AnimationClip>>(overrideController.overridesCount);
         overrideController.GetOverrides(overrides);
 
-        // If this is the first time, just grab the original clip in the state we want
-        if (previousClip == null)
-        {
-            previousClip = overrides[0].Key;
-        }
-
         // Now swap previousClip with the new chosen attack clip
         for (int i = 0; i < overrides.Count; i++)
         {
-            if (overrides[i].Key.name == previousClip.name)
+            if (overrides[i].Key.name == "Attack_Default") // The state of the base attack animation needs this animation by default.
             {
                 overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(overrides[i].Key, chosenAttack.attackClip);
             }

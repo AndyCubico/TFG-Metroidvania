@@ -8126,8 +8126,8 @@ MonoBehaviour:
   <m_MaxHealth>k__BackingField: 90
   m_IdleSOBase: {fileID: 11400000, guid: 649a07fe2c170c24d8cabaf54a50bda9, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
-  m_AttackSOBase: {fileID: 11400000, guid: 4afd77789eb276f448467a2c0ed58c24, type: 2}
-  flagMask: 0
+  m_AttackSOBase: {fileID: 11400000, guid: f21f98ef2b23b5c41b624551ecc16db6, type: 2}
+  attackFlagMask: 0
   enemyHit: {fileID: 2561326653900055253}
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 2203836079590877883}
@@ -8765,8 +8765,8 @@ Transform:
   m_GameObject: {fileID: 6355428167515150850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.845013, y: 11.666011, z: 0.044367}
-  m_LocalScale: {x: 1.6362467, y: 1.6362467, z: 1.6362467}
+  m_LocalPosition: {x: 36.9, y: 12.89, z: 0.044367}
+  m_LocalScale: {x: 3.1951, y: 3.1951, z: 3.1951}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1716892374976249624}
@@ -8835,7 +8835,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1550767983955354101, guid: df0f19e2eb22b65439ce079a8198829f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.3254717, b: 0.3254717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

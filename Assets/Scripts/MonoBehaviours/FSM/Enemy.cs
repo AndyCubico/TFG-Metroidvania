@@ -58,11 +58,11 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public AttackFlagType attackFlagMask;
 
-    public EnemyHit enemyHit; 
+    public EnemyHit enemyHit;
 
     public RuntimeAnimatorController animatorController;
 
-    [SerializeField] private ParticleSystem m_DangerParticles; 
+    [SerializeField] private ParticleSystem m_DangerParticles;
 
     [SerializeField] private LayerMask m_DeathLayerMask;
 
@@ -244,7 +244,10 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public void StopDangerParticles()
     {
-        m_DangerParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        if (m_DangerParticles != null)
+        {
+            m_DangerParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
     }
 
     #endregion

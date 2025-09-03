@@ -17,7 +17,11 @@ public class ChaseSOBase : ScriptableObject
         playerTransform = GameObject.Find("HangEdgeCheck").transform;
     }
 
-    public virtual void DoEnter() { }
+    public virtual void DoEnter()
+    {
+        enemy.StopDangerParticles();
+    }
+
     public virtual void DoExit() { ResetValues(); }
     public virtual void DoUpdate()
     {

@@ -15,6 +15,8 @@ public class AttackSlashCombo : AttackSOBase
         // Not in the base class because some enemies may not have a pathfollowing behaviour.
         enemy.pathfollowing.CancelJump();
         enemy.enemyHit.canBeParried = true;
+
+        enemy.StopDangerParticles();
     }
 
     public override void DoExit()

@@ -6,6 +6,9 @@ public class RandomAttackCombo : AttackSOBase
 {
     [SerializeField] private AttackSOBase[] attackOptions;
 
+    [Tooltip("Probabilities as follows: 50% = 50")]
+    [SerializeField] float[] m_AttackProbability;
+
     private AttackSOBase chosenAttack;
 
     private AnimatorOverrideController overrideController;
@@ -42,20 +45,6 @@ public class RandomAttackCombo : AttackSOBase
     {
         enemy.StopDangerParticles();
 
-        // Pick a random attack that is not the same as the previous one
-        int previousIndex = -1;
-        if (chosenAttack != null)
-        {
-            for (int i = 0; i < attackOptions.Length; i++)
-            {
-                if (attackOptions[i] == chosenAttack)
-                {
-                    previousIndex = i;
-                    break;
-                }
-            }
-        }
-
         int newIndex;
         if (attackOptions.Length <= 1)
         {
@@ -63,10 +52,32 @@ public class RandomAttackCombo : AttackSOBase
         }
         else
         {
-            do
+            if (m_AttackProbability != null && m_AttackProbability.Length == attackOptions.Length)
             {
-                newIndex = Random.Range(0, attackOptions.Length);
-            } while (newIndex == previousIndex);
+                // Weighted random: just pick normally
+                newIndex = (int)Choose(m_AttackProbability);
+            }
+            else
+            {
+                // Uniform random: avoid repeating previous attack
+                int previousIndex = -1;
+                if (chosenAttack != null)
+                {
+                    for (int i = 0; i < attackOptions.Length; i++)
+                    {
+                        if (attackOptions[i] == chosenAttack)
+                        {
+                            previousIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                do
+                {
+                    newIndex = Random.Range(0, attackOptions.Length);
+                } while (newIndex == previousIndex);
+            }
         }
 
         chosenAttack = attackOptions[newIndex];
@@ -97,5 +108,31 @@ public class RandomAttackCombo : AttackSOBase
         // Trigger the attack logic
         enemy.enemyHit.damage = chosenAttack.damage;
         chosenAttack.DoEnter();
+    }
+
+    // Function to determine which attack to choose https://docs.unity3d.com/2019.3/Documentation/Manual/RandomNumbers.html
+    private float Choose(float[] probs)
+    {
+        float total = 0;
+
+        foreach (float elem in probs)
+        {
+            total += elem;
+        }
+
+        float randomPoint = Random.value * total;
+
+        for (int i = 0; i < probs.Length; i++)
+        {
+            if (randomPoint < probs[i])
+            {
+                return i;
+            }
+            else
+            {
+                randomPoint -= probs[i];
+            }
+        }
+        return probs.Length - 1;
     }
 }

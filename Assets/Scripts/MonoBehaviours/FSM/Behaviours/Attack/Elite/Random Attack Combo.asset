@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Random Attack Combo
   m_EditorClassIdentifier: 
   isParried: 0
+  isAttacking: 0
   attackClip: {fileID: 0}
+  damage: 10
   attackOptions:
   - {fileID: 11400000, guid: 734fc39c2548e954088d1be4ca5db0cb, type: 2}
   - {fileID: 11400000, guid: 8dcbef248aa47944bb72b217e1b4f7ec, type: 2}
+  m_AttackProbability:
+  - 60
+  - 40

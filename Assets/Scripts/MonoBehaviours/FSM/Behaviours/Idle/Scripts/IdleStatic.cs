@@ -16,11 +16,20 @@ public class IdleStatic : IdleSOBase
 
         m_StartPosition = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
 
+        // TODO: CAN BE DANGEROUS, WHILE LOOP
         // For tall enemies like the elite, since the starting position has to be the floor the transform.position
-        // in a large enemy could be in the node aobve. This ensures it still takes the floor.
+        // in a large enemy could be in the node above. This ensures it still takes the floor.
         if (!GridManager.Instance.grid.GetValue(m_StartPosition.x, m_StartPosition.y).IsWalkable())
         {
-            m_StartPosition = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y - 1)); ;
+            // Replace the original block with this loop
+            int y = Mathf.FloorToInt(transform.position.y);
+            int x = Mathf.FloorToInt(transform.position.x);
+            while (!GridManager.Instance.grid.GetValue(x, y).IsWalkable() && y > 0)
+            {
+                y -= 1;
+            }
+            m_StartPosition = new int2(x, y);
+            m_StartPosition = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y - 1));
         }
 
         m_TimeSinceLastCheck = 0f;

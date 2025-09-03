@@ -6,10 +6,36 @@ public class StaggerableEnemy : Enemy
     [SerializeField] private int heavyHitsToBreak = 3;
     private int currentHeavyHits = 0;
 
+    [Header("WaitAttack Backstep Settings")]
+    [SerializeField] private float backstepSpeed = 1.0f;
+    [SerializeField] private string waitAttackStateName = "WaitAttack";
+    private bool isInWaitAttack = false;
+
     public override void Awake()
     {
         base.Awake();
         currentHeavyHits = 0;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName(waitAttackStateName))
+        {
+            if (!isInWaitAttack)
+                isInWaitAttack = true;
+
+            // Move backwards (opposite to local right)
+            transform.position -= transform.right * backstepSpeed * Time.deltaTime;
+        }
+        else if (isInWaitAttack)
+        {
+            // Just exited WaitAttack state
+            isInWaitAttack = false;
+        }
     }
 
     public override void ReceiveDamage(float damage, AttackFlagType attackType)

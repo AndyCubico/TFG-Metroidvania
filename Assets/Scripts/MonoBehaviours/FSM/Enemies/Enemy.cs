@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         stateMachine.Initialize(idleState);
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         stateMachine.CurrentState.Update();
     }

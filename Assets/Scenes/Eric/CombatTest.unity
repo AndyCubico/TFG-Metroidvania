@@ -8563,7 +8563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7363680550216263789, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8693,8 +8693,8 @@ Transform:
   m_GameObject: {fileID: 6355428167515150850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.95, y: 11.42, z: 0.044367}
-  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_LocalPosition: {x: 36.95, y: 12.59, z: 0.044367}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1716892374976249624}
@@ -9146,7 +9146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6355428167515150851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9171,6 +9171,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   heavyHitsToBreak: 3
+  backstepSpeed: 1
+  waitAttackStateName: WaitAttack
 --- !u!61 &7021923886264094986
 BoxCollider2D:
   m_ObjectHideFlags: 0

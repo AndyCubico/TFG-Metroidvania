@@ -8,6 +8,8 @@ public class RandomAttackCombo : AttackSOBase
 
     private AttackSOBase chosenAttack;
 
+    private AnimatorOverrideController overrideController;
+
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
@@ -35,9 +37,6 @@ public class RandomAttackCombo : AttackSOBase
             ChooseAttack();
         }
     }
-
-    private AnimatorOverrideController overrideController;
-    private AnimationClip previousClip; // track the last clip we replaced
 
     private void ChooseAttack()
     {
@@ -83,7 +82,7 @@ public class RandomAttackCombo : AttackSOBase
         var overrides = new List<KeyValuePair<AnimationClip, AnimationClip>>(overrideController.overridesCount);
         overrideController.GetOverrides(overrides);
 
-        // Now swap previousClip with the new chosen attack clip
+        // Now swap the attack clip with the new chosen attack clip
         for (int i = 0; i < overrides.Count; i++)
         {
             if (overrides[i].Key.name == "Attack_Default") // The state of the base attack animation needs this animation by default.
@@ -94,11 +93,6 @@ public class RandomAttackCombo : AttackSOBase
 
         // Apply
         overrideController.ApplyOverrides(overrides);
-
-        // Update previousClip for next round
-        previousClip = chosenAttack.attackClip;
-
-        Debug.Log($"Chosen attack: {chosenAttack.name}");
 
         // Trigger the attack logic
         enemy.enemyHit.damage = chosenAttack.damage;

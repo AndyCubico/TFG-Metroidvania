@@ -30,7 +30,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     public float damageBlockPercentage;
     float damageBlock;
     float damageNoBlock;
-    bool canAttackBeParried;
+    bool cantAttackBeParried;
 
     [Header("Extra variables")]
     [Space(5)]
@@ -44,6 +44,12 @@ public class PlayerBlockAndParry : MonoBehaviour
     [Space(5)]
     public bool enemyTesting;
     SpriteRenderer enemyTest;
+
+    [Header("BlockParry Sprite")]
+    [SerializeField]private SpriteRenderer m_blockAndParrySprite;
+    [SerializeField]private GameObject m_blockAndParryObj;
+    public Color parryColor;
+    public Color blockColor;
 
     // Bool to check if an enemy attack has hitted
     bool enemyIsAttacking;
@@ -96,6 +102,8 @@ public class PlayerBlockAndParry : MonoBehaviour
                 {
                     isBlocking = true;
                     rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+                    m_blockAndParryObj.SetActive(true);
+                    m_blockAndParrySprite.color = parryColor;
                 }
 
                 if (context.canceled)
@@ -111,7 +119,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     void Start()
     {
         isBlocking = false;
-        canAttackBeParried = false;
+        cantAttackBeParried = false;
         startRecovering = false;
         isRecovering = false;
         isInCheckpoint = false;
@@ -120,6 +128,7 @@ public class PlayerBlockAndParry : MonoBehaviour
         m_timeFromBlock = 0f;
         invincibilityCounter = 0f;
         attackDirection = 0;
+        m_blockAndParryObj.SetActive(false);
     }
 
     void Update()
@@ -133,16 +142,19 @@ public class PlayerBlockAndParry : MonoBehaviour
         {
             m_timeFromBlock += Time.deltaTime;
 
-            if (parryCounter <= maxParryTime && canAttackBeParried) // Check if the time for parry is still open and the attack can be parried
+            if (parryCounter <= maxParryTime && !cantAttackBeParried) // Check if the time for parry is still open and the attack can be parried
             {
+                m_blockAndParrySprite.color = parryColor;
                 parryCounter += Time.deltaTime;
             }
             else if (blockCounter <= blockTime) // Check if the parry apperture has passed and the block time stills open
             {
+                m_blockAndParrySprite.color = blockColor;
                 blockCounter += Time.deltaTime;
             }
             else if (!enemyIsAttacking)
             {
+                m_blockAndParryObj.SetActive(false);
                 StartCoroutine(Recovery(parryRecovery));
                 ResetBlock(); // Reset the block when ends the process
             }
@@ -163,7 +175,7 @@ public class PlayerBlockAndParry : MonoBehaviour
             {
                 if (isBlocking) // If the block action is executed correctly
                 {
-                    if (parryCounter > 0 && parryCounter <= maxParryTime && canAttackBeParried) // Check if the time for parry is still open and the attack can be parried
+                    if (parryCounter > 0 && parryCounter <= maxParryTime && !cantAttackBeParried) // Check if the time for parry is still open and the attack can be parried
                     {
                         ReciveAttackParryWindow(); // Call the function of parry
                         ResetBlock();
@@ -172,7 +184,7 @@ public class PlayerBlockAndParry : MonoBehaviour
                     {
                         if (blockCounter > 0f && blockCounter <= blockTime)
                         {
-                            if (canAttackBeParried)
+                            if (!cantAttackBeParried)
                             {
                                 ReciveAttackBlockWindow(); // Call the function of block
                                 ResetBlock();
@@ -210,6 +222,7 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         isBlocking = false;
         enemyIsAttacking = false;
+        cantAttackBeParried = false;
 
         blockCounter = 0;
         parryCounter = 0;
@@ -285,6 +298,8 @@ public class PlayerBlockAndParry : MonoBehaviour
 
     public IEnumerator Recovery(float recoveryTime) // Recovery after reciving an attack
     {
+        m_blockAndParryObj.SetActive(false);
+        cantAttackBeParried = false;
         startRecovering = true;
 
         float animationLenght = GetAnimationLength("BlockParry");
@@ -365,7 +380,7 @@ public class PlayerBlockAndParry : MonoBehaviour
                     if (!enemyHit.hasHittedPlayer) // If the attack already does not hit the player
                     {
                         damageNoBlock = enemyHit.damage;
-                        canAttackBeParried = enemyHit.canBeParried;
+                        cantAttackBeParried = !enemyHit.canBeParried;
                         enemyHit.hasHittedPlayer = true;
                         damageBlock = (damageNoBlock * (100 - damageBlockPercentage)) / 100; // Damage blocking is a % of the total incoming damage, is calculated here
 

@@ -16,11 +16,11 @@ public class ChangeCameraBounds : MonoBehaviour
     {
         NONE = 0,
         ON_START = 1 << 0,   // 1
-        ON_START_GO_RETURN = 1 << 1,     // 2
+        GO_RETURN = 1 << 1,     // 2
         ON_COLLISION_ONCE = 1 << 2,   // 4
         ON_COLLISION_STAY = 1 << 3,    // 8
         WALL = 1 << 4,           // 16
-        ALL = ON_START | ON_START_GO_RETURN | ON_COLLISION_ONCE | ON_COLLISION_STAY | WALL
+        ALL = ON_START | GO_RETURN | ON_COLLISION_ONCE | ON_COLLISION_STAY | WALL
     }
 
     [Header("Change Modifiers")]
@@ -33,11 +33,11 @@ public class ChangeCameraBounds : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if ((modes & (CameraChangesMode.ON_START | CameraChangesMode.ON_START_GO_RETURN)) != 0) 
+        if ((modes & CameraChangesMode.ON_START) != 0) 
         {
             StartCoroutine(ChangeBounds());
 
-            if ((modes & (CameraChangesMode.ON_START_GO_RETURN)) != 0) 
+            if ((modes & (CameraChangesMode.GO_RETURN)) != 0) 
             {
                 StartCoroutine(ChangeBounds(m_timeForChange + 0.1f,true));
             }
@@ -57,7 +57,12 @@ public class ChangeCameraBounds : MonoBehaviour
             if (collisionTag.Contains(collision.gameObject.tag))
             {
                 StopAllCoroutines();
-                StartCoroutine(ChangeBounds(m_timeForChange));
+                StartCoroutine(ChangeBounds(/*m_timeForChange*/));
+
+                if ((modes & (CameraChangesMode.GO_RETURN)) != 0)
+                {
+                    StartCoroutine(ChangeBounds(m_timeForChange + 0.1f, true));
+                }
 
                 if ((modes & (CameraChangesMode.ON_COLLISION_ONCE)) != 0) // If on collision once, makes sure doesn't repeat
                 {

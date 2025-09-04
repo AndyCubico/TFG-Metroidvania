@@ -9,21 +9,27 @@ public class RandomAttackCombo : AttackSOBase
     [Tooltip("Probabilities as follows: 50% = 50")]
     [SerializeField] float[] m_AttackProbability;
 
-    private AttackSOBase chosenAttack;
+    // Runtime, per-enemy cloned options
+    private AttackSOBase[] runtimeAttackOptions;
 
+    // Per-enemy runtime state
+    private AttackSOBase chosenAttack;
     private AnimatorOverrideController overrideController;
 
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
         base.Initialize(gameObject, enemy);
-        foreach (var attack in attackOptions)
-            attack.Initialize(gameObject, enemy);
+
+        // Clone attack options per enemy
+        runtimeAttackOptions = new AttackSOBase[attackOptions.Length];
+        for (int i = 0; i < attackOptions.Length; i++)
+        {
+            runtimeAttackOptions[i] = Instantiate(attackOptions[i]);
+            runtimeAttackOptions[i].Initialize(gameObject, enemy);
+        }
     }
 
-    public override void DoEnter()
-    {
-        ChooseAttack();
-    }
+    public override void DoEnter() => ChooseAttack();
 
     public override void DoUpdate() => chosenAttack?.DoUpdate();
     public override void DoFixedUpdate() => chosenAttack?.DoFixedUpdate();
@@ -35,7 +41,7 @@ public class RandomAttackCombo : AttackSOBase
 
     public override void PerformAttack()
     {
-        if (attackOptions != null && attackOptions.Length > 0)
+        if (runtimeAttackOptions != null && runtimeAttackOptions.Length > 0)
         {
             ChooseAttack();
         }
@@ -46,26 +52,26 @@ public class RandomAttackCombo : AttackSOBase
         enemy.StopDangerParticles();
 
         int newIndex;
-        if (attackOptions.Length <= 1)
+        if (runtimeAttackOptions.Length <= 1)
         {
             newIndex = 0;
         }
         else
         {
-            if (m_AttackProbability != null && m_AttackProbability.Length == attackOptions.Length)
+            if (m_AttackProbability != null && m_AttackProbability.Length == runtimeAttackOptions.Length)
             {
-                // Weighted random: just pick normally
+                // Weighted random
                 newIndex = (int)Choose(m_AttackProbability);
             }
             else
             {
-                // Uniform random: avoid repeating previous attack
+                // Uniform random, avoid repeating previous attack
                 int previousIndex = -1;
                 if (chosenAttack != null)
                 {
-                    for (int i = 0; i < attackOptions.Length; i++)
+                    for (int i = 0; i < runtimeAttackOptions.Length; i++)
                     {
-                        if (attackOptions[i] == chosenAttack)
+                        if (runtimeAttackOptions[i] == chosenAttack)
                         {
                             previousIndex = i;
                             break;
@@ -75,14 +81,14 @@ public class RandomAttackCombo : AttackSOBase
 
                 do
                 {
-                    newIndex = Random.Range(0, attackOptions.Length);
+                    newIndex = Random.Range(0, runtimeAttackOptions.Length);
                 } while (newIndex == previousIndex);
             }
         }
 
-        chosenAttack = attackOptions[newIndex];
+        chosenAttack = runtimeAttackOptions[newIndex];
 
-        // Ensure we have an override controller
+        // Create override controller per enemy if not already done
         if (overrideController == null)
         {
             overrideController = new AnimatorOverrideController(enemy.animator.runtimeAnimatorController);
@@ -93,19 +99,19 @@ public class RandomAttackCombo : AttackSOBase
         var overrides = new List<KeyValuePair<AnimationClip, AnimationClip>>(overrideController.overridesCount);
         overrideController.GetOverrides(overrides);
 
-        // Now swap the attack clip with the new chosen attack clip
+        // Replace the default attack clip
         for (int i = 0; i < overrides.Count; i++)
         {
-            if (overrides[i].Key.name == "Attack_Default") // The state of the base attack animation needs this animation by default.
+            if (overrides[i].Key.name == "Attack_Default")
             {
                 overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(overrides[i].Key, chosenAttack.attackClip);
             }
         }
 
-        // Apply
+        // Apply overrides
         overrideController.ApplyOverrides(overrides);
 
-        // Trigger the attack logic
+        // Trigger attack
         attackEnemyHit = chosenAttack.attackEnemyHit;
         attackEnemyHit.damage = chosenAttack.damage;
         chosenAttack.DoEnter();

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f8ead77f4b3340a7a75b59a21f02f, type: 3}
+  m_Name: Random Attack Boss
+  m_EditorClassIdentifier: 
+  isParried: 0
+  isAttacking: 0
+  attackClip: {fileID: 0}
+  damage: 10
+  attackOptions:
+  - {fileID: 11400000, guid: 2c57f9124e4b75643b4cfb43e2a14351, type: 2}
+  - {fileID: 11400000, guid: 14ec18240173b264ba4c6f6d10465080, type: 2}
+  - {fileID: 11400000, guid: 013ac0d2820bd0b498cdd5f08ebf6153, type: 2}
+  - {fileID: 11400000, guid: ea4a4e7479d617e419369543a3d21f12, type: 2}
+  - {fileID: 11400000, guid: 579f29f34cdb8af43b862d6a0c9cf0a7, type: 2}
+  - {fileID: 11400000, guid: b8e3ed30ca5e7da4e99e85e31b1ff88c, type: 2}
+  m_AttackProbability:
+  - 20
+  - 20
+  - 20
+  - 20
+  - 10
+  - 10

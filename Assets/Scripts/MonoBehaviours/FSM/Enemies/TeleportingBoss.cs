@@ -4,14 +4,20 @@ using UnityEngine;
 public class TeleportingBoss : StaggerableEnemy
 {
     [Header("Teleport Settings")]
-    [SerializeField] private Vector3[] m_TeleportPositions;
+    [SerializeField] private Vector2[] m_TeleportPositions;
     private int lastTeleportIndex = -1;
+
+    [System.Serializable]
+    public class AttackProbabilitySet
+    {
+        public float[] probabilities;
+    }
 
     // These probabilities correspond to the attack options in RandomAttackCombo, when
     // setting them up, remember how the attackOptions in the scriptable object are ordered.
     [Header("List of the attack probabilities depending on the position")]
     [Tooltip("Probabilities as follows: 50% = 50. Position in list = position in teleport positions")]
-    [SerializeField] private List<float[]> m_AttackProbabilitiesByTeleport;
+    [SerializeField] private List<AttackProbabilitySet> m_AttackProbabilitiesByTeleport;
 
     public override void PerformWaitAttack()
     {
@@ -50,8 +56,10 @@ public class TeleportingBoss : StaggerableEnemy
         {
             if (m_AttackProbabilitiesByTeleport != null && newIndex < m_AttackProbabilitiesByTeleport.Count)
             {
-                randomAttackCombo.SetAttackProbability(m_AttackProbabilitiesByTeleport[newIndex]);
+                randomAttackCombo.SetAttackProbability(m_AttackProbabilitiesByTeleport[newIndex].probabilities);
             }
         }
     }
 }
+
+

@@ -18,7 +18,7 @@ public class Checkpoint_Station : MonoBehaviour
 
     void Start()
     {
-        m_PressEObj = this.gameObject.transform.GetChild(0).gameObject;
+        m_PressEObj = gameObject.transform.GetChild(0).gameObject;
         m_SavedUIText = GameObject.Find("Saved!").GetComponent<TextMeshProUGUI>();
         m_IsInside = false;
         m_hasSaved = false;

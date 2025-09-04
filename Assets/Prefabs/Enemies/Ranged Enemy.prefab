@@ -548,11 +548,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <m_MaxHealth>k__BackingField: 1
+  <currentHealth>k__BackingField: 0
   m_IdleSOBase: {fileID: 11400000, guid: 7411d509fc9025f4cbf3fbe175feb63b, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: 0a2dfd9bd93832344bacc3b718134a96, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 9d1fa5a51a411af4b86d9bbb4c770683, type: 2}
   attackFlagMask: 2
-  enemyHit: {fileID: 0}
+  m_WeaponObjects: []
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 0}
   m_DeathLayerMask:
@@ -601,6 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Speed: 0
   m_JumpForce: 0
+  m_HorizontalJump: 0
   m_JumpWait: 1
   m_MaxCliffHeight: 1
   isJumping: 0

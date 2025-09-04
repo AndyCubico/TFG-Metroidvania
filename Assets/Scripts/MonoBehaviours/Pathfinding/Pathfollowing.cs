@@ -14,6 +14,7 @@ public class Pathfollowing : MonoBehaviour
     [Header("Movement stats")]
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_JumpForce;
+    [SerializeField] private float m_HorizontalJump = 0.5f;
 
     [Header("Jump management")]
     private Vector3 m_PreviousPosition; // Required for the step back performed before jumping.
@@ -135,7 +136,7 @@ public class Pathfollowing : MonoBehaviour
                     isJumping = true;
                     m_JumpCoroutineExecution = true;
 
-                    m_JumpCoroutine = StartCoroutine(Jump(m_JumpWait, 0.5f)); // 0.5f in the forceX parameter to jump more horizontally.
+                    m_JumpCoroutine = StartCoroutine(Jump(m_JumpWait, m_HorizontalJump)); // 0.5f in the forceX parameter to jump more horizontally.
                 }
                 // Move if it is not jumping.
                 else if (!isJumping)

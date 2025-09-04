@@ -202,7 +202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4225795489371782754
 Transform:
   m_ObjectHideFlags: 0
@@ -213,8 +213,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.40382475, w: 0.9148364}
   m_LocalPosition: {x: 0.641, y: 0.376, z: 0}
-  m_LocalScale: {x: 1.1218019, y: -1.1218019, z: 0}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.30902275, y: -3.9099162, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3479017593325607439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -47.635}
@@ -262,8 +262,8 @@ SpriteRenderer:
   m_SortingLayerID: 1833231955
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3960879511173417631, guid: ccfc1e7f32886d34bb0b5f3856c18eff, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
+  m_Color: {r: 0.83921576, g: 0.7803922, b: 0.22352943, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -307,17 +307,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.017214537, y: -0.0024374127}
+  m_Offset: {x: -0.017214537, y: -0.006603837}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.46545455, y: 1.5290909}
+    oldSize: {x: 1, y: 0.5}
     newSize: {x: 1.08, y: 0.26}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.37059438, y: 1.5926293}
+  m_Size: {x: 0.37059438, y: 0.5238664}
   m_EdgeRadius: 0
 --- !u!114 &1343912392270871308
 MonoBehaviour:
@@ -363,11 +363,11 @@ Transform:
   m_GameObject: {fileID: 375557002655778074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.392, y: 0.084, z: -0.0221835}
+  m_LocalPosition: {x: 0.16, y: -2.48, z: -0.0221835}
   m_LocalScale: {x: 2.0614724, y: 0.3755338, z: 0.4090922}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3479017593325607439}
+  m_Father: {fileID: 8333877002027707320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7444496635814456922
 SpriteRenderer:
@@ -522,7 +522,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.223, y: -0.492, z: -0.0221835}
-  m_LocalScale: {x: 0.7655934, y: 0.225995, z: 0.225995}
+  m_LocalScale: {x: 0.8873994, y: 0.26195082, z: 0.26195082}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3479017593325607439}
@@ -1043,9 +1043,41 @@ Transform:
   - {fileID: 7006936380436610934}
   - {fileID: 4407704891202881769}
   - {fileID: 1796837914921785566}
-  - {fileID: 7120145932299665855}
+  - {fileID: 8333877002027707320}
   - {fileID: 7318302810129988857}
   m_Father: {fileID: 6898311708793894132}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5260662980991596545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8333877002027707320}
+  m_Layer: 0
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8333877002027707320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5260662980991596545}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.38, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7120145932299665855}
+  m_Father: {fileID: 3479017593325607439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5306003111646217051
 GameObject:
@@ -1167,7 +1199,10 @@ MonoBehaviour:
   m_ChaseSOBase: {fileID: 11400000, guid: 0a2dfd9bd93832344bacc3b718134a96, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 849420352c164c340a8b41113b42da70, type: 2}
   attackFlagMask: -1
-  m_WeaponObjects: []
+  m_WeaponObjects:
+  - {fileID: 3854773809569221137}
+  - {fileID: 856349872824797016}
+  - {fileID: 375557002655778074}
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 6643994163498569581}
   m_DeathLayerMask:

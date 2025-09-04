@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b5516fb7d92bc4891168be9553bc9b, type: 3}
-  m_Name: Ray
+  m_Script: {fileID: 11500000, guid: f0ac6bfa2aca9d8479a42d339bb573f6, type: 3}
+  m_Name: R Column
   m_EditorClassIdentifier: 
   isParried: 0
   isAttacking: 0
-  attackClip: {fileID: 7400000, guid: 49598b137811ce14c8dd3cc741290b31, type: 2}
+  attackClip: {fileID: 7400000, guid: 3b65e1b5b5ef36648a0aa845d24347ee, type: 2}
   damage: 10
+  attackEnemyHit: {fileID: 0}
+  weaponName: Ray

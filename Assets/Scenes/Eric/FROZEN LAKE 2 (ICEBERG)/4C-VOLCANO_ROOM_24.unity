@@ -3369,7 +3369,7 @@ PrefabInstance:
     - target: {fileID: 3778669106515092280, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       propertyPath: m_IdleSOBase
       value: 
-      objectReference: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
+      objectReference: {fileID: 11400000, guid: 7411d509fc9025f4cbf3fbe175feb63b, type: 2}
     - target: {fileID: 4382165172331730134, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       propertyPath: patrolEnd.x
       value: 0
@@ -4692,6 +4692,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3778669106515092280, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
+      propertyPath: m_IdleSOBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 7411d509fc9025f4cbf3fbe175feb63b, type: 2}
     - target: {fileID: 4382165172331730134, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       propertyPath: patrolEnd.x
       value: 12

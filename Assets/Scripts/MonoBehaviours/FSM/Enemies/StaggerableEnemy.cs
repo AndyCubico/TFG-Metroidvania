@@ -8,8 +8,8 @@ public class StaggerableEnemy : Enemy
 
     [Header("WaitAttack Backstep Settings")]
     [SerializeField] private float backstepSpeed = 1.0f;
-    [SerializeField] private string waitAttackStateName = "WaitAttack";
-    private bool isInWaitAttack = false;
+    public string waitAttackStateName = "WaitAttack";
+    public bool isInWaitAttack = false;
 
     public override void Awake()
     {
@@ -21,22 +21,7 @@ public class StaggerableEnemy : Enemy
     {
         base.Update();
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName(waitAttackStateName))
-        {
-            if (!isInWaitAttack)
-                isInWaitAttack = true;
-
-            // Move away from the player
-            Vector3 directionAway = (transform.position - chaseSOBaseInstance.playerTransform.position).normalized;
-            transform.position += directionAway * backstepSpeed * Time.deltaTime;
-        }
-        else if (isInWaitAttack)
-        {
-            // Just exited WaitAttack state
-            isInWaitAttack = false;
-        }
+        PerformWaitAttack();
     }
 
     public override void ReceiveDamage(float damage, AttackFlagType attackType)
@@ -57,5 +42,25 @@ public class StaggerableEnemy : Enemy
     {
         currentHeavyHits = 0;
         SetTransitionAnimation("Stagger");
+    }
+
+    public virtual void PerformWaitAttack()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName(waitAttackStateName))
+        {
+            if (!isInWaitAttack)
+                isInWaitAttack = true;
+
+            // Move away from the player
+            Vector3 directionAway = (transform.position - chaseSOBaseInstance.playerTransform.position).normalized;
+            transform.position += directionAway * backstepSpeed * Time.deltaTime;
+        }
+        else if (isInWaitAttack)
+        {
+            // Just exited WaitAttack state
+            isInWaitAttack = false;
+        }
     }
 }

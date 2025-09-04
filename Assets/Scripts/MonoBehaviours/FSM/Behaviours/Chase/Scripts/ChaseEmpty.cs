@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Chase Static", menuName = "Enemy Logic/Chase/Chase Static")]
-public class ChaseStatic : ChaseSOBase
+[CreateAssetMenu(fileName = "Chase Empty", menuName = "Enemy Logic/Chase/Chase Empty")]
+public class ChaseEmpty : ChaseSOBase
 {
     public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
     {
@@ -11,9 +11,6 @@ public class ChaseStatic : ChaseSOBase
     public override void DoEnter()
     {
         base.DoEnter();
-
-        // Not in the base class because some enemies may not have a pathfollowing behaviour.
-        enemy.pathfollowing.CancelJump();
     }
 
     public override void DoExit()

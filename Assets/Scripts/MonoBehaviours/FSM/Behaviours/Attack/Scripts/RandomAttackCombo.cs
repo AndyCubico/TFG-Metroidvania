@@ -135,4 +135,9 @@ public class RandomAttackCombo : AttackSOBase
         }
         return probs.Length - 1;
     }
+
+    public void SetAttackProbability(float[] probabilities)
+    {
+        m_AttackProbability = probabilities;
+    }
 }

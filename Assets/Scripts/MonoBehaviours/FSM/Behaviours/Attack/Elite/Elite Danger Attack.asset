@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Elite Danger Attack
   m_EditorClassIdentifier: 
   isParried: 0
+  isAttacking: 0
   attackClip: {fileID: 7400000, guid: 7f3086218391a914ba866a95ef8f93b2, type: 2}
   damage: 30
+  attackEnemyHit: {fileID: 0}
+  weaponName: BasicAttack

@@ -9086,7 +9086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &7571366728318786809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9520,7 +9520,7 @@ MonoBehaviour:
   m_ChaseSOBase: {fileID: 11400000, guid: 0a2dfd9bd93832344bacc3b718134a96, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 849420352c164c340a8b41113b42da70, type: 2}
   attackFlagMask: -1
-  enemyHit: {fileID: 4246585033597705552}
+  m_WeaponObjects: []
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 2938515309363105101}
   m_DeathLayerMask:

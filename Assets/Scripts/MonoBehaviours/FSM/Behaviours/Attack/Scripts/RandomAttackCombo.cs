@@ -106,7 +106,8 @@ public class RandomAttackCombo : AttackSOBase
         overrideController.ApplyOverrides(overrides);
 
         // Trigger the attack logic
-        enemy.enemyHit.damage = chosenAttack.damage;
+        attackEnemyHit = chosenAttack.attackEnemyHit;
+        attackEnemyHit.damage = chosenAttack.damage;
         chosenAttack.DoEnter();
     }
 

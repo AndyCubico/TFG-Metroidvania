@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Elite Attack Slash
   m_EditorClassIdentifier: 
   isParried: 0
+  isAttacking: 0
   attackClip: {fileID: 7400000, guid: 47e4407f433508d44aaf403d4b0af20a, type: 2}
   damage: 15
+  attackEnemyHit: {fileID: 0}
+  weaponName: BasicAttack

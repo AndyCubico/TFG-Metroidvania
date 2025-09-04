@@ -58,7 +58,9 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public AttackFlagType attackFlagMask;
 
-    public EnemyHit enemyHit;
+    [Header("Weapon GameObjects")]
+    [SerializeField] private List<GameObject> m_WeaponObjects = new List<GameObject>();
+    private Dictionary<string, EnemyHit> m_WeaponHitDict;
 
     public RuntimeAnimatorController animatorController;
 
@@ -86,6 +88,18 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         animatorController = animator.runtimeAnimatorController;
 
         canFlip = true;
+
+        // Build dictionary using GameObject name as key
+        m_WeaponHitDict = new Dictionary<string, EnemyHit>();
+        foreach (var obj in m_WeaponObjects)
+        {
+            if (obj != null)
+            {
+                var hit = obj.GetComponent<EnemyHit>();
+                if (hit != null)
+                    m_WeaponHitDict[obj.name] = hit;
+            }
+        }
     }
 
     protected virtual void Start()
@@ -138,6 +152,16 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     public virtual void FinishParry()
     {
         attackSOBaseInstance.FinishParry();
+    }
+
+    public EnemyHit GetWeaponHitByName(string weaponName)
+    {
+        if (m_WeaponHitDict != null && m_WeaponHitDict.TryGetValue(weaponName, out var hit))
+        {
+            return hit;
+        }
+
+        return null;
     }
 
     #endregion

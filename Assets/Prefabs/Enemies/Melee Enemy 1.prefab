@@ -130,7 +130,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 4.3804207, y: 1.1594781}
+  m_Offset: {x: 4.3222537, y: 1.1594781}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -140,7 +140,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3333476, y: 3.8429105}
+  m_Size: {x: 1.449681, y: 3.8429105}
   m_EdgeRadius: 0
 --- !u!114 &2175977830349380528
 MonoBehaviour:
@@ -635,11 +635,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <m_MaxHealth>k__BackingField: 45
+  <currentHealth>k__BackingField: 0
   m_IdleSOBase: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 6fbea4701b30d104fb562785ed050736, type: 2}
   attackFlagMask: -1
-  enemyHit: {fileID: 5022359369205855707}
+  m_WeaponObjects:
+  - {fileID: 6499569393577203972}
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 0}
   m_DeathLayerMask:

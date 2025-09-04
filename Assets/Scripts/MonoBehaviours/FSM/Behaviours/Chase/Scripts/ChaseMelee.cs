@@ -34,7 +34,18 @@ public class ChaseMelee : ChaseSOBase
         m_SightTimer = 0f;
         m_PathTimer = 0f;
 
-        int2 currentPos = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y));
+        // TODO: CAN BE DANGEROUS, WHILE LOOP
+        // For tall enemies like the elite, since the starting position has to be the floor the transform.position
+        // in a large enemy could be in the node above. This ensures it still takes the floor.
+        int y = Mathf.FloorToInt(transform.position.y);
+        int x = Mathf.FloorToInt(transform.position.x);
+        while (!GridManager.Instance.grid.GetValue(x, y).IsWalkable() && y > 0)
+        {
+            y -= 1;
+        }
+        int2 currentPos = new int2(x, y);
+        currentPos = new int2(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y - 1));
+
         int2 targetPos = new int2(Mathf.FloorToInt(playerTransform.position.x), Mathf.FloorToInt(playerTransform.position.y));
 
         enemy.pathfollowing.SetPath(currentPos, targetPos);

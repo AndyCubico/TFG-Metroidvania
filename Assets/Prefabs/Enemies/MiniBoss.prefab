@@ -115,11 +115,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <m_MaxHealth>k__BackingField: 500
+  <currentHealth>k__BackingField: 0
   m_IdleSOBase: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: f21f98ef2b23b5c41b624551ecc16db6, type: 2}
   attackFlagMask: -1
-  enemyHit: {fileID: 6597421966762077437}
+  m_WeaponObjects:
+  - {fileID: 6253041576327312870}
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 6889983543685955820}
   m_DeathLayerMask:
@@ -128,6 +130,7 @@ MonoBehaviour:
   heavyHitsToBreak: 3
   backstepSpeed: 1
   waitAttackStateName: WaitAttack
+  isInWaitAttack: 0
 --- !u!114 &2425659009148079818
 MonoBehaviour:
   m_ObjectHideFlags: 0

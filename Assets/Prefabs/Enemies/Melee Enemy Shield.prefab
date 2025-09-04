@@ -67,7 +67,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.2127802, y: 1.1536336}
+  m_Offset: {x: 0.18341094, y: 1.1536336}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -77,7 +77,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4255605, y: 3.8454123}
+  m_Size: {x: 1.3668219, y: 3.8454123}
   m_EdgeRadius: 0
 --- !u!114 &142787278643747204
 MonoBehaviour:
@@ -674,7 +674,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 4.3804207, y: 1.1594781}
+  m_Offset: {x: 4.269374, y: 1.1594781}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -684,7 +684,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3333476, y: 3.8429105}
+  m_Size: {x: 1.5554411, y: 3.8429105}
   m_EdgeRadius: 0
 --- !u!114 &389710855177749684
 MonoBehaviour:
@@ -814,11 +814,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <m_MaxHealth>k__BackingField: 45
+  <currentHealth>k__BackingField: 0
   m_IdleSOBase: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
   m_AttackSOBase: {fileID: 11400000, guid: 6fbea4701b30d104fb562785ed050736, type: 2}
   attackFlagMask: 0
-  enemyHit: {fileID: 7590273077874328174}
+  m_WeaponObjects:
+  - {fileID: 2598978100710727862}
   animatorController: {fileID: 0}
   m_DangerParticles: {fileID: 0}
   m_DeathLayerMask:

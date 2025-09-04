@@ -14,6 +14,9 @@ public class AttackSOBase : ScriptableObject
 
     public float damage = 10f;
 
+    public EnemyHit attackEnemyHit;
+    [SerializeField] string weaponName; 
+
     public virtual void Initialize(GameObject gameObject, Enemy enemy)
     {
         this.gameObject = gameObject;
@@ -21,10 +24,8 @@ public class AttackSOBase : ScriptableObject
 
         this.enemy = enemy;
 
-        if (this.enemy.enemyHit != null)
-        {
-            this.enemy.enemyHit.damage = damage;
-        }
+        if (weaponName != null)
+            attackEnemyHit = enemy.GetWeaponHitByName(weaponName);
 
         isParried = false;
         isAttacking = false;

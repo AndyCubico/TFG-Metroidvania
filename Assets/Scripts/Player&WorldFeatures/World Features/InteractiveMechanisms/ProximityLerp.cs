@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using static HitLever;
 
 [Serializable]
 public class ProximityLerp : MonoBehaviour, ILerpValueReturn
@@ -19,11 +19,7 @@ public class ProximityLerp : MonoBehaviour, ILerpValueReturn
     [SerializeField] bool m_IsSave;
     [ShowIf("m_ChangesLerpProvider", true)] public MonoBehaviour lerpReciver; ILerpValueReciver m_LerpReciver;
 
-    public class HitLever_SL : object_SL 
-    {
-        public bool isTriggered;
-        public float currentValue;
-    } 
+ 
     HitLever_SL m_Save;
     void Awake()
     {

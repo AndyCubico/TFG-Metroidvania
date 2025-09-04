@@ -873,13 +873,48 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 203480776}
   m_SourcePrefab: {fileID: 100100000, guid: db20de703960176438669a341e49e3c7, type: 3}
 --- !u!4 &203480773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5501130725761357442, guid: db20de703960176438669a341e49e3c7, type: 3}
   m_PrefabInstance: {fileID: 203480772}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &203480774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 844462865004157777, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 203480772}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &203480775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 203480772}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &203480776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203480775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72a44846f25be345bb8ffd1dcd60014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToDestroy: {fileID: 203480774}
+  collisionTag:
+  - Player
+  m_isRespawnOverTime: 1
+  timeToRespawn: 1.6
+  timeToDestroy: 0.8
+  iceColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  freezeMask: 8
 --- !u!1001 &206368855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2522,6 +2557,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6795088676904829060, guid: db20de703960176438669a341e49e3c7, type: 3}
+      propertyPath: m_Size.x
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795088676904829060, guid: db20de703960176438669a341e49e3c7, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795088676904829060, guid: db20de703960176438669a341e49e3c7, type: 3}
+      propertyPath: m_Offset.x
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795088676904829060, guid: db20de703960176438669a341e49e3c7, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
       propertyPath: m_Name
       value: FragilePlatform
@@ -2567,7 +2618,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_objectToDestroy: {fileID: 1036259875}
-  collisionTag: []
+  collisionTag:
+  - Player
   m_isRespawnOverTime: 1
   timeToRespawn: 1.2
   timeToDestroy: 0.6
@@ -4251,17 +4303,53 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2035666584}
   m_SourcePrefab: {fileID: 100100000, guid: db20de703960176438669a341e49e3c7, type: 3}
 --- !u!4 &2035666581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5501130725761357442, guid: db20de703960176438669a341e49e3c7, type: 3}
   m_PrefabInstance: {fileID: 2035666580}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2035666582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 844462865004157777, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 2035666580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2035666583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9124996003078259735, guid: db20de703960176438669a341e49e3c7, type: 3}
+  m_PrefabInstance: {fileID: 2035666580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2035666584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035666583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72a44846f25be345bb8ffd1dcd60014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToDestroy: {fileID: 2035666582}
+  collisionTag:
+  - Player
+  m_isRespawnOverTime: 1
+  timeToRespawn: 1.6
+  timeToDestroy: 0.8
+  iceColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  freezeMask: 8
 --- !u!1001 &2039995486
 PrefabInstance:
   m_ObjectHideFlags: 0

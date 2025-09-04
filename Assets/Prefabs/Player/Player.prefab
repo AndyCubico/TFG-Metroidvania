@@ -55,7 +55,7 @@ MonoBehaviour:
   downForce: 25
   snowDamage: 50
   snowExpansionSpeed: 170
-  snowExpansionMaxSize: 80
+  snowExpansionMaxSize: 120
   groundCollider: {fileID: 568754183681360089}
   snowCollider: {fileID: 2722697336460229663}
   groundLayer:
@@ -1029,6 +1029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1660634256912515273}
+  clones: []
   separationTime: 0.08
   timeFading: 0.9
   cloneSpirte: {fileID: 1278133169656020282, guid: a562f9c1641042f42a86445a0a8cc575, type: 3}

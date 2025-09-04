@@ -53,7 +53,7 @@ public class ProximityLerp : MonoBehaviour, ILerpValueReturn
             if(m_Save != null) 
             {
                 m_IsTriggered = m_Save.isTriggered;
-                m_CurrentValue = m_Save.currentValue;
+                //m_CurrentValue = m_Save.currentValue;
 
                 if (m_IsTriggered) // If lever was triggered, trigger again with its saved value.
                 {

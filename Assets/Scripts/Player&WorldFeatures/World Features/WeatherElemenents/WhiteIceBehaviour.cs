@@ -165,7 +165,11 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     private IEnumerator DeactivateGameObject(GameObject go)
     {
         // Trigger animation if any
-        gameObject.GetComponent<AudioSource>().Play();
+        if (gameObject.GetComponent<AudioSource>() != null) 
+        {
+            gameObject.GetComponent<AudioSource>().Play();
+        }
+        
         gameObject.transform.position -= new Vector3(0, 0.25f, 0);
         yield return new WaitForSeconds(timeToDestroy);
 

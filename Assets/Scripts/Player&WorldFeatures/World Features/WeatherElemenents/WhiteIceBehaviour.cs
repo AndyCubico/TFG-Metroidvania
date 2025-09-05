@@ -25,9 +25,11 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     float m_frozenTime = 4;
     bool m_isFrozen;
     public AttackFlagType freezeMask = AttackFlagType.SNOW_ATTACK;
+    Vector3 originalPos;
 
     private void Start()
     {
+        originalPos = transform.position;
         iceColors = new Color[] { new Color(0.8235294f, 0.9411765f, 1, 0.9411765f), new Color(0.6367924f, 0.8887472f, 1, 0.7843137f) };
         if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
         {
@@ -152,7 +154,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     {
         // Trigger animation if any 
         gameObject.GetComponent<Collider2D>().enabled = false;
-        gameObject.transform.position += new Vector3(0, 0.25f, 0);
+        gameObject.transform.position = originalPos;
         yield return new WaitForSeconds(timeToRespawn);
 
         // Activate GameObject
@@ -170,7 +172,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
             gameObject.GetComponent<AudioSource>().Play();
         }
         
-        gameObject.transform.position -= new Vector3(0, 0.25f, 0);
+        gameObject.transform.position = new Vector3(originalPos.x, originalPos.y - 0.25f, 0);
         yield return new WaitForSeconds(timeToDestroy);
 
         // Deactivate GameObject

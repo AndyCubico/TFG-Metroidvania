@@ -2512,7 +2512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5306003111646217051, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6898311708793894132, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2553,18 +2553,6 @@ PrefabInstance:
     - target: {fileID: 6898311708793894132, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: m_TeleportPositions.Array.data[0].y
-      value: 6.766281
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: m_TeleportPositions.Array.data[1].y
-      value: 6.766281
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: m_TeleportPositions.Array.data[2].y
-      value: 6.766281
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4635,7 +4623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1232804964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4651,7 +4639,7 @@ MonoBehaviour:
   listWaves:
   - enemies:
     - enemyPrefab: {fileID: 5306003111646217051, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      positition: {x: 36.11623, y: 5, z: 0}
+      positition: {x: 36.11623, y: 6.766281, z: 0}
       isExtraSpawn: 0
       hasComplexParameters: 1
       extraParameters:

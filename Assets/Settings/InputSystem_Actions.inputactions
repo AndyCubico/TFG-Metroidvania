@@ -213,6 +213,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "BasicAttackHold",
+                    "type": "Button",
+                    "id": "b03cb478-e293-4562-9f41-cf20967832a7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SpecialAttacks",
                     "type": "Button",
                     "id": "363b5c38-daa8-4441-95b4-c8bfa4d9b9bc",
@@ -991,6 +1000,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38d9d728-f74b-40ed-bf4c-46e2012603c7",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "BasicAttackHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c284f0bc-70dd-405b-ba42-3ab7e9ecc333",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "BasicAttackHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

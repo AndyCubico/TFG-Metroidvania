@@ -1035,8 +1035,9 @@ MonoBehaviour:
   crouchingHold: {fileID: 7040659881675835329, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   crouchingDown: {fileID: -49480745969038332, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   dashing: {fileID: -7471211009204490832, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  impactHittingHold: {fileID: 1424701583950204410, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  impactHittingDown: {fileID: -8680991738361691527, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  impactHittingHold: {fileID: -8680991738361691527, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  impactHittingDown: {fileID: 1424701583950204410, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  impactHittingAttackHold: {fileID: 8348667339014678947, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   UpAction: {fileID: 5669993627503631196, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   DownAction: {fileID: 4797119804628937381, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   DownControllerAction: {fileID: -5550485386949472793, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -1608,6 +1609,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 385208a4-726c-4bc1-8244-7c7f89f8f7cb
     m_ActionName: 'Player/SunClimate[/DualShock4GamepadHID/dpad/right,/Keyboard/6]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1660634256912515273}
+        m_TargetAssemblyTypeName: PlayerController.CharacterPlayerController, Assembly-CSharp
+        m_MethodName: ImpactHitAttackHoldEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b03cb478-e293-4562-9f41-cf20967832a7
+    m_ActionName: 'Player/BasicAttackHold[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

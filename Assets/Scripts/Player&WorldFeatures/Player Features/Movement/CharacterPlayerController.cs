@@ -213,6 +213,7 @@ namespace PlayerController
         public InputActionReference dashing;
         public InputActionReference impactHittingHold;
         public InputActionReference impactHittingDown;
+        public InputActionReference impactHittingAttackHold;
         public InputActionReference UpAction;
         public InputActionReference DownAction;
         public InputActionReference DownControllerAction;
@@ -229,6 +230,7 @@ namespace PlayerController
         [HideInInspector] public bool dropDown;
         bool impactHitHold;
         bool impactHitDown;
+        bool impactHitAttackHold;
         bool jumpKeyDown;
         bool dashDown;
         bool crouchDown;
@@ -268,6 +270,7 @@ namespace PlayerController
             jumpingDown.action.started += JumpingDownEvent;
             impactHittingHold.action.started += ImpactHitHoldEvent;
             impactHittingDown.action.started += ImpactHitDownEvent;
+            impactHittingAttackHold.action.started += ImpactHitAttackHoldEvent;
             dashing.action.started += DashDownEvent;
             crouchingDown.action.started += CrouchDownEvent;
             crouchingHold.action.started += CrouchHoldEvent;
@@ -287,6 +290,7 @@ namespace PlayerController
             jumpingDown.action.started -= JumpingDownEvent;
             impactHittingHold.action.started -= ImpactHitHoldEvent;
             impactHittingDown.action.started -= ImpactHitDownEvent;
+            impactHittingAttackHold.action.started -= ImpactHitAttackHoldEvent;
             dashing.action.started -= DashDownEvent;
             crouchingDown.action.started -= CrouchDownEvent;
             crouchingHold.action.started -= CrouchHoldEvent;
@@ -362,6 +366,18 @@ namespace PlayerController
             else
             {
                 impactHitHold = false;
+            }
+        }
+        
+        public void ImpactHitAttackHoldEvent(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                impactHitAttackHold = true;
+            }
+            else
+            {
+                impactHitAttackHold = false;
             }
         }
 
@@ -953,7 +969,7 @@ namespace PlayerController
         {
             if (playerState == PLAYER_STATUS.AIR)
             {
-                if (jumpKeyHold)
+                if (jumpKeyHold/*impactHitAttackHold*/)
                 {
                     if ((dropDown || downControllerSensitivity < -0.8f))
                     {
@@ -965,8 +981,8 @@ namespace PlayerController
                             {
                                 if (!isCrouch)
                                 {
-                                    if (rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
-                                    {
+                                    //if (rb.linearVelocity.y < 0) //All check outs in term to do ground hit, only will effectuate if it's falling the player
+                                    //{
                                         if (!combatScript.isAttacking)
                                         {
                                             combatScript.isAttacking = true;
@@ -974,7 +990,7 @@ namespace PlayerController
                                             isImpactHitting = true;
                                             rb.AddForce(new Vector2(0, -impactHitForce)); //Force to go down when you are in AIR
                                         }
-                                    }
+                                    //}
                                 }
                             }
                         }

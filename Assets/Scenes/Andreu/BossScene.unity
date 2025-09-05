@@ -2510,10 +2510,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 5306003111646217051, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6898311708793894132, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 36.11623
@@ -2553,34 +2549,6 @@ PrefabInstance:
     - target: {fileID: 6898311708793894132, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[0].probabilities.Array.data[0]'
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[0].probabilities.Array.data[1]'
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[0].probabilities.Array.data[4]'
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[1].probabilities.Array.data[1]'
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[1].probabilities.Array.data[3]'
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[2].probabilities.Array.data[1]'
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 8251436503358604088, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
-      propertyPath: 'm_AttackProbabilitiesByTeleport.Array.data[2].probabilities.Array.data[2]'
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

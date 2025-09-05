@@ -952,7 +952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6898311708793894132
 Transform:
   m_ObjectHideFlags: 0
@@ -1068,23 +1068,23 @@ MonoBehaviour:
   m_TeleportParticles: {fileID: 2966517105208623512}
   m_AttackProbabilitiesByTeleport:
   - probabilities:
-    - 15
-    - 25
+    - 30
+    - 10
     - 0
     - 0
     - 30
     - 30
   - probabilities:
     - 0
-    - 30
+    - 40
     - 0
-    - 70
+    - 60
     - 0
     - 0
   - probabilities:
     - 0
-    - 30
-    - 70
+    - 40
+    - 60
     - 0
     - 0
     - 0

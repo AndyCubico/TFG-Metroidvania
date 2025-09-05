@@ -57,22 +57,26 @@ public class ArenaCombat : MonoBehaviour
                 {
                     if (enemies[m_activeEnemies.Count + m_deadEnemies].isExtraSpawn) // Extra enemies don't need to be killed to progress the wave
                     {
-                        /*GameObject enemy = */enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
-                        
-                        if (enemies[m_activeEnemies.Count + m_deadEnemies].hasComplexParameters) 
+                        /*GameObject enemy = */
+                        enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
+
+                        if (enemies[m_activeEnemies.Count + m_deadEnemies].hasComplexParameters)
                         {
                             // Set rigth or left
 
 
                             // Set vision collider
                         }
-                        
+
                         m_deadEnemies++;
                     }
-                    yield return new WaitForSeconds(spawnDelay);
+                    else
+                    {
+                        yield return new WaitForSeconds(spawnDelay);
 
-                    GameObject enemy2 = enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
-                    m_activeEnemies.Add(enemy2);
+                        GameObject enemy2 = enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
+                        m_activeEnemies.Add(enemy2);
+                    }
                 }
 
                 // Check active enemies

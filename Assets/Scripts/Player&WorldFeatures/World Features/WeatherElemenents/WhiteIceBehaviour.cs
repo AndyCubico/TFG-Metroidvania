@@ -140,8 +140,6 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
             //Debug.Log("Collision with: " + collision.gameObject.tag);
             // Collision detected with corresponding tag
 
-            originalPos = transform.position; // Update original position in case the object has moved
-
             if (!WeatherManager.Instance.GetExteriorState() || (WeatherManager.Instance.climate != CLIMATES.SUN) && !m_hasCollided) 
             {
                 m_hasCollided = true;

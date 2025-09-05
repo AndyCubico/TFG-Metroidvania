@@ -2756,34 +2756,6 @@ MonoBehaviour:
     objectsToDestroy: []
     waveFinished: 0
   - enemies:
-    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
-      positition: {x: 27, y: 15, z: 0}
-      isExtraSpawn: 1
-      hasComplexParameters: 0
-      extraParameters:
-        isRigth: 0
-        visionSensor: {x: 0, y: 0, z: 0, w: 0}
-    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
-      positition: {x: 69, y: 15, z: 0}
-      isExtraSpawn: 1
-      hasComplexParameters: 0
-      extraParameters:
-        isRigth: 0
-        visionSensor: {x: 0, y: 0, z: 0, w: 0}
-    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
-      positition: {x: 23, y: 15, z: 0}
-      isExtraSpawn: 1
-      hasComplexParameters: 0
-      extraParameters:
-        isRigth: 0
-        visionSensor: {x: 0, y: 0, z: 0, w: 0}
-    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
-      positition: {x: 23, y: 15, z: 0}
-      isExtraSpawn: 1
-      hasComplexParameters: 0
-      extraParameters:
-        isRigth: 0
-        visionSensor: {x: 0, y: 0, z: 0, w: 0}
     - enemyPrefab: {fileID: 7363680550216263789, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       positition: {x: 42, y: 6, z: 0}
       isExtraSpawn: 0
@@ -2794,6 +2766,34 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 7363680550216263789, guid: b5055f05b78033048abcbe530ff060a2, type: 3}
       positition: {x: 48, y: 6, z: 0}
       isExtraSpawn: 0
+      hasComplexParameters: 0
+      extraParameters:
+        isRigth: 0
+        visionSensor: {x: 0, y: 0, z: 0, w: 0}
+    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
+      positition: {x: 26, y: 15, z: 0}
+      isExtraSpawn: 1
+      hasComplexParameters: 0
+      extraParameters:
+        isRigth: 0
+        visionSensor: {x: 0, y: 0, z: 0, w: 0}
+    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
+      positition: {x: 70, y: 15, z: 0}
+      isExtraSpawn: 1
+      hasComplexParameters: 0
+      extraParameters:
+        isRigth: 0
+        visionSensor: {x: 0, y: 0, z: 0, w: 0}
+    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
+      positition: {x: 24, y: 15, z: 0}
+      isExtraSpawn: 1
+      hasComplexParameters: 0
+      extraParameters:
+        isRigth: 0
+        visionSensor: {x: 0, y: 0, z: 0, w: 0}
+    - enemyPrefab: {fileID: 7708451827626357764, guid: f9662e093c6646942aed67c625b6e801, type: 3}
+      positition: {x: 73, y: 15, z: 0}
+      isExtraSpawn: 1
       hasComplexParameters: 0
       extraParameters:
         isRigth: 0

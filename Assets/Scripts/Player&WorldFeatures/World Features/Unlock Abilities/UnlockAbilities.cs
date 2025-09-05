@@ -79,9 +79,11 @@ public class UnlockAbilities : MonoBehaviour
                                 break;
                         }
 
-                        specialAbilities.snowAbilityUnlocked = true;
                         hasBeenUnlocked = true;
                         InteractionInput = false;
+                        playerCombat.isInCheckpoint = false;
+                        playerBlockParry.isInCheckpoint = false;
+
                         this.gameObject.SetActive(false);
 
                         Debug.Log("Snow ability unlocked!");

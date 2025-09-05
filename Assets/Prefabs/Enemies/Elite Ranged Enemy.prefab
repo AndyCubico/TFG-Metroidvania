@@ -556,7 +556,7 @@ MonoBehaviour:
   attackFlagMask: 2
   m_WeaponObjects: []
   animatorController: {fileID: 0}
-  m_DangerParticles: {fileID: 0}
+  m_DangerParticles: {fileID: 6404366360571530894}
   m_DeathLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -620,6 +620,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   isFacingRight: 1
   isPathValid: 1
+  showDebug: 0
 --- !u!70 &2513098334486535646
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -854,7 +855,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 896566722938232966, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 896566722938232966, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -874,7 +875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1601506141239540749, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1601506141239540749, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -890,7 +891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3220440682565326708, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3220440682565326708, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -906,7 +907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3346728810411978980, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: m_Name
@@ -966,7 +967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4599520164192103926, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4599520164192103926, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -988,6 +989,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7115537549778721739}
   m_SourcePrefab: {fileID: 100100000, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+--- !u!198 &6404366360571530894 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1601506141239540749, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+  m_PrefabInstance: {fileID: 5681660487224504963}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7015202604770688282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3423388300971593625, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}

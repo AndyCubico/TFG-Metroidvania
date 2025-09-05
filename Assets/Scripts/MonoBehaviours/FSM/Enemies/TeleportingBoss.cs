@@ -7,6 +7,8 @@ public class TeleportingBoss : StaggerableEnemy
     [SerializeField] private Vector2[] m_TeleportPositions;
     private int lastTeleportIndex = -1;
 
+    [SerializeField] private ParticleSystem m_TeleportParticles;
+
     [System.Serializable]
     public class AttackProbabilitySet
     {
@@ -58,6 +60,19 @@ public class TeleportingBoss : StaggerableEnemy
             {
                 randomAttackCombo.SetAttackProbability(m_AttackProbabilitiesByTeleport[newIndex].probabilities);
             }
+        }
+    }
+
+    public void PlayTeleportParticles()
+    {
+        m_TeleportParticles.Play();
+    }
+
+    public void StopTeleportParticles()
+    {
+        if (m_TeleportParticles != null)
+        {
+            m_TeleportParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
     }
 }

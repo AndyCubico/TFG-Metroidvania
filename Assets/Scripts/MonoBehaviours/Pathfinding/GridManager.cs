@@ -11,30 +11,32 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private LayerMask m_NotWalkable; // TODO: It only works with ground, manage other types of platforms.
 
+    [SerializeField] private bool showDebug = false;
+
     public static GridManager Instance { private set; get; }
 
     public void Awake()
     {
         Instance = this;
 
-        grid = new Grid<GridNode>(width, height, cellSize, origin, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y));
+        grid = new Grid<GridNode>(width, height, cellSize, origin, (Grid<GridNode> g, int x, int y) => new GridNode(g, x, y), showDebug);
 
         SetGridWalkability();
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            grid.GetXYPosition(mouseWorldPos, out int x, out int y);
-            GridNode node = grid.GetValue(x, y);
-            if (node != null)
-            {
-                Debug.Log($"Node at ({x}, {y}) is {(node.IsWalkable() ? "Walkable" : "Blocked")}");
-            }
-        }
+        //    grid.GetXYPosition(mouseWorldPos, out int x, out int y);
+        //    GridNode node = grid.GetValue(x, y);
+        //    if (node != null)
+        //    {
+        //        Debug.Log($"Node at ({x}, {y}) is {(node.IsWalkable() ? "Walkable" : "Blocked")}");
+        //    }
+        //}
     }
 
     private void SetGridWalkability()

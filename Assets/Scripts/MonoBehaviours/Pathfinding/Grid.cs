@@ -18,6 +18,7 @@ public class Grid<T>
 
     // Debug draw cell position in the grid.
     private TextMesh[,] m_DebugTextArray;
+    private bool m_IsDebug;
 
     /// <summary>
     /// Contructor of a grid of <T> nodes.
@@ -27,7 +28,7 @@ public class Grid<T>
     /// <param name="cellSize"> Width and height of each cell (squares). </param>
     /// <param name="originPosition"> Starting position in the world from which to start drawing the grid. </param>
     /// <param name="createGridObject"> Delegate to create the grid object in each cell. </param>
-    public Grid(int width, int height, float cellSize, Vector2 originPosition, Func<Grid<T>, int, int, T> createGridObject)
+    public Grid(int width, int height, float cellSize, Vector2 originPosition, Func<Grid<T>, int, int, T> createGridObject, bool isDebug = false)
     {
         m_Width = width;
         m_Height = height;
@@ -38,6 +39,8 @@ public class Grid<T>
 
         m_DebugTextArray = new TextMesh[width, height];
 
+        m_IsDebug = isDebug;
+
         GameObject debugTextContainer = new GameObject("Grid Debug Text Container");
 
         for (int x = 0; x < m_GridArray.GetLength(0); x++)
@@ -47,15 +50,22 @@ public class Grid<T>
                 // Create and assign the grid object first
                 m_GridArray[x, y] = createGridObject(this, x, y);
 
-                m_DebugTextArray[x, y] = CreateDisplayText($"{x}, {y}", debugTextContainer.transform, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f,
-                                                            20, WalkableDebugColor(m_GridArray[x, y]));
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+                if (m_IsDebug)
+                {
+                    m_DebugTextArray[x, y] = CreateDisplayText($"{x}, {y}", debugTextContainer.transform, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f,
+                                                                20, WalkableDebugColor(m_GridArray[x, y]));
+
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+                }
             }
         }
 
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+        if (m_IsDebug)
+        {
+            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
+            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+        }
     }
 
     /// <summary>
@@ -67,10 +77,13 @@ public class Grid<T>
     {
         OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, y = y });
 
-        if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
+        if (m_IsDebug)
         {
-            m_DebugTextArray[x, y].text = $"{x}, {y}";
-            m_DebugTextArray[x, y].color = WalkableDebugColor(m_GridArray[x, y]);
+            if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
+            {
+                m_DebugTextArray[x, y].text = $"{x}, {y}";
+                m_DebugTextArray[x, y].color = WalkableDebugColor(m_GridArray[x, y]);
+            }
         }
     }
 

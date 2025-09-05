@@ -8170,6 +8170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 5306003111646217051, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6898311708793894132, guid: 861f15e191c08834bac2f15ba760e18a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 37.059
@@ -8420,7 +8424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8596485368654950094, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8839337389357864534, guid: 7da026161d6015d43a07550c9bb0559f, type: 3}
       propertyPath: m_Speed

@@ -58,6 +58,8 @@ public class Pathfollowing : MonoBehaviour
     // Store the jump coroutine reference
     private Coroutine m_JumpCoroutine;
 
+    [SerializeField] private bool showDebug = false;
+
     private void Awake()
     {
         m_Path = new NativeList<int2>(Allocator.Persistent);
@@ -99,7 +101,10 @@ public class Pathfollowing : MonoBehaviour
             }
         }
 
-        DrawPath();
+        if (showDebug)
+        {
+            DrawPath();
+        }
     }
 
     private void FixedUpdate()

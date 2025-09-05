@@ -59,7 +59,6 @@ public class ArenaCombat : MonoBehaviour
                     {
                         /*GameObject enemy = */enemies[m_activeEnemies.Count + m_deadEnemies].SpawnEnemy();
                         
-
                         if (enemies[m_activeEnemies.Count + m_deadEnemies].hasComplexParameters) 
                         {
                             // Set rigth or left

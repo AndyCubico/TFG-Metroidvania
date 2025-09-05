@@ -162,7 +162,7 @@ public class PlayerCombatV2 : MonoBehaviour
             m_finishComboTimer = 0;
         }
 
-        if (BasicAttackAction.action.WasPressedThisFrame() && !isInCheckpoint)
+        if (BasicAttackAction.action.WasPressedThisFrame() && !isInCheckpoint && !characterController.dropDown && characterController.downControllerSensitivity > -0.8f) // Secure that the input is pressed, the player is not in a checkpoint and the down input is not pressed for an impact hit
         {
             basicAttackDown = true;
             m_inputBufferCounter = inputBufferTime;

@@ -969,7 +969,7 @@ namespace PlayerController
         {
             if (playerState == PLAYER_STATUS.AIR)
             {
-                if (jumpKeyHold/*impactHitAttackHold*/)
+                if (impactHitAttackHold)
                 {
                     if ((dropDown || downControllerSensitivity < -0.8f))
                     {

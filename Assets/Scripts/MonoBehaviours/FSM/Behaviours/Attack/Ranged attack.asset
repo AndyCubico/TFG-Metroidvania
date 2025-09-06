@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Ranged attack
   m_EditorClassIdentifier: 
   isParried: 0
+  isAttacking: 0
   attackClip: {fileID: 0}
-  damage: 10
+  damage: 12
+  attackEnemyHit: {fileID: 0}
+  weaponName: 
   projectilePrefab: {fileID: 2880129877658565680, guid: 709992e431d725e42899a59ddd72c9d4, type: 3}
   projectileSpeed: 10
   attackCooldown: 1

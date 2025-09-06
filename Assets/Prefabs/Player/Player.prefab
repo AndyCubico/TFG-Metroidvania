@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff545890cc1bbc4495402972d8a387d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 100
+  attackDamage: 50
   animator: {fileID: 2918244791821584414}
   characterPlayerController: {fileID: 1660634256912515273}
   playerCombat: {fileID: 6264634318666345079}
@@ -2392,7 +2392,7 @@ MonoBehaviour:
   comboResetTime: 0.5
   softDamage: 10
   midDamage: 15
-  hardDamage: 20
+  hardDamage: 25
   airTime: 0.4
   returnToAttackAfterFinishComboTime: 0.5
   inputBufferTime: 0.2

@@ -813,7 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888f2a653c17e0b44a8ec2b4f3dc19f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <m_MaxHealth>k__BackingField: 45
+  <m_MaxHealth>k__BackingField: 50
   <currentHealth>k__BackingField: 0
   m_IdleSOBase: {fileID: 11400000, guid: 35916a0d16dd4424386b290a1cc26c8e, type: 2}
   m_ChaseSOBase: {fileID: 11400000, guid: c2c1136d4db74d1488303818612410d0, type: 2}
@@ -871,6 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Speed: 2
   m_JumpForce: 62
+  m_HorizontalJump: 0.5
   m_JumpWait: 1
   m_MaxCliffHeight: 1
   isJumping: 0
@@ -887,6 +888,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   isFacingRight: 1
   isPathValid: 1
+  showDebug: 0
 --- !u!70 &1639944751694189051
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

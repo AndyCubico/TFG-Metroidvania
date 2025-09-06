@@ -134,6 +134,10 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         {
             currentHealth -= damage;
 
+            GameManagerEvents.eSpawnDamageText(new Vector3(gameObject.transform.position.x, 
+                gameObject.transform.position.y + gameObject.transform.localScale.y / 2, 
+                transform.position.z), damage);
+
             if (currentHealth <= 0) Die();
         }
     }

@@ -49,6 +49,7 @@ public class PlayerSaveLoad : MonoBehaviour
                 maxHP = gameObject.GetComponent<PlayerHealth>().maxPlayerHealth,
                 numberPotions = gameObject.GetComponent<PlayerHealth>().maxHealPotions,
                 healingPotion = gameObject.GetComponent<PlayerHealth>().healthQuantity,
+                maxCharges = GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().UnlockedCharges
 
             };
 
@@ -84,6 +85,7 @@ public class PlayerSaveLoad : MonoBehaviour
             gameObject.GetComponent<PlayerHealth>().IncreaseMaxHealth(0);
             gameObject.GetComponent<PlayerHealth>().IncreaseMaxPotions(0);
             gameObject.GetComponent<PlayerHealth>().IncreasePotionHealing(0);
+            GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().UnlockedCharges = saveObject.maxCharges;
 
             this.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             this.gameObject.GetComponent<CharacterPlayerController>().enabled = true;

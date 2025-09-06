@@ -15,6 +15,7 @@ public class player_SL //SL -> Save&Load
     public float maxHP;
     public int numberPotions;
     public float healingPotion;
+    public int maxCharges;
 }
 
 public class object_SL //SL -> Save&Load

@@ -130,6 +130,9 @@ public class Checkpoint_Ground : MonoBehaviour
     public void FastCheckpoint()
     {
         characterController.enabled = false;
+        characterController.isImpactHitting = false;
+        characterController.combatScript.isAttacking = false;
+        characterController.InputBufferCleaner();
         rb.gravityScale = 0f;
         rb.linearVelocity = Vector2.zero;
 

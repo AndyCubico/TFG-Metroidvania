@@ -1,4 +1,5 @@
 using PlayerController;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class PlayerSaveLoad : MonoBehaviour
 {
     private SaveAndLoadGameHandler saveLoad;
     CharacterController characterController;
+
+    private float m_SecondsToReturnPlayerMovment = 0.2f; 
 
     private void OnEnable()
     {
@@ -88,7 +91,23 @@ public class PlayerSaveLoad : MonoBehaviour
             GameObject.Find("HeavyAttack").GetComponent<HeavyAttack>().UnlockedCharges = saveObject.maxCharges;
 
             this.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-            this.gameObject.GetComponent<CharacterPlayerController>().enabled = true;
+            this.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            this.gameObject.GetComponent<CharacterPlayerController>().isImpactHitting = false;
+            this.gameObject.GetComponent<CharacterPlayerController>().combatScript.isAttacking = false;
+
+            this.gameObject.GetComponent<CharacterPlayerController>().InputBufferCleaner();
+
+            StartCoroutine(WaitSecondsAfterMoving());
         }
+    }
+
+    IEnumerator WaitSecondsAfterMoving()
+    {
+        this.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+
+        yield return new WaitForSeconds(m_SecondsToReturnPlayerMovment);
+
+        this.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        this.gameObject.GetComponent<CharacterPlayerController>().enabled = true;
     }
 }

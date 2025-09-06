@@ -260,7 +260,7 @@ namespace PlayerController
         public PlayerCombatV2 combatScript;
 
         //Input Buffer
-        Dictionary<INPUT_BUFFER, float> inputBufferSaver;
+        [HideInInspector] public Dictionary<INPUT_BUFFER, float> inputBufferSaver;
 
         private void OnEnable()
         {
@@ -763,6 +763,35 @@ namespace PlayerController
                     }
                 }
             }
+        }
+
+        public void InputBufferCleaner()
+        {
+            for (int i = 0; i < (int)INPUT_BUFFER.NONE; i++) //Pass for all INPUT_BUFFER
+            {
+                if (inputBufferSaver.ContainsKey((INPUT_BUFFER)i))
+                {
+                    switch ((INPUT_BUFFER)i) //Search for the input to turn off
+                    {
+                        case INPUT_BUFFER.JUMP:
+                            if (jumpKeyHold)
+                            {
+                                jumpKeyHold = false;
+                            }
+                            break;
+                        case INPUT_BUFFER.IMPACT_HIT:
+                            if (impactHitHold)
+                            {
+                                impactHitHold = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            inputBufferSaver.Clear();
         }
 
         private void HangingEdges()

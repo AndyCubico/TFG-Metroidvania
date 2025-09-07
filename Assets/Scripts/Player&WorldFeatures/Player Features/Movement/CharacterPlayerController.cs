@@ -717,23 +717,26 @@ namespace PlayerController
 
         private void CheckForDownwardEnemy()
         {
-            if(playerState == PLAYER_STATUS.AIR)
+            if (playerState == PLAYER_STATUS.AIR)
             {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
 
-                if(hit.transform != null)
+                if (hit.transform != null)
                 {
-                    if (hit.distance <= 0.1f)
+                    if(hit.transform.TryGetComponent<CapsuleCollider2D>(out CapsuleCollider2D capsuleCollider))
                     {
-                        if (hit.transform.position.x >= this.transform.position.x)
+                        if (hit.distance <= 0.1f)
                         {
-                            rb.AddForce(Vector2.left * 40, ForceMode2D.Force);
-                            hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 150, ForceMode2D.Force);
-                        }
-                        else
-                        {
-                            rb.AddForce(Vector2.right * 40, ForceMode2D.Force);
-                            hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 150, ForceMode2D.Force);
+                            if (hit.transform.position.x >= this.transform.position.x)
+                            {
+                                rb.AddForce(Vector2.left * 40, ForceMode2D.Force);
+                                hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 150, ForceMode2D.Force);
+                            }
+                            else
+                            {
+                                rb.AddForce(Vector2.right * 40, ForceMode2D.Force);
+                                hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 150, ForceMode2D.Force);
+                            }
                         }
                     }
                 }

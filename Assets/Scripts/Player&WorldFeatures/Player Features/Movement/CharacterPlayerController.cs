@@ -200,6 +200,7 @@ namespace PlayerController
         public LayerMask earingMask;
         public LayerMask wallMask;
         public LayerMask roofMask;
+        public LayerMask enemyMask;
         [Space(10)]
 
         [Header("Input Actions")]
@@ -596,6 +597,9 @@ namespace PlayerController
             {
                 HangingEdges();
             }
+
+            // Check if an enemy is down the player while on air, if it is, push the player
+            CheckForDownwardEnemy();
         }
 
         private void Update()
@@ -613,7 +617,6 @@ namespace PlayerController
                     inputBufferSaver.Add(INPUT_BUFFER.JUMP, maxTimeInputBuffer);
                 }
             }
-
 
             // Input buffer update
             InputBufferUpdate();
@@ -662,7 +665,6 @@ namespace PlayerController
                 UnhangPlayer();
             }
 
-
             if (hasExitWall) // When the player has exit the wall hanging, from a brief of time is going to be block
             {
                 exitWallTimer += Time.deltaTime;
@@ -710,6 +712,31 @@ namespace PlayerController
             {
                 cheatMode = !cheatMode;
                 Debug.Log("Cheats: " + cheatMode);
+            }
+        }
+
+        private void CheckForDownwardEnemy()
+        {
+            if(playerState == PLAYER_STATUS.AIR)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+
+                if(hit.transform != null)
+                {
+                    if (hit.distance <= 0.1f)
+                    {
+                        if (hit.transform.position.x >= this.transform.position.x)
+                        {
+                            rb.AddForce(Vector2.left * 40, ForceMode2D.Force);
+                            hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 150, ForceMode2D.Force);
+                        }
+                        else
+                        {
+                            rb.AddForce(Vector2.right * 40, ForceMode2D.Force);
+                            hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 150, ForceMode2D.Force);
+                        }
+                    }
+                }
             }
         }
 

@@ -258,35 +258,41 @@ public class PlayerBlockAndParry : MonoBehaviour
         // The attack has been blocked
         Debug.Log(damageBlock);
 
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
-        HealthEvents.eTakingDamage?.Invoke(damageBlock); // Call the delegate to recieve damage and cancell abilities
-
-        if (enemyTesting) // Enemy color testing
+        if(characterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED) // Player cant be hitted in Hang Edges
         {
-            enemyTest.color = Color.blue;
-        }
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
+            HealthEvents.eTakingDamage?.Invoke(damageBlock); // Call the delegate to recieve damage and cancell abilities
 
-        StartCoroutine(Recovery(blockRecovery));
+            if (enemyTesting) // Enemy color testing
+            {
+                enemyTest.color = Color.blue;
+            }
+
+            StartCoroutine(Recovery(blockRecovery));
+        }
     }
 
     // Execute damage to the player
     void PlayerHasBeenHitted()
     {
-        // Damage player
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
-        HealthEvents.eTakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
-        Debug.Log(damageNoBlock);
-
-        ActiveInvincibility(); // Active the invincibility
-
-        if (enemyTest != null && enemyTesting) // Enemy color testing
+        if (characterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED) // Player cant be hitted in Hang Edges
         {
-            enemyTest.color = Color.black;
-        }
+            // Damage player
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
+            HealthEvents.eTakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
+            Debug.Log(damageNoBlock);
 
-        StartCoroutine(Recovery(hittedRecovery));
+            ActiveInvincibility(); // Active the invincibility
+
+            if (enemyTest != null && enemyTesting) // Enemy color testing
+            {
+                enemyTest.color = Color.black;
+            }
+
+            StartCoroutine(Recovery(hittedRecovery));
+        }
     }
 
     // Enables invincibility

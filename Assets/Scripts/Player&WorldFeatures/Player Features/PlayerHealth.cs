@@ -98,7 +98,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-
         if (m_PlayerCombat == null) 
         {
             m_PlayerCombat = GameObject.Find("Combat").GetComponent<PlayerCombatV2>();
@@ -127,48 +126,51 @@ public class PlayerHealth : MonoBehaviour
 
     void ReceiveAnAttack(float damage)
     {
-        playerHealth -= damage;
-        healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
-
-        if (healthCoroutine != null)
+        if (m_CharacterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED)
         {
-            StopCoroutine(healthCoroutine);
+            playerHealth -= damage;
+            healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
 
-            playerRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-            blockPlayer.EnableMovement();
-            blockPlayer.EnableCombat();
-
-            isHealing = false;
-        }
-
-        SlowMotionEffect.eSlowMotion?.Invoke(1f, 0.05f);
-
-        if (playerHealth > 0)
-        {
-            Debug.Log("Player Has been hit with: " + damage);
-
-            healthBar.fillAmount = playerHealth / maxPlayerHealth;
-            healthText.text = playerHealth.ToString();
-
-            if (playerHealth <= 0)
+            if (healthCoroutine != null)
             {
-                Debug.Log("Player Has died");
+                StopCoroutine(healthCoroutine);
+
+                playerRb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                blockPlayer.EnableMovement();
+                blockPlayer.EnableCombat();
+
+                isHealing = false;
             }
-        }
-        else
-        {
-            playerHealth = maxPlayerHealth;
-            healPotions = 3;
 
-            healthBar.fillAmount = playerHealth / maxPlayerHealth;
-            healthText.text = playerHealth.ToString();
+            SlowMotionEffect.eSlowMotion?.Invoke(1f, 0.05f);
 
-            healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+            if (playerHealth > 0)
+            {
+                Debug.Log("Player Has been hit with: " + damage);
 
-            FadeToBlackEvents.eFadeToBlackAction?.Invoke(0.02f, 0.2f);
-            SaveAndLoadEvents.eLoadAction?.Invoke();
-            HealthEvents.eRestorePotions?.Invoke();
+                healthBar.fillAmount = playerHealth / maxPlayerHealth;
+                healthText.text = playerHealth.ToString();
+
+                if (playerHealth <= 0)
+                {
+                    Debug.Log("Player Has died");
+                }
+            }
+            else
+            {
+                playerHealth = maxPlayerHealth;
+                healPotions = 3;
+
+                healthBar.fillAmount = playerHealth / maxPlayerHealth;
+                healthText.text = playerHealth.ToString();
+
+                healingParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+
+                FadeToBlackEvents.eFadeToBlackAction?.Invoke(0.02f, 0.2f);
+                SaveAndLoadEvents.eLoadAction?.Invoke();
+                HealthEvents.eRestorePotions?.Invoke();
+            }
         }
     }
 

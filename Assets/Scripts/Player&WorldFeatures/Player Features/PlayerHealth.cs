@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
     //[Space(10)]
 
     [Header("Heal Potions")]
-    int healPotions;
+    int healPotions =  0;
     public int maxHealPotions;
     public float healthQuantity;
 
@@ -89,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
         healthText.text = playerHealth.ToString();
         maxHealthText.text = playerHealth.ToString();
 
-        healPotions = maxHealPotions;
+        //healPotions = maxHealPotions;
         healPotionText.text = healPotions.ToString();
 
         blockPlayer = GetComponent<BlockPlayer>();

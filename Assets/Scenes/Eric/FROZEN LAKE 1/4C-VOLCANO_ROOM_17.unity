@@ -9483,7 +9483,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2854399480941614403, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5974003768261276478, guid: db20de703960176438669a341e49e3c7, type: 3}
     m_AddedGameObjects:

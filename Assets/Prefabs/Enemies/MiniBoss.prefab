@@ -128,7 +128,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   heavyHitsToBreak: 3
-  backstepSpeed: 1
+  backstepSpeed: 3
   waitAttackStateName: WaitAttack
   isInWaitAttack: 0
 --- !u!114 &2425659009148079818
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a546e850fe24d842a000d1b9f91db5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 2
+  m_Speed: 4
   m_JumpForce: 62
   m_HorizontalJump: 0.5
   m_JumpWait: 1

@@ -2,6 +2,15 @@ using PlayerController;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Splines;
+public class GlobalGodMode
+{
+    public static bool m_IsGodMode;
+
+    public static bool IsGodModeOn()
+    {
+        return m_IsGodMode;
+    }
+}
 
 public class GodMode : MonoBehaviour
 {
@@ -9,8 +18,8 @@ public class GodMode : MonoBehaviour
     private BoxCollider2D m_BoxCollider;
     private CircleCollider2D m_CircleCollider;
     private Rigidbody2D m_Rb;
+    private PlayerHealth m_PlayerHealth;
 
-    private bool m_IsGodMode;
     private float gravityScale;
 
     Vector2 move;
@@ -34,17 +43,17 @@ public class GodMode : MonoBehaviour
         m_CharacterController = GetComponent<CharacterPlayerController>();
         m_BoxCollider = GetComponent<BoxCollider2D>();
         m_CircleCollider = GetComponent<CircleCollider2D>();
-
+        m_PlayerHealth = GetComponent<PlayerHealth>();
 
         gravityScale = m_Rb.gravityScale;
-        m_IsGodMode = false;
+        GlobalGodMode.m_IsGodMode = false;
     }
 
     void Update()
     {
         if ( Input.GetKeyDown(KeyCode.F1) ||(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G)) )
         {
-            m_IsGodMode = !m_IsGodMode;
+            GlobalGodMode.m_IsGodMode = !GlobalGodMode.m_IsGodMode;
 
             ChangeGodMode();
         }
@@ -52,7 +61,7 @@ public class GodMode : MonoBehaviour
         move.x = movement.action.ReadValue<Vector2>().x;
         move.y = movement.action.ReadValue<Vector2>().y;
 
-        if (m_IsGodMode)
+        if (GlobalGodMode.m_IsGodMode)
         {
             if (Mathf.Abs(m_Rb.linearVelocity.x) < maxSpeedX)
             {
@@ -100,12 +109,16 @@ public class GodMode : MonoBehaviour
 
     private void ChangeGodMode()
     {
-        if(m_IsGodMode)
+        if(GlobalGodMode.m_IsGodMode)
         {
             m_CharacterController.enabled = false;
             m_Rb.gravityScale = 0f;
             m_BoxCollider.enabled = false;
             m_CircleCollider.enabled = false;
+
+            m_PlayerHealth.RestoreHealth();
+
+            m_PlayerHealth.enabled = false;
         }
         else
         {
@@ -113,6 +126,7 @@ public class GodMode : MonoBehaviour
             m_Rb.gravityScale = gravityScale;
             m_BoxCollider.enabled = true;
             m_CircleCollider.enabled = true;
+            m_PlayerHealth.enabled = true;
         }
     }
 }

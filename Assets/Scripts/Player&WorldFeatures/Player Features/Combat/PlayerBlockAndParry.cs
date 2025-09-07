@@ -260,9 +260,12 @@ public class PlayerBlockAndParry : MonoBehaviour
 
         if(characterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED) // Player cant be hitted in Hang Edges
         {
-            rb.linearVelocity = Vector2.zero;
-            rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
-            HealthEvents.eTakingDamage?.Invoke(damageBlock); // Call the delegate to recieve damage and cancell abilities
+            if (!GlobalGodMode.IsGodModeOn())
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
+                HealthEvents.eTakingDamage?.Invoke(damageBlock); // Call the delegate to recieve damage and cancell abilities
+            }
 
             if (enemyTesting) // Enemy color testing
             {
@@ -278,13 +281,16 @@ public class PlayerBlockAndParry : MonoBehaviour
     {
         if (characterPlayerController.playerState != CharacterPlayerController.PLAYER_STATUS.HANGED) // Player cant be hitted in Hang Edges
         {
-            // Damage player
-            rb.linearVelocity = Vector2.zero;
-            rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
-            HealthEvents.eTakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
-            Debug.Log(damageNoBlock);
+            if (!GlobalGodMode.IsGodModeOn())
+            {
+                // Damage player
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(new Vector2(attackDirection * hittedForce, hittedForce / 2), ForceMode2D.Impulse); // Do a force in the contrary direction of the attack
+                HealthEvents.eTakingDamage?.Invoke(damageNoBlock); // Call the delegate to recieve damage and cancell abilities
+                Debug.Log(damageNoBlock);
 
-            ActiveInvincibility(); // Active the invincibility
+                ActiveInvincibility(); // Active the invincibility
+            }
 
             if (enemyTest != null && enemyTesting) // Enemy color testing
             {

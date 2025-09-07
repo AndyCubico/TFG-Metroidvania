@@ -11,6 +11,7 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
     [SerializeField] private GameObject m_objectToDestroy; 
     bool m_isDestroyDueCollision = true;
     bool m_hasCollided;
+    bool m_IsPlayerInsideCollider;
     [TagDropdown] public string[] collisionTag = new string[] { };
 
 
@@ -143,10 +144,19 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
             if (!WeatherManager.Instance.GetExteriorState() || (WeatherManager.Instance.climate != CLIMATES.SUN) && !m_hasCollided) 
             {
                 m_hasCollided = true;
+                m_IsPlayerInsideCollider = true;
                 StartCoroutine(DeactivateGameObject(m_objectToDestroy));
             }
             
 
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collisionTag.Contains(collision.gameObject.tag) && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            m_IsPlayerInsideCollider = false;
         }
     }
 
@@ -158,10 +168,19 @@ public class WhiteIceBehaviour : MonoBehaviour, IHittableObject
         yield return new WaitForSeconds(timeToRespawn);
 
         // Activate GameObject
+        while (m_IsPlayerInsideCollider) // Wait until player exits the collider to respawn the object
+        {
+            yield return null;
+        }
         gameObject.GetComponent<Collider2D>().enabled = true; // Active and deactivate the colider to reset the OnTriggerEnter without the need of using an OnTriggerStay
         go.SetActive(true);
         m_isDestroyDueCollision = true;
         m_hasCollided = false;
+
+        if (WeatherManager.Instance.GetExteriorState()) // If is an interior area weather doesn't affect.
+        {
+            UpdateIce(WeatherManager.Instance.climate);
+        }
     }
 
     private IEnumerator DeactivateGameObject(GameObject go)

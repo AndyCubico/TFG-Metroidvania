@@ -42,7 +42,7 @@ public class GodMode : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G))
+        if ( Input.GetKeyDown(KeyCode.F1) ||(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G)) )
         {
             m_IsGodMode = !m_IsGodMode;
 

@@ -253,9 +253,12 @@ public class HeavyAttack : MonoBehaviour
         {
             characterPlayerController.blockFlip = true;
 
-            // Charge consumption called here to avoid using more than one 
-            heavyCharges--;
-            heavyCharges = Mathf.Max(0, heavyCharges); // Just in case because value sometimes goes to -52
+            if (!GlobalGodMode.IsGodModeOn())
+            {
+                // Charge consumption called here to avoid using more than one 
+                heavyCharges--;
+                heavyCharges = Mathf.Max(0, heavyCharges); // Just in case because value sometimes goes to -52
+            }
 
             isDamaging = true;
         }

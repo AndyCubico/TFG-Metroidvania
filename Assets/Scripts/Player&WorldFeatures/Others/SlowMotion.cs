@@ -24,6 +24,8 @@ public class SlowMotion : MonoBehaviour
     private void OnDisable()
     {
         SlowMotionEffect.eSlowMotion -= DoSlowMotion;
+        SlowMotionEffect.eSlowMotionOn -= SlowMotionOn;
+        SlowMotionEffect.eSlowMotionOff -= SlowMotionOff;
     }
 
     // Update is called once per frame

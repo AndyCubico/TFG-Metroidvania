@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 10c2f6c71ec192a45884a19309fc2d36
+guid: aea59ae8f72de644e9205753c36507fc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -74631122572612816
-    second: SnowWeatherIcon_0
+      213: -1588317433732037409
+    second: white-circle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,19 +97,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -139,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SnowWeatherIcon_0
+      name: white-circle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 184
-        height: 184
+        x: 129
+        y: 128
+        width: 1661
+        height: 1664
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03beed1b36bd6fef0800000000000000
-      internalID: -74631122572612816
+      spriteID: fd487d395b925f9e0800000000000000
+      internalID: -1588317433732037409
       vertices: []
       indices: 
       edges: []
@@ -164,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5a23c1b09d4d0ac4a9fd39234ce08f0c
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SnowWeatherIcon_0: -74631122572612816
+      white-circle_0: -1588317433732037409
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3954,11 +3954,12 @@ MonoBehaviour:
     waveChangeDelay: 1.2
     objectsToDestroy:
     - {fileID: 1527590290}
+    - {fileID: 1529825829}
     waveFinished: 0
   m_IsStartOnCollision: 1
   collisionTagList:
   - Player
-  m_IsSave: 0
+  m_IsSave: 1
 --- !u!61 &1232804965
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4023,7 +4024,7 @@ MonoBehaviour:
   m_timeFromFullToZero: 0.4
   m_CanBeTurnedOff: 0
   m_ChangesLerpProvider: 0
-  m_IsSave: 1
+  m_IsSave: 0
   lerpReciver: {fileID: 0}
 --- !u!4 &1232804967
 Transform:
@@ -5470,6 +5471,11 @@ PrefabInstance:
 --- !u!4 &1529825828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7919767620142812926, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
+  m_PrefabInstance: {fileID: 1529825827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1529825829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8420017964442553207, guid: eb834e37c69b4144bb75dad8432acec0, type: 3}
   m_PrefabInstance: {fileID: 1529825827}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1552039753

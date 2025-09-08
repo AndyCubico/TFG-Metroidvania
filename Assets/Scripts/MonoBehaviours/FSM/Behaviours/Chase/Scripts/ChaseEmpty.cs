@@ -3,11 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Chase Empty", menuName = "Enemy Logic/Chase/Chase Empty")]
 public class ChaseEmpty : ChaseSOBase
 {
-    public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
-    {
-        base.DoAnimationTrigger(triggerType);
-    }
-
     public override void DoEnter()
     {
         base.DoEnter();

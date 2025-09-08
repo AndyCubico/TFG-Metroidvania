@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
     #region Movement variables
 
     public Pathfollowing pathfollowing { get; set; }
-    //public bool isFacingRight { get ; set; } = true; // Default sprite is facing right
 
     #endregion
 
@@ -48,12 +47,6 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     #endregion
 
-    // TODO: FIX THIS MESS. Not sure if this is the right way to do it, will investigate. 
-    // This is for variables that have to be different between different objects with the same scriptable object.
-    // For instance, two enemies with IdlePatrol will have the same SO. If I want different positions to patrol,
-    // I can't set that up in the SO, because then all enemies with that SO will have the same positions, making me 
-    // do a different SO for each different position, something completely stupid. For now this is the fix, will
-    // think of cleaner ways to do it.
     public Dictionary<string, object> stateContext { get; private set; } = new Dictionary<string, object>();
 
     public AttackFlagType attackFlagMask;
@@ -149,7 +142,6 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     public virtual void PerformAttack()
     {
-        //Debug.LogWarning("PerformAttack not implemented in base Enemy.");
         attackSOBaseInstance.PerformAttack();
     }
 
@@ -170,14 +162,7 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
 
     #endregion
 
-    // TODO: Remove this interface if not used, pathfinding is done in the FSM states.
     #region Movement Functions
-
-    public virtual void Move(Vector2 velocity)
-    {
-        // TODO: Connect with pathfinding
-        // Add check right or left functionality
-    }
 
     public void CheckFacing(Vector2 velocity)
     {
@@ -238,22 +223,8 @@ public class Enemy : MonoBehaviour, IHittableObject, IDamagable, IMovement, ITri
         canFlip = Convert.ToBoolean(isAttacking);
     }
 
-    private void AnimationTrigger(ANIMATION_TRIGGER triggerType)
-    {
-        // TODO: In the given animation, add the trigger calling this function with the animation type needed
-        stateMachine.CurrentState.AnimationTrigger(triggerType);
-    }
-
-    public enum ANIMATION_TRIGGER
-    {
-        ENEMYDAMAGED,
-        IDLE,
-        WALK
-    }
-
     #endregion
 
-    // TODO: Use these functions to transition between states in each type of enemy.
     #region State Functions 
 
     public void IdleTransition()

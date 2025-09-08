@@ -4,13 +4,6 @@ public class IdleState : State
     {
     }
 
-    public override void AnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
-    {
-        base.AnimationTrigger(triggerType);
-
-        enemy.idleSOBaseInstance.DoAnimationTrigger(triggerType);
-    }
-
     public override void EnterState()
     {
         base.EnterState();

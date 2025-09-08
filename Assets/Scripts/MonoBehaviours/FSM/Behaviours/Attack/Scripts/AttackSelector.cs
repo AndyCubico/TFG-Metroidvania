@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Random Attack Combo", menuName = "Enemy Logic/Attack/Random Attack Combo")]
-public class RandomAttackCombo : AttackSOBase
+[CreateAssetMenu(fileName = "AttackSelector", menuName = "Enemy Logic/Attack/Attack Selector")]
+public class AttackSelector : AttackSOBase
 {
     [SerializeField] private AttackSOBase[] attackOptions;
 
-    [Tooltip("Probabilities as follows: 50% = 50")]
+    [Tooltip("Probabilities work like this: 50% = 50")]
     [SerializeField] float[] m_AttackProbability;
 
     // Runtime, per-enemy cloned options
@@ -34,7 +34,6 @@ public class RandomAttackCombo : AttackSOBase
     public override void DoUpdate() => chosenAttack?.DoUpdate();
     public override void DoFixedUpdate() => chosenAttack?.DoFixedUpdate();
     public override void DoExit() => chosenAttack?.DoExit();
-    public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) => chosenAttack?.DoAnimationTrigger(triggerType);
     public override void ResetValues() => chosenAttack?.ResetValues();
     public override void OnParried() => chosenAttack?.OnParried();
     public override void FinishParry() => chosenAttack?.FinishParry();

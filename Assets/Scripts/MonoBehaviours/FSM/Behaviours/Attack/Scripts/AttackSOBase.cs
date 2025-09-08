@@ -51,7 +51,6 @@ public class AttackSOBase : ScriptableObject
         }
     }
     public virtual void DoFixedUpdate() { }
-    public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }
     public virtual void ResetValues() { }
     public virtual void OnParried()
     {

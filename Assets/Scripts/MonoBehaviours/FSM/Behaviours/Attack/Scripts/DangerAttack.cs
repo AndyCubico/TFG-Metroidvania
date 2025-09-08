@@ -34,11 +34,6 @@ public class DangerAttack : AttackSOBase
         base.DoFixedUpdate();
     }
 
-    public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
-    {
-        base.DoAnimationTrigger(triggerType);
-    }
-
     public override void ResetValues()
     {
         base.ResetValues();

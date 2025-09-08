@@ -66,12 +66,6 @@ public class IdlePatrol : IdleSOBase
             }
         }
     }
-
-    public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
-    {
-        base.DoAnimationTrigger(triggerType);
-    }
-
     public override void ResetValues()
     {
         base.ResetValues();

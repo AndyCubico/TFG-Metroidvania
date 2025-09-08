@@ -16,6 +16,4 @@ public class State
     public virtual void Update() { }
 
     public virtual void FixedUpdate() { }
-
-    public virtual void AnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }
 }

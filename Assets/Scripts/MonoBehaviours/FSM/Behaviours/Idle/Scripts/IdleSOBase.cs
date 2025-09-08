@@ -48,7 +48,6 @@ public class IdleSOBase : ScriptableObject
         }
     }
     public virtual void DoFixedUpdate() { }
-    public virtual void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType) { }
     public virtual void ResetValues() { }
 
 }

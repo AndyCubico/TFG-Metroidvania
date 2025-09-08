@@ -18,11 +18,6 @@ public class RangedAttack : AttackSOBase
 
     [SerializeField] private bool m_CanBeParried = false;
 
-    public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
-    {
-        base.DoAnimationTrigger(triggerType);
-    }
-
     public override void DoEnter()
     {
         //base.DoEnter(); // Not needed for the ranged enemy.

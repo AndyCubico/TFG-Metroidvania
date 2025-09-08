@@ -54,7 +54,7 @@ public class TeleportingBoss : StaggerableEnemy
         lastTeleportIndex = newIndex;
 
         // Cast attackSOBaseInstance to RandomAttackCombo and set attack probability
-        if (attackSOBaseInstance is RandomAttackCombo randomAttackCombo)
+        if (attackSOBaseInstance is AttackSelector randomAttackCombo)
         {
             if (m_AttackProbabilitiesByTeleport != null && newIndex < m_AttackProbabilitiesByTeleport.Count)
             {

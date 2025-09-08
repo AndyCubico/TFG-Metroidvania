@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Attack Slash Combo", menuName = "Enemy Logic/Attack/Attack Slash Combo")]
-public class AttackSlashCombo : AttackSOBase
+[CreateAssetMenu(fileName = "Melee Attack", menuName = "Enemy Logic/Attack/Melee Attack")]
+public class MeleeAttack : AttackSOBase
 {
     public override void Initialize(GameObject gameObject, Enemy enemy)
     {
@@ -32,11 +32,6 @@ public class AttackSlashCombo : AttackSOBase
     public override void DoFixedUpdate()
     {
         base.DoFixedUpdate();
-    }
-
-    public override void DoAnimationTrigger(Enemy.ANIMATION_TRIGGER triggerType)
-    {
-        base.DoAnimationTrigger(triggerType);
     }
 
     public override void ResetValues()

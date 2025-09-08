@@ -51,7 +51,7 @@ public class GodMode : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1) || (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.AltGr) && Input.GetKeyDown(KeyCode.G)))
+        if (Input.GetKeyDown(KeyCode.F1) || (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G) || Input.GetKey(KeyCode.Period) && Input.GetKeyDown(KeyCode.G)))
         {
             GlobalGodMode.m_IsGodMode = !GlobalGodMode.m_IsGodMode;
 

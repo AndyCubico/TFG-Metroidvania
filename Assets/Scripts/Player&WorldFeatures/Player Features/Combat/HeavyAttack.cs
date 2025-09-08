@@ -130,6 +130,11 @@ public class HeavyAttack : MonoBehaviour
         {
             Hit();
         }
+
+        if (Input.GetKey(KeyCode.Period) && Input.GetKeyDown(KeyCode.C)) // Debug Keys
+        {
+            AddCharges(1);
+        }
     }
 
     public void AnimationHasFinished()
@@ -139,6 +144,7 @@ public class HeavyAttack : MonoBehaviour
         isDamaging = false;
         characterPlayerController.blockFlip = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        enemyHealth.Clear();
 
         animator.SetBool("Heavy_Attack_Right", false);
         animator.SetBool("Heavy_Attack_Left", false);

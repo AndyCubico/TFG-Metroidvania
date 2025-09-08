@@ -755,8 +755,9 @@ namespace PlayerController
                 {
                     CapsuleCollider2D capsuleCollider = null;
                     ShieldHittable shield = null;
+                    CircleCollider2D circleCollider = null;
 
-                    if (hit.transform.TryGetComponent<CapsuleCollider2D>(out capsuleCollider) || hit.transform.TryGetComponent<ShieldHittable>(out shield))
+                    if (hit.transform.TryGetComponent<CapsuleCollider2D>(out capsuleCollider) || hit.transform.TryGetComponent<CircleCollider2D>(out circleCollider) || hit.transform.TryGetComponent<ShieldHittable>(out shield))
                     {
                         if (hit.distance <= 0.1f && hit.transform.position.y <= this.transform.position.y)
                         {
@@ -765,6 +766,13 @@ namespace PlayerController
                             if (capsuleCollider != null)
                             {
                                 hitRb = hit.transform.GetComponent<Rigidbody2D>();
+                            }
+                            else if (circleCollider != null)
+                            {
+                                if (Physics2D.Raycast(hit.transform.position, Vector2.down, 1f, groundMask))
+                                {
+                                    hitRb = hit.transform.GetComponent<Rigidbody2D>();
+                                }
                             }
                             else if (shield != null)
                             {

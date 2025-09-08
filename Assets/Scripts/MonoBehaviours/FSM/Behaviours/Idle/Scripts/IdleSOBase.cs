@@ -21,8 +21,7 @@ public class IdleSOBase : ScriptableObject
     public virtual void DoExit() { ResetValues(); }
     public virtual void DoUpdate()
     {
-        // Fix in case the animator gets stuck with the shooting animation.
-        // Not adding transition from shooting to idle so that the animation is not suddenly cut.
+        // Fix in case the animator gets stuck with the attack animation.
         if (!enemy.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             enemy.SetTransitionAnimation("Idle");

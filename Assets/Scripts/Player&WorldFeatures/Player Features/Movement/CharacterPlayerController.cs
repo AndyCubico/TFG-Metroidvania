@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.Rendering;
+using System.Linq;
 
 namespace PlayerController
 {
@@ -201,6 +198,7 @@ namespace PlayerController
         public LayerMask wallMask;
         public LayerMask roofMask;
         public LayerMask enemyMask;
+        public LayerMask colliderMask;
         [Space(10)]
 
         [Header("Input Actions")]
@@ -262,6 +260,9 @@ namespace PlayerController
 
         //Input Buffer
         [HideInInspector] public Dictionary<INPUT_BUFFER, float> inputBufferSaver;
+
+        //EnemyList for push
+        private Dictionary<GameObject, Vector3> m_EnemyObjsToPush;
 
         private void OnEnable()
         {
@@ -566,6 +567,8 @@ namespace PlayerController
             playerFaceDir = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player facing Right
             dashFacing = PLAYER_FACE_DIRECTION.RIGHT; //To init the action, que put the player dash facing Right
             habilityUnlocker = UNLOCK_HABILITIES.NONE;
+
+            m_EnemyObjsToPush = new Dictionary<GameObject, Vector3>();
         }
 
         // Update is called once per frame
@@ -713,11 +716,21 @@ namespace PlayerController
                 cheatMode = !cheatMode;
                 Debug.Log("Cheats: " + cheatMode);
             }
+
+            foreach (var (key, value) in m_EnemyObjsToPush.ToList())
+            {
+                m_EnemyObjsToPush[key] = PushEnemy(key, value);
+
+                if(m_EnemyObjsToPush[key] == Vector3.zero)
+                {
+                    m_EnemyObjsToPush.Remove(key);
+                }
+            }
         }
 
         private void CheckForDownwardEnemy()
         {
-            if (playerState == PLAYER_STATUS.AIR)
+            if (playerState == PLAYER_STATUS.AIR || (playerState == PLAYER_STATUS.DASH && !Physics2D.GetIgnoreLayerCollision(6, 11)))
             {
                 RaycastHit2D hitMid = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
                 RaycastHit2D hitLeft = Physics2D.Raycast(new Vector3(transform.position.x - DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
@@ -745,7 +758,7 @@ namespace PlayerController
 
                     if (hit.transform.TryGetComponent<CapsuleCollider2D>(out capsuleCollider) || hit.transform.TryGetComponent<ShieldHittable>(out shield))
                     {
-                        if (hit.distance <= 0.1f)
+                        if (hit.distance <= 0.1f && hit.transform.position.y <= this.transform.position.y)
                         {
                             Rigidbody2D hitRb = null;
 
@@ -760,21 +773,102 @@ namespace PlayerController
 
                             if(hitRb != null)
                             {
+                                if (!m_EnemyObjsToPush.ContainsKey(hit.transform.gameObject))
+                                {
+                                    if (hit.transform.position.x >= this.transform.position.x)
+                                    {
+                                        m_EnemyObjsToPush.Add(hit.transform.gameObject, Vector3.right);
+                                    }
+                                    else
+                                    {
+                                        m_EnemyObjsToPush.Add(hit.transform.gameObject, Vector3.left);
+                                    }
+                                }
+
                                 if (hit.transform.position.x >= this.transform.position.x)
                                 {
-                                    rb.AddForce(Vector2.left * 40, ForceMode2D.Force);
-                                    hitRb.AddForce(Vector2.right * 150, ForceMode2D.Force);
+                                    rb.AddForce(Vector2.left * 60, ForceMode2D.Force);
+                                    //hitRb.AddForce(Vector2.right * 50, ForceMode2D.Force);
                                 }
                                 else
                                 {
-                                    rb.AddForce(Vector2.right * 40, ForceMode2D.Force);
-                                    hitRb.AddForce(Vector2.left * 150, ForceMode2D.Force);
+                                    rb.AddForce(Vector2.right * 60, ForceMode2D.Force);
+                                    //hitRb.AddForce(Vector2.left * 50, ForceMode2D.Force);
                                 }
                             }
                         }
                     }
                 }
             }
+            else
+            {
+                m_EnemyObjsToPush.Clear();
+            }
+        }
+
+        private Vector3 PushEnemy(GameObject enemyObj, Vector3 state)
+        {
+            float pushDistance = 5f;
+            float pushSpeed = 5f;
+
+            RaycastHit2D pushHit = new RaycastHit2D();
+            Vector3 finalDestination = new Vector3();
+
+            if (state == Vector3.left)
+            {
+                pushHit = Physics2D.Raycast(enemyObj.transform.position, Vector2.left, pushDistance, colliderMask); // Normal floor == Wall
+
+                if(pushHit.transform != null)
+                {
+                    Vector3 destination = new Vector3();
+                    destination = new Vector3(pushHit.transform.position.x, enemyObj.transform.position.y, enemyObj.transform.position.z);
+
+                    if (destination.x >= (enemyObj.transform.position.x - pushDistance - enemyObj.transform.localScale.x))
+                    {
+                        finalDestination = new Vector3(destination.x + enemyObj.transform.localScale.x * 2, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                    }
+                }
+                else
+                {
+                    finalDestination = new Vector3(enemyObj.transform.position.x - pushDistance, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                }
+
+                state = finalDestination;
+                return state;
+            }
+            else if (state == Vector3.right)
+            {
+                pushHit = Physics2D.Raycast(enemyObj.transform.position, Vector2.right, pushDistance, colliderMask); // Normal floor == Wall
+
+                if (pushHit.transform != null)
+                {
+                    Vector3 destination = new Vector3();
+                    destination = new Vector3(pushHit.transform.position.x, enemyObj.transform.position.y, enemyObj.transform.position.z);
+
+                    if (destination.x <= (enemyObj.transform.position.x + pushDistance + enemyObj.transform.localScale.x))
+                    {
+                        finalDestination = new Vector3(destination.x - enemyObj.transform.localScale.x * 2, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                    }
+                }
+                else
+                {
+                    finalDestination = new Vector3(enemyObj.transform.position.x + pushDistance, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                }
+
+                state = finalDestination;
+                return state;
+            }
+
+            if (enemyObj.transform.position != finalDestination)
+            {
+                enemyObj.transform.position = Vector3.MoveTowards(enemyObj.transform.position, state, pushSpeed * Time.deltaTime);
+            }
+            else
+            {
+                state = Vector3.zero;
+            }
+
+            return state;
         }
 
         public void UnhangPlayer()

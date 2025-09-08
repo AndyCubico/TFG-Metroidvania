@@ -122,6 +122,11 @@ public class PlayerHealth : MonoBehaviour
             playerRb.constraints = RigidbodyConstraints2D.FreezePositionX;
             healthCoroutine = StartCoroutine(Heal(healthQuantity));
         }
+
+        if (Input.GetKey(KeyCode.Period) && Input.GetKeyDown(KeyCode.H)) // Debug Keys
+        {
+            AddPotions(1);
+        }
     }
 
     void ReceiveAnAttack(float damage)

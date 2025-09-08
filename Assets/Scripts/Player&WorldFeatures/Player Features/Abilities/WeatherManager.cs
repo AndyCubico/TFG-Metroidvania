@@ -73,8 +73,6 @@ public class WeatherManager : MonoBehaviour
         specialAbilitiesScript = GameObject.Find("SpecialAttacks").GetComponent<SpecialAbilities>();
         m_WeatherWheel = GameObject.Find("WeatherWheel").gameObject;
         m_WeatherWheel.SetActive(false);
-
-        m_MiddleScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 
     void Update()
@@ -127,6 +125,7 @@ public class WeatherManager : MonoBehaviour
     private void WeatherWheel()
     {
         Vector3 mouseToMidScreen = new Vector3();
+        m_MiddleScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         if (m_IsWheelActive) // Show the actual sprite selected in the climate wheel
         {

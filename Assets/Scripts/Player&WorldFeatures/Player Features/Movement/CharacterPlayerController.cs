@@ -719,23 +719,57 @@ namespace PlayerController
         {
             if (playerState == PLAYER_STATUS.AIR)
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+                RaycastHit2D hitMid = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+                RaycastHit2D hitLeft = Physics2D.Raycast(new Vector3(transform.position.x - DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+                RaycastHit2D hitRight = Physics2D.Raycast(new Vector3(transform.position.x + DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+
+                RaycastHit2D hit = new RaycastHit2D(); 
+
+                if (hitMid.transform != null)
+                {
+                    hit = hitMid;
+                }
+                else if (hitLeft.transform != null)
+                {
+                    hit = hitLeft;
+                }
+                else if (hitRight.transform != null)
+                {
+                    hit = hitRight;
+                }
 
                 if (hit.transform != null)
                 {
-                    if(hit.transform.TryGetComponent<CapsuleCollider2D>(out CapsuleCollider2D capsuleCollider))
+                    CapsuleCollider2D capsuleCollider = null;
+                    ShieldHittable shield = null;
+
+                    if (hit.transform.TryGetComponent<CapsuleCollider2D>(out capsuleCollider) || hit.transform.TryGetComponent<ShieldHittable>(out shield))
                     {
                         if (hit.distance <= 0.1f)
                         {
-                            if (hit.transform.position.x >= this.transform.position.x)
+                            Rigidbody2D hitRb = null;
+
+                            if (capsuleCollider != null)
                             {
-                                rb.AddForce(Vector2.left * 40, ForceMode2D.Force);
-                                hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 150, ForceMode2D.Force);
+                                hitRb = hit.transform.GetComponent<Rigidbody2D>();
                             }
-                            else
+                            else if (shield != null)
                             {
-                                rb.AddForce(Vector2.right * 40, ForceMode2D.Force);
-                                hit.transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 150, ForceMode2D.Force);
+                                hitRb = hit.transform.root.GetComponent<Rigidbody2D>();
+                            }
+
+                            if(hitRb != null)
+                            {
+                                if (hit.transform.position.x >= this.transform.position.x)
+                                {
+                                    rb.AddForce(Vector2.left * 40, ForceMode2D.Force);
+                                    hitRb.AddForce(Vector2.right * 150, ForceMode2D.Force);
+                                }
+                                else
+                                {
+                                    rb.AddForce(Vector2.right * 40, ForceMode2D.Force);
+                                    hitRb.AddForce(Vector2.left * 150, ForceMode2D.Force);
+                                }
                             }
                         }
                     }

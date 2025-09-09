@@ -328,7 +328,7 @@ namespace PlayerController
 
             if (context.canceled)
             {
-                if ((isHangingWall || isGrounded || isHangingEdge) && !isCrouch)
+                if ((/*isHangingWall ||*/ isGrounded || isHangingEdge) && !isCrouch)
                 {
                     jumpStopper = false;
                 }
@@ -726,12 +726,15 @@ namespace PlayerController
             {
                 m_EnemyObjsToPush[key] = PushEnemy(key, value);
 
-                m_EnemyTimerPushToDelete[counter] += Time.deltaTime;
-
-                if (m_EnemyObjsToPush[key] == Vector3.zero || m_EnemyTimerPushToDelete[counter] >= m_MaxTimeToStopMoving || key == null)
+                if (m_EnemyTimerPushToDelete.Count < counter)
                 {
-                    m_EnemyObjsToPush.Remove(key);
-                    m_EnemyTimerPushToDelete.RemoveAt(counter);
+                    m_EnemyTimerPushToDelete[counter] += Time.deltaTime;
+
+                    if (m_EnemyObjsToPush[key] == Vector3.zero || m_EnemyTimerPushToDelete[counter] >= m_MaxTimeToStopMoving || key == null)
+                    {
+                        m_EnemyObjsToPush.Remove(key);
+                        m_EnemyTimerPushToDelete.RemoveAt(counter);
+                    }
                 }
 
                 counter++;
@@ -944,6 +947,7 @@ namespace PlayerController
                                 if (jumpKeyHold)
                                 {
                                     jumpKeyHold = false;
+                                    jumpStopper = false;
                                 }
                                 break;
                             case INPUT_BUFFER.IMPACT_HIT:
@@ -1498,7 +1502,7 @@ namespace PlayerController
             //Check if is Right Wall
             isRightWall = Physics2D.OverlapAreaAll(RightWallCheck.bounds.min, RightWallCheck.bounds.max, wallMask).Length > 0;
 
-            if (isHangingWall && !isLeftWall && !isRightWall && playerState == PLAYER_STATUS.WALL)
+            if (isHangingWall && !isLeftWall && !isRightWall && playerState == PLAYER_STATUS.WALL) //Unatach wall if it disapear
             {
                 PlayerUnFreeze();
                 playerState = PLAYER_STATUS.AIR;

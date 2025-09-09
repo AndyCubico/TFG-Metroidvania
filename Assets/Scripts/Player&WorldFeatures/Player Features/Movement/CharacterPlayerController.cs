@@ -263,6 +263,8 @@ namespace PlayerController
 
         //EnemyList for push
         private Dictionary<GameObject, Vector3> m_EnemyObjsToPush;
+        private List<float> m_EnemyTimerPushToDelete;
+        private float m_MaxTimeToStopMoving = 1f;
 
         private void OnEnable()
         {
@@ -569,6 +571,7 @@ namespace PlayerController
             habilityUnlocker = UNLOCK_HABILITIES.NONE;
 
             m_EnemyObjsToPush = new Dictionary<GameObject, Vector3>();
+            m_EnemyTimerPushToDelete = new List<float>();
         }
 
         // Update is called once per frame
@@ -717,14 +720,21 @@ namespace PlayerController
                 Debug.Log("Cheats: " + cheatMode);
             }
 
+            int counter = 0;
+
             foreach (var (key, value) in m_EnemyObjsToPush.ToList())
             {
                 m_EnemyObjsToPush[key] = PushEnemy(key, value);
 
-                if(m_EnemyObjsToPush[key] == Vector3.zero)
+                m_EnemyTimerPushToDelete[counter] += Time.deltaTime;
+
+                if (m_EnemyObjsToPush[key] == Vector3.zero || m_EnemyTimerPushToDelete[counter] >= m_MaxTimeToStopMoving || key == null)
                 {
                     m_EnemyObjsToPush.Remove(key);
+                    m_EnemyTimerPushToDelete.RemoveAt(counter);
                 }
+
+                counter++;
             }
         }
 
@@ -732,147 +742,166 @@ namespace PlayerController
         {
             if (playerState == PLAYER_STATUS.AIR || (playerState == PLAYER_STATUS.DASH && !Physics2D.GetIgnoreLayerCollision(6, 11)))
             {
-                RaycastHit2D hitMid = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
-                RaycastHit2D hitLeft = Physics2D.Raycast(new Vector3(transform.position.x - DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
-                RaycastHit2D hitRight = Physics2D.Raycast(new Vector3(transform.position.x + DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
-
-                RaycastHit2D hit = new RaycastHit2D(); 
-
-                if (hitMid.transform != null)
+                if (rb.linearVelocity.y <= 0.1f)
                 {
-                    hit = hitMid;
-                }
-                else if (hitLeft.transform != null)
-                {
-                    hit = hitLeft;
-                }
-                else if (hitRight.transform != null)
-                {
-                    hit = hitRight;
-                }
+                    RaycastHit2D hitMid = Physics2D.Raycast(transform.position, Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+                    RaycastHit2D hitLeft = Physics2D.Raycast(new Vector3(transform.position.x - DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
+                    RaycastHit2D hitRight = Physics2D.Raycast(new Vector3(transform.position.x + DownCrouchCollider.radius / 2, transform.position.y, transform.position.z), Vector2.down, m_ImpactHitMaxDistance, enemyMask);
 
-                if (hit.transform != null)
-                {
-                    CapsuleCollider2D capsuleCollider = null;
-                    ShieldHittable shield = null;
-                    CircleCollider2D circleCollider = null;
+                    RaycastHit2D hit = new RaycastHit2D();
 
-                    if (hit.transform.TryGetComponent<CapsuleCollider2D>(out capsuleCollider) || hit.transform.TryGetComponent<CircleCollider2D>(out circleCollider) || hit.transform.TryGetComponent<ShieldHittable>(out shield))
+                    if (hitMid.transform != null)
                     {
-                        if (hit.distance <= 0.1f && hit.transform.position.y <= this.transform.position.y)
-                        {
-                            Rigidbody2D hitRb = null;
+                        hit = hitMid;
+                    }
+                    else if (hitLeft.transform != null)
+                    {
+                        hit = hitLeft;
+                    }
+                    else if (hitRight.transform != null)
+                    {
+                        hit = hitRight;
+                    }
 
-                            if (capsuleCollider != null)
+                    if (hit.transform != null)
+                    {
+                        CapsuleCollider2D capsuleCollider = null;
+                        ShieldHittable shield = null;
+                        CircleCollider2D circleCollider = null;
+
+                        if (hit.transform.TryGetComponent<CapsuleCollider2D>(out capsuleCollider) || hit.transform.TryGetComponent<CircleCollider2D>(out circleCollider) || hit.transform.TryGetComponent<ShieldHittable>(out shield))
+                        {
+                            if (hit.distance <= 0.1f && hit.transform.position.y <= this.transform.position.y)
                             {
-                                hitRb = hit.transform.GetComponent<Rigidbody2D>();
-                            }
-                            else if (circleCollider != null)
-                            {
-                                if (Physics2D.Raycast(hit.transform.position, Vector2.down, 1f, groundMask))
+                                Rigidbody2D hitRb = null;
+
+                                if (capsuleCollider != null)
                                 {
                                     hitRb = hit.transform.GetComponent<Rigidbody2D>();
                                 }
-                            }
-                            else if (shield != null)
-                            {
-                                hitRb = hit.transform.root.GetComponent<Rigidbody2D>();
-                            }
-
-                            if(hitRb != null)
-                            {
-                                if (!m_EnemyObjsToPush.ContainsKey(hit.transform.gameObject))
+                                else if (circleCollider != null)
                                 {
+                                    if (Physics2D.Raycast(hit.transform.position, Vector2.down, 1f, groundMask))
+                                    {
+                                        hitRb = hit.transform.GetComponent<Rigidbody2D>();
+                                    }
+                                }
+                                else if (shield != null)
+                                {
+                                    hitRb = hit.transform.root.GetComponent<Rigidbody2D>();
+                                }
+
+                                if (hitRb != null)
+                                {
+                                    if (!m_EnemyObjsToPush.ContainsKey(hit.transform.gameObject))
+                                    {
+                                        if (hit.transform.position.x >= this.transform.position.x)
+                                        {
+                                            m_EnemyObjsToPush.Add(hit.transform.gameObject, Vector3.right);
+                                            m_EnemyTimerPushToDelete.Add(0);
+                                        }
+                                        else
+                                        {
+                                            m_EnemyObjsToPush.Add(hit.transform.gameObject, Vector3.left);
+                                            m_EnemyTimerPushToDelete.Add(0);
+                                        }
+                                    }
+
                                     if (hit.transform.position.x >= this.transform.position.x)
                                     {
-                                        m_EnemyObjsToPush.Add(hit.transform.gameObject, Vector3.right);
+                                        rb.AddForce(Vector2.left * 60, ForceMode2D.Force);
+                                        //hitRb.AddForce(Vector2.right * 50, ForceMode2D.Force);
                                     }
                                     else
                                     {
-                                        m_EnemyObjsToPush.Add(hit.transform.gameObject, Vector3.left);
+                                        rb.AddForce(Vector2.right * 60, ForceMode2D.Force);
+                                        //hitRb.AddForce(Vector2.left * 50, ForceMode2D.Force);
                                     }
-                                }
-
-                                if (hit.transform.position.x >= this.transform.position.x)
-                                {
-                                    rb.AddForce(Vector2.left * 60, ForceMode2D.Force);
-                                    //hitRb.AddForce(Vector2.right * 50, ForceMode2D.Force);
-                                }
-                                else
-                                {
-                                    rb.AddForce(Vector2.right * 60, ForceMode2D.Force);
-                                    //hitRb.AddForce(Vector2.left * 50, ForceMode2D.Force);
                                 }
                             }
                         }
                     }
                 }
+                else
+                {
+                    m_EnemyObjsToPush.Clear();
+                    m_EnemyTimerPushToDelete.Clear();
+                }
             }
-            else
-            {
-                m_EnemyObjsToPush.Clear();
-            }
+
         }
 
         private Vector3 PushEnemy(GameObject enemyObj, Vector3 state)
         {
-            float pushDistance = 5f;
-            float pushSpeed = 5f;
+            float pushDistance = 3f;
+            float pushSpeed = 8f;
 
             RaycastHit2D pushHit = new RaycastHit2D();
-            Vector3 finalDestination = new Vector3();
+            Vector3 finalDestination = state;
 
-            if (state == Vector3.left)
+            if(enemyObj != null)
             {
-                pushHit = Physics2D.Raycast(enemyObj.transform.position, Vector2.left, pushDistance, colliderMask); // Normal floor == Wall
-
-                if(pushHit.transform != null)
+                if (state == Vector3.left)
                 {
-                    Vector3 destination = new Vector3();
-                    destination = new Vector3(pushHit.transform.position.x, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                    Vector3 raycastOrigin = new Vector3(enemyObj.transform.position.x, enemyObj.transform.position.y - enemyObj.transform.localScale.y / 2f, enemyObj.transform.position.z);
 
-                    if (destination.x >= (enemyObj.transform.position.x - pushDistance - enemyObj.transform.localScale.x))
+                    pushHit = Physics2D.Raycast(raycastOrigin, Vector2.left, pushDistance, colliderMask); // Normal floor == Wall
+
+                    if (pushHit.transform != null)
                     {
-                        finalDestination = new Vector3(destination.x + enemyObj.transform.localScale.x * 2, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                        Vector3 destination = new Vector3();
+                        destination = new Vector3(pushHit.transform.position.x, enemyObj.transform.position.y, enemyObj.transform.position.z);
+
+                        if (destination.x >= (enemyObj.transform.position.x - pushDistance - enemyObj.transform.localScale.x))
+                        {
+                            finalDestination = new Vector3(destination.x + enemyObj.transform.localScale.x * 2, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                        }
                     }
+                    else
+                    {
+                        finalDestination = new Vector3(enemyObj.transform.position.x - pushDistance, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                    }
+
+                    state = finalDestination;
+                    return state;
+                }
+                else if (state == Vector3.right)
+                {
+                    Vector3 raycastOrigin = new Vector3(enemyObj.transform.position.x, enemyObj.transform.position.y - enemyObj.transform.localScale.y / 2f, enemyObj.transform.position.z);
+
+                    pushHit = Physics2D.Raycast(raycastOrigin, Vector2.right, pushDistance, colliderMask); // Normal floor == Wall
+
+                    if (pushHit.transform != null)
+                    {
+                        Vector3 destination = new Vector3();
+                        destination = new Vector3(pushHit.transform.position.x, enemyObj.transform.position.y, enemyObj.transform.position.z);
+
+                        if (destination.x <= (enemyObj.transform.position.x + pushDistance + enemyObj.transform.localScale.x))
+                        {
+                            finalDestination = new Vector3(destination.x - enemyObj.transform.localScale.x * 2, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                        }
+                    }
+                    else
+                    {
+                        finalDestination = new Vector3(enemyObj.transform.position.x + pushDistance, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                    }
+
+                    state = finalDestination;
+                    return state;
+                }
+
+                if (enemyObj.transform.position != finalDestination && finalDestination != Vector3.zero)
+                {
+                    enemyObj.transform.position = Vector3.MoveTowards(enemyObj.transform.position, finalDestination, pushSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    finalDestination = new Vector3(enemyObj.transform.position.x - pushDistance, enemyObj.transform.position.y, enemyObj.transform.position.z);
+                    state = Vector3.zero;
                 }
-
-                state = finalDestination;
-                return state;
-            }
-            else if (state == Vector3.right)
-            {
-                pushHit = Physics2D.Raycast(enemyObj.transform.position, Vector2.right, pushDistance, colliderMask); // Normal floor == Wall
-
-                if (pushHit.transform != null)
-                {
-                    Vector3 destination = new Vector3();
-                    destination = new Vector3(pushHit.transform.position.x, enemyObj.transform.position.y, enemyObj.transform.position.z);
-
-                    if (destination.x <= (enemyObj.transform.position.x + pushDistance + enemyObj.transform.localScale.x))
-                    {
-                        finalDestination = new Vector3(destination.x - enemyObj.transform.localScale.x * 2, enemyObj.transform.position.y, enemyObj.transform.position.z);
-                    }
-                }
-                else
-                {
-                    finalDestination = new Vector3(enemyObj.transform.position.x + pushDistance, enemyObj.transform.position.y, enemyObj.transform.position.z);
-                }
-
-                state = finalDestination;
-                return state;
-            }
-
-            if (enemyObj.transform.position != finalDestination)
-            {
-                enemyObj.transform.position = Vector3.MoveTowards(enemyObj.transform.position, state, pushSpeed * Time.deltaTime);
             }
             else
             {
+
                 state = Vector3.zero;
             }
 

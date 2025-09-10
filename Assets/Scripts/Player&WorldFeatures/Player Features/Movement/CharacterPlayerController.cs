@@ -836,7 +836,7 @@ namespace PlayerController
 
         private Vector3 PushEnemy(GameObject enemyObj, Vector3 state)
         {
-            float pushDistance = 3f;
+            float pushDistance = 1.2f;
             float pushSpeed = 8f;
 
             RaycastHit2D pushHit = new RaycastHit2D();
